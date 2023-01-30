@@ -1,1 +1,1 @@
-./plugins/kbot/README.md
+./plugins/kbot/readme.md
