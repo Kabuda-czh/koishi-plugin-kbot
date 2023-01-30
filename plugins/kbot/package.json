@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-kbot",
   "description": "A Multi-Functional Chat Bot",
-  "version": "1.0.0",
+  "version": "0.1.0-alpha.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -22,7 +22,8 @@
   "koishi": {
     "service": {
       "required": ["database"]
-    }
+    },
+    "preview": true
   },
   "peerDependencies": {
     "koishi": "^4.11.3",
