@@ -8,18 +8,18 @@
     "lib",
     "dist"
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "scripts": {},
   "keywords": [
-    "chatbot",
+    "kbot",
     "koishi",
     "plugin"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kabuda-czh/koishi-plugin-kbot"
+  },
   "koishi": {
-    "description": {
-      "en": "A Multi-Functional Chat Bot",
-      "zh": "一个多功能的聊天机器人"
-    },
     "service": {
       "required": ["database"]
     }
