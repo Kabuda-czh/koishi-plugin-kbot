@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-30 18:01:43
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic.ts
+ * @LastEditTime: 2023-01-30 20:15:10
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -53,8 +53,8 @@ export const Config: Schema<Config> = Schema.object({
     Schema.const("pc").description("电脑"),
     Schema.const("mobile").description("手机"),
   ])
-    .default("mobile")
-    .description("截图类型 (手机/电脑)"),
+    .default("pc")
+    .description("截图类型 (手机/电脑) - 开发中(暂时默认为电脑)"),
   live: Schema.boolean().description("是否监控开始直播的动态").default(true),
 });
 
