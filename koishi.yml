@@ -1,0 +1,63 @@
+host: localhost
+port: 5140
+maxPort: 5149
+plugins:
+  group:basic:
+    help: {}
+    rate-limit: {}
+    locales: {}
+    commands: {}
+    ~admin: {}
+    ~bind: {}
+    $collapsed: true
+  group:console:
+    analytics: {}
+    console:
+      open: true
+    dataview: {}
+    desktop:
+      $if: env.KOISHI_AGENT?.includes('Desktop')
+    logger: {}
+    insight: {}
+    market:
+      registry:
+        endpoint: https://registry.npmmirror.com
+      search:
+        endpoint: https://registry.koishi.chat/index.json
+    sandbox: {}
+    status: {}
+    $collapsed: true
+  group:database:
+    database-sqlite: {}
+    ~database-mysql: {}
+    ~database-mongo: {}
+    assets-local: {}
+    $collapsed: true
+  group:adapter:
+    adapter-onebot:
+      gocqhttp:
+        enabled: true
+      selfId: '2912490050'
+    ~adapter-discord: {}
+    ~adapter-telegram: {}
+    ~adapter-kook: {}
+    ~adapter-feishu: {}
+    gocqhttp: {}
+    $collapsed: true
+  puppeteer:t1chv7: {}
+  kbot:haehbt:
+    KBotBilibili:
+      enabled: true
+      dynamic:
+        device: pc
+    KBotMusic:
+      enabled: true
+      showWarning: true
+      platform: netease
+    KBotBasic:
+      superAdminQQ: '634469564'
+    KBotYoutube:
+      enabled: true
+      youtubeDataApiKey: AIzaSyC_DO97lLKaTsPzFk2Ig8e3SnxkGHFsSZs
+request:
+  proxyAgent: socks://127.0.0.1:7890

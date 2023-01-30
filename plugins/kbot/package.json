@@ -1,0 +1,31 @@
+{
+  "name": "koishi-plugin-kbot",
+  "description": "A Multi-Functional Chat Bot",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin"
+  ],
+  "koishi": {
+    "description": {
+      "en": "A Multi-Functional Chat Bot",
+      "zh": "一个多功能的聊天机器人"
+    },
+    "service": {
+      "required": ["database"]
+    }
+  },
+  "peerDependencies": {
+    "koishi": "^4.11.3",
+    "koishi-plugin-puppeteer": "^3.3.1"
+  }
+}
