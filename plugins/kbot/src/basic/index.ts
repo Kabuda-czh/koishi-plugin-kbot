@@ -2,14 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-30 11:30:37
+ * @LastEditTime: 2023-01-31 10:41:34
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Context, Schema } from "koishi";
-import {} from "@koishijs/plugin-console";
 
 export interface Config {
   superAdminQQ: string;
