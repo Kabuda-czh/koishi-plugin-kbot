@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 17:23:44
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-31 19:12:47
+ * @LastEditTime: 2023-01-31 19:15:45
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router.ts
  * @Description:
  *
@@ -29,7 +29,7 @@ function handleFunction<T = any>(
   functionName: keyof Bot,
   ...args: any
 ) {
-  return async (ctx) => {
+  return async (ctx: KoaContext) => {
     await Promise.all(
       context.bots.flatMap((bot) =>
         bot.platform === "onebot" ? bot?.[functionName](...args.map(arg => arg = ctx.query?.[arg] as string || "")) : []
