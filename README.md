@@ -4,6 +4,7 @@
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/Kabuda-czh/koishi-plugin-kbot?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/Kabuda-czh/koishi-plugin-kbot?style=social)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKabuda-czh%2Fkoishi-plugin-kbot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FKabuda-czh%2Fkoishi-plugin-kbot?ref=badge_shield)
 
 ![Platform](https://img.shields.io/badge/platform-koishi-lightgrey)
 [![install size](https://packagephobia.com/badge?p=koishi-plugin-kbot)](https://packagephobia.com/result?p=koishi-plugin-kbot)
@@ -19,3 +20,7 @@
 基于 [koishi](../../../../koishijs/koishi) 搭建的高效、多功能 [QQ](../../../../Mrs4s/go-cqhttp) 机器人
   
 </div>
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKabuda-czh%2Fkoishi-plugin-kbot.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FKabuda-czh%2Fkoishi-plugin-kbot?ref=badge_large)
