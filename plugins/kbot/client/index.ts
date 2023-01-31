@@ -6,7 +6,7 @@
  * @FilePath: \KBot-App\plugins\kbot\client\index.ts
  * @Description: 
  * 
- * Copyright (c) 2023 by ${git_name}, All Rights Reserved.
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Context } from '@koishijs/client'
 import ManageIndex from './index.vue'

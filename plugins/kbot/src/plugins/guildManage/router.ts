@@ -2,11 +2,11 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 17:23:44
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-31 18:06:42
+ * @LastEditTime: 2023-01-31 18:47:49
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router.ts
  * @Description:
  *
- * Copyright (c) 2023 by ${git_name}, All Rights Reserved.
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Context, Universal } from "koishi";
 import { Context as KoaContext } from 'koa'

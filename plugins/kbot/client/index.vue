@@ -6,7 +6,7 @@
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description: 
  * 
- * Copyright (c) 2023 by ${git_name}, All Rights Reserved.
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
 -->
 <template>
   <k-layout v-loading="loading" element-loading-text="加载中....">

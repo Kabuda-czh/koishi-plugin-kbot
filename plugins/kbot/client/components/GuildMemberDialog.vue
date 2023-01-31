@@ -6,7 +6,7 @@
  * @FilePath: \KBot-App\plugins\kbot\client\components\GuildMemberDialog.vue
  * @Description: 
  * 
- * Copyright (c) 2023 by ${git_name}, All Rights Reserved.
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
 -->
 <template>
   <!-- <div> -->

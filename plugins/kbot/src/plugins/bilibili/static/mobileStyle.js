@@ -6,7 +6,7 @@
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\static\mobileStyle.js
  * @Description: 用于初始化手机动态页面的样式以及图片大小
  * 
- * Copyright (c) 2023 by ${git_name}, All Rights Reserved.
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 async function getMobileStyle() {
   // 删除 dom 的对象, 可以自行添加 ( className 需要增加 '.' 为前缀, id 需要增加 '#' 为前缀)
