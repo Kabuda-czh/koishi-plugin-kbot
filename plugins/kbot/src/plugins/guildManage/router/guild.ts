@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:37
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-01 17:57:26
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router\guild.ts
+ * @LastEditTime: 2023-02-02 02:26:16
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\guildManage\router\guild.ts
  * @Description: 
  * 
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -19,6 +19,9 @@ export const guildRoutes: IRouterStrategy = {
   "/guildMemberList": function (context: Context) {
     return handleFunction<GuildMemberInfo>(context, "getGuildMemberList", "guildId")
   },
+  "/groupList": function (context: Context) {
+    return handleFunction(context, "internal.getGroupList", "noCache")
+  },
   "/groupMemberInfo": function (context: Context) {
     return handleFunction(context, "internal.getGroupMemberInfo", "groupId", "userId", "noCache")
   },
@@ -27,5 +30,8 @@ export const guildRoutes: IRouterStrategy = {
   },
   "/groupLeave": function (context: Context) {
     return handleFunction(context, "internal.setGroupLeave", "groupId", "isDismiss")
+  },
+  "/groupKick": function (context: Context) {
+    return handleFunction(context, "internal.setGroupKick", "groupId", "userId", "rejectAddRequest")
   }
 }
