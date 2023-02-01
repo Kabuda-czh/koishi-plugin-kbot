@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-31 18:06:57
+ * @LastEditTime: 2023-02-01 10:34:42
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description: 
  * 
@@ -13,12 +13,6 @@ import { Context, Schema } from "koishi";
 import { resolve } from "path";
 import {} from "@koishijs/plugin-console";
 import { routerStrategies } from "./router";
-
-declare module "@koishijs/plugin-console" {
-  interface Events {
-    "get-greeting"(): string[];
-  }
-}
 
 export interface Config {}
 
