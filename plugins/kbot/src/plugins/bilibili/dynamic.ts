@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-30 20:15:10
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic.ts
+ * @LastEditTime: 2023-02-01 14:22:21
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -86,7 +86,6 @@ export async function apply(ctx: Context, config: Config) {
     .option("list", "-l", { authority: 2 })
     .action(async ({ session, options }) => {
       // TODO: 增加搜索功能
-
       if (Object.keys(options).length > 1) return "请不要同时使用多个参数";
 
       const uid = options.add?.trim() || options.remove?.trim();

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-30 15:00:19
+ * @LastEditTime: 2023-02-01 13:26:26
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -87,7 +87,7 @@ export const Config: Schema<Config> = Schema.object({
   youtubeDataApiKey: Schema.string()
     .required()
     .description(
-      "请提供YouTube Data API v3, 详情: https://developers.google.com/youtube/v3/getting-started"
+      "请提供YouTube Data API v3 (必填) 详情: https://developers.google.com/youtube/v3/getting-started"
     ),
 });
 
