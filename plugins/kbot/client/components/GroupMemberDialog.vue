@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-01 18:22:10
- * @FilePath: \KBot-App\plugins\kbot\client\components\GuildMemberDialog.vue
+ * @LastEditTime: 2023-02-02 02:24:11
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\client\components\GuildMemberDialog.vue
  * @Description: 
  * 
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -16,6 +16,7 @@
     destroy-on-close
     @open="getMemberInfo"
     @closed="dialogVisible = false"
+    append-to-body
   >
     <el-form :model="memberInfo" label-width="auto">
       <el-row>
@@ -135,10 +136,19 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="操作">
-            <el-button type="warning" :disabled="botEditRole">
-              管理员设置
+            <el-button
+              type="warning"
+              :disabled="
+                props.botRole !== 'owner' || +props.botId === memberInfo.user_id
+              "
+            >
+              {{
+                RoleObject[memberInfo.role]?.role === 2
+                  ? "取消管理员"
+                  : "设置管理员"
+              }}
             </el-button>
-            <el-button type="danger" :disabled="botEditRole">
+            <el-button type="danger" :disabled="botEditRole" @click="groupKick">
               踢出群聊
             </el-button>
           </el-form-item>
@@ -149,11 +159,12 @@
 </template>
 
 <script setup lang="ts">
+import { message, messageBox } from "@koishijs/client";
 import { computed, ref } from "vue";
 
 interface Props {
   visible?: boolean;
-  guildId?: string;
+  groupId?: string;
   botId?: string;
   botRole?: string;
   memberId?: string;
@@ -161,7 +172,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   visible: false,
-  guildId: "",
+  groupId: "",
   botId: "",
   botRole: "member",
   memberId: "",
@@ -206,18 +217,19 @@ const RoleObject = {
 
 const botEditRole = computed(() => {
   return (
+    RoleObject[props.botRole]?.role === 1 ||
     RoleObject[props.botRole]?.role <= RoleObject[memberInfo.value.role]?.role
   );
 });
 
-const memberInfo = ref<UserInfo>({} as any);
+const memberInfo = ref<Partial<UserInfo>>({});
 
 const getMemberInfo = async () => {
-  if (props.guildId && props.botId) {
+  if (props.groupId && props.botId) {
     dialogLoading.value = true;
 
     fetch(
-      `/groupMemberInfo?groupId=${props.guildId}&userId=${props.memberId}&noCache=true`
+      `/groupMemberInfo?groupId=${props.groupId}&userId=${props.memberId}&noCache=true`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -226,5 +238,38 @@ const getMemberInfo = async () => {
 
     dialogLoading.value = false;
   }
+};
+
+const groupKick = () => {
+  // TODO 因为动态渲染的原因，这里的弹窗暂时未开发允许再次加入的选项
+  const rejectAddRequest = ref<boolean>(false);
+
+  messageBox
+    .confirm(
+      `确定要踢出 ${memberInfo.value.nickname}(${memberInfo.value.group_id}) 吗?`,
+      "提示",
+      {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        draggable: true,
+      }
+    )
+    .then(() => {
+      fetch(
+        `/groupKick?groupId=${props.groupId}&userId=${props.memberId}&rejectAddRequest=${rejectAddRequest.value}`
+      )
+        .then((res) => { 
+          const data = res.json()
+          message.success("操作成功")
+          return data;
+        })
+        .catch((res) => {
+          message.error(`操作失败: ${res}`)
+        });
+    })
+    .catch(() => {
+      message.success("已取消操作");
+    });
 };
 </script>

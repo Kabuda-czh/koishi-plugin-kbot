@@ -50,8 +50,8 @@
     </el-table>
   </el-dialog>
 
-  <GuildMemberDialog
-    :guild-id="props.guildId"
+  <GroupMemberDialog
+    :group-id="props.groupId"
     :visible="memberDialogVisible"
     :bot-id="props.botId"
     :bot-role="props.botRole"
@@ -63,18 +63,18 @@
 <script setup lang="ts">
 import { View } from "@element-plus/icons-vue";
 import { computed, ref } from "vue";
-import GuildMemberDialog from "./GuildMemberDialog.vue";
+import GroupMemberDialog from "./GroupMemberDialog.vue";
 
 interface Props {
   visible?: boolean;
-  guildId?: string;
+  groupId?: string;
   botId?: string;
   botRole?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   visible: false,
-  guildId: "",
+  groupId: "",
   botId: "",
   botRole: "member",
 });
@@ -101,11 +101,11 @@ interface UserInfo {
 const memberList = ref<UserInfo[]>([]);
 
 const getMemberList = async () => {
-  if (props.guildId) {
+  if (props.groupId) {
     dialogLoading.value = true;
 
     memberList.value = await fetch(
-      `/guildMemberList?guildId=${props.guildId}`
+      `/guildMemberList?guildId=${props.groupId}`
     ).then((res) => (res.json() as Promise<UserInfo[]>) || []);
 
     dialogLoading.value = false;
