@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 11:55:03
+ * @LastEditTime: 2023-02-02 14:12:00
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupMemberDialog.vue
  * @Description: 
  * 
@@ -126,10 +126,18 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="禁言操作">
-            <el-button type="danger" :disabled="botEditRole">
+            <el-button
+              type="danger"
+              :disabled="botEditRole"
+              @click="muteMember"
+            >
               选择禁言时间
             </el-button>
-            <el-button type="success" :disabled="botEditRole">
+            <el-button
+              type="success"
+              :disabled="botEditRole"
+              @click="cancelMuteMember"
+            >
               解除禁言
             </el-button>
           </el-form-item>
@@ -161,21 +169,27 @@
 
 <script setup lang="ts">
 import { message, messageBox } from "@koishijs/client";
-import { computed, ref } from "vue";
-import { fetchGroupAdmin } from "../api";
+import { ElCol, ElForm, ElFormItem, ElInputNumber, ElRow } from "element-plus";
+import { computed, ref, h } from "vue";
+import {
+  fetchGroupAdmin,
+  fetchGroupKick,
+  fetchGroupMemberInfo,
+  fetchMuteMember,
+} from "../api";
 
 interface Props {
   visible?: boolean;
-  groupId?: number;
-  botId?: number;
+  groupId?: string | number;
+  botId?: string | number;
   botRole?: string;
-  memberId?: string;
+  memberId?: string | number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   visible: false,
-  groupId: 0,
-  botId: 0,
+  groupId: "",
+  botId: "",
   botRole: "member",
   memberId: "",
 });
@@ -193,8 +207,8 @@ const dialogLoading = ref<boolean>(false);
 const emits = defineEmits(["closed"]);
 
 interface UserInfo {
-  group_id: number;
-  user_id: number;
+  group_id: string | number;
+  user_id: string | number;
   nickname: string;
   card: string;
   sex: string;
@@ -230,25 +244,114 @@ const getMemberInfo = async () => {
   if (props.groupId && props.botId) {
     dialogLoading.value = true;
 
-    fetch(
-      `/groupMemberInfo?groupId=${props.groupId}&userId=${props.memberId}&noCache=true`
-    )
-      .then((res) => res.json())
+    await fetchGroupMemberInfo(props.groupId, props.memberId, true)
       .then((res) => {
         memberInfo.value = res[0];
+      })
+      .finally(() => {
+        setTimeout(() => (dialogLoading.value = false), 1000);
       });
-
-    dialogLoading.value = false;
   }
 };
 
+// 禁言操作
+const muteMember = () => {
+  const muteDay = ref<number>(0), // 天
+    muteHour = ref<number>(0), // 小时
+    muteMinute = ref<number>(1); // 分钟
+
+  const muteMemberDiv = {
+    style: {
+      display: "flex",
+      "flex-direction": "column",
+      gap: "10px",
+    },
+  };
+
+  const muteMemberTimeDiv = {
+    style: {
+      display: "flex",
+      width: "100%",
+      "align-items": "center",
+      "justify-content": "space-between",
+    },
+  };
+
+  messageBox({
+    type: "info",
+    title: "禁言操作",
+    message: h("div", muteMemberDiv, [
+      h("div", muteMemberTimeDiv, [
+        h("span", null, "禁言(0 ~ 29)天"),
+        h(ElInputNumber, {
+          modelValue: muteDay.value,
+          min: 0,
+          max: 29,
+          step: 1,
+          controls: false,
+          "onUpdate:modelValue": (val) => (muteDay.value = val),
+        }),
+      ]),
+      h("div", muteMemberTimeDiv, [
+        h("p", null, "禁言(0 ~ 23)小时"),
+        h(ElInputNumber, {
+          modelValue: muteHour.value,
+          min: 0,
+          max: 23,
+          step: 1,
+          controls: false,
+          "onUpdate:modelValue": (val) => (muteHour.value = val),
+        }),
+      ]),
+      h("div", muteMemberTimeDiv, [
+        h("p", null, "禁言(0 ~ 59)分钟"),
+        h(ElInputNumber, {
+          modelValue: muteMinute.value,
+          min: 0,
+          max: 59,
+          step: 1,
+          controls: false,
+          "onUpdate:modelValue": (val) => (muteMinute.value = val),
+        }),
+      ]),
+    ]),
+  })
+    .then(() => {
+      const duration =
+        muteDay.value * 24 * 3600 +
+        muteHour.value * 3600 +
+        muteMinute.value * 60;
+      fetchMuteMember(
+        memberInfo.value.group_id,
+        memberInfo.value.user_id,
+        duration * 1000
+      ).then(() => {
+        message.success(
+          `禁言 ${memberInfo.value.nickname} 成功, 禁言时间: ${
+            muteDay.value ? `${muteDay.value}天` : ""
+          }${muteHour.value ? `${muteHour.value}小时` : ""}${
+            muteMinute.value ? `${muteMinute.value}分钟` : ""
+          }`
+        );
+      });
+    })
+    .catch(() => message.success("已取消操作"));
+};
+
+const cancelMuteMember = () => {
+  fetchMuteMember(memberInfo.value.group_id, memberInfo.value.user_id, 0).then(
+    () => message.success(`取消禁言 ${memberInfo.value.nickname} 成功`)
+  );
+};
+
+// 群管理操作
 const groupSetAdmin = () => {
   const isSetAdmin = RoleObject[memberInfo.value.role]?.role === 2;
 
   messageBox
     .confirm(
       `确定要${isSetAdmin ? "取消" : ""}设置 ${memberInfo.value.nickname}(${
-        memberInfo.value.group_id
+        memberInfo.value.user_id
       }) 为管理员吗?`,
       "提示",
       {
@@ -259,16 +362,12 @@ const groupSetAdmin = () => {
       }
     )
     .then(() => {
-      fetchGroupAdmin(props.groupId, +props.memberId, !isSetAdmin)
-        .then((res) => {
-          message.success(`${isSetAdmin ? "取消" : ""}设置管理员成功`);
-          getMemberInfo();
-        })
-        .catch(() => {
-          message.error(`${isSetAdmin ? "取消" : ""}设置管理员失败`);
-        });
+      fetchGroupAdmin(props.groupId, props.memberId, !isSetAdmin).then(() => {
+        message.success(`${isSetAdmin ? "取消" : ""}设置管理员成功`);
+        getMemberInfo();
+      });
     })
-    .catch(() => {});
+    .catch(() => message.success("已取消操作"));
 };
 
 const groupKick = () => {
@@ -287,20 +386,15 @@ const groupKick = () => {
       }
     )
     .then(() => {
-      fetch(
-        `/groupKick?groupId=${props.groupId}&userId=${props.memberId}&rejectAddRequest=${rejectAddRequest.value}`
-      )
-        .then((res) => {
-          const data = res.json();
-          message.success("操作成功");
-          return data;
-        })
-        .catch((res) => {
-          message.error(`操作失败: ${res}`);
-        });
+      fetchGroupKick(
+        props.groupId,
+        props.memberId,
+        rejectAddRequest.value
+      ).then(() => {
+        message.success("踢出成功");
+        getMemberInfo();
+      });
     })
-    .catch(() => {
-      message.success("已取消操作");
-    });
+    .catch(() => message.success("已取消操作"));
 };
 </script>
