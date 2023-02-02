@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 11:57:41
+ * @LastEditTime: 2023-02-02 13:36:05
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
@@ -58,12 +58,13 @@
 <script setup lang="ts">
 import { View } from "@element-plus/icons-vue";
 import { computed, ref } from "vue";
+import { fetchGuildMemberList } from "../api";
 import GroupMemberDialog from "./GroupMemberDialog.vue";
 
 interface Props {
   visible?: boolean;
-  groupId?: number;
-  botId?: number;
+  groupId?: string | number;
+  botId?: string | number;
   botRole?: string;
 }
 
@@ -99,11 +100,9 @@ const getMemberList = async () => {
   if (props.groupId) {
     dialogLoading.value = true;
 
-    memberList.value = await fetch(
-      `/guildMemberList?guildId=${props.groupId}`
-    ).then((res) => (res.json() as Promise<UserInfo[]>) || []);
-
-    dialogLoading.value = false;
+    memberList.value = await fetchGuildMemberList(props.groupId).finally(() => {
+      setTimeout(() => (dialogLoading.value = false), 500);
+    });
   }
 };
 
