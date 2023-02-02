@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-kbot",
   "description": "一个多功能的qq机器人, 在全力开发中....",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.8-alpha.2",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -21,7 +21,9 @@
   },
   "koishi": {
     "service": {
-      "required": ["database"]
+      "required": [
+        "database"
+      ]
     },
     "preview": true
   },
