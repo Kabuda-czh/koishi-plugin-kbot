@@ -14,6 +14,6 @@ export function fetchGuildList () {
   return http.request("get", "/guildList");
 }
 
-export function fetchGuildMemberList (guildId: string) {
+export function fetchGuildMemberList (guildId: string | number) {
   return http.request("get", "/guildMemberList", { guildId });
 }

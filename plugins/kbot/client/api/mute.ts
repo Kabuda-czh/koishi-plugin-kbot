@@ -10,10 +10,10 @@
  */
 import { http } from "../utils";
 
-export function fetchMuteGuild (guildId: number, mute: number) {
+export function fetchMuteGuild (guildId: string | number, mute: number) {
   return http.request("get", "/muteGuild", { guildId, mute });
 }
 
-export function fetchMuteMember (guildId: number, userId: number, duration: number) {
+export function fetchMuteMember (guildId: string | number, userId: string | number, duration: number) {
   return http.request("get", "/muteMember", { guildId, userId, duration });
 }

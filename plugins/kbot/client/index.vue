@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 11:48:34
+ * @LastEditTime: 2023-02-02 13:32:44
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description: 
  * 
@@ -131,8 +131,8 @@ const groupList = ref<GroupList[]>([]);
 
 // dialog
 const dialogVisible = ref<boolean>(false);
-const groupId = ref<number>(0);
-const botId = ref<number>(0);
+const groupId = ref<string | number>("");
+const botId = ref<string | number>("");
 const botRole = ref<string>("");
 
 const checkGuildInfo = (id: number, role: string) => {
