@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 02:24:11
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\client\components\GuildMemberDialog.vue
+ * @LastEditTime: 2023-02-02 11:55:03
+ * @FilePath: \KBot-App\plugins\kbot\client\components\GroupMemberDialog.vue
  * @Description: 
  * 
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -141,6 +141,7 @@
               :disabled="
                 props.botRole !== 'owner' || +props.botId === memberInfo.user_id
               "
+              @click="groupSetAdmin"
             >
               {{
                 RoleObject[memberInfo.role]?.role === 2
@@ -161,19 +162,20 @@
 <script setup lang="ts">
 import { message, messageBox } from "@koishijs/client";
 import { computed, ref } from "vue";
+import { fetchGroupAdmin } from "../api";
 
 interface Props {
   visible?: boolean;
-  groupId?: string;
-  botId?: string;
+  groupId?: number;
+  botId?: number;
   botRole?: string;
   memberId?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   visible: false,
-  groupId: "",
-  botId: "",
+  groupId: 0,
+  botId: 0,
   botRole: "member",
   memberId: "",
 });
@@ -240,6 +242,35 @@ const getMemberInfo = async () => {
   }
 };
 
+const groupSetAdmin = () => {
+  const isSetAdmin = RoleObject[memberInfo.value.role]?.role === 2;
+
+  messageBox
+    .confirm(
+      `确定要${isSetAdmin ? "取消" : ""}设置 ${memberInfo.value.nickname}(${
+        memberInfo.value.group_id
+      }) 为管理员吗?`,
+      "提示",
+      {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        draggable: true,
+      }
+    )
+    .then(() => {
+      fetchGroupAdmin(props.groupId, +props.memberId, !isSetAdmin)
+        .then((res) => {
+          message.success(`${isSetAdmin ? "取消" : ""}设置管理员成功`);
+          getMemberInfo();
+        })
+        .catch(() => {
+          message.error(`${isSetAdmin ? "取消" : ""}设置管理员失败`);
+        });
+    })
+    .catch(() => {});
+};
+
 const groupKick = () => {
   // TODO 因为动态渲染的原因，这里的弹窗暂时未开发允许再次加入的选项
   const rejectAddRequest = ref<boolean>(false);
@@ -259,13 +290,13 @@ const groupKick = () => {
       fetch(
         `/groupKick?groupId=${props.groupId}&userId=${props.memberId}&rejectAddRequest=${rejectAddRequest.value}`
       )
-        .then((res) => { 
-          const data = res.json()
-          message.success("操作成功")
+        .then((res) => {
+          const data = res.json();
+          message.success("操作成功");
           return data;
         })
         .catch((res) => {
-          message.error(`操作失败: ${res}`)
+          message.error(`操作失败: ${res}`);
         });
     })
     .catch(() => {

@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-01 17:47:55
- * @FilePath: \KBot-App\plugins\kbot\client\components\GuildDialog.vue
+ * @LastEditTime: 2023-02-02 11:57:41
+ * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -20,11 +20,6 @@
     <el-table :data="memberList" v-loading="dialogLoading">
       <el-table-column align="center" prop="userId" label="QQ号" width="150" />
       <el-table-column align="center" prop="username" label="QQ名称" />
-      <el-table-column align="center" prop="nickname" label="群名片">
-        <template #default="{ row }">
-          <span>{{ row.nickname || row.username }}</span>
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="头像" width="80">
         <template #default="{ row }">
           <el-image
@@ -67,15 +62,15 @@ import GroupMemberDialog from "./GroupMemberDialog.vue";
 
 interface Props {
   visible?: boolean;
-  groupId?: string;
-  botId?: string;
+  groupId?: number;
+  botId?: number;
   botRole?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   visible: false,
-  groupId: "",
-  botId: "",
+  groupId: 0,
+  botId: 0,
   botRole: "member",
 });
 

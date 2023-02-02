@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 02:39:35
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\client\index.vue
+ * @LastEditTime: 2023-02-02 11:48:34
+ * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description: 
  * 
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -86,7 +86,7 @@
     :bot-role="botRole"
     @closed="
       dialogVisible = false;
-      groupId = '';
+      groupId = 0;
     "
   />
 </template>
@@ -94,7 +94,15 @@
 <script setup lang="ts">
 import { View } from "@element-plus/icons-vue";
 import { message, messageBox } from "@koishijs/client";
-import { ref } from "vue";
+import { ElButton, ElForm, ElTable, ElTableColumn, ElEmpty } from "element-plus";
+import { nextTick, onMounted, ref } from "vue";
+import {
+  fetchBroadcast,
+  fetchGroupLeave,
+  fetchGroupMemberList,
+  fetchMuteGuild,
+  fetchSendMessage,
+} from "./api";
 import GroupDialog from "./components/GroupDialog.vue";
 
 const loading = ref<boolean>(true);
@@ -123,11 +131,11 @@ const groupList = ref<GroupList[]>([]);
 
 // dialog
 const dialogVisible = ref<boolean>(false);
-const groupId = ref<string>("");
-const botId = ref<string>("");
+const groupId = ref<number>(0);
+const botId = ref<number>(0);
 const botRole = ref<string>("");
 
-const checkGuildInfo = (id: string, role: string) => {
+const checkGuildInfo = (id: number, role: string) => {
   groupId.value = id;
   botRole.value = role;
   dialogVisible.value = true;
@@ -138,20 +146,16 @@ const getBotInfo = async () => {
     return res.json() as Promise<UserInfo[]>;
   });
 
-  botId.value = botInfos[0].userId;
+  botId.value = +botInfos[0].userId;
 };
 
 const getGroupList = async () => {
-  const groupDatas = await fetch(`/groupList?noCache=${true}`).then(
+  const groupDatas = await fetch(`/groupList`).then(
     (res): Promise<Group[]> => res.json()
   );
 
   const groupMemberList = await Promise.all(
-    groupDatas.map(async (group) =>
-      fetch(`/groupMemberList?groupId=${group.group_id}&noCache=${true}`).then(
-        (res) => res.json()
-      )
-    )
+    groupDatas.map(async (group) => fetchGroupMemberList(group.group_id, true))
   );
 
   groupMemberList.flat().map((member) => {
@@ -178,10 +182,7 @@ const muteGuild = (row: GroupList, mute: boolean) => {
       }
     )
     .then(() => {
-      fetch(`/muteGuild?guildId=${row.group_id}&mute=${~~mute}`).then((res) => {
-        if (res.status === 200) message.success("操作成功");
-        else message.error("操作失败");
-      });
+      fetchMuteGuild(row.group_id, ~~mute);
     })
     .catch(() => {
       message.success("已取消操作");
@@ -199,21 +200,16 @@ const broadcast = () => {
       inputErrorMessage: "消息不能为空",
     })
     .then(({ value }) => {
-      const channels = groupList.value
-        .map((group) => group.group_id)
-        .join("&channels=");
+      const channels = groupList.value.map((group) => group.group_id);
 
-      fetch(`/broadcast?channels=${channels}&message=${value}`).then((res) => {
-        if (res.status === 200) message.success("发送成功");
-        else message.error("发送失败");
-      });
+      fetchBroadcast(channels, value);
     })
     .catch(() => {
       message.success("已取消操作");
     });
 };
 
-const sendMessage = (groupId: string, groupName: string) => {
+const sendMessage = (groupId: number, groupName: string) => {
   messageBox
     .prompt("请输入要发送的消息", `向群 ${groupName}(${groupId}) 发送消息`, {
       confirmButtonText: "确定",
@@ -224,17 +220,14 @@ const sendMessage = (groupId: string, groupName: string) => {
       inputErrorMessage: "消息不能为空",
     })
     .then(({ value }) => {
-      fetch(`/sendMessage?guildId=${groupId}&message=${value}`).then((res) => {
-        if (res.status === 200) message.success("发送成功");
-        else message.error("发送失败");
-      });
+      fetchSendMessage(groupId, value);
     })
     .catch(() => {
       message.success("已取消发送");
     });
 };
 
-const groupLeave = (groupId: string, isOwner: boolean) => {
+const groupLeave = (groupId: number, isOwner: boolean) => {
   messageBox
     .confirm(
       `<strong>确定要${isOwner ? "解散群" : "退群"}吗?</strong>
@@ -253,12 +246,7 @@ const groupLeave = (groupId: string, isOwner: boolean) => {
     )
     .then(() => {
       // TODO 解散群似乎没什么效果
-      fetch(`/groupLeave?groupId=${groupId}&isDismiss=${isOwner}`).then(
-        (res) => {
-          if (res.status === 200) message.success("操作成功");
-          else message.error("操作失败");
-        }
-      );
+      fetchGroupLeave(groupId, isOwner);
     })
     .catch(() => {
       message.success("已取消操作");
@@ -269,9 +257,16 @@ const init = async () => {
   await Promise.all([getBotInfo(), getGroupList()]);
 };
 
-init().finally(() => {
-  loading.value = false;
-});
+// 提高使用体验
+onMounted( async () => {
+  await nextTick(() => {
+    setTimeout(() => {
+      init().finally(() => {
+        loading.value = false;
+      })
+    }, 1000)
+  })
+})
 </script>
 
 <style scoped>
