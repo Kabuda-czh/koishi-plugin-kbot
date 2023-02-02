@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-01 14:22:21
+ * @LastEditTime: 2023-02-02 17:09:17
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic.ts
  * @Description:
  *
@@ -19,6 +19,7 @@ import {
   Logger,
 } from "koishi";
 import {} from "koishi-plugin-puppeteer";
+import path from "path";
 import { Page } from "puppeteer-core";
 import {
   BilibiliDynamicItem,
@@ -54,7 +55,7 @@ export const Config: Schema<Config> = Schema.object({
     Schema.const("mobile").description("手机"),
   ])
     .default("pc")
-    .description("截图类型 (手机/电脑) - 开发中(暂时默认为电脑)"),
+    .description("截图类型 (手机/电脑)"),
   live: Schema.boolean().description("是否监控开始直播的动态").default(true),
 });
 
@@ -78,7 +79,7 @@ export async function apply(ctx: Context, config: Config) {
 
   ctx
     .guild()
-    .command("bilibili", "b站订阅相关")
+    .command("bilibili", "b站相关")
     .channelFields(["id", "guildId", "platform", "bilibili"])
     .before(checkDynamic)
     .option("add", "-a <uid:string>", { authority: 2 })
@@ -185,7 +186,12 @@ export async function apply(ctx: Context, config: Config) {
             neo = neo.filter((item) => item.type !== "DYNAMIC_TYPE_LIVE_RCMD");
           if (neo.length !== 0) {
             const rendered = await Promise.all(
-              neo.map((item) => pcRenderImage(ctx, item))
+              neo.map((item) => {
+                console.log("length:", neo.length);
+                if (config.device === "mobile")
+                  return mobileRenderImage(ctx, item);
+                else return pcRenderImage(ctx, item);
+              })
             );
 
             rendered.forEach((text, index) => {
@@ -283,6 +289,52 @@ async function pcRenderImage(
   }
 }
 
-// async function mobileRenderImage(ctx: Context, item: BilibiliDynamicItem): Promise<string> {
+async function mobileRenderImage(
+  ctx: Context,
+  item: BilibiliDynamicItem
+): Promise<string> {
+  let page: Page;
+  try {
+    page = await ctx.puppeteer.page();
+    await page
+      .setViewport({
+        width: 460,
+        height: 720,
+        isMobile: true,
+      })
+      .then(() =>
+        page.setUserAgent(
+          "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36"
+        )
+      );
 
-// }
+    await page.goto(`https://m.bilibili.com/dynamic/${item.id_str}`, {
+      waitUntil: "networkidle0",
+      timeout: 20000,
+    });
+
+    if (page.url().includes("bilibili.com/404")) {
+      logger.warn(`[bilibili推送] ${item.id_str} 动态不存在`);
+      throw new Error("not found");
+    }
+
+    await page.addScriptTag({
+      path: path.resolve(__dirname, "./static/mobileStyle.js"),
+    });
+
+    // TODO 目前不知道怎么正确将方法加载并等待执行完毕
+    await page.waitForFunction("getMobileStyle");
+    await page.waitForFunction("imageComplete");
+
+    const element = await page.$("#app");
+    return (
+      `${item.modules.module_author.name} 发布了动态:\n` +
+      segment.image(await element.screenshot()) +
+      `\nhttps://t.bilibili.com/${item.id_str}`
+    );
+  } catch (e) {
+    throw e;
+  } finally {
+    page?.close();
+  }
+}
