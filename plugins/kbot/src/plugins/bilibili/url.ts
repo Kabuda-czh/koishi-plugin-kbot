@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:44:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-30 13:34:49
+ * @LastEditTime: 2023-02-03 09:57:11
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\url.ts
  * @Description: 
  * 
@@ -20,15 +20,13 @@ export interface Config {}
 
 export const Config: Schema<Config> = Schema.object({})
 
-const logger = new Logger('plugins/bilibili/url')
+const logger = new Logger('KBot-bilibili-url')
 
-export function apply(ctx: Context, config: Config) {
+export function apply(ctx: Context) {
   ctx.middleware(async ({ content }, next) => {
     try {
       const avid = await testVideo(content, ctx.http)
-      if (avid) return next(async () => {
-        return await render(avid, ctx.http)
-      })
+      if (avid) return next(async () => await render(avid, ctx.http))
     } catch (e) {
       logger.error('请求时发生异常: ', e)
     }
