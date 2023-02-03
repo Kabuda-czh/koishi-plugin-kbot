@@ -2077,11 +2077,6 @@ koishi-plugin-assets-local@^3.0.1:
     "@koishijs/assets" "^1.0.1"
     file-type "^16.5.4"
 
-koishi-plugin-bilibili@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npmmirror.com/koishi-plugin-bilibili/-/koishi-plugin-bilibili-0.0.3.tgz#fa6801f56680d9e8aff47493def08bb7ec7b9b40"
-  integrity sha512-fztaCmkDGZIMuFCaSwFXujtJesEmpmemtz/+0ktG4OiJhSi/aVU3MxBRD+w4Vz5ZpbfAgJvTbVINcRWzugjx+g==
-
 koishi-plugin-desktop@^0.0.3:
   version "0.0.3"
   resolved "https://registry.npmmirror.com/koishi-plugin-desktop/-/koishi-plugin-desktop-0.0.3.tgz#2b989fcda1b270f5a6e999df6612830129672e14"

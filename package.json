@@ -71,7 +71,6 @@
     "@koishijs/plugin-status": "7.0.2",
     "koishi": "4.11.4",
     "koishi-plugin-assets-local": "^3.0.1",
-    "koishi-plugin-bilibili": "0.0.3",
     "koishi-plugin-desktop": "^0.0.3",
     "koishi-plugin-gocqhttp": "^3.3.1",
     "koishi-plugin-puppeteer": "^3.4.0"
