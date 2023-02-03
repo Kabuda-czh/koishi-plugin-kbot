@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 17:09:17
+ * @LastEditTime: 2023-02-03 09:38:17
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic.ts
  * @Description:
  *
@@ -187,7 +187,6 @@ export async function apply(ctx: Context, config: Config) {
           if (neo.length !== 0) {
             const rendered = await Promise.all(
               neo.map((item) => {
-                console.log("length:", neo.length);
                 if (config.device === "mobile")
                   return mobileRenderImage(ctx, item);
                 else return pcRenderImage(ctx, item);
@@ -322,9 +321,8 @@ async function mobileRenderImage(
       path: path.resolve(__dirname, "./static/mobileStyle.js"),
     });
 
-    // TODO 目前不知道怎么正确将方法加载并等待执行完毕
-    await page.waitForFunction("getMobileStyle");
-    await page.waitForFunction("imageComplete");
+    await page.evaluate('getMobileStyle()');
+    await page.evaluate('imageComplete()');
 
     const element = await page.$("#app");
     return (

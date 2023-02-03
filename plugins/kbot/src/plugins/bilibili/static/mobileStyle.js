@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 11:18:49
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 17:00:58
+ * @LastEditTime: 2023-02-02 18:32:24
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\static\mobileStyle.js
  * @Description: 用于初始化手机动态页面的样式以及图片大小
  *
@@ -105,6 +105,7 @@ async function getMobileStyle() {
         : isAllOneLength > 0 &&
           isAllOneLength % 3 === 0 &&
           ratioList.length > 3;
+
     // 说明可能为组装的拼图, 如果不是则放大为大图
     if (!isAllOne) {
       // 找到图标容器dom
@@ -187,6 +188,6 @@ async function imageComplete() {
 
 window.onload = () => {
   getMobileStyle();
-}
+};
 
 getMobileStyle();
