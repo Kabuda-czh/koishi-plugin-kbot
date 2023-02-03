@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 17:18:37
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-30 17:19:30
+ * @LastEditTime: 2023-02-03 17:37:59
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\model\dynamic.model.ts
  * @Description: 
  * 
@@ -34,6 +34,9 @@ export type BilibiliDynamicItem =
             };
           };
         };
+        module_tag?: {
+          text: string
+        }
       };
     }
   | {
@@ -56,6 +59,9 @@ export type BilibiliDynamicItem =
             };
           };
         };
+        module_tag?: {
+          text: string
+        }
       };
     }
   | {
@@ -71,6 +77,9 @@ export type BilibiliDynamicItem =
             text: string;
           };
         };
+        module_tag?: {
+          text: string
+        }
       };
     }
   | {
@@ -87,6 +96,9 @@ export type BilibiliDynamicItem =
             text: string;
           };
         };
+        module_tag?: {
+          text: string
+        }
       };
     }
   | {
@@ -104,5 +116,8 @@ export type BilibiliDynamicItem =
             };
           };
         };
+        module_tag?: {
+          text: string
+        }
       };
     };
