@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:27
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-30 15:03:17
+ * @LastEditTime: 2023-02-03 13:36:30
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\index.ts
  * @Description: 
  * 
@@ -27,7 +27,7 @@ export interface Config {
 
 export const Config: Schema<Config> = Schema.object({
   dynamic: dynamic.Config.description('动态监听 (使用 dynamic 指令管理监听对象)'),
-  quester: Quester.Config,
+  quester: Quester.Config.description("Bilibili 请求配置"),
 })
 
 export const using = ['database']
