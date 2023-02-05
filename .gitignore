@@ -10,6 +10,7 @@ logs
 .koishi.db
 koishi.yml
 yakumo.yml
+public
 
 node_modules
 npm-debug.log
