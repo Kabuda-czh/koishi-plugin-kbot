@@ -2,13 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 11:18:49
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 18:32:24
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\static\mobileStyle.js
+ * @LastEditTime: 2023-02-06 01:49:40
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\static\bilibiliStyle.js
  * @Description: 用于初始化手机动态页面的样式以及图片大小
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-async function getMobileStyle() {
+async function getBilibiliStyle() {
   // 删除 dom 的对象, 可以自行添加 ( className 需要增加 '.' 为前缀, id 需要增加 '#' 为前缀)
   const deleteDoms = {
     // 关注 dom
@@ -28,7 +28,9 @@ async function getMobileStyle() {
     // 全屏弹出 Dom
     openAppDialogDoms: [".openapp-dialog"],
     // 评论区 dom
-    commentsDoms: [".v-switcher"],
+    commentsDoms: [".v-switcher", ".bili-dyn-item__panel"],
+    // PC端登陆 dom
+    pcLoginDoms: [".login-tip"],
   };
 
   // 遍历对象的值, 并将多数组扁平化, 再遍历进行删除操作
@@ -50,11 +52,20 @@ async function getMobileStyle() {
     mOpusDom.style.minHeight = "0";
   }
 
-  // 删除老版动态 .dyn-card 上的字体设置
-  const dynCardDom = document.querySelector(".dyn-card");
-  if (dynCardDom) {
-    dynCardDom.style.fontFamily = "unset";
+  // 需要禁用的字体 dom 对象
+  const fontUnsetDomObject = {
+    // 电脑端动态字体 dom
+    dynPcDoms: [".bili-dyn-content", ".bili-dyn-item"],
+    // 手机端动态字体 dom
+    dynMobileDoms: [".dyn-card"],
   }
+
+  Object.values(fontUnsetDomObject)
+    .flat(1)
+    .forEach((domTag) => {
+      const unsetDom = document.querySelector(domTag);
+      unsetDom && (unsetDom.style.fontFamily = "unset");
+    });
 
   // 获取图片容器的所有 dom 数组
   const imageItemDoms = Array.from(
@@ -95,9 +106,7 @@ async function getMobileStyle() {
     })
   ).then(() => {
     // 获取图片比例数组中接近 1 的数量 isAllOneLength
-    const isAllOneLength = ratioList.filter(
-      (item) => item >= 0.9 && item <= 1.1
-    ).length;
+    const isAllOneLength = ratioList.filter((item) => item >= 0.9 && item <= 1.1).length;
     // 判断图片是否为 9 图: 是则判断 isAllOneLength 是否超过图片比例数组半数, 不是则判断是否为 3 的倍数
     const isAllOne =
       ratioList.length === 9
@@ -153,6 +162,46 @@ async function getMobileStyle() {
   });
 }
 
+function setFont(needLoadFontList) {
+  const emojiFontList = [
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji",
+  ];
+
+  // 字体按需加载方法
+  (() => {
+    const code = needLoadFontList.reduce((defaultString, fontObject) => {
+      return (
+        defaultString +
+        `@font-face { font-family: ${fontObject.fontFamily};src: url('${fontObject.fontUrl}'); }`
+      );
+    }, "");
+    const style = document.createElement("style");
+    style.rel = "stylesheet";
+    style.appendChild(document.createTextNode(code));
+    const head = document.getElementsByTagName("head")[0];
+    head.appendChild(style);
+  })();
+
+  // 将字体样式设置到 div#app 上
+  const appDom = document.querySelector("#app");
+  const emojiFont = emojiFontList.join(",");
+
+  if (appDom) {
+    // 动态加字体, 并给与默认值 sans-serif
+    const needLoadFont = needLoadFontList.reduce(
+      (defaultString, fontObject) => defaultString + fontObject.fontFamily + ",",
+      ""
+    );
+
+    appDom.style.fontFamily = needLoadFont + emojiFont + ",sans-serif";
+  
+    appDom.style.overflowWrap = "break-word";
+  }
+}
+
 async function imageComplete() {
   // 异步渲染已经加载的图片地址, 如果已经缓存则会立即返回 true
   const loadImageAsync = (url) => {
@@ -186,8 +235,13 @@ async function imageComplete() {
   }, true);
 }
 
+function fontsLoaded() {
+  // 判断字体是否都加载完成
+  return document.fonts.status === "loaded";
+}
+
 window.onload = () => {
-  getMobileStyle();
+  getBilibiliStyle();
 };
 
-getMobileStyle();
+getBilibiliStyle();
