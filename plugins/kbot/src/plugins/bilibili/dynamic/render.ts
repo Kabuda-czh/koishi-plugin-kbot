@@ -2,55 +2,91 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-03 14:21:01
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
- * @Description: 
- * 
+ * @LastEditTime: 2023-02-06 00:32:05
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
+ * @Description:
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Context, segment } from "koishi";
 import path from "path";
-import { logger } from ".";
+import { Config, logger } from ".";
 import { BilibiliDynamicItem } from "../model";
 import { Page } from "puppeteer-core";
+import { getFontsList } from "../utils";
 
-export async function pcRenderImage(
+export async function renderFunction(
   ctx: Context,
-  item: BilibiliDynamicItem
+  item: BilibiliDynamicItem,
+  config: Config
+): Promise<string> {
+  if (config.device === "pc") {
+    return pcRenderImage(ctx, item, config);
+  } else {
+    return mobileRenderImage(ctx, item, config);
+  }
+}
+
+async function pcRenderImage(
+  ctx: Context,
+  item: BilibiliDynamicItem,
+  config: Config
 ): Promise<string> {
   let page: Page;
   try {
+    const needLoadFontList = await getFontsList(config);
+
     page = await ctx.puppeteer.page();
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 });
     await page.goto(`https://t.bilibili.com/${item.id_str}`);
     await page.waitForNetworkIdle();
-    await (await page.$(".login-tip"))?.evaluate((e) => e.remove());
-    await (await page.$(".bili-dyn-item__panel")).evaluate((e) => e.remove());
+
+    await page.addScriptTag({
+      path: path.resolve(__dirname, "../static/bilibiliStyle.js"),
+    });
+
     await page.evaluate(() => {
       let popover: any;
       while ((popover = document.querySelector(".van-popover")))
         popover.remove();
     });
+
+    await page.evaluate("getBilibiliStyle()");
+    if (needLoadFontList.length > 0)
+      await page.evaluate(`setFont(${JSON.stringify(needLoadFontList)})`);
+
     const element = await page.$(".bili-dyn-item");
+    const elementClip = await element.boundingBox();
+
     return (
       `${item.modules.module_author.name} 发布了动态:\n` +
-      segment.image(await element.screenshot()) +
+      segment.image(
+        await element.screenshot({
+          clip: elementClip,
+        }),
+        "image/png"
+      ) +
       `\nhttps://t.bilibili.com/${item.id_str}`
     );
   } catch (e) {
+    logger.error("pc render error", e);
     throw e;
   } finally {
     page?.close();
   }
 }
 
-export async function mobileRenderImage(
+async function mobileRenderImage(
   ctx: Context,
-  item: BilibiliDynamicItem
+  item: BilibiliDynamicItem,
+  config: Config
 ): Promise<string> {
   let page: Page;
   try {
+    const needLoadFontList = await getFontsList(config);
+    
     page = await ctx.puppeteer.page();
+
     await page
       .setViewport({
         width: 460,
@@ -74,21 +110,32 @@ export async function mobileRenderImage(
     }
 
     await page.addScriptTag({
-      path: path.resolve(__dirname, "../static/mobileStyle.js"),
+      path: path.resolve(__dirname, "../static/bilibiliStyle.js"),
     });
 
-    await page.evaluate("getMobileStyle()");
+    await page.evaluate("getBilibiliStyle()");
     await page.evaluate("imageComplete()");
+    if (needLoadFontList.length > 0)
+      await page.evaluate(`setFont(${JSON.stringify(needLoadFontList)})`);
 
-    const element = await page.$("#app");
+    const element =
+      (await page.$(".opus-modules")) ?? (await page.$(".dyn-card"));
+    const elementClip = await element.boundingBox();
+
     return (
       `${item.modules.module_author.name} 发布了动态:\n` +
-      segment.image(await element.screenshot()) +
+      segment.image(
+        await page.screenshot({
+          clip: elementClip,
+        }),
+        "image/png"
+      ) +
       `\nhttps://t.bilibili.com/${item.id_str}`
     );
   } catch (e) {
+    logger.error("mobile render error", e);
     throw e;
   } finally {
-    page?.close();
+    // page?.close();
   }
 }

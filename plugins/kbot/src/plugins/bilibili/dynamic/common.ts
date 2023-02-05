@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-03 17:40:31
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
+ * @LastEditTime: 2023-02-05 21:33:00
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -16,7 +16,7 @@ import {
   DynamicNotifiction,
 } from "../model";
 import { getDynamic, uidExtract } from "../utils";
-import { mobileRenderImage, pcRenderImage } from "./render";
+import { renderFunction } from "./render";
 
 const fetchUserInfo = async (
   uid: string,
@@ -157,7 +157,7 @@ export async function bilibiliCheck(
   config: Config
 ) {
   const checkUpValue = options.check;
-  
+
   const uid = await uidExtract(checkUpValue, { session }, logger, ctx);
   if (!uid) return "未找到该 UP, 请输入正确的 UP 名 , UP UID 或 UP 首页链接";
 
@@ -170,9 +170,7 @@ export async function bilibiliCheck(
     const dynamic =
       items[0].modules.module_tag?.text === "置顶" ? items[1] : items[0];
 
-    if (config.device === "pc") return pcRenderImage(ctx, dynamic);
-    else return mobileRenderImage(ctx, dynamic);
-
+    return renderFunction(ctx, dynamic, config);
   } catch (e) {
     logger.error(`Failed to get user dynamics. ${e}`);
     return "动态获取失败";
