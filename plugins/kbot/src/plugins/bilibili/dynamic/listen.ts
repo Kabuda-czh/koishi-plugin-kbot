@@ -2,11 +2,11 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-05 21:34:19
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\listen.ts
+ * @LastEditTime: 2023-02-06 17:51:24
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\listen.ts
  * @Description:
  *
- * Copyright (c) 2023 by ${git_name}, All Rights Reserved.
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Channel, Context, Dict, Quester } from "koishi";
 import { Config, logger } from ".";
