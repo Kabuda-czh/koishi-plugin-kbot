@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 01:51:13
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
+ * @LastEditTime: 2023-02-06 17:45:57
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -111,7 +111,7 @@ export async function apply(ctx: Context, config: Config) {
 
   ctx
     .guild()
-    .command("bilibili", "b站相关")
+    .command("kbot/bilibili", "b站相关")
     .channelFields(["id", "guildId", "platform", "bilibili"])
     .before(checkDynamic)
     .usage("最低权限: 2 级")
@@ -122,11 +122,21 @@ export async function apply(ctx: Context, config: Config) {
       authority: 2,
     })
     .option(
-      "check",
-      "-c <upInfo:string> 查看动态, 请输入要查看动态的up主的 UID 或者 名字 或者 空间短链",
+      "search",
+      "-s <upInfo:string> 查看动态, 请输入要查看动态的 up 主的 uid 或者 名字 或者 空间短链",
       { authority: 2 }
     )
     .option("list", "-l 展示当前订阅up主列表", { authority: 2 })
+    .option(
+      "vup",
+      "-v <upInfo:string> 查成分, 请输入要查看成分的 up 主的 uid 或者 名字",
+      { authority: 2 }
+    )
+    .option(
+      "danmu",
+      "-d <upInfo:string> 查弹幕, 请输入要查看弹幕的 up 主的 uid 或者 名字",
+      { authority: 2 }
+    )
     .action(async ({ session, options }) => {
       if (Object.keys(options).length > 1) return "请不要同时使用多个参数";
 

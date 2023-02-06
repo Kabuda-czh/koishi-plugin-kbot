@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-03 17:54:20
+ * @LastEditTime: 2023-02-06 17:48:58
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\dynamic.strategy.ts
  * @Description: 
  * 
@@ -11,13 +11,17 @@
 import { Argv, Channel, Context, Dict } from "koishi";
 import { Config } from ".";
 import { DynamicNotifiction } from "../model";
-import { bilibiliAdd, bilibiliCheck, bilibiliList, bilibiliRemove } from "./common";
+import { bilibiliAdd, bilibiliSearch, bilibiliList, bilibiliRemove } from "./common";
+import { bilibiliVupCheck, bilibiliDanmuCheck } from "./searchUser";
 
 const dynamicStrategies = {
   add: bilibiliAdd,
   remove: bilibiliRemove,
   list: bilibiliList,
-  check: bilibiliCheck
+  search: bilibiliSearch,
+  // TODO 等待增加查成分
+  vup: bilibiliVupCheck,
+  danmu: bilibiliDanmuCheck,
 };
 
 export const dynamicStrategy = (
@@ -33,6 +37,6 @@ export const dynamicStrategy = (
 ) => {
   const strategyName = Object.keys(options).find((key) => options[key]);
   if (strategyName) {
-    return dynamicStrategies[strategyName]({ session, options }, list, ctx, config);
+    return dynamicStrategies[strategyName]?.({ session, options }, list, ctx, config);
   }
 };
