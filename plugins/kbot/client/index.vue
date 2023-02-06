@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 13:32:44
+ * @LastEditTime: 2023-02-06 10:57:52
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description: 
  * 
@@ -20,7 +20,7 @@
         >
       </div>
       <el-form>
-        <el-table :data="groupList" height="250" style="width: 100%">
+        <el-table :data="groupList" style="width: 100%">
           <el-table-column
             align="center"
             prop="group_id"
