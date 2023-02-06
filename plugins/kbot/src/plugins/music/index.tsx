@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 15:28:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-01-30 15:47:12
+ * @LastEditTime: 2023-02-06 10:54:01
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\music\index.tsx
  * @Description: 
  * 
@@ -100,7 +100,7 @@ export function apply(ctx: Context, config: Config) {
 
   }
 
-  ctx.command('music <name:text>', '点歌')
+  ctx.command('kbot/music <name:text>', '点歌')
     // typescript cannot infer type from string templates
     .option('platform', `-p <platform>  点歌平台，目前支持 qq, netease, 默认为 ${platform}`, { type: Object.keys(platforms) })
     .alias('点歌')
