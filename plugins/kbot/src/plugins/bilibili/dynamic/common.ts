@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-05 21:33:00
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
+ * @LastEditTime: 2023-02-06 17:47:33
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -81,7 +81,7 @@ export async function bilibiliAdd(
     return `成功添加 up主: ${name}`;
   } catch (e) {
     logger.error(`Failed to add user ${uid}. ${e}`);
-    return "请求失败，请检查 uid 是否正确或重试。";
+    return "请求失败，请检查 uid 是否正确或重试" + e;
   }
 }
 
@@ -137,7 +137,7 @@ export async function bilibiliList({
     .join("\n");
 }
 
-export async function bilibiliCheck(
+export async function bilibiliSearch(
   {
     session,
     options,
@@ -159,13 +159,13 @@ export async function bilibiliCheck(
   const checkUpValue = options.check;
 
   const uid = await uidExtract(checkUpValue, { session }, logger, ctx);
-  if (!uid) return "未找到该 UP, 请输入正确的 UP 名 , UP UID 或 UP 首页链接";
+  if (!uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
 
   try {
     const { data } = await getDynamic(ctx.http, uid);
     const items = data.items as BilibiliDynamicItem[];
 
-    if (items.length === 0) return "该 UP 没有动态";
+    if (items.length === 0) return "该 up 没有动态";
 
     const dynamic =
       items[0].modules.module_tag?.text === "置顶" ? items[1] : items[0];
@@ -173,6 +173,6 @@ export async function bilibiliCheck(
     return renderFunction(ctx, dynamic, config);
   } catch (e) {
     logger.error(`Failed to get user dynamics. ${e}`);
-    return "动态获取失败";
+    return "动态获取失败" + e;
   }
 }
