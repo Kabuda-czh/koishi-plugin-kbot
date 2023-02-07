@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 17:39:40
+ * @LastEditTime: 2023-02-07 15:51:29
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -20,21 +20,23 @@ import * as managePlugin from "./plugins/guildManage";
 export const name = "kbot";
 
 export const usage = `
-## 注意事项
+# 注意事项
 内置多个插件，可在配置文件中配置启用插件\n
 但注意，插件的配置项不是所有都是可选的，具体请查看插件的配置项
-
 ## 当前插件列表
 - KBotBasic: 基础功能
 - KBotManage: 群管理功能
 - KBotBilibili: Bilibili 动态推送
 - KBotMusic: 点歌功能
 - KBotYoutube: Youtube 视频解析
-
 ## 权限问题
-由于插件的权限问题，需要启用 koishi 内置的权限插件 \`Admin\`\n
-并通过 \`authorize <value> -u <user>\` 指令来授权用户\n
-详情请看链接 [authorize](https://koishi.chat/plugins/accessibility/admin.html#%E6%8C%87%E4%BB%A4-authorize)
+- 第一步: 设置机器人的超级管理员 QQ 号, 建议为自身 QQ 号\n
+\t若指令仍然提示权限不足, 请通过在左侧菜单栏中找到 \`数据库\` 选项点击进入\n
+\t然后找到 \`user\` 表, 在右侧中找到自己的账号(如果没有先与机器人私聊一次)\n
+\t最后双击 \`authority\` 格, 更改自己的权限并保存
+- 第二步: 由于插件的权限问题，需要启用 koishi 内置的权限插件 \`Admin\`\n
+\t并通过 \`authorize <value> -u <user>\` 指令来授权其他用户\n
+\t详情请看链接 [authorize](https://koishi.chat/plugins/accessibility/admin.html#%E6%8C%87%E4%BB%A4-authorize)
 `;
 
 interface IPluginEnableConfig {
