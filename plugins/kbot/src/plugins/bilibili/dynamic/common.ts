@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 17:47:33
+ * @LastEditTime: 2023-02-06 20:12:56
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -145,7 +145,7 @@ export async function bilibiliSearch(
     never,
     "id" | "guildId" | "platform" | "bilibili",
     any,
-    { check: string }
+    { search: string }
   >,
   list: Dict<
     [
@@ -156,9 +156,9 @@ export async function bilibiliSearch(
   ctx: Context,
   config: Config
 ) {
-  const checkUpValue = options.check;
+  const searchUpValue = options.search;
 
-  const uid = await uidExtract(checkUpValue, { session }, logger, ctx);
+  const uid = await uidExtract(searchUpValue, { session }, logger, ctx);
   if (!uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
 
   try {
