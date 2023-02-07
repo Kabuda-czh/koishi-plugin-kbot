@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 10:57:52
+ * @LastEditTime: 2023-02-07 11:52:22
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description: 
  * 
@@ -35,6 +35,7 @@
                 auto-insert-space
                 round
                 @click="muteGuild(row, true)"
+                :disabled="['owner', 'admin'].includes(row.role)"
               >
                 开启
               </el-button>
@@ -43,6 +44,7 @@
                 auto-insert-space
                 round
                 @click="muteGuild(row, false)"
+                :disabled="['owner', 'admin'].includes(row.role)"
               >
                 关闭
               </el-button>
