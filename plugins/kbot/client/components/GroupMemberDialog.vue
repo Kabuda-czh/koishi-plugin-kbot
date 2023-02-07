@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 14:12:00
+ * @LastEditTime: 2023-02-07 17:14:49
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupMemberDialog.vue
  * @Description: 
  * 
@@ -65,12 +65,24 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="加入时间戳">
-            <el-input v-model="memberInfo.join_time" disabled />
+            <el-date-picker
+              style="width: 100%;"
+              v-model="joinTime"
+              type="datetime"
+              placeholder="无"
+              disabled
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="最后发言时间戳">
-            <el-input v-model="memberInfo.last_sent_time" disabled />
+            <el-date-picker
+              style="width: 100%;"
+              v-model="lastSentTime"
+              type="datetime"
+              placeholder="无"
+              disabled
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -107,7 +119,13 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="专属头衔过期时间戳">
-            <el-input v-model="memberInfo.title_expire_time" disabled />
+            <el-date-picker
+              style="width: 100%;"
+              v-model="titleExpireTime"
+              type="datetime"
+              placeholder="无"
+              disabled
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -205,6 +223,12 @@ const dialogVisible = computed({
 const dialogLoading = ref<boolean>(false);
 
 const emits = defineEmits(["closed"]);
+
+const joinTime = computed(() => memberInfo.value.join_time * 1000);
+const lastSentTime = computed(() => memberInfo.value.last_sent_time * 1000);
+const titleExpireTime = computed(
+  () => memberInfo.value.title_expire_time * 1000
+);
 
 interface UserInfo {
   group_id: string | number;
