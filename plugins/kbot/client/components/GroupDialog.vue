@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 13:36:05
+ * @LastEditTime: 2023-02-07 11:37:26
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
@@ -12,12 +12,12 @@
   <el-dialog
     v-model="dialogVisible"
     width="50%"
-    title="群信息"
+    title="群成员列表"
     destroy-on-close
     @open="getMemberList"
     @closed="dialogVisible = false"
   >
-    <el-table :data="memberList" v-loading="dialogLoading">
+    <el-table :data="memberList" max-height="70vh" v-loading="dialogLoading">
       <el-table-column align="center" prop="userId" label="QQ号" width="150" />
       <el-table-column align="center" prop="username" label="QQ名称" />
       <el-table-column align="center" label="头像" width="80">
