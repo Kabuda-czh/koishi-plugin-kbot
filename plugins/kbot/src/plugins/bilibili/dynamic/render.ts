@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 00:32:05
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
+ * @LastEditTime: 2023-02-07 14:19:05
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -136,6 +136,6 @@ async function mobileRenderImage(
     logger.error("mobile render error", e);
     throw e;
   } finally {
-    // page?.close();
+    page?.close();
   }
 }

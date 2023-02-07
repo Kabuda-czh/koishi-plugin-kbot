@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-01 13:22:47
+ * @LastEditTime: 2023-02-07 10:57:37
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.ts
  * @Description:
  *
@@ -18,15 +18,6 @@ export const Config: Schema<Config> = Schema.object({
   superAdminQQ: Schema.string().required().description("超级管理员QQ号 (必填)"),
 });
 
-export const using = ['database']
-
 export function apply(ctx: Context, config: Config) {
-
-  // ctx.on("bot-status-updated", (bot) => {
-  //   // 这里的 selfId 换成机器人的账号
-  //   if (bot.status === "online") {
-  //     // 这里的 userId 换成你的账号
-  //     bot.sendPrivateMessage(config.superAdminQQ, "我上线了~");
-  //   }
-  // });
+  
 }
