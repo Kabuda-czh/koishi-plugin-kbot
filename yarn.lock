@@ -168,10 +168,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.2.2":
-  version "5.2.2"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.2.2.tgz#952c4b097d69af54580daa41225b41763264893d"
-  integrity sha512-AGuL7rb+0lEoTrKxqlPSVFmNtp7Ny7TG3h/GfoEkRTCpB3v3C2t2w0O1fMWYEaVm2aaAeqSi6cIdy6GOXJDlSw==
+"@koishijs/plugin-console@5.2.3":
+  version "5.2.3"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.2.3.tgz#8981ec99086139ca3ce67f0b903b0824f310e32d"
+  integrity sha512-aAP2tolMzq7fRc19iE7/iK0SdsFTW6Ac0aEi+hJjlLP+Fcmy+VYnP6bbTnb7FQrFTsIYlvldBgLi0WuF5DnoQQ==
   dependencies:
     open "^8.4.0"
     uuid "^8.3.2"
@@ -214,10 +214,10 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-logger/-/plugin-logger-2.2.0.tgz#0692020f3b96d2f693da949e9624e9363b08f1b2"
   integrity sha512-s/iqFVvTq21dtLnGbkvFTZSU2zoy55yjaSNpKUzBTj5Jv3pu+Ysj1XPNBZ3iJLaCOEbd1ejNLqtyNK+Lpgk+Vw==
 
-"@koishijs/plugin-market@1.10.1":
-  version "1.10.1"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.10.1.tgz#ea7b935f9e6b13a4dce0ca2a97f2959d70ecc7af"
-  integrity sha512-ZQZ6/P3+hpqJXxKJ0Q/J9aMUJPwAWZm/9NIyQxNbu3PSkjtyvsFhMjHxj3wIyf1Fe82EZOEjt9CdtOcp+6I0tQ==
+"@koishijs/plugin-market@1.10.2":
+  version "1.10.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.10.2.tgz#249850e700c1486678564d72095cb2834db1e94e"
+  integrity sha512-s/Ec8lpGHzgECHJ3yvIVIL5d44qI3HWYcVoSN0OIqohERBAnjjWMJ2Y2ommvlSzCh22HF4zIGh9Q7J595WXEOQ==
   dependencies:
     "@koishijs/registry" "^4.4.7"
     execa "^5.1.1"
@@ -239,10 +239,13 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-sandbox/-/plugin-sandbox-2.6.1.tgz#e485dfdcce6e599384abbbb15603faa0d3e64e55"
   integrity sha512-dzKEPSSJ/3yi2Fdu9B7Ypg9XrAhCfrXofk7gS+BcXdkGcXs0k+AMKJyqsDJjxS76TaaJ4uYh1KJYyU9E1JphFw==
 
-"@koishijs/plugin-status@7.0.2":
-  version "7.0.2"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-status/-/plugin-status-7.0.2.tgz#75b0cf31e9bc79de9405fa956cdb8f69ac8302e1"
-  integrity sha512-KmAdF8Q5FP1KBCO39WxldgWtEg2cUp4v9fZxGfR5mKD8mef/KG17en8Qty93BF3D+VaILNpk5q3jgzyPmfTCOw==
+"@koishijs/plugin-status@7.1.0":
+  version "7.1.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-status/-/plugin-status-7.1.0.tgz#f66b4dc51b8a3c6e77698883478f5dbd5e3b2c80"
+  integrity sha512-epID8wNK6AdC8oIzR4MhLH2RBDUZKTBK/zP/et8qAUq+jaMXyNfP4tMADWqnIaKaVvknESv/3ytGhccWDVZdjA==
+  dependencies:
+    envinfo "^7.8.1"
+    which-pm-runs "^1.1.0"
 
 "@koishijs/registry@^4.4.7":
   version "4.4.7"
@@ -1250,6 +1253,11 @@ env-paths@^2.2.1:
   version "2.2.1"
   resolved "https://registry.npmmirror.com/env-paths/-/env-paths-2.2.1.tgz#420399d416ce1fbe9bc0a07c62fa68d67fd0f8f2"
   integrity sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==
+
+envinfo@^7.8.1:
+  version "7.8.1"
+  resolved "https://registry.npmmirror.com/envinfo/-/envinfo-7.8.1.tgz#06377e3e5f4d379fea7ac592d5ad8927e0c4d475"
+  integrity sha512-/o+BXHmB7ocbHEAs6F2EnG0ogybVVUdkRunTT2glZU9XAaGmhqskrvKwqXuDfNjEO0LZKWdejEEpnq8aM0tOaw==
 
 esbuild-android-64@0.14.54:
   version "0.14.54"
