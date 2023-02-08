@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-08 01:52:19
+ * @LastEditTime: 2023-02-08 13:31:28
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.ts
  * @Description:
  *
@@ -30,13 +30,14 @@ export function apply(ctx: Context, config: Config) {
       ctx.database
         .getUser(bot.platform, config.superAdminQQ)
         .then((user) => {
+          console.log(bot.platform, user);
           try {
             if (user && user?.authority < 5) {
               ctx.database.setUser(bot.platform, config.superAdminQQ, {
                 authority: 5,
               });
               logger.success(`已将QQ号为 ${config.superAdminQQ} 的用户权限设置为 5 级`)
-            } else {
+            } else if (!user) {
               ctx.database.createUser(bot.platform, config.superAdminQQ, {
                 authority: 5,
               });
