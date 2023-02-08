@@ -2,18 +2,19 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 11:40:29
+ * @LastEditTime: 2023-02-08 14:31:05
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
- * @Description: 
- * 
+ * @Description:
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Quester } from "koishi";
+import { BilibiliDynamicType } from "../enum";
+import { StringFormat } from "./format";
 
 export async function getDynamic(http: Quester, uid: string) {
   return await http.get(
-    "https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?host_mid=" +
-      uid,
+    StringFormat(BilibiliDynamicType.DynamicDetailURL, uid),
     {
       headers: {
         Referer: `https://space.bilibili.com/${uid}/dynamic`,
@@ -23,14 +24,12 @@ export async function getDynamic(http: Quester, uid: string) {
 }
 
 export async function searchUser(keyword: string, http: Quester) {
-  const appURL = "https://api.bilibili.com/x/web-interface/search/type";
-  const pcURL = "https://api.bilibili.com/x/web-interface/wbi/search/type";
   const data = { keyword: keyword, search_type: "bili_user" };
 
   try {
-    const resp = await http.get(appURL, { params: data }).catch((e) => {
+    const resp = await http.get(BilibiliDynamicType.SearchUserByApp, { params: data }).catch((e) => {
       if (e.response.status === 412) {
-        return http.get(pcURL, { params: data }).then((resp) => {
+        return http.get(BilibiliDynamicType.SearchUserByPC, { params: data }).then((resp) => {
           return resp;
         });
       }
@@ -39,4 +38,12 @@ export async function searchUser(keyword: string, http: Quester) {
   } catch (e) {
     throw new Error("Failed to search user." + e);
   }
+}
+
+export async function getMemberCard(http: Quester, uid: string) {
+  
+}
+
+export async function getMedalWall(http: Quester, uid: string) {
+  
 }
