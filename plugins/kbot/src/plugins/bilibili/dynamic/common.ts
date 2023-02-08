@@ -156,9 +156,9 @@ export async function bilibiliSearch(
   ctx: Context,
   config: Config
 ) {
-  const searchUpValue = options.search;
+  const value = options.search;
 
-  const uid = await uidExtract(searchUpValue, { session }, logger, ctx);
+  const uid = await uidExtract(value, { session }, logger, ctx);
   if (!uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
 
   try {
