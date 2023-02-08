@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 17:48:58
+ * @LastEditTime: 2023-02-08 17:05:33
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\dynamic.strategy.ts
  * @Description: 
  * 
@@ -12,7 +12,7 @@ import { Argv, Channel, Context, Dict } from "koishi";
 import { Config } from ".";
 import { DynamicNotifiction } from "../model";
 import { bilibiliAdd, bilibiliSearch, bilibiliList, bilibiliRemove } from "./common";
-import { bilibiliVupCheck, bilibiliDanmuCheck } from "./searchUser";
+import { bilibiliVupCheck, bilibiliDanmuCheck } from "./composition";
 
 const dynamicStrategies = {
   add: bilibiliAdd,

@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 17:48:17
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\searchUser\common.ts
+ * @LastEditTime: 2023-02-08 18:33:56
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.ts
  * @Description: 
  * 
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -11,7 +11,7 @@
 import { Argv, Dict, Channel, Context, intersection } from "koishi";
 import { Config, logger } from "..";
 import { DynamicNotifiction } from "../../model";
-import { uidExtract } from "../../utils";
+import { getMedalWall, getMemberCard, uidExtract } from "../../utils";
 
 // TODO 查成分开发
 export async function bilibiliVupCheck(
@@ -33,10 +33,10 @@ export async function bilibiliVupCheck(
   ctx: Context,
   config: Config
 ) {
-  // const vupValue = options.vup;
+  const value = options.vup;
 
-  // const uid = await uidExtract(vupValue, { session }, logger, ctx);
-  // if (!uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
+  const uid = await uidExtract(value, { session }, logger, ctx);
+  if (!uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
 
   try {
     // const card = await getMemberCard(uid);
@@ -75,7 +75,7 @@ export async function bilibiliDanmuCheck(
     never,
     "id" | "guildId" | "platform" | "bilibili",
     any,
-    { vup: string }
+    { danmu: string }
   >,
   list: Dict<
     [
@@ -86,30 +86,39 @@ export async function bilibiliDanmuCheck(
   ctx: Context,
   config: Config
 ) {
-  // const vupValue = options.vup;
+  const value = options.danmu;
 
-  // const uid = await uidExtract(vupValue, { session }, logger, ctx);
-  // if (!uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
+  const uid = await uidExtract(value, { session }, logger, ctx);
+  if (!uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
 
   try {
-    // const card = await getMemberCard(uid);
+    const card: any = await getMemberCard(ctx.http, uid);
 
-    // const vups = intersection(vdb,  card.Attensions);
+    const vdb = await ctx.database.get("vup", {}, [
+      "id",
+      "uname",
+      "mid",
+      "roomid",
+    ])
 
-    // const medals = getMedalWall(uid);
-    // medals.sort((a, b) => b.level - a.level);
+    const vups = vdb.filter((vup) => card.Attentions.includes(vup.mid));
 
-    // const frontVups = [], medalMap = {};
+    const medals: any = await getMedalWall(ctx.http, uid);
+    medals.sort((a, b) => b.level - a.level);
 
-    // for(const medal of medals) {
-    //   const up = {
-    //     Mid: medal.Mid,
-    //     Uname: medal.Uname,
-    //   }
+    const frontVups = [], medalMap = {};
 
-    //   frontVups.push(up);
-    //   medalMap[medal.Mid] = medal;
-    // }
+    for(const medal of medals) {
+      const up = {
+        Mid: medal.Mid,
+        Uname: medal.Uname,
+      }
+
+      frontVups.push(up);
+      medalMap[medal.Mid] = medal;
+    }
+
+    vups.push(...frontVups);
 
     return "功能还在开发喵~"
 

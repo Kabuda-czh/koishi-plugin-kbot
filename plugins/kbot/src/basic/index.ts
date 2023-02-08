@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-08 13:31:28
+ * @LastEditTime: 2023-02-08 16:31:01
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.ts
  * @Description:
  *
@@ -30,7 +30,6 @@ export function apply(ctx: Context, config: Config) {
       ctx.database
         .getUser(bot.platform, config.superAdminQQ)
         .then((user) => {
-          console.log(bot.platform, user);
           try {
             if (user && user?.authority < 5) {
               ctx.database.setUser(bot.platform, config.superAdminQQ, {
