@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:27
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-08 16:31:04
+ * @LastEditTime: 2023-02-09 15:29:55
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\index.ts
  * @Description:
  *
@@ -18,17 +18,6 @@ declare module "koishi" {
   interface Channel {
     bilibili: BilibiliChannel;
   }
-
-  interface Tables {
-    vup: BilibiliVup;
-  }
-}
-
-export interface BilibiliVup {
-  id: number;
-  mid: number;
-  uname: string;
-  roomid: number;
 }
 
 export interface Config {
@@ -52,28 +41,6 @@ export function apply(context: Context, config: Config) {
       initial: {},
     },
   });
-
-  context.model.extend(
-    "vup",
-    {
-      id: {
-        type: "unsigned",
-      },
-      mid: {
-        type: "unsigned",
-      },
-      uname: {
-        type: "string",
-      },
-      roomid: {
-        type: "unsigned",
-      },
-    },
-    {
-      // 使用自增的主键值
-      autoInc: true,
-    }
-  );
 
   const ctx = context.isolate(["http"]);
 
