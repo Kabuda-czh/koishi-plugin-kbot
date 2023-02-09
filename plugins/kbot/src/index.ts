@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-07 15:51:29
+ * @LastEditTime: 2023-02-09 16:12:53
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -30,7 +30,7 @@ export const usage = `
 - KBotMusic: 点歌功能
 - KBotYoutube: Youtube 视频解析
 ## 权限问题
-- 第一步: 设置机器人的超级管理员 QQ 号, 建议为自身 QQ 号\n
+- 第一步: 设置机器人的超级管理员 QQ 号, 建议为自身 QQ 号, kbot 会自动创建该账号最高权限\n
 \t若指令仍然提示权限不足, 请通过在左侧菜单栏中找到 \`数据库\` 选项点击进入\n
 \t然后找到 \`user\` 表, 在右侧中找到自己的账号(如果没有先与机器人私聊一次)\n
 \t最后双击 \`authority\` 格, 更改自己的权限并保存
