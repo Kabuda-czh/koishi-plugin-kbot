@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 20:12:56
+ * @LastEditTime: 2023-02-09 18:27:13
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -15,7 +15,7 @@ import {
   BilibiliUserInfoApiData,
   DynamicNotifiction,
 } from "../model";
-import { getDynamic, uidExtract } from "../utils";
+import { getDynamic } from "../utils";
 import { renderFunction } from "./render";
 
 const fetchUserInfo = async (
@@ -35,15 +35,8 @@ const fetchUserInfo = async (
 };
 
 export async function bilibiliAdd(
-  {
-    session,
-    options,
-  }: Argv<
-    never,
-    "id" | "guildId" | "platform" | "bilibili",
-    any,
-    { add: string }
-  >,
+  { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
+  uid: string,
   list: Dict<
     [
       Pick<Channel, "id" | "guildId" | "platform" | "bilibili">,
@@ -52,8 +45,6 @@ export async function bilibiliAdd(
   >,
   ctx: Context
 ) {
-  const uid = options.add;
-
   if (
     session.channel.bilibili.dynamic.find(
       (notification) => notification.bilibiliId === uid
@@ -86,15 +77,8 @@ export async function bilibiliAdd(
 }
 
 export async function bilibiliRemove(
-  {
-    session,
-    options,
-  }: Argv<
-    never,
-    "id" | "guildId" | "platform" | "bilibili",
-    any,
-    { remove: string }
-  >,
+  { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
+  uid: string,
   list: Dict<
     [
       Pick<Channel, "id" | "guildId" | "platform" | "bilibili">,
@@ -102,8 +86,7 @@ export async function bilibiliRemove(
     ][]
   >
 ) {
-  const { channel } = session,
-    uid = options.remove;
+  const { channel } = session;
   const index = channel.bilibili.dynamic.findIndex(
     (notification) => notification.bilibiliId === uid
   );
@@ -138,15 +121,8 @@ export async function bilibiliList({
 }
 
 export async function bilibiliSearch(
-  {
-    session,
-    options,
-  }: Argv<
-    never,
-    "id" | "guildId" | "platform" | "bilibili",
-    any,
-    { search: string }
-  >,
+  { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
+  uid: string,
   list: Dict<
     [
       Pick<Channel, "id" | "guildId" | "platform" | "bilibili">,
@@ -156,11 +132,6 @@ export async function bilibiliSearch(
   ctx: Context,
   config: Config
 ) {
-  const value = options.search;
-
-  const uid = await uidExtract(value, { session }, logger, ctx);
-  if (!uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
-
   try {
     const { data } = await getDynamic(ctx.http, uid);
     const items = data.items as BilibiliDynamicItem[];

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 17:45:57
+ * @LastEditTime: 2023-02-09 16:40:41
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -137,6 +137,8 @@ export async function apply(ctx: Context, config: Config) {
       "-d <upInfo:string> 查弹幕, 请输入要查看弹幕的 up 主的 uid 或者 名字",
       { authority: 2 }
     )
+    .option("refresh", "--re 更新vup", { authority: 2 })
+    .option("cookie", "--ck <cookie:string> 更新cookie", { authority: 2 })
     .action(async ({ session, options }) => {
       if (Object.keys(options).length > 1) return "请不要同时使用多个参数";
 
