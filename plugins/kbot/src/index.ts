@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-09 16:12:53
+ * @LastEditTime: 2023-02-10 10:37:42
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -75,7 +75,7 @@ export const Config: Schema<Config> = Schema.object({
   KBotYoutube: pluginLoad(youtubePlugin.Config).description("Youtube 视频解析"),
 });
 
-export function apply(ctx: Context, config: Config) {
+export async function apply(ctx: Context, config: Config) {
 
   ctx.command("kbot", "kbot 相关功能");
 
