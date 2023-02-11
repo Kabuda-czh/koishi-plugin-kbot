@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-09 17:53:22
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
+ * @LastEditTime: 2023-02-11 18:39:21
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -13,9 +13,9 @@ import { Config, logger } from "..";
 import { DynamicNotifiction } from "../../model";
 import * as fs from "fs";
 import { resolve } from "path";
-import { getMedalWall, getMemberCard } from "../../utils";
+import { getFontsList, getMedalWall, getMemberCard } from "../../utils";
+import { renderVup } from "./render";
 
-// TODO 查成分开发
 export async function bilibiliVupCheck(
   { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
   uid: string,
@@ -31,22 +31,37 @@ export async function bilibiliVupCheck(
   try {
     const searchUserCardInfo = await getMemberCard(ctx.http, uid);
 
-    // TODO 需要测试一下某些情况
-    const vdb = JSON.parse(
-      fs.readFileSync(
-        resolve(__dirname, "../../../../../../../public/bilibili/vup.json"),
-        "utf-8"
-      )
-    );
+    const needLoadFontList = await getFontsList(config);
 
-    const cookie = JSON.parse(
-      fs.readFileSync(
-        resolve(__dirname, "../../../../../../../public/bilibili/cookie.json"),
-        "utf-8"
-      )
-    );
+    let vdb, cookie;
 
-    const vups = vdb.filter((vup) => searchUserCardInfo.card.attentions.includes(vup.mid));
+    try {
+      vdb = JSON.parse(
+        fs.readFileSync(
+          resolve(__dirname, "../../../../../../../public/bilibili/vup.json"),
+          "utf-8"
+        )
+      );
+    } catch (e) {
+      logger.error(`Failed to get vup info. ${e}`);
+      throw new Error("vtb信息未找到, 请使用 --re 或 --refresh 更新vup信息");
+    }
+
+    try {
+      cookie = JSON.parse(
+        fs.readFileSync(
+          resolve(__dirname, "../../../../../../../public/bilibili/cookie.json"),
+          "utf-8"
+        )
+      );
+    } catch (e) {
+      logger.error(`Failed to get cookie info. ${e}`);
+      throw new Error("cookie信息未找到, 请使用 --ck 或 --cookie 更新cookie信息");
+    }
+
+    let vups: any[] = vdb.filter((vup) => searchUserCardInfo.card.attentions.includes(vup.mid));
+
+    const vupsLength = vups.length;
 
     const cookieString = Object.entries(cookie)
       .map(([key, value]) => `${key}=${value}`)
@@ -71,70 +86,24 @@ export async function bilibiliVupCheck(
       medalMap[medal.medal_info.target_id] = medal;
     }
 
-    vups.push(...frontVups);
+    vups = frontVups.concat(vups)
+    vups = frontVups.concat(vups.slice(frontVups.length));
+    for(let i = frontVups.length; i < vups.length; i++) {
+      if (medalMap[vups[i].mid]) {
+        vups.splice(i, 1)
+        i--;
+      }
+    }
 
     if (vups.length > 50) await session.send("成分太多了, 只显示前50个");
 
-    const image = <html>
-      <style>
-        {`
-          .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          }
-
-          .info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-          }
-
-          .info div {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-          }
-        `}
-      </style>
-      <div class="header">
-        <img src={searchUserCardInfo.card.face} />
-        <div class="info">
-          <div>
-            <p>{searchUserCardInfo.card.name}</p>
-            <p>{searchUserCardInfo.card.mid}</p>
-          </div>
-          <div style="justify-content: space-between">
-            <p>粉丝: {searchUserCardInfo.card.fans}</p>
-            <p>关注: {searchUserCardInfo.card.attentions.length}</p>
-          </div>
-          <div>
-            <p>管人痴成分:
-              {(vups.length
-                /
-                searchUserCardInfo.card.attentions.length * 100).toFixed(2)}%
-              ({vups.length} / {searchUserCardInfo.card.attentions.length})
-            </p>
-          </div>
-          <div>
-            <p>注册日期: {new Date(searchUserCardInfo.card.regtime * 1000).toLocaleString()}</p>
-          </div>
-          <div>
-            <p>查询日期: {new Date().toLocaleString()}</p>
-          </div>
-        </div>
-      </div>
-      <div>
-
-      </div>
-    </html>
+    const image = renderVup(searchUserCardInfo, vups, vupsLength, medalMap, needLoadFontList);
 
     await session.send(image)
 
   } catch (e) {
     logger.error(`Failed to get vup info. ${e}`);
-    return "成分获取失败" + e;
+    return "成分获取失败: " + e.message;
   }
 }
 
@@ -152,33 +121,9 @@ export async function bilibiliDanmuCheck(
   config: Config
 ) {
   try {
-    const card: any = await getMemberCard(ctx.http, uid);
-
-    // const vdb = await ctx.database.get("vup", {}, ["uname", "mid", "roomid"]);
-
-    // const vups = vdb.filter((vup) => card.Attentions.includes(vup.mid));
-
-    // const medals: any = await getMedalWall(ctx.http, uid);
-    // medals.sort((a, b) => b.level - a.level);
-
-    // const frontVups = [],
-    //   medalMap = {};
-
-    // for (const medal of medals) {
-    //   const up = {
-    //     Mid: medal.Mid,
-    //     Uname: medal.Uname,
-    //   };
-
-    //   frontVups.push(up);
-    //   medalMap[medal.Mid] = medal;
-    // }
-
-    // vups.push(...frontVups);
-
     return "功能还在开发喵~";
   } catch (e) {
-    logger.error(`Failed to get vup info. ${e}`);
+    logger.error(`Failed to get danmu info. ${e}`);
     return "成分获取失败" + e;
   }
 }

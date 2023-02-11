@@ -86,7 +86,7 @@ interface Data {
   level: number;
 }
 
-interface List {
+export interface List {
   medal_info: Medalinfo;
   target_name: string;
   target_icon: string;
