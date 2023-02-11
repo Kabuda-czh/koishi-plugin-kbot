@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-10 10:30:33
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
+ * @LastEditTime: 2023-02-11 18:15:32
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -88,11 +88,14 @@ export async function apply(ctx: Context, config: Config) {
     "bilibili",
   ]);
 
-  if (config.fonts.enabled && !config.fonts.isCreate) {
-    const fileNames = fs.readdirSync(
-      path.resolve(__dirname, "../../../../../../public")
-    );
+  const fileNames = fs.readdirSync(
+    path.resolve(__dirname, "../../../../../../public")
+  );
 
+  if (!fileNames.includes("bilibili"))
+    fs.mkdirSync(path.resolve(__dirname, "../../../../../../public/bilibili"));
+
+  if (config.fonts.enabled && !config.fonts.isCreate) {
     if (!fileNames.includes("fonts"))
       fs.mkdirSync(path.resolve(__dirname, "../../../../../../public/fonts"));
 
@@ -115,12 +118,20 @@ export async function apply(ctx: Context, config: Config) {
     .channelFields(["id", "guildId", "platform", "bilibili"])
     .before(checkDynamic)
     .usage("最低权限: 2 级")
-    .option("add", "-a <uid:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字 或者 空间短链", {
-      authority: 2,
-    })
-    .option("remove", "-r <uid:string> 移除订阅, 请输入要移除的 up 主的 uid 或者 名字 或者 空间短链", {
-      authority: 2,
-    })
+    .option(
+      "add",
+      "-a <uid:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字 或者 空间短链",
+      {
+        authority: 2,
+      }
+    )
+    .option(
+      "remove",
+      "-r <uid:string> 移除订阅, 请输入要移除的 up 主的 uid 或者 名字 或者 空间短链",
+      {
+        authority: 2,
+      }
+    )
     .option(
       "search",
       "-s <upInfo:string> 查看动态, 请输入要查看动态的 up 主的 uid 或者 名字 或者 空间短链",

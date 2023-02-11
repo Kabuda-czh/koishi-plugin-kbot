@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 14:41:21
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-03 17:13:13
- * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\uidExtract.ts
+ * @LastEditTime: 2023-02-11 18:33:37
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\utils\uidExtract.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -22,6 +22,9 @@ export async function uidExtract(
   logger: Logger,
   ctx: Context
 ) {
+
+  if (typeof text !== "string") return "";
+
   try {
     if (session.channel.bilibili.dynamic.length !== 0) {
       session.channel.bilibili.dynamic.forEach((item) => {
