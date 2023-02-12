@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-10 15:46:29
+ * @LastEditTime: 2023-02-11 20:30:24
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.ts
  * @Description:
  *
@@ -53,7 +53,8 @@ export async function apply(ctx: Context, config: Config) {
   });
 
   ctx
-    .command("查询天气 <city:string>", "查询城市天气")
+    .command("天气 <city:string>", "查询城市天气")
+    .shortcut(/^查询(.+)天气$/, { args: ['$1'] })
     .action(async ({ session }, city) => {
       const weather = await ctx.http
         .get(`https://api.pmay.cn/api/qqtq?msg=${city}`)
