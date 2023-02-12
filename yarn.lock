@@ -2093,10 +2093,10 @@ koishi-plugin-gocqhttp@3.3.3:
     go-cqhttp "^2.2.0"
     strip-ansi "^6.0.1"
 
-koishi-plugin-puppeteer@3.4.4:
-  version "3.4.4"
-  resolved "https://registry.npmmirror.com/koishi-plugin-puppeteer/-/koishi-plugin-puppeteer-3.4.4.tgz#53de7efc932b1a504031b3d7b319386d352b1cb8"
-  integrity sha512-TJEYFtmSWgob/Wf+zHGtplJuTX6ZuygM0QzP6L7E4Ak8lnxBbeBWPaFyFo1VTteHHjJx+QJr6aEh4H0JBvilZA==
+koishi-plugin-puppeteer@3.4.5:
+  version "3.4.5"
+  resolved "https://registry.npmmirror.com/koishi-plugin-puppeteer/-/koishi-plugin-puppeteer-3.4.5.tgz#f4923c86bf5f897ae7eec33885e4502a879e4072"
+  integrity sha512-rSYS/4f2xSB9kALD1U1LkAs8jXC1xf8FAnuA7vIurhaGM+ouuIBlIE/CD86AjQsyDQCTj2kAZsemHqP4D/Xp5w==
   dependencies:
     puppeteer-core "^19.6.2"
     puppeteer-finder "^1.0.3"
