@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-01 13:26:26
+ * @LastEditTime: 2023-02-14 12:55:31
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -101,9 +101,15 @@ const fetchDataFromAPI = async (
   config: Config,
   videoId: string
 ): Promise<ApiData> => {
-  return await ctx.http.get(
-    `${apiEndPointPrefix}?id=${videoId}&key=${config.youtubeDataApiKey}&part=snippet,contentDetails,statistics,status`
-  );
+  try {
+    const data = await ctx.http.get(
+      `${apiEndPointPrefix}?id=${videoId}&key=${config.youtubeDataApiKey}&part=snippet,contentDetails,statistics,status`
+    );
+    return data
+  } catch (error) {
+    logger.error(`YouTube API 请求失败: ${error}`);
+    throw new Error("YouTube API 请求失败");
+  }
 };
 
 const getIDFromURLByRegex = (url: string): string | undefined => {
@@ -112,6 +118,9 @@ const getIDFromURLByRegex = (url: string): string | undefined => {
 };
 
 export function apply(ctx: Context, config: Config) {
+
+  ctx.command("kbot/youtube", "YouTube视频链接解析")
+
   ctx.middleware(async (session, next) => {
     const isYoutube =
       session.content.includes("youtube.com") ||
@@ -119,6 +128,8 @@ export function apply(ctx: Context, config: Config) {
     if (!isYoutube) return next();
 
     try {
+      logger.info(`捕获到 Youtube 视频链接: ${session.content}`);
+
       let id,
         tagString = "无";
 
@@ -143,6 +154,8 @@ export function apply(ctx: Context, config: Config) {
       }, statistics } = result.items[0];
 
       if (tags) tagString = tags.length > 1 ? tags.join(", ") : tags[0];
+
+      logger.info(`Youtube视频解析成功: ${title}`);
 
       // TODO 待优化样式
       await session.send(
