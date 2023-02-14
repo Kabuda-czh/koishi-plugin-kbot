@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-14 14:05:09
- * @FilePath: \KBot-App\plugins\kbot\src\index.ts
+ * @LastEditTime: 2023-02-14 22:02:02
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -62,8 +62,8 @@ const pluginLoad = <T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> =>
         ...schema.dict,
       }),
       Schema.object({
-        enabled: Schema.const(false).required(),
-      })
+        enabled: Schema.const(false),
+      }),
     ]) as Schema<T>,
   ]);
 
@@ -78,7 +78,6 @@ export const Config: Schema<Config> = Schema.object({
 });
 
 export async function apply(ctx: Context, config: Config) {
-
   ctx.command("kbot", "kbot 相关功能");
 
   ctx.plugin(botBasic, config.KBotBasic);

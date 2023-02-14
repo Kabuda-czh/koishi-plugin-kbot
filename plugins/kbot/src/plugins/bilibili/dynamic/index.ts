@@ -75,7 +75,7 @@ export const Config: Schema<Config> = Schema.object({
         fontsObjcet: Schema.dict(String).description(fontsObjectUsage),
       }),
       Schema.object({
-        enabled: Schema.const(false).required(),
+        enabled: Schema.const(false),
       })
     ]),
   ]),
