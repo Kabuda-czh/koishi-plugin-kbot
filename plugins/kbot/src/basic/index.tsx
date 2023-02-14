@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-11 20:30:24
- * @FilePath: \KBot-App\plugins\kbot\src\basic\index.ts
+ * @LastEditTime: 2023-02-13 15:47:09
+ * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -53,7 +53,7 @@ export async function apply(ctx: Context, config: Config) {
   });
 
   ctx
-    .command("天气 <city:string>", "查询城市天气")
+    .command("kbot/天气 <city:string>", "查询城市天气")
     .shortcut(/^查询(.+)天气$/, { args: ['$1'] })
     .action(async ({ session }, city) => {
       const weather = await ctx.http
@@ -65,7 +65,7 @@ export async function apply(ctx: Context, config: Config) {
       return weather;
     });
 
-  ctx.command("一言", "随机一言").action(async ({ session }) => {
+  ctx.command("kbot/一言", "随机一言").action(async ({ session }) => {
     const yiyan = await ctx.http
       .get("https://api.pmay.cn/api/yiyan")
       .catch((err) => {
@@ -76,14 +76,66 @@ export async function apply(ctx: Context, config: Config) {
     return yiyan;
   })
 
-  ctx.command("人间", "随机一言散文集《我在人间凑数的日子》").action(async ({ session }) => {
-    const {data: {yiyan: renjian}} = await ctx.http
+  ctx.command("kbot/人间", "随机一言散文集《我在人间凑数的日子》").action(async ({ session }) => {
+    const { data: { yiyan: renjian } } = await ctx.http
       .get("https://api.pmay.cn/api/renjian")
       .catch((err) => {
         logger.error(`获取人间一言时出错: ${err}`);
       });
 
+      await session.send("测试字段1")
+      await session.send("测试字段2")
+
     if (!renjian) return "获取人间一言失败";
     return renjian;
+  })
+
+  ctx.command("kbot/今日新闻", "获取60秒看世界新闻").action(async ({ session }) => {
+    const data = await ctx.http
+      .get("http://bjb.yunwj.top/php/60miao/qq.php")
+      .catch((err) => {
+        logger.error(`获取今日新闻时出错: ${err}`);
+      });
+
+    const imgURL = data.tp;
+    const news = data.wb;
+
+    await session.send(<html>
+      <style>{`
+          * {
+            margin: 0;
+            padding: 0;
+          }
+          #app {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            padding:5px 20px;
+          }
+          #app > div {
+            width: 100%;
+          }
+          #app > div > p {
+            word-break: break-all;
+            word-wrap: break-word;
+          }
+        `}
+      </style>
+      <div id="app">
+        <div>
+          <img style={{width: "300px", height: "auto"}} src={imgURL} />
+        </div>
+        <br />
+        {
+          news?.map((item: string) => {
+            return <div>
+              <p>{item}</p>
+              <br />
+            </div>
+          })
+        }
+      </div>
+    </html>)
   })
 }
