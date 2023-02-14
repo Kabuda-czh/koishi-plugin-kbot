@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-10 10:37:42
+ * @LastEditTime: 2023-02-14 11:12:50
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -60,8 +60,7 @@ const pluginLoad = <T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> =>
       Schema.object({
         enabled: Schema.const(true).required(),
         ...schema.dict,
-      }),
-      Schema.object({}),
+      })
     ]) as Schema<T>,
   ]);
 
