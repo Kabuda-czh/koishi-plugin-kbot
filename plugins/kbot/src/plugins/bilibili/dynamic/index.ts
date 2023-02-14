@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-11 18:15:32
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
+ * @LastEditTime: 2023-02-14 14:06:56
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -74,6 +74,9 @@ export const Config: Schema<Config> = Schema.object({
         enabled: Schema.const(true).required(),
         fontsObjcet: Schema.dict(String).description(fontsObjectUsage),
       }),
+      Schema.object({
+        enabled: Schema.const(false).required(),
+      })
     ]),
   ]),
 });
