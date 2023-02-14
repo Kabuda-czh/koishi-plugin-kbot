@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-13 15:47:09
+ * @LastEditTime: 2023-02-14 14:28:28
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
@@ -82,9 +82,6 @@ export async function apply(ctx: Context, config: Config) {
       .catch((err) => {
         logger.error(`获取人间一言时出错: ${err}`);
       });
-
-      await session.send("测试字段1")
-      await session.send("测试字段2")
 
     if (!renjian) return "获取人间一言失败";
     return renjian;
