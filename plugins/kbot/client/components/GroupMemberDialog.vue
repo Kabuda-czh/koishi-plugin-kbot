@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-07 17:14:49
+ * @LastEditTime: 2023-02-14 10:53:57
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupMemberDialog.vue
  * @Description: 
  * 
@@ -48,48 +48,14 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="性别">
-            <el-input v-model="memberInfo.sex" disabled />
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="年龄">
-            <el-input v-model="memberInfo.age" disabled />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="8">
-          <el-form-item label="地区">
-            <el-input v-model="memberInfo.area" placeholder="无" disabled />
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="加入时间戳">
-            <el-date-picker
-              style="width: 100%;"
-              v-model="joinTime"
-              type="datetime"
-              placeholder="无"
-              disabled
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="最后发言时间戳">
-            <el-date-picker
-              style="width: 100%;"
-              v-model="lastSentTime"
-              type="datetime"
-              placeholder="无"
-              disabled
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="8">
-          <el-form-item label="成员等级">
-            <el-input v-model="memberInfo.level" disabled />
+            <el-select v-model="memberInfo.sex" style="width: 100%" disabled>
+              <el-option
+                v-for="item in sexList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -99,8 +65,32 @@
             </el-tag>
           </el-form-item>
         </el-col>
+      </el-row>
+      <el-row>
         <el-col :span="8">
-          <el-form-item label="是否不良记录成员">
+          <el-form-item label="入群时间">
+            <el-date-picker
+              style="width: 100%"
+              v-model="joinTime"
+              type="datetime"
+              placeholder="无"
+              disabled
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="最后发言">
+            <el-date-picker
+              style="width: 100%"
+              v-model="lastSentTime"
+              type="datetime"
+              placeholder="无"
+              disabled
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="成员标签">
             <el-tag :type="memberInfo.unfriendly ? 'danger' : 'success'">
               {{ memberInfo.unfriendly ? "危险" : "安全" }}
             </el-tag>
@@ -115,31 +105,6 @@
               v-model="memberInfo.title"
               :disabled="RoleObject[memberInfo.role]?.role !== 3"
             />
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="专属头衔过期时间戳">
-            <el-date-picker
-              style="width: 100%;"
-              v-model="titleExpireTime"
-              type="datetime"
-              placeholder="无"
-              disabled
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="是否允许修改群名片">
-            <el-tag :type="memberInfo.card_changeable ? 'info' : 'warning'">
-              {{ memberInfo.card_changeable ? "允许" : "不允许" }}
-            </el-tag>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="8">
-          <el-form-item label="禁言到期时间">
-            <el-input v-model="memberInfo.shut_up_timestamp" disabled />
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -224,11 +189,23 @@ const dialogLoading = ref<boolean>(false);
 
 const emits = defineEmits(["closed"]);
 
+const sexList = [
+  {
+    label: "男",
+    value: "male",
+  },
+  {
+    label: "女",
+    value: "female",
+  },
+  {
+    label: "未知",
+    value: "unknown",
+  },
+];
+
 const joinTime = computed(() => memberInfo.value.join_time * 1000);
 const lastSentTime = computed(() => memberInfo.value.last_sent_time * 1000);
-const titleExpireTime = computed(
-  () => memberInfo.value.title_expire_time * 1000
-);
 
 interface UserInfo {
   group_id: string | number;

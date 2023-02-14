@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-07 11:52:22
+ * @LastEditTime: 2023-02-14 10:58:14
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description: 
  * 
@@ -32,19 +32,15 @@
             <template #default="{ row }">
               <el-button
                 type="primary"
-                auto-insert-space
-                round
                 @click="muteGuild(row, true)"
-                :disabled="['owner', 'admin'].includes(row.role)"
+                :disabled="!['owner', 'admin'].includes(row.role)"
               >
                 开启
               </el-button>
               <el-button
                 type="primary"
-                auto-insert-space
-                round
                 @click="muteGuild(row, false)"
-                :disabled="['owner', 'admin'].includes(row.role)"
+                :disabled="!['owner', 'admin'].includes(row.role)"
               >
                 关闭
               </el-button>
@@ -274,5 +270,75 @@ onMounted( async () => {
 <style scoped>
 .manage__layout {
   margin: 24px;
+}
+</style>
+
+<style>
+.el-table__cell {
+  font-weight: 500;
+  color: #333;
+  text-align: center !important;
+  padding: 12px 0 !important ;
+}
+
+.table-header-cell {
+  background-color: #eef6ff !important;
+}
+
+.el-col {
+  padding: 0 20px;
+}
+
+.el-form-item__label {
+  width: 150px;
+  font-weight: 500;
+  font-size: 14px !important;
+  color: #333;
+  line-height: 37px !important;
+}
+
+.el-input {
+  max-width: 360px !important;
+}
+
+.el-select .el-input {
+  max-width: 360px !important;
+}
+
+.el-select-dropdown__item {
+  font-size: 14px !important;
+}
+
+.el-input__inner {
+  font-size: 14px !important;
+  padding: 15px 0 !important;
+  text-align: left !important;
+}
+
+.el-form-item {
+  margin-bottom: 12px !important;
+}
+
+.is-disabled .el-input__inner {
+  color: #606266 !important;
+  -webkit-text-fill-color: #606266 !important;
+}
+
+.el-textarea__inner {
+  font-size: 14px !important;
+  padding: 10px 15px !important;
+}
+
+.is-disabled .el-textarea__inner {
+  color: #606266 !important;
+}
+
+.el-range-editor.el-input__wrapper {
+  padding: 20px 10px !important;
+}
+
+.el-date-editor .el-input__wrapper,
+.el-range-editor.el-input__wrapper {
+  padding: 1px 11px !important;
 }
 </style>
