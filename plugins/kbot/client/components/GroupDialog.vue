@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-07 11:37:26
+ * @LastEditTime: 2023-02-14 12:45:02
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
@@ -17,6 +17,16 @@
     @open="getMemberList"
     @closed="dialogVisible = false"
   >
+  <div class="memberSearch">
+    <p>搜索群成员</p>
+    <FuzzySearch
+      :options="defaultMemberList"
+      label-key="username"
+      value-key="userId"
+      @select-data="selectData"
+      @data-change="dataChange"
+    />
+  </div>
     <el-table :data="memberList" max-height="70vh" v-loading="dialogLoading">
       <el-table-column align="center" prop="userId" label="QQ号" width="150" />
       <el-table-column align="center" prop="username" label="QQ名称" />
@@ -60,6 +70,7 @@ import { View } from "@element-plus/icons-vue";
 import { computed, ref } from "vue";
 import { fetchGuildMemberList } from "../api";
 import GroupMemberDialog from "./GroupMemberDialog.vue";
+import FuzzySearch from "./FuzzySearch.vue";
 
 interface Props {
   visible?: boolean;
@@ -94,13 +105,14 @@ interface UserInfo {
   nickname: string;
 }
 
+const defaultMemberList = ref<UserInfo[]>([]);
 const memberList = ref<UserInfo[]>([]);
 
 const getMemberList = async () => {
   if (props.groupId) {
     dialogLoading.value = true;
 
-    memberList.value = await fetchGuildMemberList(props.groupId).finally(() => {
+    defaultMemberList.value = memberList.value = await fetchGuildMemberList(props.groupId).finally(() => {
       setTimeout(() => (dialogLoading.value = false), 500);
     });
   }
@@ -108,4 +120,37 @@ const getMemberList = async () => {
 
 const memberDialogVisible = ref<boolean>(false);
 const memberId = ref<string>("");
+
+const selectData = (item: { label: string; value: string | number }) => {
+  dialogLoading.value = true;
+  const filterList = defaultMemberList.value.filter(
+    (member) => +member.userId === +item.value
+  );
+
+  setTimeout(() => {
+    memberList.value = filterList;
+    dialogLoading.value = false;
+  }, 1000);
+};
+
+const dataChange = (value: string | number) => {
+  if (!value) {
+    dialogLoading.value = true;
+    setTimeout(() => {
+      memberList.value = defaultMemberList.value;
+      dialogLoading.value = false;
+    }, 1000);
+  }
+};
+
 </script>
+
+<style scoped>
+.memberSearch {
+  display: flex;
+  float: right;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 15px;
+}
+</style>

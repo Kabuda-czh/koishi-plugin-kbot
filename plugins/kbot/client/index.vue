@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-14 10:58:14
+ * @LastEditTime: 2023-02-14 12:57:24
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description: 
  * 
@@ -11,13 +11,25 @@
 <template>
   <k-layout v-loading="loading" element-loading-text="加载中....">
     <div class="manage__layout">
-      <div style="margin-bottom: 20px">
-        <el-button
-          type="primary"
-          @click="broadcast"
-          :disabled="groupList.length <= 1"
-          >向所有群广播消息</el-button
-        >
+      <div class="container__header">
+        <div>
+          <el-button
+            type="primary"
+            @click="broadcast"
+            :disabled="groupList.length <= 1"
+            >向所有群广播消息</el-button
+          >
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px">
+          <p>搜索群</p>
+          <FuzzySearch
+            :options="defaultGroupList"
+            label-key="group_name"
+            value-key="group_id"
+            @select-data="selectData"
+            @data-change="dataChange"
+          />
+        </div>
       </div>
       <el-form>
         <el-table :data="groupList" style="width: 100%">
@@ -73,6 +85,16 @@
             <el-empty />
           </template>
         </el-table>
+
+        <div class="data__pagination">
+          <el-pagination
+            background
+            :page-sizes="[10]"
+            layout="prev, pager, next"
+            :total="defaultGroupList.length"
+            @current-change="paginationClick"
+          />
+        </div>
       </el-form>
     </div>
   </k-layout>
@@ -92,7 +114,13 @@
 <script setup lang="ts">
 import { View } from "@element-plus/icons-vue";
 import { message, messageBox } from "@koishijs/client";
-import { ElButton, ElForm, ElTable, ElTableColumn, ElEmpty } from "element-plus";
+import {
+  ElButton,
+  ElForm,
+  ElTable,
+  ElTableColumn,
+  ElEmpty,
+} from "element-plus";
 import { nextTick, onMounted, ref } from "vue";
 import {
   fetchBroadcast,
@@ -102,6 +130,7 @@ import {
   fetchSendMessage,
 } from "./api";
 import GroupDialog from "./components/GroupDialog.vue";
+import FuzzySearch from "./components/FuzzySearch.vue";
 
 const loading = ref<boolean>(true);
 
@@ -119,13 +148,17 @@ interface Group {
 }
 
 interface GroupConfig {
-  muteAll: boolean;
   role?: string;
 }
 
 type GroupList = Group & GroupConfig;
 
+// GroupList
+const defaultGroupList = ref<GroupList[]>([]);
 const groupList = ref<GroupList[]>([]);
+
+// pagination
+const pageSize = ref<number>(10);
 
 // dialog
 const dialogVisible = ref<boolean>(false);
@@ -158,13 +191,15 @@ const getGroupList = async () => {
 
   groupMemberList.flat().map((member) => {
     if (member.user_id === +botId.value) {
-      groupList.value.push({
+      const groupInfo = {
         ...groupDatas.find((data) => data.group_id === member.group_id),
-        muteAll: false,
         role: member.role,
-      });
+      };
+      defaultGroupList.value.push(groupInfo);
     }
   });
+
+  groupList.value = defaultGroupList.value.slice(0, pageSize.value);
 };
 
 const muteGuild = (row: GroupList, mute: boolean) => {
@@ -205,6 +240,28 @@ const broadcast = () => {
     .catch(() => {
       message.success("已取消操作");
     });
+};
+
+const selectData = (item: { label: string; value: string | number }) => {
+  loading.value = true;
+  const filterList = defaultGroupList.value.filter(
+    (group) => group.group_id === +item.value
+  );
+
+  setTimeout(() => {
+    groupList.value = filterList;
+    loading.value = false;
+  }, 1000);
+};
+
+const dataChange = (value: string | number) => {
+  if (!value) {
+    loading.value = true;
+    setTimeout(() => {
+      groupList.value = defaultGroupList.value;
+      loading.value = false;
+    }, 1000);
+  }
 };
 
 const sendMessage = (groupId: number, groupName: string) => {
@@ -251,25 +308,55 @@ const groupLeave = (groupId: number, isOwner: boolean) => {
     });
 };
 
+const paginationClick = (val: number) => {
+  loading.value = true;
+
+  const start = (val - 1) * pageSize.value;
+
+  setTimeout(() => {
+    groupList.value = defaultGroupList.value.slice(
+      start,
+      start + pageSize.value
+    );
+    loading.value = false;
+  }, 1000);
+};
+
 const init = async () => {
   await Promise.all([getBotInfo(), getGroupList()]);
 };
 
 // 提高使用体验
-onMounted( async () => {
+onMounted(async () => {
   await nextTick(() => {
     setTimeout(() => {
       init().finally(() => {
         loading.value = false;
-      })
-    }, 1000)
-  })
-})
+      });
+    }, 1000);
+  });
+});
 </script>
 
 <style scoped>
 .manage__layout {
   margin: 24px;
+}
+
+.container__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
+.data__pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 5px;
+  padding-top: 20px;
 }
 </style>
 
