@@ -2,13 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-14 22:02:02
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\index.ts
+ * @LastEditTime: 2023-02-15 12:43:33
+ * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Schema } from "koishi";
+import { Context, Logger, Schema } from "koishi";
 
 import * as botBasic from "./basic";
 
@@ -30,7 +30,7 @@ export const usage = `
 - KBotMusic: 点歌功能
 - KBotYoutube: Youtube 视频解析
 ## 权限问题
-- 第一步: 设置机器人的超级管理员 QQ 号, 建议为自身 QQ 号, kbot 会自动创建该账号最高权限\n
+- 第一步: 设置机器人的超级管理员 QQ 号, 建议为自身 QQ 号, kbot 会自动创建该账号最高权限, 注意设置完毕后需要重启一次\n
 \t若指令仍然提示权限不足, 请通过在左侧菜单栏中找到 \`数据库\` 选项点击进入\n
 \t然后找到 \`user\` 表, 在右侧中找到自己的账号(如果没有先与机器人私聊一次)\n
 \t最后双击 \`authority\` 格, 更改自己的权限并保存
@@ -44,6 +44,7 @@ interface IPluginEnableConfig {
 }
 
 interface Config {
+  superAdminQQ?: string[];
   KBotBasic?: botBasic.Config;
   KBotManage?: managePlugin.Config & IPluginEnableConfig;
   KBotBilibili?: bilibiliPlugin.Config & IPluginEnableConfig;
@@ -68,6 +69,7 @@ const pluginLoad = <T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> =>
   ]);
 
 export const Config: Schema<Config> = Schema.object({
+  superAdminQQ: Schema.array(String).description("超级管理员QQ号 (必填)"),
   KBotBasic: botBasic.Config,
   KBotManage: pluginLoad(managePlugin.Config).description("群管理功能"),
   KBotBilibili: pluginLoad(bilibiliPlugin.Config).description(
@@ -77,14 +79,50 @@ export const Config: Schema<Config> = Schema.object({
   KBotYoutube: pluginLoad(youtubePlugin.Config).description("Youtube 视频解析"),
 });
 
+export const logger = new Logger("KBot");
+
 export async function apply(ctx: Context, config: Config) {
-  ctx.command("kbot", "kbot 相关功能");
+  if (!config.superAdminQQ || config.superAdminQQ.length === 0) {
+    logger.error("未设置超级管理员QQ号");
+  } else {
+    ctx.bots.forEach(async (bot) => {
+      if (
+        !["connect", "online"].includes(bot.status) ||
+        bot.platform === "qqguild"
+      )
+        return;
+      config.superAdminQQ.forEach(async (qq) => {
+        await ctx.database.getUser(bot.platform, qq).then((user) => {
+          try {
+            if (user && user?.authority < 5) {
+              ctx.database.setUser(bot.platform, qq, {
+                authority: 5,
+              });
+              logger.success(`已将QQ号为 ${qq} 的用户权限设置为 5 级`);
+            } else if (!user) {
+              ctx.database.createUser(bot.platform, qq, {
+                authority: 5,
+              });
+              logger.success(`已成功创建QQ号为 ${qq} 的用户, 并赋予权限 5 级`);
+            }
+          } catch (err) {
+            logger.error(`设置QQ号为 ${qq} 的用户权限时出错: ${err}`);
+          }
+        });
+      });
+    });
 
-  ctx.plugin(botBasic, config.KBotBasic);
+    ctx.command("kbot", "kbot 相关功能");
 
-  if (config.KBotManage.enabled) ctx.plugin(managePlugin, config.KBotManage);
-  if (config.KBotBilibili.enabled)
-    ctx.plugin(bilibiliPlugin, config.KBotBilibili);
-  if (config.KBotMusic.enabled) ctx.plugin(musicPlugin, config.KBotMusic);
-  if (config.KBotYoutube.enabled) ctx.plugin(youtubePlugin, config.KBotYoutube);
+    ctx.plugin(botBasic, config.KBotBasic);
+
+    if (config.KBotManage.enabled) ctx.plugin(managePlugin, config.KBotManage);
+    if (config.KBotBilibili.enabled)
+      ctx.plugin(bilibiliPlugin, config.KBotBilibili);
+    if (config.KBotMusic.enabled) ctx.plugin(musicPlugin, config.KBotMusic);
+    if (config.KBotYoutube.enabled)
+      ctx.plugin(youtubePlugin, config.KBotYoutube);
+
+    logger.success("插件加载完毕");
+  }
 }

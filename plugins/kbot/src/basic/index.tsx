@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-14 14:28:28
+ * @LastEditTime: 2023-02-15 12:42:09
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
@@ -11,11 +11,11 @@
 import { Context, Logger, Schema } from "koishi";
 
 export interface Config {
-  superAdminQQ: string;
+  alApiToken?: string;
 }
 
 export const Config: Schema<Config> = Schema.object({
-  superAdminQQ: Schema.string().required().description("超级管理员QQ号 (必填)"),
+  alApiToken: Schema.string().description("ALAPI Token, 注: 前往 https://www.alapi.cn/ 个人中心获取token (可选)"),
 });
 
 export const logger = new Logger("KBot-basic");
@@ -23,35 +23,6 @@ export const logger = new Logger("KBot-basic");
 export const using = ["database"];
 
 export async function apply(ctx: Context, config: Config) {
-  ctx.on("bot-status-updated", (bot) => {
-    if (bot.status === "online") {
-      logger.success("KBot已上线");
-      ctx.database.getUser(bot.platform, config.superAdminQQ).then((user) => {
-        try {
-          if (user && user?.authority < 5) {
-            ctx.database.setUser(bot.platform, config.superAdminQQ, {
-              authority: 5,
-            });
-            logger.success(
-              `已将QQ号为 ${config.superAdminQQ} 的用户权限设置为 5 级`
-            );
-          } else if (!user) {
-            ctx.database.createUser(bot.platform, config.superAdminQQ, {
-              authority: 5,
-            });
-            logger.success(
-              `已成功创建QQ号为 ${config.superAdminQQ} 的用户, 并赋予权限 5 级`
-            );
-          }
-        } catch (err) {
-          logger.error(
-            `设置QQ号为 ${config.superAdminQQ} 的用户权限时出错: ${err}`
-          );
-        }
-      });
-    }
-  });
-
   ctx
     .command("kbot/天气 <city:string>", "查询城市天气")
     .shortcut(/^查询(.+)天气$/, { args: ['$1'] })
@@ -70,6 +41,7 @@ export async function apply(ctx: Context, config: Config) {
       .get("https://api.pmay.cn/api/yiyan")
       .catch((err) => {
         logger.error(`获取一言时出错: ${err}`);
+        return "获取一言失败";
       });
 
     if (!yiyan) return "获取一言失败";
@@ -77,62 +49,30 @@ export async function apply(ctx: Context, config: Config) {
   })
 
   ctx.command("kbot/人间", "随机一言散文集《我在人间凑数的日子》").action(async ({ session }) => {
-    const { data: { yiyan: renjian } } = await ctx.http
+    const data = await ctx.http
       .get("https://api.pmay.cn/api/renjian")
       .catch((err) => {
         logger.error(`获取人间一言时出错: ${err}`);
       });
 
-    if (!renjian) return "获取人间一言失败";
-    return renjian;
+    if (data.code !== 1) return "获取人间一言失败";
+    return data.data.yiyan;
   })
 
-  ctx.command("kbot/今日新闻", "获取60秒看世界新闻").action(async ({ session }) => {
-    const data = await ctx.http
-      .get("http://bjb.yunwj.top/php/60miao/qq.php")
-      .catch((err) => {
-        logger.error(`获取今日新闻时出错: ${err}`);
-      });
+  if (config.alApiToken) {
+    ctx.command("kbot/今日新闻", "获取60秒看世界新闻").action(async ({ session }) => {
+      await ctx.http
+        .get(`https://v2.alapi.cn/api/zaobao?token=${config.alApiToken}&format=json`)
+        .then(res => {
+          const { data } = res;
+          session.send(<>
+            <image url={data.image} />
+          </>);
+        }).catch(err => {
+          logger.error(`获取今日新闻时出错: ${err}`);
+          return "获取今日新闻失败";
+        })
 
-    const imgURL = data.tp;
-    const news = data.wb;
-
-    await session.send(<html>
-      <style>{`
-          * {
-            margin: 0;
-            padding: 0;
-          }
-          #app {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 300px;
-            padding:5px 20px;
-          }
-          #app > div {
-            width: 100%;
-          }
-          #app > div > p {
-            word-break: break-all;
-            word-wrap: break-word;
-          }
-        `}
-      </style>
-      <div id="app">
-        <div>
-          <img style={{width: "300px", height: "auto"}} src={imgURL} />
-        </div>
-        <br />
-        {
-          news?.map((item: string) => {
-            return <div>
-              <p>{item}</p>
-              <br />
-            </div>
-          })
-        }
-      </div>
-    </html>)
-  })
+    })
+  }
 }
