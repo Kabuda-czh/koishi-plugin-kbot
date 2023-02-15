@@ -2,13 +2,14 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-15 12:42:09
- * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
+ * @LastEditTime: 2023-02-15 23:11:19
+ * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Context, Logger, Schema } from "koishi";
+import * as statusPlugin from "./status";
 
 export interface Config {
   alApiToken?: string;
@@ -75,4 +76,6 @@ export async function apply(ctx: Context, config: Config) {
 
     })
   }
+
+  ctx.plugin(statusPlugin)
 }
