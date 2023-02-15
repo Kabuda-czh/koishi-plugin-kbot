@@ -35,9 +35,11 @@
     "@koishijs/plugin-admin": "^1.1.5"
   },
   "dependencies": {
-    "qs": "^6.10.3"
+    "qs": "^6.10.3",
+    "systeminformation": "^5.17.0"
   },
   "devDependencies": {
-    "@types/qs": "^6.9.7"
+    "@types/qs": "^6.9.7",
+    "@types/systeminformation": "^5.17.0"
   }
 }

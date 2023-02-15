@@ -588,6 +588,13 @@
     "@types/mime" "*"
     "@types/node" "*"
 
+"@types/systeminformation@^5.17.0":
+  version "3.54.1"
+  resolved "https://registry.npmjs.org/@types/systeminformation/-/systeminformation-3.54.1.tgz#bbc1b9e4ae2e60d45f75906029c6fb5436e1c5cb"
+  integrity sha512-vvisj2mdWygyc0jk/5XtSVq9gtxCmF3nrGwv8wVway8pwNRhtPji/MU9dc1L0F6rl0F/NFIHa4ScRU7wmNaHmg==
+  dependencies:
+    systeminformation "*"
+
 "@types/web-bluetooth@^0.0.14":
   version "0.0.14"
   resolved "https://registry.npmmirror.com/@types/web-bluetooth/-/web-bluetooth-0.0.14.tgz#94e175b53623384bff1f354cdb3197a8d63cdbe5"
@@ -2845,6 +2852,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmmirror.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+systeminformation@*, systeminformation@^5.17.0:
+  version "5.17.9"
+  resolved "https://registry.npmjs.org/systeminformation/-/systeminformation-5.17.9.tgz#8a47bc84f076982734d7b7a0c71371d23bbbfd52"
+  integrity sha512-inxwRLI/4qpx4o85R54/zdhNagdBGBgs0la7Vl3qBorRVKRDk0nNsDTCGzG4lOITsw1gl7LRWeG4Zsp1pC8nfg==
 
 tar-fs@2.1.1:
   version "2.1.1"
