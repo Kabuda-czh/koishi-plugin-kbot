@@ -168,10 +168,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.3.3":
-  version "5.3.3"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.3.3.tgz#22ca91fd6b4410a3c2831c53436eea9fe5c0863a"
-  integrity sha512-3LLDEt7fUHC3zg1uK67pPfNp4gG+8yqyRk+YZ8HluWKlun2404LrsnNynaPbbxVltnu74MicLTm0l0mLoaP1Uw==
+"@koishijs/plugin-console@5.4.0":
+  version "5.4.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.4.0.tgz#90fc14e3dc9e605a0a310eba55660c10597064a3"
+  integrity sha512-kAW9GxIrrZRM2Z7FZQWtfkl6RtpThV5wfd7JUWuuDT07+CX6v1VMKPI6LtISknh6BOP18uCIuTKGFlbnQhWQBg==
   dependencies:
     open "^8.4.0"
     uuid "^8.3.2"
@@ -214,12 +214,12 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-logger/-/plugin-logger-2.2.3.tgz#4876eb4d6d15c3c42ec109f3a7acebff6853d562"
   integrity sha512-OqZK6UOVJUtcqhdOvcABqWYraALzwDhN+Apr32F4DF3fDtjJ9ld0fX9ndFMgPBucfSXYrCM7ciJ2Cqj563Tdjg==
 
-"@koishijs/plugin-market@1.10.7":
-  version "1.10.7"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.10.7.tgz#943757a0d7da4dfa1f335673909b73f553116ff2"
-  integrity sha512-/nNIBVfJc0Pi3113D4kV44RiIBhYmH4PIwmINMwOhyVib5DlXHQVQKGQIFwlxOpZogttqKo65LyWizQiOjiRng==
+"@koishijs/plugin-market@1.10.8":
+  version "1.10.8"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.10.8.tgz#edffd8db41f822718be0e83580f4bfaac8dbbc7d"
+  integrity sha512-1EYIGR+KLTNBeLn7F84lK+HO56G0CgBFAF9jdMgl6kSwNbkiP5bcuHqgaRNILkG3BXnXMsHEluth/jx5pPsA1Q==
   dependencies:
-    "@koishijs/registry" "^4.4.7"
+    "@koishijs/registry" "^4.5.1"
     execa "^5.1.1"
     get-registry "^1.1.0"
     ns-require "^1.1.4"
@@ -247,10 +247,10 @@
     envinfo "^7.8.1"
     which-pm-runs "^1.1.0"
 
-"@koishijs/registry@^4.4.7":
-  version "4.4.7"
-  resolved "https://registry.npmmirror.com/@koishijs/registry/-/registry-4.4.7.tgz#2b9126b19c2e40ee856ad910b0a1d4400e0b6310"
-  integrity sha512-AxErAdbvZ8xdThRM40m9AQzj7EzzP7ZDDBqaPmYisraOJNg2KRVnE57XpsgKoLmFB3kIsyCoNp+AIR122l7WbA==
+"@koishijs/registry@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.npmmirror.com/@koishijs/registry/-/registry-4.5.1.tgz#d817b8a5d6c8ac0a305038aa5f09adb5bffbce53"
+  integrity sha512-e1w/D/uimT3jntEkazwAqVEYMveW83xAzePy3tIuhRIHL2VKb608VVDMyyy+SZBSb1FlN29twKSn0P8iq9TgMw==
   dependencies:
     cosmokit "^1.4.0"
     p-map "^4.0.0"
