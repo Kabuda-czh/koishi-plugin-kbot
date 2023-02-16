@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-15 23:11:19
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\basic\index.tsx
+ * @LastEditTime: 2023-02-16 11:05:59
+ * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -24,6 +24,8 @@ export const logger = new Logger("KBot-basic");
 export const using = ["database"];
 
 export async function apply(ctx: Context, config: Config) {
+  ctx.plugin(statusPlugin)
+
   ctx
     .command("kbot/天气 <city:string>", "查询城市天气")
     .shortcut(/^查询(.+)天气$/, { args: ['$1'] })
@@ -76,6 +78,4 @@ export async function apply(ctx: Context, config: Config) {
 
     })
   }
-
-  ctx.plugin(statusPlugin)
 }
