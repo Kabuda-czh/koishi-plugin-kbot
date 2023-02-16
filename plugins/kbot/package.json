@@ -40,6 +40,6 @@
   },
   "devDependencies": {
     "@types/qs": "^6.9.7",
-    "@types/systeminformation": "^5.17.0"
+    "@types/systeminformation": "^3.54.0"
   }
 }
