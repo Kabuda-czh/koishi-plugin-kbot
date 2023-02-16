@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-10 16:16:08
+ * @LastEditTime: 2023-02-16 17:33:25
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -63,6 +63,7 @@ async function pcRenderImage(
       segment.image(
         await element.screenshot({
           clip: elementClip,
+          encoding: "binary",
         }),
         "image/png"
       ) +
@@ -127,6 +128,7 @@ async function mobileRenderImage(
       segment.image(
         await page.screenshot({
           clip: elementClip,
+          encoding: "binary"
         }),
         "image/png"
       ) +
