@@ -1,3 +1,13 @@
+/*
+ * @Author: Kabuda-czh
+ * @Date: 2023-02-16 09:35:30
+ * @LastEditors: Kabuda-czh
+ * @LastEditTime: 2023-02-16 10:58:42
+ * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
+ * @Description:
+ *
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
+ */
 import os from "os";
 import * as si from "systeminformation";
 
@@ -10,6 +20,8 @@ export async function getSystemInfo(koishiVersion: string, pluginSize: number) {
     getDiskUsage(),
   ]);
 
+  const { uptime } = si.time();
+
   const [
     { cpuUsage, cpuInfo },
     { distro },
@@ -21,21 +33,22 @@ export async function getSystemInfo(koishiVersion: string, pluginSize: number) {
   // memory
   const memoryTotal = (total / 1024 / 1024 / 1024).toFixed(2) + " GB";
   const memoryUsed = (used / 1024 / 1024 / 1024).toFixed(2);
-  const memoryUsage = ((used / total)).toFixed(2);
+  const memoryUsage = (used / total).toFixed(2);
   // swap
   const swapTotal = (swaptotal / 1024 / 1024 / 1024).toFixed(2) + " GB";
   const swapUsed = (swapused / 1024 / 1024 / 1024).toFixed(2);
-  const swapUsage = ((swapused / swaptotal)).toFixed(2);
+  const swapUsage = (swapused / swaptotal).toFixed(2);
   // disk
   const diskTotal = (disksize / 1024 / 1024 / 1024).toFixed(2) + " GB";
   const diskUsed = (diskused / 1024 / 1024 / 1024).toFixed(2);
-  const diskUsage = ((diskused / disksize)).toFixed(2);
+  const diskUsage = (diskused / disksize).toFixed(2);
 
   const systemInfo = {
+    name: "KBot",
     dashboard: [
       {
         progress: +cpuUsage,
-        title: `${cpuUsage}% - ${avg}Ghz`,
+        title: `${+cpuUsage * 100}% - ${avg}Ghz`,
       },
       {
         progress: +memoryUsage,
@@ -48,7 +61,7 @@ export async function getSystemInfo(koishiVersion: string, pluginSize: number) {
       {
         progress: +diskUsage,
         title: `${diskUsed} / ${diskTotal}`,
-      }
+      },
     ],
     information: [
       {
@@ -68,9 +81,10 @@ export async function getSystemInfo(koishiVersion: string, pluginSize: number) {
         value: `${pluginSize} loaded`,
       },
     ],
-  }
+    footer: durationTime(uptime),
+  };
 
-  return systemInfo
+  return systemInfo;
 }
 
 async function getDiskUsage() {
@@ -98,7 +112,7 @@ async function getCPUUsage() {
   const idle = t2.idle - t1.idle;
   const total = t2.total - t1.total;
 
-  const cpuUsage = ((1 - idle / total)).toFixed(2);
+  const cpuUsage = (1 - idle / total).toFixed(2);
   const cpuInfo = os.cpus()[0].model;
 
   return {
@@ -123,4 +137,12 @@ function getCPUInfo() {
     idle,
     total,
   };
+}
+
+function durationTime(time: number) {
+  const day = Math.floor(time / 86400);
+  const hour = Math.floor((time - day * 86400) / 3600);
+  const minute = Math.floor((time - day * 86400 - hour * 3600) / 60);
+
+  return `已持续运行 ${day}天 ${hour}小时 ${minute}分钟`;
 }
