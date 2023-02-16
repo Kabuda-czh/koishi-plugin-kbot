@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-16 10:58:42
+ * @LastEditTime: 2023-02-16 17:31:08
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
@@ -11,7 +11,11 @@
 import os from "os";
 import * as si from "systeminformation";
 
-export async function getSystemInfo(koishiVersion: string, pluginSize: number) {
+export async function getSystemInfo(
+  name: string,
+  koishiVersion: string,
+  pluginSize: number
+) {
   const promisList = await Promise.all([
     getCPUUsage(),
     si.osInfo(),
@@ -44,23 +48,23 @@ export async function getSystemInfo(koishiVersion: string, pluginSize: number) {
   const diskUsage = (diskused / disksize).toFixed(2);
 
   const systemInfo = {
-    name: "KBot",
+    name,
     dashboard: [
       {
         progress: +cpuUsage,
-        title: `${+cpuUsage * 100}% - ${avg}Ghz`,
+        title: `${(+cpuUsage * 100).toFixed(0)}% - ${avg}Ghz`,
       },
       {
-        progress: +memoryUsage,
-        title: `${memoryUsed} / ${memoryTotal}`,
+        progress: isNaN(+memoryUsage) ? 0 : +memoryUsage,
+        title: `${isNaN(+memoryUsed) ? 0 : memoryUsed} / ${memoryTotal}`,
       },
       {
-        progress: +swapUsage,
-        title: `${swapUsed} / ${swapTotal}`,
+        progress: isNaN(+swapUsage) ? 0 : +swapUsage,
+        title: `${isNaN(+swapUsed) ? 0 : swapUsed} / ${swapTotal}`,
       },
       {
-        progress: +diskUsage,
-        title: `${diskUsed} / ${diskTotal}`,
+        progress: isNaN(+diskUsage) ? 0 : +diskUsage,
+        title: `${isNaN(+diskUsed) ? 0 : diskUsed} / ${diskTotal}`,
       },
     ],
     information: [
