@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-16 11:07:36
+ * @LastEditTime: 2023-02-16 11:11:22
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.tsx
  * @Description:
  *
@@ -94,7 +94,7 @@ export async function apply(ctx: Context, config: Config) {
   //     return status;
   //   });
 
-  ctx.command("checkBody", "检查机器人状态")
+  ctx.command("body", "检查机器人状态")
     .shortcut("检查身体")
     .action(async ({ session }) => {
       const systemInfo = await getSystemInfo(version, ctx.registry.size);
