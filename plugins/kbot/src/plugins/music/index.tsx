@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 15:28:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 10:54:01
+ * @LastEditTime: 2023-02-16 16:48:41
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\music\index.tsx
  * @Description: 
  * 
@@ -16,12 +16,15 @@ const { version: pVersion } = require('../../../package.json')
 export type Platform = 'netease' | 'qq'
 
 export interface Config {
-  platform?: Platform
+  platform?: string
   showWarning?: boolean
 }
 
 export const Config: Schema<Config> = Schema.object({
-  platform: Schema.union<Platform>(['netease', 'qq']).default('qq').description('默认的点歌平台。'),
+  platform: Schema.union([
+    Schema.const("netease").description('网易云音乐'),
+    Schema.const("qq").description('QQ音乐'),
+  ]).default('qq').description('默认的点歌平台'),
   showWarning: Schema.boolean().default(false).description('点歌失败时是否发送提示。'),
 })
 
