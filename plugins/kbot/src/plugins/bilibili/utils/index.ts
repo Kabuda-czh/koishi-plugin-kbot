@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 14:40:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 14:25:55
+ * @LastEditTime: 2023-02-17 16:14:18
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\index.ts
  * @Description:
  *
@@ -12,6 +12,4 @@ export * from "./toAvid";
 export * from "./b23Extract";
 export * from "./uidExtract";
 export * from "./biliRequest";
-export * from "./fontsHandle";
-export * from "./format";
 export * from "./functionHandle";
