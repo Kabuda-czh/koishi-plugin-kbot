@@ -168,10 +168,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.4.0":
-  version "5.4.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.4.0.tgz#90fc14e3dc9e605a0a310eba55660c10597064a3"
-  integrity sha512-kAW9GxIrrZRM2Z7FZQWtfkl6RtpThV5wfd7JUWuuDT07+CX6v1VMKPI6LtISknh6BOP18uCIuTKGFlbnQhWQBg==
+"@koishijs/plugin-console@5.4.2":
+  version "5.4.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.4.2.tgz#b0198e28a2243fb91a182dfc3cee3750b57b2dad"
+  integrity sha512-zQUpXa24YgpOUdv/AGxPkbOscwSVJqmbCPw5VNcUs+WR7t8sFSw3L21log83UGmtqq06fgxm0UBRbU0IHPjSFA==
   dependencies:
     open "^8.4.0"
     uuid "^8.3.2"
@@ -2107,10 +2107,10 @@ koishi-plugin-gocqhttp@3.3.3:
     go-cqhttp "^2.2.0"
     strip-ansi "^6.0.1"
 
-koishi-plugin-puppeteer@3.4.6:
-  version "3.4.6"
-  resolved "https://registry.npmjs.org/koishi-plugin-puppeteer/-/koishi-plugin-puppeteer-3.4.6.tgz#65753ae9952878594d962f1ccfdff3f5c84bcfac"
-  integrity sha512-wdusaoyJJM4GQgA8k+FEqlx91GweB4L91avQd3KjXiCnlP8tgwhGLys7SJSr0uQuey2zzf/z4plvrzX3R2j5GA==
+koishi-plugin-puppeteer@3.4.9:
+  version "3.4.9"
+  resolved "https://registry.npmmirror.com/koishi-plugin-puppeteer/-/koishi-plugin-puppeteer-3.4.9.tgz#596156421effdc7305007002bbcbd8002451f5a8"
+  integrity sha512-9C0RNfKEXcTno355+0o9NczpOhtKIJTnHWtMxOyRdHsl96+JQAxU96mNy0Fk78eDi2uXmRmGdrROcR+FhIv+1g==
   dependencies:
     puppeteer-core "^19.6.2"
     puppeteer-finder "^1.0.3"
