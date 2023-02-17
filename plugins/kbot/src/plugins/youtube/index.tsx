@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 09:59:06
+ * @LastEditTime: 2023-02-17 11:17:09
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -162,8 +162,7 @@ export function apply(ctx: Context, config: Config) {
       logger.info(`Youtube视频解析成功: ${title}`);
 
       if (config.useText) {
-        return `Youtube视频内容解析
-<image url="${url}" />
+        return `<image url="${url}" />
 频道: ${channelTitle}
 标题: ${title}
 描述: ${description.length > 50 ? description.slice(0, 50) + '...' : description}
@@ -180,8 +179,6 @@ export function apply(ctx: Context, config: Config) {
             color: '#fff',
             background: '#000'
           }}>
-            <p>Youtube视频内容解析</p>
-            <br />
             <img src={url} />
             <p>频道: {channelTitle}</p>
             <p>标题: {title}</p>
