@@ -2,25 +2,34 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-05 23:11:45
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-05 23:35:41
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\utils\fontsHandle.ts
+ * @LastEditTime: 2023-02-17 16:28:20
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\utils\fontsHandle.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Config, logger } from "../dynamic";
 import * as fs from "fs";
+import { Dict, Logger } from "koishi";
 import path from "path";
 
+interface Config {
+  fonts: {
+    enabled: boolean;
+    isCreate?: boolean;
+    fontsObjcet?: Dict<string, string>;
+  }
+}
+
 export async function getFontsList(
-  config: Config
+  config: Config,
+  logger: Logger
 ): Promise<{ fontFamily: string; fontUrl: string }[]> {
   return new Promise((resolve) => {
     const needLoadFontList: { fontFamily: string; fontUrl: string }[] = [];
 
     if (config.fonts.enabled) {
       const fileNames = fs.readdirSync(
-        path.resolve(__dirname, "../../../../../../public/fonts")
+        path.resolve(__dirname, "../../../../../public/fonts")
       );
 
       if (fileNames.length !== 0) {
@@ -41,7 +50,7 @@ export async function getFontsList(
             const fileBuffer = fs.readFileSync(
               path.resolve(
                 __dirname,
-                `../../../../../../public/fonts/${fontFileName}`
+                `../../../../../public/fonts/${fontFileName}`
               ),
               "binary"
             );

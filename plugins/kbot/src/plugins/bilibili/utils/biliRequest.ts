@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-09 17:13:08
+ * @LastEditTime: 2023-02-17 14:52:24
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
@@ -11,7 +11,7 @@
 import { Quester } from "koishi";
 import { BilibiliDynamicType } from "../enum";
 import { MemberCard, MedalWall } from "../model";
-import { StringFormat } from "./format";
+import { StringFormat } from "../../utils";
 
 export async function getDynamic(http: Quester, uid: string) {
   return await http.get(

@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-11 18:39:21
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
+ * @LastEditTime: 2023-02-17 16:59:47
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -13,7 +13,8 @@ import { Config, logger } from "..";
 import { DynamicNotifiction } from "../../model";
 import * as fs from "fs";
 import { resolve } from "path";
-import { getFontsList, getMedalWall, getMemberCard } from "../../utils";
+import { getMedalWall, getMemberCard } from "../../utils";
+import { getFontsList } from "../../../utils";
 import { renderVup } from "./render";
 
 export async function bilibiliVupCheck(
@@ -31,7 +32,7 @@ export async function bilibiliVupCheck(
   try {
     const searchUserCardInfo = await getMemberCard(ctx.http, uid);
 
-    const needLoadFontList = await getFontsList(config);
+    const needLoadFontList = await getFontsList(config, logger);
 
     let vdb, cookie;
 

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-15 12:43:33
+ * @LastEditTime: 2023-02-17 16:13:42
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -16,6 +16,7 @@ import * as bilibiliPlugin from "./plugins/bilibili";
 import * as musicPlugin from "./plugins/music";
 import * as youtubePlugin from "./plugins/youtube";
 import * as managePlugin from "./plugins/guildManage";
+import * as twitterPlugin from "./plugins/twitter";
 
 export const name = "kbot";
 
@@ -50,6 +51,7 @@ interface Config {
   KBotBilibili?: bilibiliPlugin.Config & IPluginEnableConfig;
   KBotMusic?: musicPlugin.Config & IPluginEnableConfig;
   KBotYoutube?: youtubePlugin.Config & IPluginEnableConfig;
+  KBotTwitter?: twitterPlugin.Config & IPluginEnableConfig;
 }
 
 const pluginLoad = <T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> =>
@@ -77,6 +79,7 @@ export const Config: Schema<Config> = Schema.object({
   ),
   KBotMusic: pluginLoad(musicPlugin.Config).description("点歌功能"),
   KBotYoutube: pluginLoad(youtubePlugin.Config).description("Youtube 视频解析"),
+  KBotTwitter: pluginLoad(twitterPlugin.Config).description("Twitter 动态推送"),
 });
 
 export const logger = new Logger("KBot");
@@ -122,6 +125,8 @@ export async function apply(ctx: Context, config: Config) {
     if (config.KBotMusic.enabled) ctx.plugin(musicPlugin, config.KBotMusic);
     if (config.KBotYoutube.enabled)
       ctx.plugin(youtubePlugin, config.KBotYoutube);
+    if (config.KBotTwitter.enabled)
+      ctx.plugin(twitterPlugin, config.KBotTwitter);
 
     logger.success("插件加载完毕");
   }

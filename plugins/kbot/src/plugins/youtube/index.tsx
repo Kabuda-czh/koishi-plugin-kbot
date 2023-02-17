@@ -2,14 +2,14 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-14 12:55:31
+ * @LastEditTime: 2023-02-17 11:17:09
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Context, Logger, Schema } from "koishi";
-import {} from 'koishi-plugin-puppeteer'
+import { } from 'koishi-plugin-puppeteer'
 
 interface ApiData {
   kind: string;
@@ -79,6 +79,7 @@ interface Item {
 
 export interface Config {
   youtubeDataApiKey: string;
+  useText?: boolean;
 }
 
 const logger = new Logger('plugins/youtube')
@@ -89,6 +90,7 @@ export const Config: Schema<Config> = Schema.object({
     .description(
       "请提供YouTube Data API v3 (必填) 详情: https://developers.google.com/youtube/v3/getting-started"
     ),
+  useText: Schema.boolean().default(false).description("是否使用文本模式"),
 });
 
 const apiEndPointPrefix = "https://www.googleapis.com/youtube/v3/videos";
@@ -142,6 +144,8 @@ export function apply(ctx: Context, config: Config) {
 
       const result = await fetchDataFromAPI(ctx, config, id);
 
+      if (result.items.length === 0) return "未能成功解析, 或许视频不存在";
+
       const { snippet: {
         title,
         description,
@@ -157,26 +161,35 @@ export function apply(ctx: Context, config: Config) {
 
       logger.info(`Youtube视频解析成功: ${title}`);
 
-      // TODO 待优化样式
-      await session.send(
-        <html style={{
-          padding: '1rem',
-          color: '#fff',
-          background: '#000'
-        }}>
-          <p>Youtube视频内容解析</p>
-          <br />
-          <img src={url} />
-          <p>频道: {channelTitle}</p>
-          <p>标题: {title}</p>
-          <p>描述: {description.length > 50 ? description.slice(0, 50) + '...' : description}</p>
-          <p>发布时间: {publishedAt}</p>
-          <p>标签: {tagString}</p>
-          <p>播放量: {statistics.viewCount}</p>
-          <p>点赞: {statistics.likeCount}</p>
-        </html>
-      )
-
+      if (config.useText) {
+        return `<image url="${url}" />
+频道: ${channelTitle}
+标题: ${title}
+描述: ${description.length > 50 ? description.slice(0, 50) + '...' : description}
+发布时间: ${publishedAt}
+标签: ${tagString}
+播放量: ${statistics.viewCount}
+点赞: ${statistics.likeCount}
+`;
+      } else {
+        // TODO 待优化样式
+        await session.send(
+          <html style={{
+            padding: '1rem',
+            color: '#fff',
+            background: '#000'
+          }}>
+            <img src={url} />
+            <p>频道: {channelTitle}</p>
+            <p>标题: {title}</p>
+            <p>描述: {description.length > 50 ? description.slice(0, 50) + '...' : description}</p>
+            <p>发布时间: {publishedAt}</p>
+            <p>标签: {tagString}</p>
+            <p>播放量: {statistics.viewCount}</p>
+            <p>点赞: {statistics.likeCount}</p>
+          </html>
+        )
+      }
     } catch (error) {
       logger.error(error);
       return "Youtube视频解析发生错误";

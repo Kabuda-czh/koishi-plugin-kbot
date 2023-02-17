@@ -58,7 +58,7 @@
     "@koishijs/plugin-analytics": "1.0.3",
     "@koishijs/plugin-bind": "1.3.3",
     "@koishijs/plugin-commands": "^2.3.0",
-    "@koishijs/plugin-console": "5.4.0",
+    "@koishijs/plugin-console": "5.4.2",
     "@koishijs/plugin-database-sqlite": "3.3.3",
     "@koishijs/plugin-dataview": "2.2.4",
     "@koishijs/plugin-help": "2.0.3",
@@ -74,6 +74,7 @@
     "koishi-plugin-desktop": "^0.0.3",
     "koishi-plugin-genshin-voice": "1.0.3",
     "koishi-plugin-gocqhttp": "3.3.3",
-    "koishi-plugin-puppeteer": "3.4.6"
+    "koishi-plugin-puppeteer": "3.4.9",
+    "koishi-plugin-status-pro": "1.1.6"
   }
 }
