@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-16 17:31:37
+ * @LastEditTime: 2023-02-21 17:24:45
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.tsx
  * @Description:
  *
@@ -94,8 +94,10 @@ export async function apply(ctx: Context, config: Config) {
   //     return status;
   //   });
 
-  ctx.command("kbot/body", "检查机器人状态")
-    .shortcut("自检")
+  ctx.command("kbot/body", "检查机器人状态", {
+    checkArgCount: true,
+    showWarning: false
+  }).shortcut("自检", { fuzzy: false })
     .action(async ({ session }) => {
       const systemInfo = await getSystemInfo("KBot", version, ctx.registry.size);
 
