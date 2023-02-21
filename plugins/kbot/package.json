@@ -44,6 +44,6 @@
   "devDependencies": {
     "@types/qs": "^6.9.7",
     "@types/systeminformation": "^3.54.0",
-    "@koishijs/client": "^1.1.5"
+    "@koishijs/client": "^5.4.4"
   }
 }
