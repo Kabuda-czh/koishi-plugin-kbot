@@ -38,12 +38,12 @@
     "@koishijs/plugin-admin": "^1.1.5"
   },
   "dependencies": {
-    "qs": "^6.10.3",
-    "systeminformation": "^5.17.0"
+    "qs": "^6.11.0",
+    "systeminformation": "^5.17.9"
   },
   "devDependencies": {
     "@types/qs": "^6.9.7",
-    "@types/systeminformation": "^3.54.0",
-    "@koishijs/client": "^5.4.4"
+    "@types/systeminformation": "^3.54.1",
+    "@koishijs/client": "^5.5.0"
   }
 }
