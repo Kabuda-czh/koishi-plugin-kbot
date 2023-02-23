@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-21 14:12:42
+ * @LastEditTime: 2023-02-22 16:46:21
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -79,7 +79,7 @@ export const Config: Schema<Config> = Schema.object({
   ),
   KBotMusic: pluginLoad(musicPlugin.Config).description("点歌功能"),
   KBotYoutube: pluginLoad(youtubePlugin.Config).description("Youtube 视频解析"),
-  // KBotTwitter: pluginLoad(twitterPlugin.Config).description("Twitter 动态推送"),
+  KBotTwitter: pluginLoad(twitterPlugin.Config).description("Twitter 动态推送"),
 });
 
 export const logger = new Logger("KBot");
@@ -125,8 +125,8 @@ export async function apply(ctx: Context, config: Config) {
     if (config.KBotMusic.enabled) ctx.plugin(musicPlugin, config.KBotMusic);
     if (config.KBotYoutube.enabled)
       ctx.plugin(youtubePlugin, config.KBotYoutube);
-    // if (config.KBotTwitter.enabled)
-    //   ctx.plugin(twitterPlugin, config.KBotTwitter);
+    if (config.KBotTwitter.enabled)
+      ctx.plugin(twitterPlugin, config.KBotTwitter);
 
     logger.success("插件加载完毕");
   }
