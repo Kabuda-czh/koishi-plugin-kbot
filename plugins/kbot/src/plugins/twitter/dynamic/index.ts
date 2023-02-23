@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 16:20:04
+ * @LastEditTime: 2023-02-23 17:52:49
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -10,10 +10,11 @@
  */
 import { Argv, Context, Channel, Dict, Quester, Schema, Logger } from "koishi";
 import {} from "koishi-plugin-puppeteer";
+import { Page } from "puppeteer-core";
 
 import * as fs from "fs";
 import path from "path";
-import { DynamicNotifiction } from "../model";
+import { DynamicNotifiction, UserTweetsResponse } from "../model";
 import { listen } from "./listen";
 import { dynamicStrategy } from "./dynamic.strategy";
 
@@ -33,23 +34,7 @@ export interface Config {
   interval: number;
   device: string;
   live: boolean;
-  fonts: {
-    enabled: boolean;
-    isCreate?: boolean;
-    fontsObjcet?: Dict<string, string>;
-  };
 }
-
-const fontsUsage = `是否使用自定义字体截图, **注意**
-- 需要在根目录下的 \`public\` 文件夹中的 \`fonts\` 文件夹下放入字体文件
-- 若无 \`fonts\` 文件夹, 请自行创建`;
-
-const fontsObjectUsage = `请将自定义字体名字与文件名字对应上, 且最好不要重复
-- 左侧为自定义字体名字, 右侧为字体文件名字
-- 例如: \`YaHei\` 对应 \`MicrosoftYaHei.ttf\`
-- 若未填写, 将从 \`fonts\` 文件夹中按照文件名排序进行设置
-- 推荐字体: \`HarmonyOS_Sans_SC\`
-`;
 
 export const Config: Schema<Config> = Schema.object({
   interval: Schema.number()
@@ -63,45 +48,21 @@ export const Config: Schema<Config> = Schema.object({
     .default("pc")
     .description("截图类型 (手机/电脑)"),
   live: Schema.boolean().description("是否监控开始直播的动态").default(true),
-  fonts: Schema.intersect([
-    Schema.object({
-      enabled: Schema.boolean().default(false).description(fontsUsage),
-      isCreate: Schema.boolean().default(false).hidden(),
-    }),
-    Schema.union([
-      Schema.object({
-        enabled: Schema.const(true).required(),
-        fontsObjcet: Schema.dict(String).description(fontsObjectUsage),
-      }),
-      Schema.object({
-        enabled: Schema.const(false)
-      })
-    ]),
-  ]),
 });
 
 export const logger = new Logger("KBot-twitter-dynamic");
 
 export async function apply(ctx: Context, config: Config) {
-  console.log("123");
+  const cookieJson = {
+    gt: "1628300495491313664",
+  };
+
   const channels = await ctx.database.get("channel", {}, [
     "id",
     "guildId",
     "platform",
     "twitter",
   ]);
-
-  const fileNames = fs.readdirSync(
-    path.resolve(__dirname, "../../../../../../public")
-  );
-
-  if (config.fonts.enabled && !config.fonts.isCreate) {
-    if (!fileNames.includes("fonts"))
-      fs.mkdirSync(path.resolve(__dirname, "../../../../../../public/fonts"));
-
-    config.fonts.isCreate = true;
-    ctx.scope.update(config);
-  }
 
   const list = channels
     .filter((channel) => channel.twitter.dynamic)
@@ -120,24 +81,24 @@ export async function apply(ctx: Context, config: Config) {
     .usage("最低权限: 2 级")
     .option(
       "add",
-      "-a <uid:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字 或者 空间短链",
+      "-a <uid:string> 添加订阅, 请输入要添加的 twitter 博主的 id 名字(指 @后的字符串)",
       {
         authority: 2,
       }
     )
     .option(
       "remove",
-      "-r <uid:string> 移除订阅, 请输入要移除的 up 主的 uid 或者 名字 或者 空间短链",
+      "-r <uid:string> 移除订阅, 请输入要移除的 twitter 博主的 id 名字(指 @后的字符串)",
       {
         authority: 2,
       }
     )
     .option(
       "search",
-      "-s <upInfo:string> 查看动态, 请输入要查看动态的 up 主的 uid 或者 名字 或者 空间短链",
+      "-s <upInfo:string> 查看最新动态, 请输入要查看动态的 twitter 博主的 id 名字(指 @后的字符串)",
       { authority: 2 }
     )
-    .option("list", "-l 展示当前订阅up主列表", { authority: 2 })
+    .option("list", "-l 展示当前订阅 twitter 博主列表", { authority: 2 })
     .action(async ({ session, options }) => {
       if (Object.keys(options).length > 1) return "请不要同时使用多个参数";
 
@@ -148,14 +109,44 @@ export async function apply(ctx: Context, config: Config) {
   // ctx.setInterval(async () => {
   //   await generator.next();
   // }, config.interval * 1000);
+
+  // ctx.command("twittertest").action(async ({session}) => {
+  //   let page: Page;
+
+  //   ctx.http.get("https://twitter.com/i/api/graphql/rePnxwe9LZ51nQ7Sn_xN_A/UserByScreenName?variables=%7B%22screen_name%22%3A%22playvalorant%22%2C%22withSafetyModeUserFields%22%3Atrue%2C%22withSuperFollowsUserFields%22%3Atrue%7D&features=%7B%22responsive_web_twitter_blue_verified_badge_is_enabled%22%3Atrue%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Afalse%2C%22verified_phone_label_enabled%22%3Afalse%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%7D", {
+  //     headers: {
+  //       "x-guest-token": "1628300495491313664"
+  //     }
+  //   }).then(resp => {
+  //     console.log("resp", resp)
+  //   }).catch(err => {
+  //     const response = err.response
+  //     if (response.status === 403 && response.data) {
+  //       console.log(response.data.errors[0]?.code) // 239 -> reGetToken
+  //     }
+  //   })
+
+  //   try {
+  //     page = await ctx.puppeteer.page();
+  //     await page.goto("https://twitter.com/");
+  //     await page.waitForNetworkIdle()
+  //     const cookies = await page.cookies();
+  //     const gtCookie = cookies.find((x) => x.name === "gt")?.value;
+  //     // session.send(String(await page.cookies()))
+  //   } catch (error) {
+  //   } finally {
+  //     page?.close()
+  //   }
+  // })
 }
 
 function checkDynamic({ session }: Argv<never, "twitter">) {
   session.channel.twitter.dynamic ||= [];
 }
 
-// async function request(
-//   uid: string,
-//   http: Quester
-// ): Promise<BilibiliDynamicItem[]> {
-// }
+async function request(
+  uid: string,
+  http: Quester
+): Promise<UserTweetsResponse[]> {
+  return {} as any
+}

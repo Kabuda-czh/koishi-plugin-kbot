@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 16:59:47
+ * @LastEditTime: 2023-02-23 17:15:50
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -32,7 +32,7 @@ export async function bilibiliVupCheck(
   try {
     const searchUserCardInfo = await getMemberCard(ctx.http, uid);
 
-    const needLoadFontList = await getFontsList(config, logger);
+    const needLoadFontList = await getFontsList(logger);
 
     let vdb, cookie;
 

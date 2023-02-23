@@ -17,19 +17,17 @@ import { getFontsList } from "../../utils";
 export async function renderFunction(
   ctx: Context,
   item: any,
-  config: Config
 ): Promise<string> {
-  return pcRenderImage(ctx, item, config);
+  return pcRenderImage(ctx, item);
 }
 
 async function pcRenderImage(
   ctx: Context,
   item: any,
-  config: Config
 ): Promise<string> {
   let page: Page;
   try {
-    const needLoadFontList = await getFontsList(config, logger);
+    const needLoadFontList = await getFontsList(logger);
 
     page = await ctx.puppeteer.page();
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 });

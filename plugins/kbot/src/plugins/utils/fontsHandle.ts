@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-05 23:11:45
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 16:28:20
+ * @LastEditTime: 2023-02-23 17:12:30
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\utils\fontsHandle.ts
  * @Description:
  *
@@ -12,60 +12,34 @@ import * as fs from "fs";
 import { Dict, Logger } from "koishi";
 import path from "path";
 
-interface Config {
-  fonts: {
-    enabled: boolean;
-    isCreate?: boolean;
-    fontsObjcet?: Dict<string, string>;
-  }
-}
-
 export async function getFontsList(
-  config: Config,
   logger: Logger
 ): Promise<{ fontFamily: string; fontUrl: string }[]> {
   return new Promise((resolve) => {
     const needLoadFontList: { fontFamily: string; fontUrl: string }[] = [];
 
-    if (config.fonts.enabled) {
-      const fileNames = fs.readdirSync(
-        path.resolve(__dirname, "../../../../../public/fonts")
-      );
+    const fileNames = fs.readdirSync(
+      path.resolve(__dirname, "../../assets/fonts")
+    );
 
-      if (fileNames.length !== 0) {
-        let trueFontFileNames = [];
+    for (const fontFileName of fileNames) {
+      try {
+        const fileBuffer = fs.readFileSync(
+          path.resolve(
+            __dirname,
+            `../../assets/fonts/${fontFileName}`
+          ),
+          "binary"
+        );
 
-        if (Object.keys(config.fonts?.fontsObjcet || {}).length > 0) {
-          for (const fontName in Object.values(config.fonts.fontsObjcet)) {
-            if (fileNames.includes(fontName)) {
-              trueFontFileNames.push(fontName);
-            }
-          }
-        }
-
-        if (trueFontFileNames.length === 0) trueFontFileNames = [...fileNames];
-
-        for (const fontFileName of trueFontFileNames) {
-          try {
-            const fileBuffer = fs.readFileSync(
-              path.resolve(
-                __dirname,
-                `../../../../../public/fonts/${fontFileName}`
-              ),
-              "binary"
-            );
-
-            needLoadFontList.push({
-              fontFamily: `${fontFileName.split(".").join(" ")}`,
-              fontUrl: `data:application/font-${fontFileName.split(".")[1]};base64,${Buffer.from(
-                fileBuffer,
-                "binary"
-              ).toString("base64")}`,
-            });
-          } catch (err) {
-            logger.error(`字体 ${fontFileName} 加载失败`, err);
-          }
-        }
+        needLoadFontList.push({
+          fontFamily: `${fontFileName.split(".").join(" ")}`,
+          fontUrl: `data:application/font-${
+            fontFileName.split(".")[1]
+          };base64,${Buffer.from(fileBuffer, "binary").toString("base64")}`,
+        });
+      } catch (err) {
+        logger.error(`字体 ${fontFileName} 加载失败`, err);
       }
     }
     resolve(needLoadFontList);

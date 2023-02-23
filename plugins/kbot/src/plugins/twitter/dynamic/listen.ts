@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 15:40:40
+ * @LastEditTime: 2023-02-23 17:14:45
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\listen.ts
  * @Description:
  *
@@ -52,7 +52,7 @@ export async function* listen(
           neo = neo.filter((item) => item.type !== "DYNAMIC_TYPE_LIVE_RCMD");
         if (neo.length !== 0) {
           const rendered = await Promise.all(
-            neo.map((item) => renderFunction(ctx, item, config))
+            neo.map((item) => renderFunction(ctx, item))
           );
 
           rendered.forEach((text, index) => {

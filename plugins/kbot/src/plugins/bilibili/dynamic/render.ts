@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 15:34:50
+ * @LastEditTime: 2023-02-23 17:12:38
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -21,20 +21,19 @@ export async function renderFunction(
   config: Config
 ): Promise<string> {
   if (config.device === "pc") {
-    return pcRenderImage(ctx, item, config);
+    return pcRenderImage(ctx, item);
   } else {
-    return mobileRenderImage(ctx, item, config);
+    return mobileRenderImage(ctx, item);
   }
 }
 
 async function pcRenderImage(
   ctx: Context,
   item: BilibiliDynamicItem,
-  config: Config
 ): Promise<string> {
   let page: Page;
   try {
-    const needLoadFontList = await getFontsList(config, logger);
+    const needLoadFontList = await getFontsList(logger);
 
     page = await ctx.puppeteer.page();
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 });
@@ -80,11 +79,10 @@ async function pcRenderImage(
 async function mobileRenderImage(
   ctx: Context,
   item: BilibiliDynamicItem,
-  config: Config
 ): Promise<string> {
   let page: Page;
   try {
-    const needLoadFontList = await getFontsList(config, logger);
+    const needLoadFontList = await getFontsList(logger);
     
     page = await ctx.puppeteer.page();
 
