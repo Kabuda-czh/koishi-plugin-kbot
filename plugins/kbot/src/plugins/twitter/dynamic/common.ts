@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 14:23:18
+ * @LastEditTime: 2023-02-27 18:24:36
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
@@ -120,10 +120,11 @@ export async function twitterSearch(
   try {
     const entries = await getTwitterTweets(twitterRestId, ctx);
 
+    if (entries.length === 0) return "该用户没有动态。";
+
     const tweetsRestId = entries[0].sortIndex;
     const dynamicURL =
-      entries[0].content.itemContent.tweet_results.result.legacy
-        .retweeted_status_result.result.legacy.extended_entities.media[0].url;
+      entries[0].content.itemContent.tweet_results.result.legacy?.retweeted_status_result?.result?.legacy.extended_entities.media[0].url || "";
 
     return renderFunction(ctx, { twitterId, tweetsRestId, dynamicURL });
   } catch (e) {

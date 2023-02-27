@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 16:08:52
+ * @LastEditTime: 2023-02-27 18:22:46
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -117,7 +117,7 @@ export async function getTwitterTweets(restId: string, ctx: Context): Promise<En
 
   if (!res) throw new Error(`Failed to get dynamics. ${res}`);
 
-  const instructions = res.data.user.result.timeline_v2.timeline.instructions;
+  const instructions = res.data.user?.result?.timeline_v2.timeline.instructions || [];
 
   const entries = instructions.find(
     (x) => x.type === "TimelineAddEntries"
