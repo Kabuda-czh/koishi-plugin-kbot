@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 15:19:09
+ * @LastEditTime: 2023-02-27 16:08:52
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -121,7 +121,7 @@ export async function getTwitterTweets(restId: string, ctx: Context): Promise<En
 
   const entries = instructions.find(
     (x) => x.type === "TimelineAddEntries"
-  ).entries;
+  )?.entries;
 
   return entries;
 }

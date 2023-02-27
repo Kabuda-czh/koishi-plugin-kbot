@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 15:04:15
+ * @LastEditTime: 2023-02-27 17:19:38
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\listen.ts
  * @Description:
  *
@@ -63,9 +63,8 @@ export async function* listen(
                     .user_results.result.legacy.screen_name,
                 tweetsRestId: item.sortIndex,
                 dynamicURL:
-                  item.content.itemContent.tweet_results.result.legacy
-                    .retweeted_status_result.result.legacy.extended_entities
-                    .media[0].url,
+                  item.content.itemContent.tweet_results.result.legacy?.retweeted_status_result?.result?.legacy.extended_entities
+                    .media[0].url || "",
               })
             )
           );

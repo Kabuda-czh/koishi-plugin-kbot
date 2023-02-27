@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 15:07:14
+ * @LastEditTime: 2023-02-27 15:26:30
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -89,7 +89,7 @@ export async function apply(ctx: Context, config: Config) {
     .command("kbot/twitter", "推特相关")
     .channelFields(["id", "guildId", "platform", "twitter"])
     .before(checkDynamic)
-    .usage("最低权限: 2 级")
+    .usage(`最低权限: ${config.authority} 级`)
     .option(
       "add",
       "-a <uid:string> 添加订阅, 请输入要添加的 twitter 博主的 id 名字(指 @后的字符串)",

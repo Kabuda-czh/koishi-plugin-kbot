@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 13:56:53
+ * @LastEditTime: 2023-02-27 17:17:26
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -45,6 +45,8 @@ async function pcRenderImage(
     const element = await page.$("article");
     const elementClip = await element.boundingBox();
 
+    const URL = item.dynamicURL || `https://twitter.com/${item.twitterId}/status/${item.tweetsRestId}`
+
     return (
       `${item.twitterId} 发布了动态:\n` +
       segment.image(
@@ -54,7 +56,7 @@ async function pcRenderImage(
         }),
         "image/png"
       ) +
-      `\n${item.dynamicURL}`
+      `\n${URL}`
     );
   } catch (e) {
     logger.error("twitter render error", e);

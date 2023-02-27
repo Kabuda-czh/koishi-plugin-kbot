@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 14:40:24
+ * @LastEditTime: 2023-02-27 15:26:54
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -88,7 +88,7 @@ export async function apply(ctx: Context, config: Config) {
     .command("kbot/bilibili", "b站相关")
     .channelFields(["id", "guildId", "platform", "bilibili"])
     .before(checkDynamic)
-    .usage("最低权限: 2 级")
+    .usage(`最低权限: ${config.authority} 级`)
     .option(
       "add",
       "-a <uid:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字 或者 空间短链",

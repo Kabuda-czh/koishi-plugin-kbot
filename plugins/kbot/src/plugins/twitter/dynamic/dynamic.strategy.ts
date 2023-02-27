@@ -57,14 +57,17 @@ export const dynamicStrategy = async (
 
   const strategyName = Object.keys(options).find((key) => options[key]);
   if (strategyName) {
+    let restId, twitterName
     const twitterId = options[strategyName];
-    const [restId, twitterName] = await getTwitterRestId(
-      twitterId,
-      ctx.http,
-      logger
-    );
-    if (!["list"].includes(strategyName) && !restId)
-      return "未获取到对应 twitter 博主 ID 信息";
+    if (!["list"].includes(strategyName)) {
+      [restId, twitterName] = await getTwitterRestId(
+        twitterId,
+        ctx.http,
+        logger
+      );
+      if (!["list"].includes(strategyName) && !restId)
+        return "未获取到对应 twitter 博主 ID 信息";
+    }
 
     return dynamicStrategies[strategyName]?.(
       { session, options },
