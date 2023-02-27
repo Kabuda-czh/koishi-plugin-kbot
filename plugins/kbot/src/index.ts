@@ -2,13 +2,15 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-22 16:46:21
+ * @LastEditTime: 2023-02-27 15:08:59
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import { Context, Logger, Schema } from "koishi";
+import * as fs from "fs";
+import { resolve } from "path";
 
 import * as botBasic from "./basic";
 
@@ -30,6 +32,7 @@ export const usage = `
 - KBotBilibili: Bilibili 动态推送
 - KBotMusic: 点歌功能
 - KBotYoutube: Youtube 视频解析
+- KBotTwitter: Twitter 动态推送
 ## 权限问题
 - 第一步: 设置机器人的超级管理员 QQ 号, 建议为自身 QQ 号, kbot 会自动创建该账号最高权限, 注意设置完毕后需要重启一次\n
 \t若指令仍然提示权限不足, 请通过在左侧菜单栏中找到 \`数据库\` 选项点击进入\n
@@ -88,6 +91,15 @@ export async function apply(ctx: Context, config: Config) {
   if (!config.superAdminQQ || config.superAdminQQ.length === 0) {
     logger.error("未设置超级管理员QQ号");
   } else {
+    const fileNames = fs.readdirSync(
+      resolve(__dirname, "../../../public")
+    );
+
+    if (!fileNames.includes("kbot"))
+      fs.mkdirSync(
+        resolve(__dirname, "../../../public/kbot")
+      );
+
     ctx.bots.forEach(async (bot) => {
       if (
         !["connect", "online"].includes(bot.status) ||
@@ -128,6 +140,6 @@ export async function apply(ctx: Context, config: Config) {
     if (config.KBotTwitter.enabled)
       ctx.plugin(twitterPlugin, config.KBotTwitter);
 
-    logger.success("插件加载完毕");
+    logger.success("KBot 内置插件加载完毕");
   }
 }

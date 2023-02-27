@@ -2,13 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-23 17:15:50
+ * @LastEditTime: 2023-02-27 11:53:37
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Argv, Dict, Channel, Context, segment } from "koishi";
+import { Argv, Dict, Channel, Context } from "koishi";
 import { Config, logger } from "..";
 import { DynamicNotifiction } from "../../model";
 import * as fs from "fs";
@@ -39,7 +39,7 @@ export async function bilibiliVupCheck(
     try {
       vdb = JSON.parse(
         fs.readFileSync(
-          resolve(__dirname, "../../../../../../../public/bilibili/vup.json"),
+          resolve(__dirname, "../../../../../../../public/kbot/bilibili/vup.json"),
           "utf-8"
         )
       );
@@ -51,7 +51,7 @@ export async function bilibiliVupCheck(
     try {
       cookie = JSON.parse(
         fs.readFileSync(
-          resolve(__dirname, "../../../../../../../public/bilibili/cookie.json"),
+          resolve(__dirname, "../../../../../../../public/kbot/bilibili/cookie.json"),
           "utf-8"
         )
       );
@@ -156,11 +156,11 @@ export async function bilibiliRefreshVup() {
     });
 
     if (
-      !fs.existsSync(resolve(__dirname, "../../../../../../../public/bilibili"))
+      !fs.existsSync(resolve(__dirname, "../../../../../../../public/kbot/bilibili"))
     )
-      fs.mkdirSync(resolve(__dirname, "../../../../../../../public/bilibili"));
+      fs.mkdirSync(resolve(__dirname, "../../../../../../../public/kbot/bilibili"));
     fs.writeFileSync(
-      resolve(__dirname, "../../../../../../../public/bilibili/vup.json"),
+      resolve(__dirname, "../../../../../../../public/kbot/bilibili/vup.json"),
       JSON.stringify(vtbs)
     );
 
@@ -199,11 +199,11 @@ export async function bilibiliCookie({
     });
 
     if (
-      !fs.existsSync(resolve(__dirname, "../../../../../../../public/bilibili"))
+      !fs.existsSync(resolve(__dirname, "../../../../../../../public/kbot/bilibili"))
     )
-      fs.mkdirSync(resolve(__dirname, "../../../../../../../public/bilibili"));
+      fs.mkdirSync(resolve(__dirname, "../../../../../../../public/kbot/bilibili"));
     fs.writeFileSync(
-      resolve(__dirname, "../../../../../../../public/bilibili/cookie.json"),
+      resolve(__dirname, "../../../../../../../public/kbot/bilibili/cookie.json"),
       JSON.stringify(cookieJson)
     );
 
