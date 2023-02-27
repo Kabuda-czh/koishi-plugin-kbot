@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-09 18:27:13
+ * @LastEditTime: 2023-02-27 14:23:18
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
@@ -10,30 +10,13 @@
  */
 import { Argv, Channel, Context, Dict, Quester } from "koishi";
 import { Config, logger } from ".";
-import {
-  DynamicNotifiction,
-} from "../model";
+import { DynamicNotifiction } from "../model";
+import { getTwitterTweets } from "../utils";
 import { renderFunction } from "./render";
-
-const fetchUserInfo = async (
-  uid: string,
-  http: Quester
-): Promise<any> => {
-  const res = await http.get(
-    `https://api.twitter.com/x/space/acc/info?mid=${uid}&gaia_source=m_station`,
-    {
-      headers: {
-        Referer: `https://space.twitter.com/${uid}/dynamic`,
-      },
-    }
-  );
-  if (res.code !== 0) throw new Error(`Failed to get user info. ${res}`);
-  return res.data;
-};
 
 export async function twitterAdd(
   { session }: Argv<never, "id" | "guildId" | "platform" | "twitter", any>,
-  uid: string,
+  twitter: { twitterId: string; twitterName: string; twitterRestId: string },
   list: Dict<
     [
       Pick<Channel, "id" | "guildId" | "platform" | "twitter">,
@@ -42,22 +25,24 @@ export async function twitterAdd(
   >,
   ctx: Context
 ) {
+  const { twitterId, twitterName, twitterRestId } = twitter;
+
   if (
     session.channel.twitter.dynamic.find(
-      (notification) => notification.twitterId === uid
+      (notification) => notification.twitterRestId === twitterRestId
     )
   ) {
     return "该用户已在监听列表中。";
   }
   try {
-    const { name } = await fetchUserInfo(uid, ctx.http);
     const notification: DynamicNotifiction = {
       botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
-      twitterId: uid,
-      twitterName: name,
+      twitterId: twitterId,
+      twitterName: twitterName,
+      twitterRestId: twitterRestId,
     };
     session.channel.twitter.dynamic.push(notification);
-    (list[uid] ||= []).push([
+    (list[twitterRestId] ||= []).push([
       {
         id: session.channel.id,
         guildId: session.channel.guildId,
@@ -66,16 +51,16 @@ export async function twitterAdd(
       },
       notification,
     ]);
-    return `成功添加 up主: ${name}`;
+    return `成功添加: ${twitterName}`;
   } catch (e) {
-    logger.error(`Failed to add user ${uid}. ${e}`);
-    return "请求失败，请检查 uid 是否正确或重试" + e;
+    logger.error(`Failed to add user ${twitterId}. ${e}`);
+    return "请求失败，请检查 id 是否正确或重试" + e;
   }
 }
 
 export async function twitterRemove(
   { session }: Argv<never, "id" | "guildId" | "platform" | "twitter", any>,
-  uid: string,
+  twitter: { twitterId: string; twitterName: string; twitterRestId: string },
   list: Dict<
     [
       Pick<Channel, "id" | "guildId" | "platform" | "twitter">,
@@ -84,25 +69,27 @@ export async function twitterRemove(
   >
 ) {
   const { channel } = session;
+  const { twitterRestId } = twitter;
+
   const index = channel.twitter.dynamic.findIndex(
-    (notification) => notification.twitterId === uid
+    (notification) => notification.twitterRestId === twitterRestId
   );
   if (index === -1) return "该用户不在监听列表中。";
   channel.twitter.dynamic.splice(index, 1);
-  const listIndex = list[uid].findIndex(
+  const listIndex = list[twitterRestId].findIndex(
     ([{ id, guildId, platform }, notification]) => {
       return (
         channel.id === id &&
         channel.guildId === guildId &&
         channel.platform === platform &&
-        notification.twitterId === uid
+        notification.twitterRestId === twitterRestId
       );
     }
   );
   if (listIndex === -1) throw new Error("Data is out of sync.");
-  const name = list[uid][listIndex]?.[1].twitterName;
-  delete list[uid];
-  return `成功删除 up主: ${name}`;
+  const name = list[twitterRestId][listIndex]?.[1].twitterName;
+  delete list[twitterRestId];
+  return `成功删除: ${name}`;
 }
 
 export async function twitterList({
@@ -112,14 +99,14 @@ export async function twitterList({
   return session.channel.twitter.dynamic
     .map(
       (notification) =>
-        "- " + notification.twitterId + " " + notification.twitterName
+        "- @" + notification.twitterId + " " + notification.twitterName
     )
     .join("\n");
 }
 
 export async function twitterSearch(
   { session }: Argv<never, "id" | "guildId" | "platform" | "twitter", any>,
-  uid: string,
+  twitter: { twitterId: string; twitterName: string; twitterRestId: string },
   list: Dict<
     [
       Pick<Channel, "id" | "guildId" | "platform" | "twitter">,
@@ -129,18 +116,18 @@ export async function twitterSearch(
   ctx: Context,
   config: Config
 ) {
-  // try {
-  //   const { data } = await getDynamic(ctx.http, uid);
-  //   const items = data.items as BilibiliDynamicItem[];
+  const { twitterId, twitterRestId } = twitter;
+  try {
+    const entries = await getTwitterTweets(twitterRestId, ctx);
 
-  //   if (items.length === 0) return "该 up 没有动态";
+    const tweetsRestId = entries[0].sortIndex;
+    const dynamicURL =
+      entries[0].content.itemContent.tweet_results.result.legacy
+        .retweeted_status_result.result.legacy.extended_entities.media[0].url;
 
-  //   const dynamic =
-  //     items[0].modules.module_tag?.text === "置顶" ? items[1] : items[0];
-
-  //   return renderFunction(ctx, dynamic, config);
-  // } catch (e) {
-  //   logger.error(`Failed to get user dynamics. ${e}`);
-  //   return "动态获取失败" + e;
-  // }
+    return renderFunction(ctx, { twitterId, tweetsRestId, dynamicURL });
+  } catch (e) {
+    logger.error(`Failed to get user dynamics. ${e}`);
+    return "动态获取失败" + e;
+  }
 }

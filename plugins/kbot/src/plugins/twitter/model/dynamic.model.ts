@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:25:48
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 15:27:58
+ * @LastEditTime: 2023-02-27 13:39:36
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\model\dynamic.model.ts
  * @Description: 
  * 
@@ -12,5 +12,6 @@ export interface DynamicNotifiction {
   botId: string;
   twitterId: string;
   twitterName: string;
-  lastUpdated?: string;
+  twitterRestId: string;
+  lastUpdated?: number;
 }

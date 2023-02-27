@@ -9,7 +9,7 @@
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as fs from "fs";
-import { Dict, Logger } from "koishi";
+import { Logger } from "koishi";
 import path from "path";
 
 export async function getFontsList(

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:03:04
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 15:24:18
+ * @LastEditTime: 2023-02-27 12:53:56
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\model\userTweet.model.ts
  * @Description: 
  * 
@@ -269,7 +269,7 @@ interface Entities9 {
   symbols: any[];
 }
 
-interface Entry {
+export interface Entry {
   entryId: string;
   sortIndex: string;
   content: Content;

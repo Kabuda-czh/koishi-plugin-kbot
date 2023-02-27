@@ -2,15 +2,15 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-23 17:14:45
+ * @LastEditTime: 2023-02-27 15:04:15
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\listen.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Channel, Context, Dict, Quester } from "koishi";
+import { Channel, Context, Dict } from "koishi";
 import { Config, logger } from ".";
-import { DynamicNotifiction } from "../model";
+import { DynamicNotifiction, Entry } from "../model";
 import { renderFunction } from "./render";
 
 export async function* listen(
@@ -20,7 +20,7 @@ export async function* listen(
       DynamicNotifiction
     ][]
   >,
-  request: (uid: string, http: Quester) => Promise<any>,
+  request: (restId: string, ctx: Context) => Promise<Entry[]>,
   ctx: Context,
   config: Config
 ) {
@@ -30,35 +30,54 @@ export async function* listen(
       yield;
       continue;
     }
-    for (const [uid, notifications] of entries) {
+    for (const [restId, notifications] of entries) {
       if (notifications.length === 0) continue;
       const time = notifications[0][1].lastUpdated;
       try {
-        const items = await request(uid, ctx.http);
+        const items = await request(restId, ctx);
         // setup time on every start up
         if (!notifications[0]?.[1].lastUpdated) {
           notifications.forEach(
             ([, notification]) =>
               (notification.lastUpdated =
-                items[0]?.modules.module_author.pub_ts ||
-                Math.ceil(+new Date() / 1000))
+                new Date(
+                  items[0]?.content.itemContent.tweet_results.result.legacy.created_at
+                ).getTime() / 1000 || Math.ceil(+new Date() / 1000))
           );
           continue;
         }
         let neo = items.filter(
-          (item) => item.modules.module_author.pub_ts > time
+          (item) =>
+            new Date(
+              item.content.itemContent?.tweet_results?.result.legacy.created_at || 0
+            ).getTime() /
+              1000 >
+            time
         );
-        if (!config.live)
-          neo = neo.filter((item) => item.type !== "DYNAMIC_TYPE_LIVE_RCMD");
         if (neo.length !== 0) {
           const rendered = await Promise.all(
-            neo.map((item) => renderFunction(ctx, item))
+            neo.map((item) =>
+              renderFunction(ctx, {
+                twitterId:
+                  item.content.itemContent.tweet_results.result.core
+                    .user_results.result.legacy.screen_name,
+                tweetsRestId: item.sortIndex,
+                dynamicURL:
+                  item.content.itemContent.tweet_results.result.legacy
+                    .retweeted_status_result.result.legacy.extended_entities
+                    .media[0].url,
+              })
+            )
           );
 
           rendered.forEach((text, index) => {
             notifications.forEach(([channel, notification]) => {
               notification.lastUpdated =
-                neo[index].modules.module_author.pub_ts;
+                new Date(
+                  neo[
+                    index
+                  ].content.itemContent.tweet_results.result.legacy.created_at
+                ).getTime() / 1000;
               ctx.bots[notification.botId].sendMessage(
                 channel.id,
                 text,

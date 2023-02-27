@@ -1,13 +1,13 @@
 /*
-* @Author: Kabuda-czh
-* @Date: 2023-01-29 14:43:27
+ * @Author: Kabuda-czh
+ * @Date: 2023-01-29 14:43:27
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 16:24:02
+ * @LastEditTime: 2023-02-27 11:14:54
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\index.ts
-* @Description:
-*
-* Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
-*/
+ * @Description:
+ *
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
+ */
 // TODO developing
 import { Context, Quester, Schema } from "koishi";
 import * as dynamic from "./dynamic";
@@ -46,9 +46,9 @@ export function apply(context: Context, config: Config) {
 
   ctx.http = context.http.extend({
     headers: {
-      "User-Agent":
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36",
-      "Authorization": "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs=1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA",
+      "User-Agent": "PostmanRuntime/7.31.0",
+      Authorization:
+        "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs=1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA",
       ...config.quester.headers,
     },
     ...config.quester,
