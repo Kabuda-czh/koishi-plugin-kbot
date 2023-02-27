@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 17:32:23
+ * @LastEditTime: 2023-02-27 17:36:10
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -87,7 +87,7 @@ export const Config: Schema<Config> = Schema.object({
 
 export const logger = new Logger("KBot");
 
-export const using = ["console", "database", "puppeteer"];
+export const using = ["console", "database", "puppeteer"] as const;
 
 export async function apply(ctx: Context, config: Config) {
   if (!config.superAdminQQ || config.superAdminQQ.length === 0) {
