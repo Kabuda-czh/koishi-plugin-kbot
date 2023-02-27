@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 15:28:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-16 16:48:41
+ * @LastEditTime: 2023-02-27 14:42:12
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\music\index.tsx
  * @Description: 
  * 
@@ -18,6 +18,7 @@ export type Platform = 'netease' | 'qq'
 export interface Config {
   platform?: string
   showWarning?: boolean
+  authority?: number
 }
 
 export const Config: Schema<Config> = Schema.object({
@@ -26,6 +27,10 @@ export const Config: Schema<Config> = Schema.object({
     Schema.const("qq").description('QQ音乐'),
   ]).default('qq').description('默认的点歌平台'),
   showWarning: Schema.boolean().default(false).description('点歌失败时是否发送提示。'),
+  authority: Schema.number()
+    .default(2)
+    .min(1)
+    .description("设定指令的最低权限, 默认 2 级"),
 })
 
 interface Result {
@@ -105,7 +110,7 @@ export function apply(ctx: Context, config: Config) {
 
   ctx.command('kbot/music <name:text>', '点歌')
     // typescript cannot infer type from string templates
-    .option('platform', `-p <platform>  点歌平台，目前支持 qq, netease, 默认为 ${platform}`, { type: Object.keys(platforms) })
+    .option('platform', `-p <platform>  点歌平台，目前支持 qq, netease, 默认为 ${platform}`, { type: Object.keys(platforms), authority: config.authority })
     .alias('点歌')
     .shortcut('来一首', { fuzzy: true })
     .shortcut('点一首', { fuzzy: true })

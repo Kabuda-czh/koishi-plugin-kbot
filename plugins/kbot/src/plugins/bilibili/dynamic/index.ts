@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-23 17:25:13
+ * @LastEditTime: 2023-02-27 14:40:24
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -34,6 +34,7 @@ export interface Config {
   interval: number;
   device: string;
   live: boolean;
+  authority: number;
 }
 
 export const Config: Schema<Config> = Schema.object({
@@ -47,7 +48,11 @@ export const Config: Schema<Config> = Schema.object({
   ])
     .default("pc")
     .description("截图类型 (手机/电脑)"),
-  live: Schema.boolean().description("是否监控开始直播的动态").default(true)
+  live: Schema.boolean().description("是否监控开始直播的动态").default(true),
+  authority: Schema.number()
+    .default(2)
+    .min(1)
+    .description("设定指令的最低权限, 默认 2 级"),
 });
 
 export const logger = new Logger("KBot-bilibili-dynamic");
@@ -61,11 +66,13 @@ export async function apply(ctx: Context, config: Config) {
   ]);
 
   const fileNames = fs.readdirSync(
-    path.resolve(__dirname, "../../../../../../public")
+    path.resolve(__dirname, "../../../../../../public/kbot")
   );
 
   if (!fileNames.includes("bilibili"))
-    fs.mkdirSync(path.resolve(__dirname, "../../../../../../public/bilibili"));
+    fs.mkdirSync(
+      path.resolve(__dirname, "../../../../../../public/kbot/bilibili")
+    );
 
   const list = channels
     .filter((channel) => channel.bilibili.dynamic)
@@ -86,34 +93,36 @@ export async function apply(ctx: Context, config: Config) {
       "add",
       "-a <uid:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字 或者 空间短链",
       {
-        authority: 2,
+        authority: config.authority,
       }
     )
     .option(
       "remove",
       "-r <uid:string> 移除订阅, 请输入要移除的 up 主的 uid 或者 名字 或者 空间短链",
       {
-        authority: 2,
+        authority: config.authority,
       }
     )
     .option(
       "search",
       "-s <upInfo:string> 查看最新动态, 请输入要查看动态的 up 主的 uid 或者 名字 或者 空间短链",
-      { authority: 2 }
+      { authority: config.authority }
     )
-    .option("list", "-l 展示当前订阅up主列表", { authority: 2 })
+    .option("list", "-l 展示当前订阅up主列表", { authority: config.authority })
     .option(
       "vup",
       "-v <upInfo:string> 查成分, 请输入要查看成分的 up 主的 uid 或者 名字",
-      { authority: 2 }
+      { authority: config.authority }
     )
     .option(
       "danmu",
       "-d <upInfo:string> 查弹幕, 请输入要查看弹幕的 up 主的 uid 或者 名字",
-      { authority: 2 }
+      { authority: config.authority }
     )
-    .option("refresh", "--re 更新vup", { authority: 2 })
-    .option("cookie", "--ck <cookie:string> 更新cookie", { authority: 2 })
+    .option("refresh", "--re 更新vup", { authority: config.authority })
+    .option("cookie", "--ck <cookie:string> 更新cookie", {
+      authority: config.authority
+    })
     .action(async ({ session, options }) => {
       if (Object.keys(options).length > 1) return "请不要同时使用多个参数";
 
