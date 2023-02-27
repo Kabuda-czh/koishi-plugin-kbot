@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-kbot",
   "description": "一个多功能的qq机器人, 在全力开发中....",
-  "version": "0.5.3-alpha.2",
+  "version": "0.6.0-alpha.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -39,11 +39,11 @@
   },
   "dependencies": {
     "qs": "^6.11.0",
-    "systeminformation": "^5.17.9"
+    "systeminformation": "^5.17.10"
   },
   "devDependencies": {
     "@types/qs": "^6.9.7",
     "@types/systeminformation": "^3.54.1",
-    "@koishijs/client": "^5.5.0"
+    "@koishijs/client": "^5.5.1"
   }
 }
