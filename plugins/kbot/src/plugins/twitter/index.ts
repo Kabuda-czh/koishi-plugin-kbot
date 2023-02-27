@@ -32,8 +32,6 @@ export const Config: Schema<Config> = Schema.object({
   quester: Quester.Config.description("twitter 请求配置"),
 });
 
-export const using = ["database"];
-
 export function apply(context: Context, config: Config) {
   context.model.extend("channel", {
     twitter: {

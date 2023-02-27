@@ -18,8 +18,6 @@ export interface Config {}
 
 export const Config: Schema<Config> = Schema.object({});
 
-export const using = ["console"] as const;
-
 export function apply(context: Context, config: Config) {
   Object.keys(routerStrategies).forEach((key) => {
     context.router["get"](key, routerStrategies[key](context));

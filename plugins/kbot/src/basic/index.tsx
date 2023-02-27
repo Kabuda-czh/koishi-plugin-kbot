@@ -23,8 +23,6 @@ export const Config: Schema<Config> = Schema.object({
 
 export const logger = new Logger("KBot-basic");
 
-export const using = ["database"];
-
 export async function apply(ctx: Context, config: Config) {
   ctx.command("kbot/一言", "随机一言", {
     checkArgCount: true,
