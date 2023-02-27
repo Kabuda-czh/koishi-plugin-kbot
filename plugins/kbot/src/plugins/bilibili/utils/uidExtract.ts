@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 14:41:21
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-11 18:33:37
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\utils\uidExtract.ts
+ * @LastEditTime: 2023-02-27 10:15:27
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\uidExtract.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -57,8 +57,8 @@ export async function uidExtract(
       return uidMatch ? uidMatch[0] : "";
     } else {
       const keyword = message.replace(/^['"“”‘’]+|['"“”‘’]+$/g, "");
-      const resp = await searchUser(keyword, ctx.http);
-      if (resp.numResults) {
+      const resp = await searchUser(keyword, ctx.http, logger);
+      if (resp?.numResults) {
         resp.result.forEach((item) => {
           if (item.uname === keyword) {
             uid = item.mid;

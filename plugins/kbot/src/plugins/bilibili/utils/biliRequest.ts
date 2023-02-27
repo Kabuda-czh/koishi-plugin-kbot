@@ -2,16 +2,18 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 14:52:24
+ * @LastEditTime: 2023-02-27 10:47:45
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Quester } from "koishi";
+import { Logger, Quester } from "koishi";
 import { BilibiliDynamicType } from "../enum";
 import { MemberCard, MedalWall } from "../model";
 import { StringFormat } from "../../utils";
+import * as fs from "fs";
+import { resolve } from "path";
 
 export async function getDynamic(http: Quester, uid: string) {
   return await http.get(
@@ -24,16 +26,46 @@ export async function getDynamic(http: Quester, uid: string) {
   );
 }
 
-export async function searchUser(keyword: string, http: Quester) {
+export async function searchUser(
+  keyword: string,
+  http: Quester,
+  logger: Logger
+) {
+  // TODO 更改报错反馈 应该为 cookie 过期
   const data = { keyword: keyword, search_type: "bili_user" };
+  let cookie;
+  try {
+    cookie = JSON.parse(
+      fs.readFileSync(
+        resolve(__dirname, "../../../../../../public/kbot/bilibili/cookie.json"),
+        "utf-8"
+      )
+    );
+  } catch (e) {
+    logger.error(`Failed to get cookie info. ${e}`);
+    throw new Error("cookie信息未找到, 请使用 --ck 或 --cookie 更新cookie信息");
+  }
+
+  const cookieString = Object.entries(cookie)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("; ");
 
   try {
     const resp = await http
-      .get(BilibiliDynamicType.SearchUserByApp, { params: data })
+      .get(BilibiliDynamicType.SearchUserByApp, {
+        params: data,
+        headers: { cookie: cookieString, ...http.config.headers },
+      })
+      .then((resp) => {
+        return resp;
+      })
       .catch((e) => {
-        if (e.response.status === 412) {
+        if (+e.response.status === 412) {
           return http
-            .get(BilibiliDynamicType.SearchUserByPC, { params: data })
+            .get(BilibiliDynamicType.SearchUserByPC, {
+              params: data,
+              headers: { cookie: cookieString, ...http.config.headers },
+            })
             .then((resp) => {
               return resp;
             });
@@ -56,14 +88,19 @@ export async function getMemberCard(http: Quester, uid: string) {
   }
 }
 
-export async function getMedalWall(http: Quester, uid: string, cookie: string) {
+export async function getMedalWall(
+  http: Quester,
+  uid: string,
+  cookieString: string
+) {
   try {
     const resp = await http.get<MedalWall>(
-      StringFormat(BilibiliDynamicType.MedalWallURL, uid), {
+      StringFormat(BilibiliDynamicType.MedalWallURL, uid),
+      {
         headers: {
           Referer: `https://space.bilibili.com/${uid}/medal`,
-          cookie: cookie
-        }
+          cookie: cookieString,
+        },
       }
     );
 
