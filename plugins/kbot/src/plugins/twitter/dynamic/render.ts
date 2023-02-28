@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-28 13:23:57
+ * @LastEditTime: 2023-02-28 15:09:30
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -24,13 +24,14 @@ export async function renderFunction(
   return renderImage(ctx, entry);
 }
 
-async function renderImage(
-  ctx: Context,
-  entry: Entry
-): Promise<string> {
+async function renderImage(ctx: Context, entry: Entry): Promise<string> {
   const twitterRestId = entry.sortIndex;
-  const twitterScreenName = entry.content.itemContent.tweet_results.result.core.user_results.result.legacy.screen_name;
-  const twitterName = entry.content.itemContent.tweet_results.result.core.user_results.result.legacy.name;
+  const twitterScreenName =
+    entry.content.itemContent.tweet_results.result.core.user_results.result
+      .legacy.screen_name;
+  const twitterName =
+    entry.content.itemContent.tweet_results.result.core.user_results.result
+      .legacy.name;
   let page: Page;
   try {
     // const needLoadFontList = await getFontsList(logger);
@@ -72,10 +73,7 @@ async function renderImage(
   }
 }
 
-async function renderText(
-  ctx: Context,
-  entry: Entry
-): Promise<string> {
+async function renderText(ctx: Context, entry: Entry): Promise<string> {
   const entryResult = entry.content.itemContent.tweet_results.result;
   if (!entryResult) throw new Error("entryResult is undefined");
 
@@ -87,9 +85,10 @@ async function renderText(
   const is_retweet = !!retweet;
   const data = entryResult.legacy;
   const tweetId = data.id_str;
-  const url = `\n推文地址: \nhttps://twitter.com/${screenName}/status/${tweetId}`;
+  const url = `推文地址: \nhttps://twitter.com/${screenName}/status/${tweetId}`;
 
   let text = "",
+    hasShortURL = false,
     media = [];
 
   if (is_quote) {
@@ -132,5 +131,13 @@ ${retweetText}\n`;
     }
   }
 
-  return `${text}\n${media.reduce((str, httpStr) => str += `<image url="${httpStr}" />\n`, "")}\n${url}`;
+  hasShortURL =
+    data.full_text.includes("https://t.co") ||
+    (is_quote && quote?.legacy?.full_text?.includes("https://t.co")) ||
+    (is_retweet && retweet?.legacy.full_text?.includes("https://t.co"));
+
+  return `${text}\n${media.reduce(
+    (str, httpStr) => (str += `<image url="${httpStr}" />\n`),
+    ""
+  )}${hasShortURL ? "" : "\n" + url}`;
 }
