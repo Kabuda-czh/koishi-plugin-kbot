@@ -583,12 +583,12 @@
     js-yaml "^4.1.0"
     ns-require "^1.1.4"
 
-"@koishijs/plugin-adapter-discord@3.5.5":
-  version "3.5.5"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-discord/-/plugin-adapter-discord-3.5.5.tgz#2582bc26dd8ceee787621dab5abeebc5fb59db0e"
-  integrity sha512-hbzD5jJmLdpwWlLXGMIYbUPR6pPOmRq1UIua6iHagBunLpdITZ8GKj6eoWjXa84df5RaqWgsUSeusmdozZYvBA==
+"@koishijs/plugin-adapter-discord@3.5.6":
+  version "3.5.6"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-discord/-/plugin-adapter-discord-3.5.6.tgz#f8a89e3bbf8bc74125f6edc943dee3fc62de8ecd"
+  integrity sha512-7SRydA4D5ry6hg//uMLp3H/bZSi1AdoF3Pi30sJeDuVOeZs7sc/Zm42FBSTv7dd4u1QEWhSWn/cbo4SC1c2JPQ==
   dependencies:
-    "@satorijs/adapter-discord" "^3.5.5"
+    "@satorijs/adapter-discord" "^3.5.6"
 
 "@koishijs/plugin-adapter-feishu@1.2.2":
   version "1.2.2"
@@ -701,10 +701,10 @@
     throttle-debounce "^3.0.1"
     which-pm-runs "^1.1.0"
 
-"@koishijs/plugin-rate-limit@1.2.7":
-  version "1.2.7"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-rate-limit/-/plugin-rate-limit-1.2.7.tgz#33d0f33617fff13f81e4785e123e7e61369d6206"
-  integrity sha512-5L6ghFNRilbzEvUsXLNnV2MB4fkKuPQ5B8zfWVcE6F6sNLjV0o11YTtdZHlcmRHZ2tbtUF935OjgqwKd/Ywt5g==
+"@koishijs/plugin-rate-limit@1.2.8":
+  version "1.2.8"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-rate-limit/-/plugin-rate-limit-1.2.8.tgz#406e1f25c7b0d91a74f300eb222cf26b095a2270"
+  integrity sha512-ugeVK/wfYdLD5qIgy3/1p/t8iSqskdtZSDKvvMByIM2XnDcSSDoe9xe+/CNwvJYuMoBO1mpkTWtcHDosuslsAw==
   dependencies:
     "@koishijs/helpers" "^1.2.7"
 
@@ -713,10 +713,10 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-sandbox/-/plugin-sandbox-2.7.0.tgz#df4b85633d8606aa86fec43cb2cf05aef9f3158a"
   integrity sha512-U08TqvdfRpPGsNztrLiT9M8wPdhpcSt16g8e8ap1Jp3cK/iSPdLjwgq2mZ7nzMGrNOrMu5VklouhuRMjfNjkUA==
 
-"@koishijs/plugin-status@7.1.0":
-  version "7.1.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-status/-/plugin-status-7.1.0.tgz#f66b4dc51b8a3c6e77698883478f5dbd5e3b2c80"
-  integrity sha512-epID8wNK6AdC8oIzR4MhLH2RBDUZKTBK/zP/et8qAUq+jaMXyNfP4tMADWqnIaKaVvknESv/3ytGhccWDVZdjA==
+"@koishijs/plugin-status@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-status/-/plugin-status-7.1.1.tgz#e22e41a71e8d0d44019f0faa3346b78462557196"
+  integrity sha512-rcQJSs72VjyXCFKrm1+lHpPk0SGb3K79vwEc3cgmgLsI8HUbiN+uLro25wxi/LdUyb9LKYwi/277kXsLU2MnmQ==
   dependencies:
     envinfo "^7.8.1"
     which-pm-runs "^1.1.0"
@@ -854,10 +854,10 @@
   resolved "https://registry.npmmirror.com/@redis/time-series/-/time-series-1.0.4.tgz#af85eb080f6934580e4d3b58046026b6c2b18717"
   integrity sha512-ThUIgo2U/g7cCuZavucQTQzA9g9JbDDY2f64u3AbAoz/8vE2lt2U37LamDUVChhaDA3IRT9R6VvJwqnUfTJzng==
 
-"@satorijs/adapter-discord@^3.5.5":
-  version "3.5.5"
-  resolved "https://registry.npmmirror.com/@satorijs/adapter-discord/-/adapter-discord-3.5.5.tgz#2a55f0a7e90cbb3a5c9ba24ce2ac768b31a6d4f4"
-  integrity sha512-qqZzw9tMOV9tMJjpqqjmaJCJ+tybI196TU/7SXtZ7CK39Bqt3b/ibOxEtCBBrrhfL5A70Sf+t2jaqgNaIVjEbA==
+"@satorijs/adapter-discord@^3.5.6":
+  version "3.5.6"
+  resolved "https://registry.npmmirror.com/@satorijs/adapter-discord/-/adapter-discord-3.5.6.tgz#d7959a536cb7f1d9b8b8ef5ec2163b529c6993b3"
+  integrity sha512-7XiR6/e8idlE72BT1LVvEo7TJ/vWPipQXV7nFYG4KhxOr2PaBlcuRvtO3EP0IhUlaSvjKG4oDXlowbdG6Y0gOw==
   dependencies:
     form-data "^4.0.0"
 
