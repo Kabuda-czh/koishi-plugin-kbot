@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-28 14:36:35
+ * @LastEditTime: 2023-02-28 15:25:35
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -117,8 +117,7 @@ export async function getTwitterTweets(
     })
     .catch(async (err) => {
       await getTwitterToken(ctx, logger);
-      logger.error(`error getTwitterTweets: ${err}`);
-      return null;
+      throw new Error(`error getTwitterTweets: ${err}`);
     });
 
   if (!res) throw new Error(`Failed to get dynamics`);
