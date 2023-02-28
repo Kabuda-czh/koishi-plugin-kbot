@@ -557,14 +557,14 @@
     vue "^3.2.45"
     vue-router "^4.1.6"
 
-"@koishijs/core@4.11.7":
-  version "4.11.7"
-  resolved "https://registry.npmmirror.com/@koishijs/core/-/core-4.11.7.tgz#28d7b5b74673ed0237c94b53f39b5fe163be5c7b"
-  integrity sha512-DqRRgiDFKSAhSt1608zjiA3P1cAtne8RuMkbPMX43GmwndCGpa433eY0rRn2OvbKV4woUppkjIeVXjoVusMbxQ==
+"@koishijs/core@4.11.8":
+  version "4.11.8"
+  resolved "https://registry.npmmirror.com/@koishijs/core/-/core-4.11.8.tgz#0e0f2a4f983ab6d9a0b950009864703c364613aa"
+  integrity sha512-lLX8c1VhzhMOCMVylBt7VAUkofhNB8eEKFlhEjo8X1fo42YNfnWo3F3e2iiHYgdD5B5XaT2IgXTd9Pw/Rtevfg==
   dependencies:
     "@koishijs/utils" "^7.0.0"
     "@minatojs/core" "^2.2.2"
-    "@satorijs/core" "^2.1.6"
+    "@satorijs/core" "^2.2.0"
     cordis "^2.7.3"
     cosmokit "^1.4.0"
     fastest-levenshtein "^1.0.16"
@@ -574,10 +574,10 @@
   resolved "https://registry.npmmirror.com/@koishijs/helpers/-/helpers-1.2.7.tgz#48e0bf5996046caf5198a39f565228f84ef02abc"
   integrity sha512-H9DVVS1lKMcfoWcEtuy0f3Wm3uceutcudfhUsKiYIsyFTud0z+Hy9ZdfNQjAYvn1GDIYxcIidYieB+3y28A/Ng==
 
-"@koishijs/loader@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.npmmirror.com/@koishijs/loader/-/loader-3.0.1.tgz#754c6c3014a98ee12409df7844d0df7fd2ab645d"
-  integrity sha512-BzEspiHgL5M70xdmnQhT14y72ZMs9Go/rfoKzHw8L3+KCQ5OnJaFvgPJ9+QdDm8bXNWgXWHn1IiX+cLABHYx4A==
+"@koishijs/loader@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.npmmirror.com/@koishijs/loader/-/loader-3.0.2.tgz#a4013a31f88f7462f7df81189249b6636ef66565"
+  integrity sha512-KJE2CX6E2u0lbVE0XFshIpAwJ+Ui6+Ym705xH83gyH9QNNA/oBfab7bDSEsDcPvuQh0xm6aW5ANAR3LgbRs2IQ==
   dependencies:
     dotenv "^16.0.3"
     js-yaml "^4.1.0"
@@ -663,10 +663,10 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-dataview/-/plugin-dataview-2.2.4.tgz#c0f983ffab478c0e5904f9855333db69498a6bbc"
   integrity sha512-c1LO3Uil0gugmv2vEK4uJph12EUbOVoIv91N6TI3ECJfA/vW4IcRZAswqMmH0npYIYnlvzPUaplFRstfL3OgIA==
 
-"@koishijs/plugin-help@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-help/-/plugin-help-2.0.4.tgz#f4a68edd653aedc2488c71eabe49878e8a8f67b1"
-  integrity sha512-aZjc9ouhNPjd8n7InAEjpXqU1CdyjbOQlu3k9b79tufJJv/XUHwapAdRShU6X0qcVtE9rH7OVOdlIRbcCcQLDQ==
+"@koishijs/plugin-help@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-help/-/plugin-help-2.1.0.tgz#a82b75024f681b3f1a15d66eac4514e7f40eed54"
+  integrity sha512-QhJsac6SOA94cRjoJOC2ykMq2w79YPRwOzS8B8WWXz3qQARMCAf+QL1jCBP3Jo3/mI8d6WP/HnopjbLE8XG2cw==
 
 "@koishijs/plugin-insight@3.3.3":
   version "3.3.3"
@@ -688,10 +688,10 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-logger/-/plugin-logger-2.2.3.tgz#4876eb4d6d15c3c42ec109f3a7acebff6853d562"
   integrity sha512-OqZK6UOVJUtcqhdOvcABqWYraALzwDhN+Apr32F4DF3fDtjJ9ld0fX9ndFMgPBucfSXYrCM7ciJ2Cqj563Tdjg==
 
-"@koishijs/plugin-market@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.11.3.tgz#bf87bce9a87cf07e3e5ec9277a0265a5f5428322"
-  integrity sha512-+hFgZjKsn68g4inR5fjOBdcVlpAm6d4ydWnGzDP+UyFvV3+COnBEduph1DQCK5Q7fmmHfJu9yqL6FCZLEHn+GA==
+"@koishijs/plugin-market@1.11.4":
+  version "1.11.4"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.11.4.tgz#fd366ca5cdf79ef47589e9ed5ae952a04a9f0994"
+  integrity sha512-RSQ5vW17cAniqUuMr7Rix9uJr6pgcmNwRMf6p5f00ji7XVMYfXLO5avz33PSH8pH+vooT/GVQLX+5Lxxia7CEA==
   dependencies:
     "@koishijs/registry" "^4.6.0"
     execa "^5.1.1"
@@ -900,10 +900,10 @@
     "@popperjs/core" "npm:@sxzz/popperjs-es@^2.11.7"
     "@satorijs/element" "^2.3.1"
 
-"@satorijs/core@2.1.6", "@satorijs/core@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmmirror.com/@satorijs/core/-/core-2.1.6.tgz#13535554004e5c256bbff74ccbf692b6d977ceaf"
-  integrity sha512-mBSzTPYh/rZ1hUZsTTeLVveLUFgvoxAqFw/4c8rU3SVLIJvwFD7iQmO2cdpEkEcVbUG3HzpZO+EUMGSdi7pKeg==
+"@satorijs/core@2.2.0", "@satorijs/core@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmmirror.com/@satorijs/core/-/core-2.2.0.tgz#7647cbc7032d52d0048c4b714f794763882872d6"
+  integrity sha512-6NAY0twLIQ9RWVxXaODneu7AVn1PUvsCL2ecKOO8P2qiGZ4EIriTTgT65ibsoU0qhByvtr/3CCC9D6dUgIJodw==
   dependencies:
     "@satorijs/element" "^2.3.4"
     cordis "^2.7.3"
@@ -927,13 +927,13 @@
   dependencies:
     cosmokit "^1.4.0"
 
-"@satorijs/satori@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmmirror.com/@satorijs/satori/-/satori-2.1.6.tgz#f6f48d94d5f6dd853653dbfea849f47a007b5315"
-  integrity sha512-8UiKqa91R5szPCd0Kpm08+ha2rYw4taSdFaYCQnDE3jHGAxRXCp2P/GTpQPOclw2m13ds+KmgtQuA2XYXGb1ZQ==
+"@satorijs/satori@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmmirror.com/@satorijs/satori/-/satori-2.2.0.tgz#e15517e3a13ac2aaa916c0a2a85a1b8c17b8030d"
+  integrity sha512-gXtRDjlABGvT5rItCgMxAb+HDLtXvXx8Fub2HdXw2v/DR07ubK0n49OHLBoEnmxBbEotbnCXgnW0GIKXNtzhCg==
   dependencies:
     "@koa/router" "^10.1.1"
-    "@satorijs/core" "2.1.6"
+    "@satorijs/core" "2.2.0"
     "@types/koa" "*"
     "@types/koa__router" "*"
     "@types/ws" "^8.5.3"
@@ -2817,15 +2817,15 @@ koishi-plugin-puppeteer@3.4.11:
     puppeteer-core "^19.6.2"
     puppeteer-finder "^1.0.3"
 
-koishi@4.11.7:
-  version "4.11.7"
-  resolved "https://registry.npmmirror.com/koishi/-/koishi-4.11.7.tgz#23f8a6182171fe56e19e0450cad0ff766cff2c3f"
-  integrity sha512-5jLXI6C+1hBKOkD3cCh3vg4VsPBhcD/Dh264k1jRKvAQVFMFRzA3IE55A9eEgYjAFQ/g9DyIO58jmY+ITZ7GhA==
+koishi@4.11.8:
+  version "4.11.8"
+  resolved "https://registry.npmmirror.com/koishi/-/koishi-4.11.8.tgz#e03d0e58e311a458e9845ef4a44fa7c85eb3c390"
+  integrity sha512-slqW+l5+njgyfKEhFnnXHScd8NNZJbNg+ypBYLSZyMPmyU42cM/p40YRYv/KqUhEmxG3icmXmbhgZhKxkkj/FQ==
   dependencies:
-    "@koishijs/core" "4.11.7"
-    "@koishijs/loader" "3.0.1"
+    "@koishijs/core" "4.11.8"
+    "@koishijs/loader" "3.0.2"
     "@koishijs/utils" "^7.0.0"
-    "@satorijs/satori" "^2.1.6"
+    "@satorijs/satori" "^2.2.0"
     cac "^6.7.14"
     chokidar "^3.5.3"
     kleur "^4.1.5"
