@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 17:19:38
+ * @LastEditTime: 2023-02-28 13:09:27
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\listen.ts
  * @Description:
  *
@@ -49,24 +49,15 @@ export async function* listen(
         let neo = items.filter(
           (item) =>
             new Date(
-              item.content.itemContent?.tweet_results?.result.legacy.created_at || 0
+              item.content.itemContent?.tweet_results?.result.legacy
+                .created_at || 0
             ).getTime() /
               1000 >
             time
         );
         if (neo.length !== 0) {
           const rendered = await Promise.all(
-            neo.map((item) =>
-              renderFunction(ctx, {
-                twitterId:
-                  item.content.itemContent.tweet_results.result.core
-                    .user_results.result.legacy.screen_name,
-                tweetsRestId: item.sortIndex,
-                dynamicURL:
-                  item.content.itemContent.tweet_results.result.legacy?.retweeted_status_result?.result?.legacy.extended_entities
-                    .media[0].url || "",
-              })
-            )
+            neo.map((item) => renderFunction(ctx, item, config))
           );
 
           rendered.forEach((text, index) => {

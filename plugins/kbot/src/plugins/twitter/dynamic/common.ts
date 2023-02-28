@@ -2,13 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 18:24:36
+ * @LastEditTime: 2023-02-28 13:09:43
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Argv, Channel, Context, Dict, Quester } from "koishi";
+import { Argv, Channel, Context, Dict } from "koishi";
 import { Config, logger } from ".";
 import { DynamicNotifiction } from "../model";
 import { getTwitterTweets } from "../utils";
@@ -116,17 +116,13 @@ export async function twitterSearch(
   ctx: Context,
   config: Config
 ) {
-  const { twitterId, twitterRestId } = twitter;
+  const { twitterRestId } = twitter;
   try {
     const entries = await getTwitterTweets(twitterRestId, ctx);
 
     if (entries.length === 0) return "该用户没有动态。";
 
-    const tweetsRestId = entries[0].sortIndex;
-    const dynamicURL =
-      entries[0].content.itemContent.tweet_results.result.legacy?.retweeted_status_result?.result?.legacy.extended_entities.media[0].url || "";
-
-    return renderFunction(ctx, { twitterId, tweetsRestId, dynamicURL });
+    return renderFunction(ctx, entries[0], config);
   } catch (e) {
     logger.error(`Failed to get user dynamics. ${e}`);
     return "动态获取失败" + e;

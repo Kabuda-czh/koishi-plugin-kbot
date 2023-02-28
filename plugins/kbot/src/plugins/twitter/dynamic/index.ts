@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 15:26:30
+ * @LastEditTime: 2023-02-28 11:55:03
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -24,15 +24,9 @@ declare module ".." {
   }
 }
 
-export interface LivePlayInfo {
-  title: string;
-  cover: string;
-  link: string;
-}
-
 export interface Config {
   interval: number;
-  // device: string;
+  useText?: boolean;
   authority: number;
 }
 
@@ -41,12 +35,7 @@ export const Config: Schema<Config> = Schema.object({
     .description("请求之间的间隔 (秒) 注: 最低 30 秒!")
     .default(30)
     .min(30),
-  // device: Schema.union([
-  //   Schema.const("pc").description("电脑"),
-  //   Schema.const("mobile").description("手机"),
-  // ])
-  //   .default("pc")
-  //   .description("截图类型 (手机/电脑)"),
+  useText: Schema.boolean().default(false).description("是否使用文本模式"),
   authority: Schema.number()
     .default(2)
     .min(1)
