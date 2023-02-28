@@ -52,7 +52,7 @@ export const dynamicStrategy = async (
     );
     ctx.http.config.headers["x-guest-token"] = cookie.cookies;
   } catch (e) {
-    cookie = await getTwitterToken(ctx);
+    cookie = await getTwitterToken(ctx, logger);
   }
 
   const strategyName = Object.keys(options).find((key) => options[key]);

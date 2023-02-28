@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-28 11:55:03
+ * @LastEditTime: 2023-02-28 14:15:38
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -27,6 +27,7 @@ declare module ".." {
 export interface Config {
   interval: number;
   useText?: boolean;
+  usePure?: boolean;
   authority: number;
 }
 
@@ -36,6 +37,7 @@ export const Config: Schema<Config> = Schema.object({
     .default(30)
     .min(30),
   useText: Schema.boolean().default(false).description("是否使用文本模式"),
+  usePure: Schema.boolean().default(false).description("是否使用纯净推送 注: 指过滤掉引用和转发, 且仅仅会覆盖掉自动推送模式"),
   authority: Schema.number()
     .default(2)
     .min(1)
@@ -45,6 +47,8 @@ export const Config: Schema<Config> = Schema.object({
 export const logger = new Logger("KBot-twitter-dynamic");
 
 export async function apply(ctx: Context, config: Config) {
+  await getTwitterToken(ctx, logger);
+
   const channels = await ctx.database.get("channel", {}, [
     "id",
     "guildId",
@@ -61,8 +65,6 @@ export async function apply(ctx: Context, config: Config) {
       path.resolve(__dirname, "../../../../../../public/kbot/twitter")
     );
   }
-
-  await getTwitterToken(ctx);
 
   const list = channels
     .filter((channel) => channel.twitter.dynamic)

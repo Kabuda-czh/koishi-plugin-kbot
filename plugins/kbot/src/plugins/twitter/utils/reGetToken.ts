@@ -2,18 +2,18 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-27 13:24:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 13:30:44
+ * @LastEditTime: 2023-02-28 13:49:49
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\reGetToken.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context } from "koishi";
+import { Context, Logger } from "koishi";
 import * as fs from "fs";
 import { resolve } from "path";
 import { Page } from "puppeteer-core";
 
-export async function getTwitterToken(ctx: Context) {
+export async function getTwitterToken(ctx: Context, logger: Logger) {
   let page: Page, cookie: any;
 
   try {
@@ -31,6 +31,8 @@ export async function getTwitterToken(ctx: Context) {
     ctx.http.config.headers["x-guest-token"] = gtCookie;
 
     cookie = { cookies: gtCookie };
+
+    logger.info("Twitter Token: ", gtCookie);
   } catch (error) {
   } finally {
     page?.close();

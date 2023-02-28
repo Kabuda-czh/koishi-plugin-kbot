@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 18:22:46
+ * @LastEditTime: 2023-02-28 14:36:35
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -10,7 +10,13 @@
  */
 import { Context, Logger, Quester } from "koishi";
 import { TwitterDynamicType } from "../enum";
-import { Entry, UserByScreenNameParam, UserByScreenNameResponse, UserTweetsParam, UserTweetsResponse } from "../model";
+import {
+  Entry,
+  UserByScreenNameParam,
+  UserByScreenNameResponse,
+  UserTweetsParam,
+  UserTweetsResponse,
+} from "../model";
 import { getTwitterToken } from "./reGetToken";
 
 export async function getTwitterRestId(
@@ -57,7 +63,12 @@ export async function getTwitterRestId(
   return data;
 }
 
-export async function getTwitterTweets(restId: string, ctx: Context): Promise<Entry[]> {
+export async function getTwitterTweets(
+  restId: string,
+  ctx: Context,
+  logger: Logger,
+  isPure: boolean = false
+): Promise<Entry[]> {
   const param: UserTweetsParam = {
     variables: {
       userId: restId,
@@ -100,28 +111,35 @@ export async function getTwitterTweets(restId: string, ctx: Context): Promise<En
       `${TwitterDynamicType.UserTweetsURL}?variables=${encodeURIComponent(
         JSON.stringify(param.variables)
       )}&features=${encodeURIComponent(JSON.stringify(param.features))}`,
-      {
-        // params: {
-        //   variables: encodeURIComponent(JSON.stringify(param.variables)),
-        //   features: encodeURIComponent(JSON.stringify(param.features)),
-        // },
-      }
     )
     .then((res) => {
       return res;
     })
     .catch(async (err) => {
-      await getTwitterToken(ctx);
+      await getTwitterToken(ctx, logger);
+      logger.error(`error getTwitterTweets: ${err}`);
       return null;
     });
 
-  if (!res) throw new Error(`Failed to get dynamics. ${res}`);
+  if (!res) throw new Error(`Failed to get dynamics`);
 
-  const instructions = res.data.user?.result?.timeline_v2.timeline.instructions || [];
+  const instructions =
+    res.data.user?.result?.timeline_v2.timeline.instructions || [];
 
   const entries = instructions.find(
-    (x) => x.type === "TimelineAddEntries"
+    (entry) => entry.type === "TimelineAddEntries"
   )?.entries;
+
+  if (isPure) {
+    const pureEntries = entries.find(
+      (entry) =>
+        !entry.content.itemContent.tweet_results.result?.quoted_status_result
+          ?.result &&
+        !entry.content.itemContent.tweet_results.result.legacy
+          ?.retweeted_status_result?.result
+    );
+    return [pureEntries];
+  }
 
   return entries;
 }

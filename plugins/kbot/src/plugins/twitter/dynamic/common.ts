@@ -118,7 +118,7 @@ export async function twitterSearch(
 ) {
   const { twitterRestId } = twitter;
   try {
-    const entries = await getTwitterTweets(twitterRestId, ctx);
+    const entries = await getTwitterTweets(twitterRestId, ctx, logger);
 
     if (entries.length === 0) return "该用户没有动态。";
 
