@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-28 15:25:35
+ * @LastEditTime: 2023-03-01 18:10:58
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -72,7 +72,7 @@ export async function getTwitterTweets(
   const param: UserTweetsParam = {
     variables: {
       userId: restId,
-      count: 42,
+      count: 40,
       includePromotedContent: true,
       withQuickPromoteEligibilityTweetFields: true,
       withSuperFollowsUserFields: true,
@@ -102,6 +102,7 @@ export async function getTwitterTweets(
         false,
       interactive_text_enabled: true,
       responsive_web_text_conversations_enabled: false,
+      longform_notetweets_richtext_consumption_enabled: false,
       responsive_web_enhance_cards_enabled: false,
     },
   };
