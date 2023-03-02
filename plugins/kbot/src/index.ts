@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 17:36:10
+ * @LastEditTime: 2023-03-02 15:49:26
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -19,6 +19,7 @@ import * as musicPlugin from "./plugins/music";
 import * as youtubePlugin from "./plugins/youtube";
 import * as managePlugin from "./plugins/guildManage";
 import * as twitterPlugin from "./plugins/twitter";
+import * as tarotPlugin from "./plugins/tarot";
 
 export const name = "kbot";
 
@@ -33,6 +34,7 @@ export const usage = `
 - KBotMusic: 点歌功能
 - KBotYoutube: Youtube 视频解析
 - KBotTwitter: Twitter 动态推送
+- KBotTarot: 塔罗牌占卜
 ## 权限问题
 - 第一步: 设置机器人的超级管理员 QQ 号, 建议为自身 QQ 号, kbot 会自动创建该账号最高权限, 注意设置完毕后需要重启一次\n
 \t若指令仍然提示权限不足, 请通过在左侧菜单栏中找到 \`数据库\` 选项点击进入\n
@@ -55,6 +57,7 @@ interface Config {
   KBotMusic?: musicPlugin.Config & IPluginEnableConfig;
   KBotYoutube?: youtubePlugin.Config & IPluginEnableConfig;
   KBotTwitter?: twitterPlugin.Config & IPluginEnableConfig;
+  KBotTarot?: tarotPlugin.Config & IPluginEnableConfig;
 }
 
 const pluginLoad = <T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> =>
@@ -83,6 +86,7 @@ export const Config: Schema<Config> = Schema.object({
   KBotMusic: pluginLoad(musicPlugin.Config).description("点歌功能"),
   KBotYoutube: pluginLoad(youtubePlugin.Config).description("Youtube 视频解析"),
   KBotTwitter: pluginLoad(twitterPlugin.Config).description("Twitter 动态推送"),
+  KBotTarot: pluginLoad(tarotPlugin.Config).description("塔罗牌功能"),
 });
 
 export const logger = new Logger("KBot");
@@ -93,14 +97,10 @@ export async function apply(ctx: Context, config: Config) {
   if (!config.superAdminQQ || config.superAdminQQ.length === 0) {
     logger.error("未设置超级管理员QQ号");
   } else {
-    const fileNames = fs.readdirSync(
-      resolve(__dirname, "../../../public")
-    );
+    const fileNames = fs.readdirSync(resolve(__dirname, "../../../public"));
 
     if (!fileNames.includes("kbot"))
-      fs.mkdirSync(
-        resolve(__dirname, "../../../public/kbot")
-      );
+      fs.mkdirSync(resolve(__dirname, "../../../public/kbot"));
 
     ctx.bots.forEach(async (bot) => {
       if (
@@ -141,6 +141,7 @@ export async function apply(ctx: Context, config: Config) {
       ctx.plugin(youtubePlugin, config.KBotYoutube);
     if (config.KBotTwitter.enabled)
       ctx.plugin(twitterPlugin, config.KBotTwitter);
+    if (config.KBotTarot.enabled) ctx.plugin(tarotPlugin, config.KBotTarot);
 
     logger.success("KBot 内置插件加载完毕");
   }
