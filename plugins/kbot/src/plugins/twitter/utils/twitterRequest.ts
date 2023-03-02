@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 01:52:00
+ * @LastEditTime: 2023-03-02 15:22:36
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -119,8 +119,11 @@ export async function getTwitterTweets(
       return res;
     })
     .catch((err) => {
-      tokenError = true;
-      return err;
+      if (err?.response?.status === 403) {
+        tokenError = true;
+        return err;
+      }
+      throw new Error(`${err}`);
     });
 
   if (tokenError) {
