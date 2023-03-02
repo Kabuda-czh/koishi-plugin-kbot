@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 16:00:04
+ * @LastEditTime: 2023-03-02 17:14:17
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\tarot\index.tsx
  * @Description:
  *
@@ -20,11 +20,13 @@ export const Config: Schema<Config> = Schema.object({});
 export const logger = new Logger("KBot-plugin-tarot");
 
 export async function apply(ctx: Context, config: Config) {
+  const cardLength = Object.keys(cards).length;
+
   ctx.command("kbot/抽塔罗牌", "抽单张塔罗牌", {
     checkArgCount: true,
     showWarning: false
   }).action(async ({ session }) => {
-    const randomIndex = Math.floor(Math.random() * 78 + 1);
+    const randomIndex = Math.floor(Math.random() * cardLength);
     let cardKey = Object.keys(cards)[randomIndex];
     let imageFile: string = "file:///" + path.join(__dirname, "images", `${cardKey}.jpg`);
     let cardValue: string = "";
@@ -61,7 +63,7 @@ export async function apply(ctx: Context, config: Config) {
     checkArgCount: true,
     showWarning: false
   }).action(async ({ session }) => {
-    const indiceArray = Array.from({ length: 78 }, (_, i) => i + 1);
+    const indiceArray = Array.from({ length: cardLength }, (_, i) => i + 1);
     const randomIndices = new Set<number>();
     while (randomIndices.size < 4) {
       const index = Math.floor(Math.random() * indiceArray.length);
@@ -78,6 +80,12 @@ export async function apply(ctx: Context, config: Config) {
     for (let i = 0; i < indices.length; i++) {
       const index = indices[i];
       cardKey = cardKeys[index - 1];
+
+      if (!cardKey) {
+        logger.error("cardKey is undefined", cardKey, indices);
+        return "出现未知问题，请联系管理员"
+      }
+
       const meaningKey = Object.keys(meanings)[i];
       const meaningValue = meanings[meaningKey];
       imageFile = "file:///" + path.join(__dirname, "images", `${cardKey}.jpg`);
