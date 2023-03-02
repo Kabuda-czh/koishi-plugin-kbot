@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-28 15:25:35
+ * @LastEditTime: 2023-03-02 01:52:00
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -106,19 +106,26 @@ export async function getTwitterTweets(
     },
   };
 
+  let tokenError = false;
+
   const res: UserTweetsResponse = await ctx.http
     .get<UserTweetsResponse>(
       `${TwitterDynamicType.UserTweetsURL}?variables=${encodeURIComponent(
         JSON.stringify(param.variables)
-      )}&features=${encodeURIComponent(JSON.stringify(param.features))}`,
+      )}&features=${encodeURIComponent(JSON.stringify(param.features))}`
     )
     .then((res) => {
       return res;
     })
-    .catch(async (err) => {
-      await getTwitterToken(ctx, logger);
-      throw new Error(`error getTwitterTweets: ${err}`);
+    .catch((err) => {
+      tokenError = true;
+      return err;
     });
+
+  if (tokenError) {
+    await getTwitterToken(ctx, logger);
+    throw new Error(`${res}`);
+  }
 
   if (!res) throw new Error(`Failed to get dynamics`);
 
