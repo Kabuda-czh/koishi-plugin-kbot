@@ -2819,6 +2819,13 @@ koishi-plugin-puppeteer@3.4.11:
     puppeteer-core "^19.6.2"
     puppeteer-finder "^1.0.3"
 
+koishi-plugin-status-pro@1.1.7:
+  version "1.1.7"
+  resolved "https://registry.npmmirror.com/koishi-plugin-status-pro/-/koishi-plugin-status-pro-1.1.7.tgz#8bfab20dd958180b38542d7cea1112925464f9b5"
+  integrity sha512-VbZOo2RtBUX+HQJ8U6opd+Kf8Dittb4YFU0k5r1oIhQruxXeAynHKbbZ1JuP/WgYBfccyVZbBM2ytHIjoQ0j0Q==
+  dependencies:
+    systeminformation "^5.17.9"
+
 koishi@4.11.8:
   version "4.11.8"
   resolved "https://registry.npmmirror.com/koishi/-/koishi-4.11.8.tgz#e03d0e58e311a458e9845ef4a44fa7c85eb3c390"
@@ -3632,6 +3639,11 @@ systeminformation@^5.17.10:
   version "5.17.10"
   resolved "https://registry.npmmirror.com/systeminformation/-/systeminformation-5.17.10.tgz#bd1e12fc3e5de7259cf71b52468cdddd52f3af91"
   integrity sha512-FUm264baeDpruTw4P50BRRmYHD39D3jkOQ0VpNIkp8CdNejQbsp4Me18jacGBc/mWSVxKdQw4wSHmcL7ERxrNg==
+
+systeminformation@^5.17.9:
+  version "5.17.12"
+  resolved "https://registry.npmmirror.com/systeminformation/-/systeminformation-5.17.12.tgz#5b3e1bfcd5c2c5b459f1a88e61fed27cf9668ba8"
+  integrity sha512-I3pfMW2vue53u+X08BNxaJieaHkRoMMKjWetY9lbYJeWFaeWPO6P4FkNc4XOCX8F9vbQ0HqQ25RJoz3U/B7liw==
 
 tar-fs@2.1.1:
   version "2.1.1"

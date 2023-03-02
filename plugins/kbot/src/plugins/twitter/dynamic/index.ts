@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-28 14:15:38
+ * @LastEditTime: 2023-03-01 15:09:59
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -28,6 +28,7 @@ export interface Config {
   interval: number;
   useText?: boolean;
   usePure?: boolean;
+  onlyMedia?: boolean;
   authority: number;
 }
 
@@ -42,6 +43,7 @@ export const Config: Schema<Config> = Schema.object({
     .default(2)
     .min(1)
     .description("设定指令的最低权限, 默认 2 级"),
+  onlyMedia: Schema.boolean().default(false).description("是否只推送媒体动态"),
 });
 
 export const logger = new Logger("KBot-twitter-dynamic");

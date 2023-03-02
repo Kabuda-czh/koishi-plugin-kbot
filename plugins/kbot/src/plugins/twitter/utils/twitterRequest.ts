@@ -72,7 +72,7 @@ export async function getTwitterTweets(
   const param: UserTweetsParam = {
     variables: {
       userId: restId,
-      count: 42,
+      count: 40,
       includePromotedContent: true,
       withQuickPromoteEligibilityTweetFields: true,
       withSuperFollowsUserFields: true,
@@ -102,6 +102,7 @@ export async function getTwitterTweets(
         false,
       interactive_text_enabled: true,
       responsive_web_text_conversations_enabled: false,
+      longform_notetweets_richtext_consumption_enabled: false,
       responsive_web_enhance_cards_enabled: false,
     },
   };

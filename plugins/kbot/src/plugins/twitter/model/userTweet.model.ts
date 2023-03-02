@@ -126,6 +126,10 @@ interface Features {
   /*
    * false
    */
+  longform_notetweets_richtext_consumption_enabled: boolean;
+  /*
+   * false
+   */
   responsive_web_enhance_cards_enabled: boolean;
 }
 

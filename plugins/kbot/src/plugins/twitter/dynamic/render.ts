@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-28 15:09:30
+ * @LastEditTime: 2023-03-01 19:26:32
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -20,7 +20,7 @@ export async function renderFunction(
   entry: Entry,
   config: Config
 ): Promise<string> {
-  if (config.useText) return renderText(ctx, entry);
+  if (config.useText) return renderText(ctx, entry, config.onlyMedia);
   return renderImage(ctx, entry);
 }
 
@@ -73,7 +73,7 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
   }
 }
 
-async function renderText(ctx: Context, entry: Entry): Promise<string> {
+async function renderText(ctx: Context, entry: Entry, onlyMedia: boolean = false): Promise<string> {
   const entryResult = entry.content.itemContent.tweet_results.result;
   if (!entryResult) throw new Error("entryResult is undefined");
 
@@ -135,6 +135,8 @@ ${retweetText}\n`;
     data.full_text.includes("https://t.co") ||
     (is_quote && quote?.legacy?.full_text?.includes("https://t.co")) ||
     (is_retweet && retweet?.legacy.full_text?.includes("https://t.co"));
+
+  if (onlyMedia && media.length === 0) return;
 
   return `${text}\n${media.reduce(
     (str, httpStr) => (str += `<image url="${httpStr}" />\n`),
