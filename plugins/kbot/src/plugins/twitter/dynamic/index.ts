@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-01 15:09:59
+ * @LastEditTime: 2023-03-02 17:41:48
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -38,7 +38,11 @@ export const Config: Schema<Config> = Schema.object({
     .default(30)
     .min(30),
   useText: Schema.boolean().default(false).description("是否使用文本模式"),
-  usePure: Schema.boolean().default(false).description("是否使用纯净推送 注: 指过滤掉引用和转发, 且仅仅会覆盖掉自动推送模式"),
+  usePure: Schema.boolean()
+    .default(false)
+    .description(
+      "是否使用纯净推送 注: 指过滤掉引用和转发, 且仅仅会覆盖掉自动推送模式"
+    ),
   authority: Schema.number()
     .default(2)
     .min(1)
@@ -49,8 +53,6 @@ export const Config: Schema<Config> = Schema.object({
 export const logger = new Logger("KBot-twitter-dynamic");
 
 export async function apply(ctx: Context, config: Config) {
-  await getTwitterToken(ctx, logger);
-
   const channels = await ctx.database.get("channel", {}, [
     "id",
     "guildId",
@@ -106,6 +108,22 @@ export async function apply(ctx: Context, config: Config) {
 
       return dynamicStrategy({ session, options }, list, ctx, config);
     });
+
+  const cookieJson = fs.readFileSync(
+    path.resolve(
+      __dirname,
+      "../../../../../../public/kbot/twitter/cookie.json"
+    ),
+    { encoding: "utf-8" }
+  );
+
+  if (!cookieJson) {
+    await getTwitterToken(ctx, logger);
+  } else {
+    const cookie = JSON.parse(cookieJson).cookies;
+    ctx.http.config.headers["x-guest-token"] = cookie;
+  }
+
 
   const generator = listen(list, getTwitterTweets, ctx, config);
   ctx.setInterval(async () => {
