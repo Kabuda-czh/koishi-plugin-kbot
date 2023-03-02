@@ -597,26 +597,26 @@
   dependencies:
     "@satorijs/adapter-feishu" "^1.2.2"
 
-"@koishijs/plugin-adapter-kook@3.6.1":
-  version "3.6.1"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-kook/-/plugin-adapter-kook-3.6.1.tgz#74e96685cc0cdbbd9dae650812c50fd7616e79ec"
-  integrity sha512-85OD2fHU1PJw4qfuP5R6YbaVcsXYazhVxi/+0w+JOWl0WNm1KpVVbcjfFhwFX19vkroIolnE7hOjkk2c/hguGg==
+"@koishijs/plugin-adapter-kook@3.6.2":
+  version "3.6.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-kook/-/plugin-adapter-kook-3.6.2.tgz#5df293e3bd9b3edadcec9aed764302f8cde52249"
+  integrity sha512-PMp7s3bTGSx/XunEgrXO8qczMCri2Fm4wwhM/V2BPun0USbzN3hC2HVUih71GWMKGqQZcpoAgUvwhZWCie20Tw==
   dependencies:
-    "@satorijs/adapter-kook" "^3.6.1"
+    "@satorijs/adapter-kook" "^3.6.2"
 
-"@koishijs/plugin-adapter-onebot@5.6.0":
-  version "5.6.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-onebot/-/plugin-adapter-onebot-5.6.0.tgz#2576473ab5759dd1a2f5ca86057054b0c9552532"
-  integrity sha512-7xivAIDKFZL/wjmkzscU4lS0I8wxQTe1jaH2TGwdxcoE/StlQQDlv3nlc1Oi9xco+Cb9ulcuPhzmuVQX3GJKJA==
+"@koishijs/plugin-adapter-onebot@5.6.1":
+  version "5.6.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-onebot/-/plugin-adapter-onebot-5.6.1.tgz#d42ddabb9b00591f743a6a15c1c73a7e3e7681b7"
+  integrity sha512-8tf5PIg+cpn6sP4eOXUqxhBnA6x/3ejyQxsu49YTposYi/2JaFQjre3sGoRJKBF1GNvoJG6TIvZX3DsI2Tgw6w==
   dependencies:
-    "@satorijs/adapter-onebot" "^5.6.0"
+    "@satorijs/adapter-onebot" "^5.6.1"
 
-"@koishijs/plugin-adapter-telegram@3.6.8":
-  version "3.6.8"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-telegram/-/plugin-adapter-telegram-3.6.8.tgz#39efb373c2e9d567b6e510e662a4627151cb2437"
-  integrity sha512-qi2KE6IzvUKyR14+ummTjiVd1SQGEliLOWvJ2x+F+YJw2+wLY/MnrWMBDaEnBKK5W1B0a9rZtSJ3uwkwkkw2eQ==
+"@koishijs/plugin-adapter-telegram@3.7.0":
+  version "3.7.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-telegram/-/plugin-adapter-telegram-3.7.0.tgz#629b512213e94bb358cfb75c9e82437b277086ab"
+  integrity sha512-TjyGImXgE8nPMtavWZd27S9bLAnDxw6oMuDFa+Mmkm/6QNjMcuUBZ4nAv86/lWdWCmg8ZQdBV6YVWjRCRMyTaw==
   dependencies:
-    "@satorijs/adapter-telegram" "^3.6.8"
+    "@satorijs/adapter-telegram" "^3.7.0"
 
 "@koishijs/plugin-admin@1.1.6":
   version "1.1.6"
@@ -642,21 +642,21 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.5.1":
-  version "5.5.1"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.5.1.tgz#3628030178fbc5ee01a291be7b4a19fc829eafa7"
-  integrity sha512-n6nV2iKFX62TevZUiVC2nHC5cnwDy15unpkfHVPYILItZ2/u9U4s/davWkBslyajwTEhVaLBSx0PeYvUnExj6g==
+"@koishijs/plugin-console@5.5.2":
+  version "5.5.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.5.2.tgz#3afec7d294ae98c6f59c78f816e9f24c3ed40b68"
+  integrity sha512-fAtOWdSJ/pIChPqalB1RPyMtGjf5uANJdUYE4Xf4vzDtKS7tu/cq3WppdSPnF9LWd926xDOEm0aQmRJMmjZWrA==
   dependencies:
-    open "^8.4.0"
+    open "^8.4.2"
     uuid "^8.3.2"
-    ws "^8.11.0"
+    ws "^8.12.1"
 
-"@koishijs/plugin-database-sqlite@3.3.10":
-  version "3.3.10"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.3.10.tgz#4de2423bd5b0ed8ffed32d8d0e110a06970b8e9a"
-  integrity sha512-ftmZcUwq7UkqRIjiXfo8syu+IngfHB8fVNhPk8Z34LraGehoZLtvL8Dt1Ga3y++My1D+8xp38ZWobc+aaTQGlw==
+"@koishijs/plugin-database-sqlite@3.3.11":
+  version "3.3.11"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.3.11.tgz#67cdd56efada3289c9b5b38675f76a242f05a53b"
+  integrity sha512-XBZ7D6on1LkGdGoqihkds6sHKHGstGSB6zocnOkWPS/TTjeO1KUvCBEnGTVlTSetozBuWbeeTP8IfcoDnXw5pg==
   dependencies:
-    "@minatojs/driver-sqlite" "^3.3.10"
+    "@minatojs/driver-sqlite" "^3.3.11"
 
 "@koishijs/plugin-dataview@2.2.4":
   version "2.2.4"
@@ -675,10 +675,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-locales@2.1.4":
-  version "2.1.4"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.1.4.tgz#2e546496a3794c8b8ebcef40f71a0d192991d30e"
-  integrity sha512-w82Dpcy6mMHdlzQM9oY6H9begUnnVOY8NloxjNYJgIskmocKIzs/Ajo0HczC1czP+mX468SsPlox5w7JAS/gjQ==
+"@koishijs/plugin-locales@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.2.0.tgz#9c6d9df4607845b258c059363ce20103c77f00c5"
+  integrity sha512-CRWSFPkyjomoiSM2q4cFPZv4j1hXXGp/9bOwJkK8g0yHj1ZmndHt6+7NmcG9hu0N3GGPdR5rLpgSQyVPsZL0XA==
   dependencies:
     js-yaml "^4.1.0"
     throttle-debounce "^3.0.1"
@@ -772,14 +772,14 @@
   dependencies:
     cosmokit "^1.4.0"
 
-"@minatojs/driver-sqlite@^3.3.10":
-  version "3.3.10"
-  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.3.10.tgz#d95faebc84b06116b29f515f5bdd260adabb90b5"
-  integrity sha512-UrTONvVY7bETEegtYVO90QRA0kmfJdG6G43IRjq52M9gV2P20BHOVhiRALtVSrB+GBmxwzjfLuCbM7RWjLWgMg==
+"@minatojs/driver-sqlite@^3.3.11":
+  version "3.3.11"
+  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.3.11.tgz#fd1798dca4918820aee2489640c0e7ae33245ae0"
+  integrity sha512-VmxNdg9x8G9lG3hQs+kWm9BtTw+ozgpczoMfd13o9jBbQlUkpij5k1xm7NAwZuoe7RZcUSEzLY/fHRugpSvA+w==
   dependencies:
     "@minatojs/sql-utils" "^4.0.2"
     "@minatojs/sql.js" "^2.0.0"
-    cosmokit "^1.4.0"
+    cosmokit "^1.4.1"
     reggol "^1.3.5"
 
 "@minatojs/sql-utils@^4.0.2":
@@ -868,28 +868,25 @@
   dependencies:
     form-data "^4.0.0"
 
-"@satorijs/adapter-kook@^3.6.1":
-  version "3.6.1"
-  resolved "https://registry.npmmirror.com/@satorijs/adapter-kook/-/adapter-kook-3.6.1.tgz#77dd3b1af4b97a6ad0e485b973ed6ff40d5826b8"
-  integrity sha512-tyWbju4iP2JT2gWdBqXsQ/QIOQfRKaJjpc10gU4CfRncjUG9OO65s6XKuIFUeO2m6Ly7nY2BwUnwM3kyNQOYGw==
+"@satorijs/adapter-kook@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.npmmirror.com/@satorijs/adapter-kook/-/adapter-kook-3.6.2.tgz#3792b4e5ae0aa25089fa8afa59bf45856b831a84"
+  integrity sha512-CxNIdfKHkiMYuEb3Gi+3nv9esoIi43BjGbT99cufOew2IG2kv3bEgNpqAv+Zlj6LLlBF/y/3YM7OZsHCCXu4nw==
   dependencies:
-    cosmokit "^1.4.0"
     form-data "^4.0.0"
 
-"@satorijs/adapter-onebot@^5.6.0":
-  version "5.6.0"
-  resolved "https://registry.npmmirror.com/@satorijs/adapter-onebot/-/adapter-onebot-5.6.0.tgz#558b7409aedc56e5404567e14544733efb5feb08"
-  integrity sha512-BaJRm2I3ZPDE/pPjv4hiJoLBdC6k1PD83opRsqhLvmA5QVvWptdjsNFUWfLDGHC8M7OcAPF0L1nAAOSijeJWmQ==
+"@satorijs/adapter-onebot@^5.6.1":
+  version "5.6.1"
+  resolved "https://registry.npmmirror.com/@satorijs/adapter-onebot/-/adapter-onebot-5.6.1.tgz#b1058dec2403fceb21ed85dcc685be60825a61a5"
+  integrity sha512-OD9EGuTuxBqoFmv+uIDwhU8cYanDiNfHnEYMkXOPhpJY4/kJ6y7oAe9JIO8NO0RkxgWrbUEpJU2cP5+7KQNMnw==
   dependencies:
-    cosmokit "^1.4.0"
-    qface "^1.2.0"
+    qface "^1.3.0"
 
-"@satorijs/adapter-telegram@^3.6.8":
-  version "3.6.8"
-  resolved "https://registry.npmmirror.com/@satorijs/adapter-telegram/-/adapter-telegram-3.6.8.tgz#81e771d353271e6d0c51718b3cf7cf4fdc3eda84"
-  integrity sha512-mckWtB51oSQ5NNs7rpSWNN8o1wdnhTNwOAzySegczZ9bP7qk3izvBJm1ANTwBLcm3YWA28RwDNwkT1G1SGY37Q==
+"@satorijs/adapter-telegram@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.npmmirror.com/@satorijs/adapter-telegram/-/adapter-telegram-3.7.0.tgz#750a9a711daa10ae47d75d9de8252912f58494b6"
+  integrity sha512-P5S1yfrsjMNU+OooC2BD8hXpjIYHU00dyRtlLiuSu+GQbd73tgghNZuoypv7RiYC4u6QONauh6zjaMFjfKKaQQ==
   dependencies:
-    file-type "^16.5.4"
     form-data "^4.0.0"
 
 "@satorijs/components@^0.5.6":
@@ -1700,6 +1697,11 @@ cosmokit@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmmirror.com/cosmokit/-/cosmokit-1.4.0.tgz#bddb770cf642ba7bfd84ccd90f09e57d2b24221a"
   integrity sha512-9Y5epwkPxnWDSjweuWoFATY8GKg9N1/r/3wL32Cjs7FIvo0S9syyY39xmNKq7+SZjbw+9bZUSbeQSbJaqufV3Q==
+
+cosmokit@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.npmmirror.com/cosmokit/-/cosmokit-1.4.1.tgz#1f9ffb8f86565f1f13e2cbe0b1f7243489af9e40"
+  integrity sha512-d3ZRpKFahJRvLbo1T4y0ELCudjk9AeDUsfgKm+iAti6yPCeoPLGNUGT4expTWsNkrSA1uk7CKhtBPiizFYvDgA==
 
 cross-env@^7.0.3:
   version "7.0.3"
@@ -3109,10 +3111,10 @@ only@~0.0.2:
   resolved "https://registry.npmmirror.com/only/-/only-0.0.2.tgz#2afde84d03e50b9a8edc444e30610a70295edfb4"
   integrity sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==
 
-open@^8.4.0:
-  version "8.4.0"
-  resolved "https://registry.npmmirror.com/open/-/open-8.4.0.tgz#345321ae18f8138f82565a910fdc6b39e8c244f8"
-  integrity sha512-XgFPPM+B28FtCCgSb9I+s9szOC1vZRSwgWsRUA5ylIxRTgKozqjOCrVOqGsYABPYK5qnfqClxZTFBa8PKt2v6Q==
+open@^8.4.2:
+  version "8.4.2"
+  resolved "https://registry.npmmirror.com/open/-/open-8.4.2.tgz#5b5ffe2a8f793dcd2aad73e550cb87b59cb084f9"
+  integrity sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==
   dependencies:
     define-lazy-prop "^2.0.0"
     is-docker "^2.1.1"
@@ -3276,7 +3278,7 @@ puppeteer-finder@^1.0.3:
   resolved "https://registry.npmmirror.com/puppeteer-finder/-/puppeteer-finder-1.0.3.tgz#db1e646ffb4da444a574345e6b29efff21865d36"
   integrity sha512-QN0sCTpqVglTGYYTTOAuib1OiCxnQtDpXtH7DRdpA2YSEdibBlSK08d3xh+d+j2q+xRN1x1RDpnjuyA1EmUp9w==
 
-qface@^1.2.0:
+qface@^1.3.0:
   version "1.3.0"
   resolved "https://registry.npmmirror.com/qface/-/qface-1.3.0.tgz#2628ba673d2531c501dd3c494b3974cd7e0b0c0a"
   integrity sha512-kuudXeQqG2VQqB+P2L/RSIey3Vxqi8OKdxQPKtR+REqczu8kuY5KjZ+w+tSxCYpVA430H+rahNc3y+9Ah9DX5A==
@@ -3870,6 +3872,11 @@ ws@^8.11.0:
   version "8.12.0"
   resolved "https://registry.npmmirror.com/ws/-/ws-8.12.0.tgz#485074cc392689da78e1828a9ff23585e06cddd8"
   integrity sha512-kU62emKIdKVeEIOIKVegvqpXMSTAMLJozpHZaJNDYqBjzlSYXQGviYwN1osDLJ9av68qHd4a2oSjd7yD4pacig==
+
+ws@^8.12.1:
+  version "8.12.1"
+  resolved "https://registry.npmmirror.com/ws/-/ws-8.12.1.tgz#c51e583d79140b5e42e39be48c934131942d4a8f"
+  integrity sha512-1qo+M9Ba+xNhPB+YTWUlK6M17brTut5EXbcBaMRN5pH5dFrXz7lzz1ChFSUq3bOUl8yEvSenhHmYUNJxFzdJew==
 
 xss@^1.0.14:
   version "1.0.14"
