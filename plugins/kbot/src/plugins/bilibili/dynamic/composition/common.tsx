@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 11:53:37
+ * @LastEditTime: 2023-03-03 00:59:11
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -122,10 +122,14 @@ export async function bilibiliDanmuCheck(
   config: Config
 ) {
   try {
+    const searchUserCardInfo = await getMemberCard(ctx.http, uid);
+
+
+
     return "功能还在开发喵~";
   } catch (e) {
     logger.error(`Failed to get danmu info. ${e}`);
-    return "成分获取失败" + e;
+    return "弹幕获取失败" + e;
   }
 }
 
