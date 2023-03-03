@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 10:47:45
+ * @LastEditTime: 2023-03-03 10:16:00
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
@@ -10,7 +10,7 @@
  */
 import { Logger, Quester } from "koishi";
 import { BilibiliDynamicType } from "../enum";
-import { MemberCard, MedalWall } from "../model";
+import { MemberCard, MedalWall, DanmukuData } from "../model";
 import { StringFormat } from "../../utils";
 import * as fs from "fs";
 import { resolve } from "path";
@@ -31,13 +31,15 @@ export async function searchUser(
   http: Quester,
   logger: Logger
 ) {
-  // TODO 更改报错反馈 应该为 cookie 过期
   const data = { keyword: keyword, search_type: "bili_user" };
   let cookie;
   try {
     cookie = JSON.parse(
       fs.readFileSync(
-        resolve(__dirname, "../../../../../../public/kbot/bilibili/cookie.json"),
+        resolve(
+          __dirname,
+          "../../../../../../public/kbot/bilibili/cookie.json"
+        ),
         "utf-8"
       )
     );
@@ -109,5 +111,16 @@ export async function getMedalWall(
     return resp;
   } catch (e) {
     throw new Error(`Failed to get medal wall [${e.message}]`);
+  }
+}
+
+export async function getDanmukuData(http: Quester, uid: string) {
+  try {
+    const resp = await http.get<DanmukuData>(
+      StringFormat(BilibiliDynamicType.DanmakuAPI, uid, 0)
+    );
+    return resp;
+  } catch (e) {
+    throw new Error("Failed to get danmuku data." + e);
   }
 }
