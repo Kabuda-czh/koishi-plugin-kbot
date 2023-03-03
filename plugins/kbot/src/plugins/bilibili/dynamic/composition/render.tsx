@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-11 15:12:57
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-03 14:45:53
+ * @LastEditTime: 2023-03-03 15:00:14
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\render.tsx
  * @Description: 
  * 
@@ -295,14 +295,16 @@ export function renderDanmu(
                   <p class="nameTitleColor">标题: {item.live.title}</p>
                   <p class="nameTitleColor">主播: {item.channel.name}</p>
                   <p>开始时间: {new Date(item.live.startDate).toLocaleString()}</p>
-                  {
-                    ...(item.live.isFinish ? [
-                      <p>结束时间: {new Date(item.live.stopDate).toLocaleString()}</p>,
-                      <p>直播时长: {((item.live.stopDate - item.live.startDate) / 3600000).toFixed(1) + "小时"}</p>]
-                      : [
-                        <p>结束时间: <span class="greenColor">正在直播</span></p>,
-                        <p>直播时长: {((new Date().getTime() - item.live.startDate) / 3600000).toFixed(1) + "小时"}</p>])
-                  }
+                  <p>结束时间: {
+                    item.live.isFinish ?
+                      new Date(item.live.stopDate).toLocaleString() :
+                      <span class="greenColor">正在直播</span>
+                  }</p>
+                  <p>直播时长: {
+                    (
+                      (item.live.isFinish ? item.live.stopDate : new Date().getTime() - item.live.startDate) / 3600000
+                    ).toFixed(1) + "小时"}
+                  </p>
                   <p>弹幕数量: {item.live.danmakusCount}</p>
                   <p>观看次数: {item.live.watchCount}</p>
                   <p>收益: <span class="redColor">￥{item.live.totalIncome}</span></p>
