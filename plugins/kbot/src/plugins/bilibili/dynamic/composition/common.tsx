@@ -13,7 +13,7 @@ import { Config, logger } from "..";
 import { DynamicNotifiction } from "../../model";
 import * as fs from "fs";
 import { resolve } from "path";
-import { getMedalWall, getMemberCard } from "../../utils";
+import { getDanmukuData, getMedalWall, getMemberCard } from "../../utils";
 import { getFontsList } from "../../../utils";
 import { renderVup } from "./render";
 
@@ -108,7 +108,6 @@ export async function bilibiliVupCheck(
   }
 }
 
-// TODO 查弹幕开发
 export async function bilibiliDanmuCheck(
   { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
   uid: string,
@@ -124,7 +123,13 @@ export async function bilibiliDanmuCheck(
   try {
     const searchUserCardInfo = await getMemberCard(ctx.http, uid);
 
+    const needLoadFontList = await getFontsList(logger);
 
+    const danmuku = await getDanmukuData(ctx.http, uid)
+
+    const image = renderDanmu(searchUserCardInfo, danmuku, needLoadFontList)
+
+    await session.send(image);
 
     return "功能还在开发喵~";
   } catch (e) {
