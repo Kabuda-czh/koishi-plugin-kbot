@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 14:19:51
+ * @LastEditTime: 2023-03-03 09:36:03
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
@@ -21,11 +21,11 @@ export interface Config {
 }
 
 export const Config: Schema<Config> = Schema.object({
-  yiyan: Schema.boolean().default(true).description("是否开启一言"),
-  renjian: Schema.boolean().default(true).description("是否开启人间一言"),
+  yiyan: Schema.boolean().default(false).description("是否开启一言"),
+  renjian: Schema.boolean().default(false).description("是否开启人间一言"),
   alApiToken: Schema.string().description("ALAPI Token, 注: 前往 https://www.alapi.cn/ 个人中心获取token (可选)"),
-  news: Schema.boolean().default(true).description("是否开启今日新闻 (需要alApiToken)"),
-  weather: Schema.boolean().default(true).description("是否开启天气查询 (需要alApiToken)"),
+  news: Schema.boolean().default(false).description("是否开启今日新闻 (需要alApiToken)"),
+  weather: Schema.boolean().default(false).description("是否开启天气查询 (需要alApiToken)"),
   body: Schema.boolean().default(false).description("是否开启自带的 status, 等同于插件 `status-pro`"),
 });
 
