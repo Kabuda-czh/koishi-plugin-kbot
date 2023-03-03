@@ -15,5 +15,6 @@ export enum BilibiliDynamicType {
   DynamicDetailURL = "https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?host_mid=%s",
   MemberCardURL = "https://account.bilibili.com/api/member/getCardByMid?mid=%s",
   MedalWallURL = "https://api.live.bilibili.com/xlive/web-ucenter/user/MedalWall?target_id=%s",
-  DanmakuAPI = "https://danmakus.com/api/search/user/detail?uid=%s&pagenum=%s&pagesize=5"
+  DanmakuAPI = "https://danmakus.com/api/search/user/detail?uid=%s&pagenum=%s&pagesize=5",
+  DanmakuAPI2 = "https://ukamnads.icu/api/search/user/detail?uid=%s&pagenum=%s&pagesize=5"
 }
