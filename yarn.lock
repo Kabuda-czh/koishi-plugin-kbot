@@ -583,12 +583,12 @@
     js-yaml "^4.1.0"
     ns-require "^1.1.4"
 
-"@koishijs/plugin-adapter-discord@3.5.6":
-  version "3.5.6"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-discord/-/plugin-adapter-discord-3.5.6.tgz#f8a89e3bbf8bc74125f6edc943dee3fc62de8ecd"
-  integrity sha512-7SRydA4D5ry6hg//uMLp3H/bZSi1AdoF3Pi30sJeDuVOeZs7sc/Zm42FBSTv7dd4u1QEWhSWn/cbo4SC1c2JPQ==
+"@koishijs/plugin-adapter-discord@3.5.7":
+  version "3.5.7"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-discord/-/plugin-adapter-discord-3.5.7.tgz#15769c3ee2a09300c09cbec9d76af551bdf86bdb"
+  integrity sha512-VP9ZpwdV7qXflgTDRHKTI8vtdiAg3IIMnd0dHlHK4UswZFa2wo38qn0dK4IikjfTHDQG5W2u+mUpdU+/iOD3Tw==
   dependencies:
-    "@satorijs/adapter-discord" "^3.5.6"
+    "@satorijs/adapter-discord" "^3.5.7"
 
 "@koishijs/plugin-adapter-feishu@1.2.2":
   version "1.2.2"
@@ -642,10 +642,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.5.2":
-  version "5.5.2"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.5.2.tgz#3afec7d294ae98c6f59c78f816e9f24c3ed40b68"
-  integrity sha512-fAtOWdSJ/pIChPqalB1RPyMtGjf5uANJdUYE4Xf4vzDtKS7tu/cq3WppdSPnF9LWd926xDOEm0aQmRJMmjZWrA==
+"@koishijs/plugin-console@5.5.3":
+  version "5.5.3"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.5.3.tgz#2cebf0df66b583f9be8e95fff438a8ad630da469"
+  integrity sha512-67YEWt8duKSZTPlWgV4CKo/d9lcl1NoMDBJej8u2+n+LHyUaV3572xyb5j4gLHQST5Eflps/YuTCOrjugO0GvQ==
   dependencies:
     open "^8.4.2"
     uuid "^8.3.2"
@@ -675,10 +675,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-locales@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.2.0.tgz#9c6d9df4607845b258c059363ce20103c77f00c5"
-  integrity sha512-CRWSFPkyjomoiSM2q4cFPZv4j1hXXGp/9bOwJkK8g0yHj1ZmndHt6+7NmcG9hu0N3GGPdR5rLpgSQyVPsZL0XA==
+"@koishijs/plugin-locales@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.2.1.tgz#3013744931f0ec1ada251ff9aaadeeca88088d60"
+  integrity sha512-LcinC6W+SJlUycHyKTd9wjaNIT6+N244wATldXBpJZmyfiqoNAbAGAehO1BMWWf2e0uTYPNr+mx/9/xyLMBpSA==
   dependencies:
     js-yaml "^4.1.0"
     throttle-debounce "^3.0.1"
@@ -688,10 +688,10 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-logger/-/plugin-logger-2.2.3.tgz#4876eb4d6d15c3c42ec109f3a7acebff6853d562"
   integrity sha512-OqZK6UOVJUtcqhdOvcABqWYraALzwDhN+Apr32F4DF3fDtjJ9ld0fX9ndFMgPBucfSXYrCM7ciJ2Cqj563Tdjg==
 
-"@koishijs/plugin-market@1.11.4":
-  version "1.11.4"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.11.4.tgz#fd366ca5cdf79ef47589e9ed5ae952a04a9f0994"
-  integrity sha512-RSQ5vW17cAniqUuMr7Rix9uJr6pgcmNwRMf6p5f00ji7XVMYfXLO5avz33PSH8pH+vooT/GVQLX+5Lxxia7CEA==
+"@koishijs/plugin-market@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.12.0.tgz#7b21df2c79e06016c05acc62b74c83552657699e"
+  integrity sha512-5X4Vw/mI/ar2opS5mTuT6D86bRtCKthQwil8so8bLdNo6qy+MGbMFB/21JoTfaznIlMAd1soRBx6/WmnWQTG4Q==
   dependencies:
     "@koishijs/registry" "^4.6.0"
     execa "^5.1.1"
@@ -854,10 +854,10 @@
   resolved "https://registry.npmmirror.com/@redis/time-series/-/time-series-1.0.4.tgz#af85eb080f6934580e4d3b58046026b6c2b18717"
   integrity sha512-ThUIgo2U/g7cCuZavucQTQzA9g9JbDDY2f64u3AbAoz/8vE2lt2U37LamDUVChhaDA3IRT9R6VvJwqnUfTJzng==
 
-"@satorijs/adapter-discord@^3.5.6":
-  version "3.5.6"
-  resolved "https://registry.npmmirror.com/@satorijs/adapter-discord/-/adapter-discord-3.5.6.tgz#d7959a536cb7f1d9b8b8ef5ec2163b529c6993b3"
-  integrity sha512-7XiR6/e8idlE72BT1LVvEo7TJ/vWPipQXV7nFYG4KhxOr2PaBlcuRvtO3EP0IhUlaSvjKG4oDXlowbdG6Y0gOw==
+"@satorijs/adapter-discord@^3.5.7":
+  version "3.5.7"
+  resolved "https://registry.npmmirror.com/@satorijs/adapter-discord/-/adapter-discord-3.5.7.tgz#4c4c875735deef7f89482070576768dabc162834"
+  integrity sha512-rGv7UAnmBNEWTBR6n18mXAzWKffnrfkrNxlqVqzf2mJHo+t342CxePbj/vBA6nHmoXwxoQ0YYbL0wJWSrpRxpg==
   dependencies:
     form-data "^4.0.0"
 
@@ -2794,10 +2794,10 @@ koishi-plugin-genshin-voice@1.0.3:
   resolved "https://registry.npmmirror.com/koishi-plugin-genshin-voice/-/koishi-plugin-genshin-voice-1.0.3.tgz#2b6bc151bbcf3572bfd262a1f13e32b4ac059f76"
   integrity sha512-xwizXuAZK0jcui91J90BFS9tU5Vj7JEOuB5l/cDisNhtzCLCPhWizvFOlKmU+0BpfQDLUW4JqtoUNU2oCwfBrw==
 
-koishi-plugin-gocqhttp@3.3.3:
-  version "3.3.3"
-  resolved "https://registry.npmmirror.com/koishi-plugin-gocqhttp/-/koishi-plugin-gocqhttp-3.3.3.tgz#258add2b84264c0dba098f451e13872215b9fe3b"
-  integrity sha512-yaIbXnukxu5qKswWuUbFdKXGkQHXrxNLn+1n3AJeuwaGrUbB5BWkL4fl/Eo9x95FKVvr7+RO3kIXbQjFy5YP1Q==
+koishi-plugin-gocqhttp@3.3.4:
+  version "3.3.4"
+  resolved "https://registry.npmmirror.com/koishi-plugin-gocqhttp/-/koishi-plugin-gocqhttp-3.3.4.tgz#f3fa54cfacd9a7cfe1a7a8eb0bfd196d649b5b83"
+  integrity sha512-7nZtr2qNZKJY90lnqTSkXrb7mCNighxa/CeSewCjUcZjDEjb81N6kcRmUl/7gjHII3Te2FIIldZ7Rc7AQnw/2A==
   dependencies:
     go-cqhttp "^2.2.0"
     strip-ansi "^6.0.1"
@@ -2818,13 +2818,6 @@ koishi-plugin-puppeteer@3.4.11:
   dependencies:
     puppeteer-core "^19.6.2"
     puppeteer-finder "^1.0.3"
-
-koishi-plugin-status-pro@1.1.7:
-  version "1.1.7"
-  resolved "https://registry.npmmirror.com/koishi-plugin-status-pro/-/koishi-plugin-status-pro-1.1.7.tgz#8bfab20dd958180b38542d7cea1112925464f9b5"
-  integrity sha512-VbZOo2RtBUX+HQJ8U6opd+Kf8Dittb4YFU0k5r1oIhQruxXeAynHKbbZ1JuP/WgYBfccyVZbBM2ytHIjoQ0j0Q==
-  dependencies:
-    systeminformation "^5.17.9"
 
 koishi@4.11.8:
   version "4.11.8"
@@ -3639,11 +3632,6 @@ systeminformation@^5.17.10:
   version "5.17.10"
   resolved "https://registry.npmmirror.com/systeminformation/-/systeminformation-5.17.10.tgz#bd1e12fc3e5de7259cf71b52468cdddd52f3af91"
   integrity sha512-FUm264baeDpruTw4P50BRRmYHD39D3jkOQ0VpNIkp8CdNejQbsp4Me18jacGBc/mWSVxKdQw4wSHmcL7ERxrNg==
-
-systeminformation@^5.17.9:
-  version "5.17.12"
-  resolved "https://registry.npmmirror.com/systeminformation/-/systeminformation-5.17.12.tgz#5b3e1bfcd5c2c5b459f1a88e61fed27cf9668ba8"
-  integrity sha512-I3pfMW2vue53u+X08BNxaJieaHkRoMMKjWetY9lbYJeWFaeWPO6P4FkNc4XOCX8F9vbQ0HqQ25RJoz3U/B7liw==
 
 tar-fs@2.1.1:
   version "2.1.1"
