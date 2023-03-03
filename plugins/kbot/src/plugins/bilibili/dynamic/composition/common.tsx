@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-03 00:59:11
+ * @LastEditTime: 2023-03-03 11:29:22
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -15,7 +15,7 @@ import * as fs from "fs";
 import { resolve } from "path";
 import { getDanmukuData, getMedalWall, getMemberCard } from "../../utils";
 import { getFontsList } from "../../../utils";
-import { renderVup } from "./render";
+import { renderDanmu, renderVup } from "./render";
 
 export async function bilibiliVupCheck(
   { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
@@ -89,7 +89,7 @@ export async function bilibiliVupCheck(
 
     vups = frontVups.concat(vups)
     vups = frontVups.concat(vups.slice(frontVups.length));
-    for(let i = frontVups.length; i < vups.length; i++) {
+    for (let i = frontVups.length; i < vups.length; i++) {
       if (medalMap[vups[i].mid]) {
         vups.splice(i, 1)
         i--;
@@ -130,8 +130,7 @@ export async function bilibiliDanmuCheck(
     const image = renderDanmu(searchUserCardInfo, danmuku, needLoadFontList)
 
     await session.send(image);
-
-    return "功能还在开发喵~";
+    
   } catch (e) {
     logger.error(`Failed to get danmu info. ${e}`);
     return "弹幕获取失败" + e;
