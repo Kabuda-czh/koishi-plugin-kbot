@@ -4,8 +4,8 @@
  * @LastEditors: Kabuda-czh
  * @LastEditTime: 2023-02-03 17:37:59
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\model\dynamic.model.ts
- * @Description: 
- * 
+ * @Description:
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 export interface DynamicNotifiction {
@@ -35,8 +35,8 @@ export type BilibiliDynamicItem =
           };
         };
         module_tag?: {
-          text: string
-        }
+          text: string;
+        };
       };
     }
   | {
@@ -60,8 +60,8 @@ export type BilibiliDynamicItem =
           };
         };
         module_tag?: {
-          text: string
-        }
+          text: string;
+        };
       };
     }
   | {
@@ -78,8 +78,8 @@ export type BilibiliDynamicItem =
           };
         };
         module_tag?: {
-          text: string
-        }
+          text: string;
+        };
       };
     }
   | {
@@ -97,8 +97,8 @@ export type BilibiliDynamicItem =
           };
         };
         module_tag?: {
-          text: string
-        }
+          text: string;
+        };
       };
     }
   | {
@@ -117,7 +117,13 @@ export type BilibiliDynamicItem =
           };
         };
         module_tag?: {
-          text: string
-        }
+          text: string;
+        };
       };
     };
+
+export interface LivePlayInfo {
+  title: string;
+  cover: string;
+  link: string;
+}
