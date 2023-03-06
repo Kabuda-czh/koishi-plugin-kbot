@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 17:41:48
+ * @LastEditTime: 2023-03-06 09:48:14
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -109,21 +109,19 @@ export async function apply(ctx: Context, config: Config) {
       return dynamicStrategy({ session, options }, list, ctx, config);
     });
 
-  const cookieJson = fs.readFileSync(
-    path.resolve(
-      __dirname,
-      "../../../../../../public/kbot/twitter/cookie.json"
-    ),
-    { encoding: "utf-8" }
-  );
-
-  if (!cookieJson) {
-    await getTwitterToken(ctx, logger);
-  } else {
+  try {
+    const cookieJson = fs.readFileSync(
+      path.resolve(
+        __dirname,
+        "../../../../../../public/kbot/twitter/cookie.json"
+      ),
+      { encoding: "utf-8" }
+    );
     const cookie = JSON.parse(cookieJson).cookies;
     ctx.http.config.headers["x-guest-token"] = cookie;
+  } catch {
+    await getTwitterToken(ctx, logger);
   }
-
 
   const generator = listen(list, getTwitterTweets, ctx, config);
   ctx.setInterval(async () => {
