@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-14 13:06:30
+ * @LastEditTime: 2023-03-06 11:27:48
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description: 
  * 
@@ -177,13 +177,15 @@ const getBotInfo = async () => {
     return res.json() as Promise<UserInfo[]>;
   });
 
-  botId.value = +botInfos[0].userId;
+  botId.value = +botInfos?.[0]?.userId ?? "";
 };
 
 const getGroupList = async () => {
   const groupDatas = await fetch(`/groupList`).then(
     (res): Promise<Group[]> => res.json()
   );
+
+  if (groupDatas.length === 1 && !groupDatas[0]) return;
 
   const groupMemberList = await Promise.all(
     groupDatas.map(async (group) => fetchGroupMemberList(group.group_id, true))
