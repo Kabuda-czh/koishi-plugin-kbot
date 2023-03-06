@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-16 17:31:08
+ * @LastEditTime: 2023-03-06 11:52:24
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
@@ -24,6 +24,7 @@ export async function getSystemInfo(
     si.cpuCurrentSpeed(),
     si.mem(),
     getDiskUsage(),
+    si.cpu(),
   ]);
 
   const { uptime } = si.time();
@@ -34,6 +35,7 @@ export async function getSystemInfo(
     { avg },
     { total, used, swaptotal, swapused },
     { disksize, diskused },
+    { cores },
   ] = promisList;
 
   // memory
@@ -54,11 +56,13 @@ export async function getSystemInfo(
     dashboard: [
       {
         progress: +cpuUsage,
-        title: `${(+cpuUsage * 100).toFixed(0)}% - ${avg}Ghz`,
+        title: `${(+cpuUsage * 100).toFixed(0)}% - ${avg}Ghz  [${cores}core]`,
       },
       {
         progress: +memoryUsage || 0,
-        title: isNaN(+memoryUsed) ? ErrorInfo : `${memoryUsed} / ${memoryTotal}`,
+        title: isNaN(+memoryUsed)
+          ? ErrorInfo
+          : `${memoryUsed} / ${memoryTotal}`,
       },
       {
         progress: +swapUsage || 0,
