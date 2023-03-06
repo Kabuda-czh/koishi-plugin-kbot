@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-23 17:12:38
+ * @LastEditTime: 2023-03-06 10:52:05
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -11,7 +11,7 @@
 import { Context, segment } from "koishi";
 import path from "path";
 import { Config, logger } from ".";
-import { BilibiliDynamicItem } from "../model";
+import { BilibiliDynamicItem, LivePlayInfo } from "../model";
 import { Page } from "puppeteer-core";
 import { getFontsList } from "../../utils";
 
@@ -21,11 +21,11 @@ export async function renderFunction(
   config: Config
 ): Promise<string> {
   if (ctx.puppeteer && config.useImage) {
-  if (config.device === "pc") {
-    return pcRenderImage(ctx, item);
-  } else {
-    return mobileRenderImage(ctx, item);
-  }
+    if (config.device === "pc") {
+      return pcRenderImage(ctx, item);
+    } else {
+      return mobileRenderImage(ctx, item);
+    }
   } else {
     return renderText(item);
   }
@@ -33,7 +33,7 @@ export async function renderFunction(
 
 async function pcRenderImage(
   ctx: Context,
-  item: BilibiliDynamicItem,
+  item: BilibiliDynamicItem
 ): Promise<string> {
   let page: Page;
   try {
@@ -82,12 +82,12 @@ async function pcRenderImage(
 
 async function mobileRenderImage(
   ctx: Context,
-  item: BilibiliDynamicItem,
+  item: BilibiliDynamicItem
 ): Promise<string> {
   let page: Page;
   try {
     const needLoadFontList = await getFontsList(logger);
-    
+
     page = await ctx.puppeteer.page();
 
     await page
@@ -130,7 +130,7 @@ async function mobileRenderImage(
       segment.image(
         await page.screenshot({
           clip: elementClip,
-          encoding: "binary"
+          encoding: "binary",
         }),
         "image/png"
       ) +
@@ -142,4 +142,36 @@ async function mobileRenderImage(
   } finally {
     page?.close();
   }
+}
+
+async function renderText(item: BilibiliDynamicItem): Promise<string> {
+  const author = item.modules.module_author;
+  let result: string;
+  if (item.type === "DYNAMIC_TYPE_AV") {
+    const dynamic = item.modules.module_dynamic;
+    result = `${author.name} 发布了视频: ${dynamic.major.archive.title}\n<image url="${dynamic.major.archive.cover}"/>`;
+  } else if (item.type === "DYNAMIC_TYPE_DRAW") {
+    const dynamic = item.modules.module_dynamic;
+    result = `${author.name} 发布了动态: ${
+      dynamic.desc.text
+    }\n${dynamic.major.draw.items
+      .map((item) => `<image url="${item.src}"/>`)
+      .join("")}`;
+  } else if (item.type === "DYNAMIC_TYPE_WORD") {
+    const dynamic = item.modules.module_dynamic;
+    result = `${author.name} 发布了动态: ${dynamic.desc.text}`;
+  } else if (item.type === "DYNAMIC_TYPE_FORWARD") {
+    const dynamic = item.modules.module_dynamic;
+    result = `${author.name} 转发动态: ${dynamic.desc.text}\n${renderText(
+      item.orig
+    )}`;
+  } else if (item.type === "DYNAMIC_TYPE_LIVE_RCMD") {
+    const dynamic = item.modules.module_dynamic;
+    const info: LivePlayInfo = JSON.parse(dynamic.major.live_rcmd.content);
+    result = `${author.name} 开始直播: ${info.title}`;
+    if (info.cover) result += `\n${segment.image(info.cover)}`;
+  } else {
+    result = `${author.name} 发布了未知类型的动态: ${item["type"]}`;
+  }
+  return result + `\nhttps://t.bilibili.com/${item.id_str}`;
 }
