@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 15:26:54
+ * @LastEditTime: 2023-03-06 10:43:34
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -24,17 +24,12 @@ declare module ".." {
   }
 }
 
-export interface LivePlayInfo {
-  title: string;
-  cover: string;
-  link: string;
-}
-
 export interface Config {
   interval: number;
   device: string;
   live: boolean;
   authority: number;
+  useImage?: boolean;
 }
 
 export const Config: Schema<Config> = Schema.object({
@@ -47,8 +42,9 @@ export const Config: Schema<Config> = Schema.object({
     Schema.const("mobile").description("手机"),
   ])
     .default("pc")
-    .description("截图类型 (手机/电脑)"),
+    .description("截图类型 (手机/电脑), 需要开启图片模式"),
   live: Schema.boolean().description("是否监控开始直播的动态").default(true),
+  useImage: Schema.boolean().default(false).description("是否使用图片模式 (需要 puppeteer 支持!)"),
   authority: Schema.number()
     .default(2)
     .min(1)

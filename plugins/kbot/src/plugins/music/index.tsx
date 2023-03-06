@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 15:28:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 18:08:39
+ * @LastEditTime: 2023-03-06 10:57:31
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\music\index.tsx
  * @Description: 
  * 
@@ -18,7 +18,7 @@ export type Platform = 'netease' | 'qq'
 export interface Config {
   platform?: string
   showWarning?: boolean
-  useText?: boolean
+  useImage?: boolean
   authority?: number
 }
 
@@ -28,7 +28,7 @@ export const Config: Schema<Config> = Schema.object({
     Schema.const("qq").description('QQ音乐'),
   ]).default('qq').description('默认的点歌平台'),
   showWarning: Schema.boolean().default(false).description('点歌失败时是否发送提示。'),
-  useText: Schema.boolean().default(false).description('是否使用文本模式。'),
+  useImage: Schema.boolean().default(false).description('是否使用图片模式 (需要 puppeteer 支持!)'),
   authority: Schema.number()
     .default(2)
     .min(1)
@@ -76,10 +76,10 @@ const platforms: Record<Platform, (this: Context, keyword: string) => Promise<Re
 }
 
 export function apply(ctx: Context, config: Config) {
-  const { showWarning, platform, useText } = config
+  const { showWarning, platform, useImage } = config
 
   function list(results: Result[]) {
-    if (!useText) {
+    if (ctx.puppeteer && useImage) {
       return <html style={{
         color: '#ffffff',
         background: '#333333',

@@ -20,10 +20,14 @@ export async function renderFunction(
   item: BilibiliDynamicItem,
   config: Config
 ): Promise<string> {
+  if (ctx.puppeteer && config.useImage) {
   if (config.device === "pc") {
     return pcRenderImage(ctx, item);
   } else {
     return mobileRenderImage(ctx, item);
+  }
+  } else {
+    return renderText(item);
   }
 }
 

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 15:49:26
+ * @LastEditTime: 2023-03-06 11:43:55
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -85,7 +85,7 @@ export const Config: Schema<Config> = Schema.object({
   ),
   KBotMusic: pluginLoad(musicPlugin.Config).description("点歌功能"),
   KBotYoutube: pluginLoad(youtubePlugin.Config).description("Youtube 视频解析"),
-  KBotTwitter: pluginLoad(twitterPlugin.Config).description("Twitter 动态推送"),
+  KBotTwitter: pluginLoad(twitterPlugin.Config).description("Twitter 动态推送 (必须要 puppeteer)"),
   KBotTarot: pluginLoad(tarotPlugin.Config).description("塔罗牌功能"),
 });
 
@@ -139,8 +139,11 @@ export async function apply(ctx: Context, config: Config) {
     if (config.KBotMusic.enabled) ctx.plugin(musicPlugin, config.KBotMusic);
     if (config.KBotYoutube.enabled)
       ctx.plugin(youtubePlugin, config.KBotYoutube);
-    if (config.KBotTwitter.enabled)
-      ctx.plugin(twitterPlugin, config.KBotTwitter);
+    if (config.KBotTwitter.enabled) {
+      if (ctx.puppeteer) {
+        ctx.plugin(twitterPlugin, config.KBotTwitter);
+      } else logger.warn("未启用 puppeteer, Twitter 动态推送功能将不可用");
+    }
     if (config.KBotTarot.enabled) ctx.plugin(tarotPlugin, config.KBotTarot);
 
     logger.success("KBot 内置插件加载完毕");

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 09:48:14
+ * @LastEditTime: 2023-03-06 10:58:31
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -26,7 +26,7 @@ declare module ".." {
 
 export interface Config {
   interval: number;
-  useText?: boolean;
+  useImage?: boolean;
   usePure?: boolean;
   onlyMedia?: boolean;
   authority: number;
@@ -37,7 +37,7 @@ export const Config: Schema<Config> = Schema.object({
     .description("请求之间的间隔 (秒) 注: 最低 30 秒!")
     .default(30)
     .min(30),
-  useText: Schema.boolean().default(false).description("是否使用文本模式"),
+  useImage: Schema.boolean().default(false).description("是否使用图片模式 (需要 puppeteer 支持!)"),
   usePure: Schema.boolean()
     .default(false)
     .description(

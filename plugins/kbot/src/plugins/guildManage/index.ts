@@ -8,7 +8,6 @@
  * 
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-// TODO developing
 import { Context, Schema } from "koishi";
 import { resolve } from "path";
 import {} from "@koishijs/plugin-console";

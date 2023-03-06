@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-03 11:29:22
+ * @LastEditTime: 2023-03-06 10:54:23
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -30,77 +30,82 @@ export async function bilibiliVupCheck(
   config: Config
 ) {
   try {
-    const searchUserCardInfo = await getMemberCard(ctx.http, uid);
+    if (ctx.puppeteer && config.useImage) {
 
-    const needLoadFontList = await getFontsList(logger);
+      const searchUserCardInfo = await getMemberCard(ctx.http, uid);
 
-    let vdb, cookie;
+      const needLoadFontList = await getFontsList(logger);
 
-    try {
-      vdb = JSON.parse(
-        fs.readFileSync(
-          resolve(__dirname, "../../../../../../../public/kbot/bilibili/vup.json"),
-          "utf-8"
-        )
-      );
-    } catch (e) {
-      logger.error(`Failed to get vup info. ${e}`);
-      throw new Error("vtb信息未找到, 请使用 --re 或 --refresh 更新vup信息");
-    }
+      let vdb, cookie;
 
-    try {
-      cookie = JSON.parse(
-        fs.readFileSync(
-          resolve(__dirname, "../../../../../../../public/kbot/bilibili/cookie.json"),
-          "utf-8"
-        )
-      );
-    } catch (e) {
-      logger.error(`Failed to get cookie info. ${e}`);
-      throw new Error("cookie信息未找到, 请使用 --ck 或 --cookie 更新cookie信息");
-    }
-
-    let vups: any[] = vdb.filter((vup) => searchUserCardInfo.card.attentions.includes(vup.mid));
-
-    const vupsLength = vups.length;
-
-    const cookieString = Object.entries(cookie)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("; ");
-
-    const medals = await getMedalWall(ctx.http, uid, cookieString);
-
-    const medalArray = medals.data.list;
-
-    medalArray.sort((a, b) => b.medal_info.level - a.medal_info.level);
-
-    const frontVups = [],
-      medalMap = {};
-
-    for (const medal of medalArray) {
-      const up = {
-        mid: medal.medal_info.target_id,
-        uname: medal.target_name,
-      };
-
-      frontVups.push(up);
-      medalMap[medal.medal_info.target_id] = medal;
-    }
-
-    vups = frontVups.concat(vups)
-    vups = frontVups.concat(vups.slice(frontVups.length));
-    for (let i = frontVups.length; i < vups.length; i++) {
-      if (medalMap[vups[i].mid]) {
-        vups.splice(i, 1)
-        i--;
+      try {
+        vdb = JSON.parse(
+          fs.readFileSync(
+            resolve(__dirname, "../../../../../../../public/kbot/bilibili/vup.json"),
+            "utf-8"
+          )
+        );
+      } catch (e) {
+        logger.error(`Failed to get vup info. ${e}`);
+        throw new Error("vtb信息未找到, 请使用 --re 或 --refresh 更新vup信息");
       }
+
+      try {
+        cookie = JSON.parse(
+          fs.readFileSync(
+            resolve(__dirname, "../../../../../../../public/kbot/bilibili/cookie.json"),
+            "utf-8"
+          )
+        );
+      } catch (e) {
+        logger.error(`Failed to get cookie info. ${e}`);
+        throw new Error("cookie信息未找到, 请使用 --ck 或 --cookie 更新cookie信息");
+      }
+
+      let vups: any[] = vdb.filter((vup) => searchUserCardInfo.card.attentions.includes(vup.mid));
+
+      const vupsLength = vups.length;
+
+      const cookieString = Object.entries(cookie)
+        .map(([key, value]) => `${key}=${value}`)
+        .join("; ");
+
+      const medals = await getMedalWall(ctx.http, uid, cookieString);
+
+      const medalArray = medals.data.list;
+
+      medalArray.sort((a, b) => b.medal_info.level - a.medal_info.level);
+
+      const frontVups = [],
+        medalMap = {};
+
+      for (const medal of medalArray) {
+        const up = {
+          mid: medal.medal_info.target_id,
+          uname: medal.target_name,
+        };
+
+        frontVups.push(up);
+        medalMap[medal.medal_info.target_id] = medal;
+      }
+
+      vups = frontVups.concat(vups)
+      vups = frontVups.concat(vups.slice(frontVups.length));
+      for (let i = frontVups.length; i < vups.length; i++) {
+        if (medalMap[vups[i].mid]) {
+          vups.splice(i, 1)
+          i--;
+        }
+      }
+
+      if (vups.length > 50) await session.send("成分太多了, 只显示前50个");
+
+      const image = renderVup(searchUserCardInfo, vups, vupsLength, medalMap, needLoadFontList);
+
+      await session.send(image)
+    } else {
+      return "该功能需要开启图片模式支持!";
     }
-
-    if (vups.length > 50) await session.send("成分太多了, 只显示前50个");
-
-    const image = renderVup(searchUserCardInfo, vups, vupsLength, medalMap, needLoadFontList);
-
-    await session.send(image)
 
   } catch (e) {
     logger.error(`Failed to get vup info. ${e}`);
@@ -121,16 +126,19 @@ export async function bilibiliDanmuCheck(
   config: Config
 ) {
   try {
-    const searchUserCardInfo = await getMemberCard(ctx.http, uid);
+    if (ctx.puppeteer && config.useImage) {
+      const searchUserCardInfo = await getMemberCard(ctx.http, uid);
 
-    const needLoadFontList = await getFontsList(logger);
+      const needLoadFontList = await getFontsList(logger);
 
-    const danmuku = await getDanmukuData(ctx.http, uid)
+      const danmuku = await getDanmukuData(ctx.http, uid)
 
-    const image = renderDanmu(searchUserCardInfo, danmuku, needLoadFontList)
+      const image = renderDanmu(searchUserCardInfo, danmuku, needLoadFontList)
 
-    await session.send(image);
-    
+      await session.send(image);
+    } else {
+      return "该功能需要开启图片模式支持!";
+    }
   } catch (e) {
     logger.error(`Failed to get danmu info. ${e}`);
     return "弹幕获取失败" + e;

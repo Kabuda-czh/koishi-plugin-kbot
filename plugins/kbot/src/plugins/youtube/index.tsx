@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 11:17:09
+ * @LastEditTime: 2023-03-06 10:59:52
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -79,7 +79,7 @@ interface Item {
 
 export interface Config {
   youtubeDataApiKey: string;
-  useText?: boolean;
+  useImage?: boolean;
 }
 
 const logger = new Logger('plugins/youtube')
@@ -90,7 +90,7 @@ export const Config: Schema<Config> = Schema.object({
     .description(
       "请提供YouTube Data API v3 (必填) 详情: https://developers.google.com/youtube/v3/getting-started"
     ),
-  useText: Schema.boolean().default(false).description("是否使用文本模式"),
+  useText: Schema.boolean().default(false).description("是否使用图片模式 (需要 puppeteer 支持!)"),
 });
 
 const apiEndPointPrefix = "https://www.googleapis.com/youtube/v3/videos";
@@ -161,17 +161,7 @@ export function apply(ctx: Context, config: Config) {
 
       logger.info(`Youtube视频解析成功: ${title}`);
 
-      if (config.useText) {
-        return `<image url="${url}" />
-频道: ${channelTitle}
-标题: ${title}
-描述: ${description.length > 50 ? description.slice(0, 50) + '...' : description}
-发布时间: ${publishedAt}
-标签: ${tagString}
-播放量: ${statistics.viewCount}
-点赞: ${statistics.likeCount}
-`;
-      } else {
+      if (ctx.puppeteer && config.useImage) {
         // TODO 待优化样式
         await session.send(
           <html style={{
@@ -189,6 +179,16 @@ export function apply(ctx: Context, config: Config) {
             <p>点赞: {statistics.likeCount}</p>
           </html>
         )
+      } else {
+        return `<image url="${url}" />
+频道: ${channelTitle}
+标题: ${title}
+描述: ${description.length > 50 ? description.slice(0, 50) + '...' : description}
+发布时间: ${publishedAt}
+标签: ${tagString}
+播放量: ${statistics.viewCount}
+点赞: ${statistics.likeCount}
+`;
       }
     } catch (error) {
       logger.error(error);
