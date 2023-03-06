@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-11 18:32:48
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\dynamic\dynamic.strategy.ts
+ * @LastEditTime: 2023-03-06 10:15:12
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\dynamic.strategy.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -53,15 +53,19 @@ export const dynamicStrategy = async (
   const strategyName = Object.keys(options).find((key) => options[key]);
   if (strategyName) {
     const value = options[strategyName];
-    const uid = await uidExtract(value, { session }, logger, ctx);
-    if (!["list", "cookie", "refresh"].includes(strategyName) && !uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
-    
-    return dynamicStrategies[strategyName]?.(
-      { session, options },
-      uid,
-      list,
-      ctx,
-      config
-    );
+    try {
+      const uid = await uidExtract(value, { session }, logger, ctx);
+      if (!["list", "cookie", "refresh"].includes(strategyName) && !uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
+      
+      return dynamicStrategies[strategyName]?.(
+        { session, options },
+        uid,
+        list,
+        ctx,
+        config
+      );
+    } catch (err) {
+      return err.message;
+    }
   }
 };
