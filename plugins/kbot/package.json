@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-kbot",
   "description": "一个多功能的qq机器人, 在全力开发中....",
-  "version": "0.7.3-alpha.1",
+  "version": "0.7.4-alpha.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -36,6 +36,11 @@
     "koishi": "^4.11.3",
     "koishi-plugin-puppeteer": "^3.3.1",
     "@koishijs/plugin-admin": "^1.1.5"
+  },
+  "peerDependenciesMeta": {
+    "koishi-plugin-puppeteer": {
+      "optional": true
+    }
   },
   "dependencies": {
     "qs": "^6.11.0",
