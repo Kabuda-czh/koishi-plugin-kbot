@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-28 13:09:43
+ * @LastEditTime: 2023-03-07 14:28:03
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
@@ -120,9 +120,9 @@ export async function twitterSearch(
   try {
     const entries = await getTwitterTweets(twitterRestId, ctx, logger);
 
-    if (entries.length === 0) return "该用户没有动态。";
+    if (!entries || entries?.length === 0) return "该用户没有动态。";
 
-    return renderFunction(ctx, entries[0], config);
+    return renderFunction(ctx, entries[0], config, false);
   } catch (e) {
     logger.error(`Failed to get user dynamics. ${e}`);
     return "动态获取失败" + e;
