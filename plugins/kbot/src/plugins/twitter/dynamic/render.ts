@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:59:30
+ * @LastEditTime: 2023-03-07 14:17:02
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -18,12 +18,18 @@ import { Entry } from "../model";
 export async function renderFunction(
   ctx: Context,
   entry: Entry,
-  config: Config
+  config: Config,
+  isListen: boolean = true
 ): Promise<string> {
-  if (ctx.puppeteer && config.useImage) {
-    return renderImage(ctx, entry);
-  } else {
-    return renderText(ctx, entry, config.onlyMedia);
+  try {
+    if (ctx.puppeteer && config.useImage) {
+      return renderImage(ctx, entry);
+    } else {
+      return renderText(ctx, entry, isListen, config.onlyMedia);
+    }
+  } catch (err) {
+    logger.error("twitter render error: ", err.message);
+    throw err.message;
   }
 }
 
@@ -79,74 +85,81 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
 async function renderText(
   ctx: Context,
   entry: Entry,
+  isListen: boolean = true,
   onlyMedia: boolean = false
 ): Promise<string> {
   const entryResult = entry.content.itemContent.tweet_results.result;
-  if (!entryResult) throw new Error("entryResult is undefined");
+  if (!entryResult) throw new Error("数据获取失败");
 
-  const name = entryResult.core.user_results.result.legacy.name;
-  const screenName = entryResult.core.user_results.result.legacy.screen_name;
-  const quote = entryResult?.quoted_status_result?.result;
-  const is_quote = !!quote;
-  const retweet = entryResult.legacy?.retweeted_status_result?.result;
-  const is_retweet = !!retweet;
-  const data = entryResult.legacy;
-  const tweetId = data.id_str;
-  const url = `推文地址: \nhttps://twitter.com/${screenName}/status/${tweetId}`;
+  try {
 
-  let text = "",
-    hasShortURL = false,
-    media = [];
-
-  if (is_quote) {
-    text = `${name} 发布了动态: \n${data.full_text}\n`;
-    const mediaData = data.entities;
-    if (mediaData.media) {
-      mediaData.media.forEach((item) => {
-        media.push(item.media_url_https);
-      });
+    const name = entryResult.core.user_results.result.legacy.name;
+    const screenName = entryResult.core.user_results.result.legacy.screen_name;
+    const quote = entryResult?.quoted_status_result?.result;
+    const is_quote = !!quote;
+    const retweet = entryResult.legacy?.retweeted_status_result?.result;
+    const is_retweet = !!retweet;
+    const data = entryResult.legacy;
+    const tweetId = data.id_str;
+    const url = `推文地址: \nhttps://twitter.com/${screenName}/status/${tweetId}`;
+  
+    let text = "",
+      hasShortURL = false,
+      media = [];
+  
+    if (is_quote) {
+      text = `${name} 发布了动态: \n${data.full_text}\n`;
+      const mediaData = data.entities;
+      if (mediaData.media) {
+        mediaData.media.forEach((item) => {
+          media.push(item.media_url_https);
+        });
+      }
+      const quoteName = quote?.core?.user_results?.result?.legacy?.name || "";
+      const quoteText = quote?.legacy?.full_text || "";
+      text += `引用了 ${quoteName} 的推文: \n${quoteText}\n`;
+  
+      const mediaEntities = quote?.legacy?.entities;
+      if (mediaEntities?.media) {
+        mediaEntities.media.forEach((item) => {
+          media.push(item.media_url_https);
+        });
+      }
+    } else if (is_retweet) {
+      text = `${name} 发布了动态: \n`;
+      const retweetName = retweet.core.user_results.result.legacy.name;
+      const retweetText = retweet.legacy.full_text;
+      text += `转发了 ${retweetName} 的推文:
+  ${retweetText}\n`;
+      const mediaData = retweet.legacy.entities;
+      if (mediaData.media) {
+        mediaData.media.forEach((item) => {
+          media.push(item.media_url_https);
+        });
+      }
+    } else {
+      text = `${name} 发布了动态: \n${data.full_text}\n`;
+      const mediaData = data.entities;
+      if (mediaData.media) {
+        mediaData.media.forEach((item) => {
+          media.push(item.media_url_https);
+        });
+      }
     }
-    const quoteName = quote.core.user_results.result.legacy.name;
-    const quoteText = quote.legacy.full_text;
-    text += `引用了 ${quoteName} 的推文: \n${quoteText}\n`;
-
-    const mediaEntities = quote.legacy.entities;
-    if (mediaEntities.media) {
-      mediaEntities.media.forEach((item) => {
-        media.push(item.media_url_https);
-      });
-    }
-  } else if (is_retweet) {
-    text = `${name} 发布了动态: \n`;
-    const retweetName = retweet.core.user_results.result.legacy.name;
-    const retweetText = retweet.legacy.full_text;
-    text += `转发了 ${retweetName} 的推文:
-${retweetText}\n`;
-    const mediaData = retweet.legacy.entities;
-    if (mediaData.media) {
-      mediaData.media.forEach((item) => {
-        media.push(item.media_url_https);
-      });
-    }
-  } else {
-    text = `${name} 发布了动态: \n${data.full_text}\n`;
-    const mediaData = data.entities;
-    if (mediaData.media) {
-      mediaData.media.forEach((item) => {
-        media.push(item.media_url_https);
-      });
-    }
+  
+    hasShortURL =
+      data.full_text.includes("https://t.co") ||
+      (is_quote && quote?.legacy?.full_text?.includes("https://t.co")) ||
+      (is_retweet && retweet?.legacy.full_text?.includes("https://t.co"));
+  
+    if (isListen && onlyMedia && media.length === 0) return;
+  
+    return `${text}\n${media.reduce(
+      (str, httpStr) => (str += `<image url="${httpStr}" />\n`),
+      ""
+    )}${hasShortURL ? "" : "\n" + url}`;
+  } catch (err) {
+    logger.error("twitter render error: ", err.message);
+    throw err.message;
   }
-
-  hasShortURL =
-    data.full_text.includes("https://t.co") ||
-    (is_quote && quote?.legacy?.full_text?.includes("https://t.co")) ||
-    (is_retweet && retweet?.legacy.full_text?.includes("https://t.co"));
-
-  if (onlyMedia && media.length === 0) return;
-
-  return `${text}\n${media.reduce(
-    (str, httpStr) => (str += `<image url="${httpStr}" />\n`),
-    ""
-  )}${hasShortURL ? "" : "\n" + url}`;
 }
