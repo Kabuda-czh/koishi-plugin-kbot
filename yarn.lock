@@ -1088,10 +1088,10 @@
   resolved "https://registry.npmmirror.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
   integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
 
-"@types/node@^18.14.5":
-  version "18.14.5"
-  resolved "https://registry.npmmirror.com/@types/node/-/node-18.14.5.tgz#4a13a6445862159303fc38586598a9396fc408b3"
-  integrity sha512-CRT4tMK/DHYhw1fcCEBwME9CSaZNclxfzVMe7GsO6ULSwsttbj70wSiX6rZdIjGblu93sTJxLdhNIT85KKI7Qw==
+"@types/node@^18.14.6":
+  version "18.14.6"
+  resolved "https://registry.npmmirror.com/@types/node/-/node-18.14.6.tgz#ae1973dd2b1eeb1825695bb11ebfb746d27e3e93"
+  integrity sha512-93+VvleD3mXwlLI/xASjw0FzKcwzl3OdTCzm1LaRfqgS21gfFtK3zDXM5Op9TeeMsJVOaJ2VRDpT9q4Y3d0AvA==
 
 "@types/qs@*", "@types/qs@^6.9.7":
   version "6.9.7"
@@ -3290,7 +3290,14 @@ qface@^1.3.0:
   resolved "https://registry.npmmirror.com/qface/-/qface-1.3.0.tgz#2628ba673d2531c501dd3c494b3974cd7e0b0c0a"
   integrity sha512-kuudXeQqG2VQqB+P2L/RSIey3Vxqi8OKdxQPKtR+REqczu8kuY5KjZ+w+tSxCYpVA430H+rahNc3y+9Ah9DX5A==
 
-qs@^6.11.0, qs@^6.5.2:
+qs@^6.11.1:
+  version "6.11.1"
+  resolved "https://registry.npmmirror.com/qs/-/qs-6.11.1.tgz#6c29dff97f0c0060765911ba65cbc9764186109f"
+  integrity sha512-0wsrzgTz/kAVIeuxSjnpGC56rzYtr6JT/2BwEvMaPhFIoYa1aGO8LbzuU1R0uUYQkLpWBTOj0l/CLAJB64J6nQ==
+  dependencies:
+    side-channel "^1.0.4"
+
+qs@^6.5.2:
   version "6.11.0"
   resolved "https://registry.npmmirror.com/qs/-/qs-6.11.0.tgz#fd0d963446f7a65e1367e01abd85429453f0c37a"
   integrity sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==
@@ -3946,10 +3953,10 @@ yakumo-upgrade@^0.3.3:
     p-map "^4.0.0"
     semver "^7.3.8"
 
-yakumo-version@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.npmmirror.com/yakumo-version/-/yakumo-version-0.3.3.tgz#c220d8a2a4d65ab7300797e5bafcb86ea5fb87a9"
-  integrity sha512-36O6M39RqrZkYePc4f+iwcHnzzCle837on7j5df5orpKOppl6AymCAG3zNJOBKVIsGpBjLohWBBBX8ks7BkHsA==
+yakumo-version@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.npmmirror.com/yakumo-version/-/yakumo-version-0.3.4.tgz#57328da44b91c6771bd58cde0b9df299007da6d5"
+  integrity sha512-rqNPdvYCIfZY+W1tr05Y/U88bQxr6GZl0prdN6Uki63TcAoXECkRAwTAdrduTAPwg8Ib/6paO3WkJG2z1oLRDQ==
   dependencies:
     kleur "^4.1.5"
     semver "^7.3.8"
