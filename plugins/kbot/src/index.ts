@@ -28,14 +28,27 @@ export const usage = `
 # 注意事项
 内置多个插件，可在配置文件中配置启用插件\n
 但注意，插件的配置项不是所有都是可选的，具体请查看插件的配置项
-## 当前插件列表
-- KBotBasic: 基础功能
-- KBotManage: 群管理功能
-- KBotBilibili: Bilibili 动态推送
-- KBotMusic: 点歌功能
-- KBotYoutube: Youtube 视频解析
-- KBotTwitter: Twitter 动态推送
-- KBotTarot: 塔罗牌占卜
+## 插件列表
+<details>
+
+<summary>详情</summary>
+
+**KBotBasic**: 基础功能;
+
+**KBotManage**: 群管理功能;
+
+**KBotBilibili**: Bilibili 动态推送;
+
+**KBotMusic**: 点歌功能;
+
+**KBotYoutube**: Youtube 视频解析;
+
+**KBotTwitter**: Twitter 动态推送;
+
+**KBotTarot**: 塔罗牌占卜;
+
+</details>
+
 ## 权限问题
 - 第一步: 设置机器人的超级管理员 QQ 号, 建议为自身 QQ 号, kbot 会自动创建该账号最高权限, 注意设置完毕后需要重启一次\n
 \t若指令仍然提示权限不足, 请通过在左侧菜单栏中找到 \`数据库\` 选项点击进入\n
