@@ -91,7 +91,7 @@ export const Config: Schema<IConfig> = Schema.object({
     .description(
       '请提供YouTube Data API v3 (必填) 详情: https://developers.google.com/youtube/v3/getting-started',
     ),
-  useText: Schema.boolean().default(false).description('是否使用图片模式 (需要 puppeteer 支持!)'),
+  useImage: Schema.boolean().default(false).description('是否使用图片模式 (需要 puppeteer 支持!)'),
 })
 
 const apiEndPointPrefix = 'https://www.googleapis.com/youtube/v3/videos'
