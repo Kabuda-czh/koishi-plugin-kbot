@@ -8,22 +8,22 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Argv, Channel, Context, Dict } from "koishi";
-import { Config, logger } from ".";
-import { DynamicNotifiction } from "../model";
-import { uidExtract } from "../utils";
+import type { Argv, Channel, Context, Dict } from 'koishi'
+import type { DynamicNotifiction } from '../model'
+import { uidExtract } from '../utils'
 import {
   bilibiliAdd,
-  bilibiliSearch,
   bilibiliList,
   bilibiliRemove,
-} from "./common";
+  bilibiliSearch,
+} from './common'
 import {
-  bilibiliVupCheck,
+  bilibiliCookie,
   bilibiliDanmuCheck,
   bilibiliRefreshVup,
-  bilibiliCookie,
-} from "./composition";
+  bilibiliVupCheck,
+} from './composition'
+import { logger } from '.'
 
 const dynamicStrategies = {
   add: bilibiliAdd,
@@ -33,39 +33,41 @@ const dynamicStrategies = {
   vup: bilibiliVupCheck,
   danmu: bilibiliDanmuCheck,
   refresh: bilibiliRefreshVup,
-  cookie: bilibiliCookie
-};
+  cookie: bilibiliCookie,
+}
 
 export const dynamicStrategy = async (
   {
     session,
     options,
-  }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any, any>,
+  }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any, any>,
   list: Dict<
     [
-      Pick<Channel, "id" | "guildId" | "platform" | "bilibili">,
-      DynamicNotifiction
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
+      DynamicNotifiction,
     ][]
   >,
   ctx: Context,
-  config: Config
+  config: IConfig,
 ) => {
-  const strategyName = Object.keys(options).find((key) => options[key]);
+  const strategyName = Object.keys(options).find(key => options[key])
   if (strategyName) {
-    const value = options[strategyName];
+    const value = options[strategyName]
     try {
-      const uid = await uidExtract(value, { session }, logger, ctx);
-      if (!["list", "cookie", "refresh"].includes(strategyName) && !uid) return "未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接";
-      
+      const uid = await uidExtract(value, { session }, logger, ctx)
+      if (!['list', 'cookie', 'refresh'].includes(strategyName) && !uid)
+        return '未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接'
+
       return dynamicStrategies[strategyName]?.(
         { session, options },
         uid,
         list,
         ctx,
-        config
-      );
-    } catch (err) {
-      return err.message;
+        config,
+      )
+    }
+    catch (err) {
+      return err.message
     }
   }
-};
+}

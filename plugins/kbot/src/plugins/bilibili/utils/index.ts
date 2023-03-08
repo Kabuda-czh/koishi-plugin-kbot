@@ -8,8 +8,8 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-export * from "./toAvid";
-export * from "./b23Extract";
-export * from "./uidExtract";
-export * from "./biliRequest";
-export * from "./functionHandle";
+export * from './toAvid'
+export * from './b23Extract'
+export * from './uidExtract'
+export * from './biliRequest'
+export * from './functionHandle'

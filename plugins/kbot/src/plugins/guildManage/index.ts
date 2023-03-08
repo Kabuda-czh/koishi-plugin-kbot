@@ -4,28 +4,29 @@
  * @LastEditors: Kabuda-czh
  * @LastEditTime: 2023-02-01 10:34:42
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
- * @Description: 
- * 
+ * @Description:
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Schema } from "koishi";
-import { resolve } from "path";
-import {} from "@koishijs/plugin-console";
-import { routerStrategies } from "./router";
+import { resolve } from 'node:path'
+import type { Context } from 'koishi'
+import { Schema } from 'koishi'
+import {} from '@koishijs/plugin-console'
+import { routerStrategies } from './router'
 
-export interface Config {}
+export interface IConfig {}
 
-export const Config: Schema<Config> = Schema.object({});
+export const Config: Schema<IConfig> = Schema.object({})
 
-export function apply(context: Context, config: Config) {
+export function apply(context: Context) {
   Object.keys(routerStrategies).forEach((key) => {
-    context.router["get"](key, routerStrategies[key](context));
-  });
+    context.router.get(key, routerStrategies[key](context))
+  })
 
-  context.using(["console"], (ctx) => {
+  context.using(['console'], (ctx) => {
     ctx.console.addEntry({
-      dev: resolve(__dirname, "../../../client/index.ts"),
-      prod: resolve(__dirname, "../../../dist"),
-    });
-  });
+      dev: resolve(__dirname, '../../../client/index.ts'),
+      prod: resolve(__dirname, '../../../dist'),
+    })
+  })
 }

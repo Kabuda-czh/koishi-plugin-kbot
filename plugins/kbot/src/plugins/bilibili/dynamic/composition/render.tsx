@@ -4,11 +4,11 @@
  * @LastEditors: Kabuda-czh
  * @LastEditTime: 2023-03-03 15:00:14
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\render.tsx
- * @Description: 
- * 
+ * @Description:
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { MemberCard, List, DanmukuData } from "../../model";
+import type { DanmukuData, List, MemberCard } from '../../model'
 
 export function renderVup(
   searchUserCardInfo: MemberCard,
@@ -16,9 +16,9 @@ export function renderVup(
   vupsLength: number,
   medalMap: { [key: string]: List },
   needLoadFontList: {
-    fontFamily: string;
-    fontUrl: string;
-  }[]
+    fontFamily: string
+    fontUrl: string
+  }[],
 ) {
   return <html>
     <style>
@@ -114,8 +114,7 @@ export function renderVup(
           <div>
             <p>管人痴成分:&nbsp;
               {(vupsLength
-                /
-                searchUserCardInfo.card.attentions.length * 100).toFixed(2)}%
+                / searchUserCardInfo.card.attentions.length * 100).toFixed(2)}%
               ({vupsLength} / {searchUserCardInfo.card.attentions.length})
             </p>
           </div>
@@ -129,9 +128,9 @@ export function renderVup(
       </div>
       <div class="vup">
         {
-          vups.map((vup, index) => {
+          vups.forEach((vup, index) => {
             if (medalMap[vup.mid] && medalMap[vup.mid].medal_info.level) {
-              return <div class={(index % 2) && "medalBg"}>
+              return <div class={(index % 2) && 'medalBg'}>
                 <div class="vupInfo">
                   <p>{vup.uname}</p>
                   <div class="flex-cc uid">
@@ -143,13 +142,13 @@ export function renderVup(
                       border: `1px solid ${int2rgb(medalMap[vup.mid].medal_info.medal_color_border)}`,
                     }}>
                       <p class="padding-x5" style={{
-                        color: "#FFF",
+                        color: '#FFF',
                       }}>
                         {medalMap[vup.mid].medal_info.medal_name}
                       </p>
                       <p class="padding-x5" style={{
-                        backgroundColor: "#FFF",
-                        color: `${int2rgb(medalMap[vup.mid].medal_info.medal_color_border)}`
+                        backgroundColor: '#FFF',
+                        color: `${int2rgb(medalMap[vup.mid].medal_info.medal_color_border)}`,
                       }}>
                         {medalMap[vup.mid].medal_info.level}
                       </p>
@@ -169,19 +168,19 @@ export function renderDanmu(
   searchUserCardInfo: MemberCard,
   danmukuData: DanmukuData,
   needLoadFontList: {
-    fontFamily: string;
-    fontUrl: string;
+    fontFamily: string
+    fontUrl: string
   }[]) {
   const danmuMap = {
-    0: "普通消息",
-    1: "礼物",
-    2: "上舰",
-    3: "Superchat",
-    4: "进入直播间",
-    5: "标题变动",
-    6: "分区变动",
-    7: "直播中止",
-    8: "直播继续",
+    0: '普通消息',
+    1: '礼物',
+    2: '上舰',
+    3: 'Superchat',
+    4: '进入直播间',
+    5: '标题变动',
+    6: '分区变动',
+    7: '直播中止',
+    8: '直播继续',
   }
 
   return <html>
@@ -287,7 +286,7 @@ export function renderDanmu(
       </div>
       <div class="danmukuDatas">
         {
-          danmukuData.data.data.map(item => {
+          danmukuData.data.data.map((item) => {
             return <div class="danmu">
               <div class="upData">
                 <img class="upFace" src={item.channel.faceUrl} />
@@ -296,14 +295,14 @@ export function renderDanmu(
                   <p class="nameTitleColor">主播: {item.channel.name}</p>
                   <p>开始时间: {new Date(item.live.startDate).toLocaleString()}</p>
                   <p>结束时间: {
-                    item.live.isFinish ?
-                      new Date(item.live.stopDate).toLocaleString() :
-                      <span class="greenColor">正在直播</span>
+                    item.live.isFinish
+                      ? new Date(item.live.stopDate).toLocaleString()
+                      : <span class="greenColor">正在直播</span>
                   }</p>
                   <p>直播时长: {
-                    (
+                    `${(
                       (item.live.isFinish ? item.live.stopDate : new Date().getTime() - item.live.startDate) / 3600000
-                    ).toFixed(1) + "小时"}
+                    ).toFixed(1)}小时`}
                   </p>
                   <p>弹幕数量: {item.live.danmakusCount}</p>
                   <p>观看次数: {item.live.watchCount}</p>
@@ -312,38 +311,40 @@ export function renderDanmu(
               </div>
               <div class="danmuData">
                 {
-                  item.danmakus.map(danmu => {
-                    let messageInfo;
+                  item.danmakus.map((danmu) => {
+                    let messageInfo
                     switch (danmu.type) {
                       case 0:
                         messageInfo = [<span>{danmu.message}</span>]
-                        break;
+                        break
                       case 1:
                         messageInfo = [
                           <span>{danmuMap[danmu.type]}</span>,
                           <span>&nbsp;&nbsp;</span>,
                           <span>{danmu.message}</span>]
-                        break;
+                        break
                       case 2:
                       case 3:
-                        const color = danmu.type === 3 ? "rgb(0, 85, 255)" : "rgb(128, 0, 128)"
+                      {
+                        const color = danmu.type === 3 ? 'rgb(0, 85, 255)' : 'rgb(128, 0, 128)'
                         messageInfo = [
                           <span style={{ color }}>{danmuMap[danmu.type]}</span>,
                           <span>&nbsp;&nbsp;</span>,
                           <span style={{ color }}>{danmu.message}[</span>,
                           <span class="redColor">￥{+danmu.price.toFixed(1)}]</span>,
                           <span style={{ color }}>]</span>]
-                        break;
+                        break
+                      }
                       case 4:
                       case 5:
                       case 6:
                       case 7:
                       case 8:
                         messageInfo = [<span class="greenColor">{danmuMap[danmu.type]}</span>]
-                        break;
+                        break
                       default:
                         messageInfo = [<span>未知类型 {danmu.type}</span>]
-                        break;
+                        break
                     }
                     return <p>
                       <span>{new Date(danmu.sendDate).toLocaleTimeString()}</span>
@@ -364,26 +365,25 @@ export function renderDanmu(
 }
 
 function int2rgb(int: number) {
-  const r = int >> 16;
-  const g = (int >> 8) & 255;
-  const b = int & 255;
+  const r = int >> 16
+  const g = (int >> 8) & 255
+  const b = int & 255
   return `rgb(${r}, ${g}, ${b})`
 }
 
-function loadFont(needLoadFontList: { fontFamily: string; fontUrl: string; }[]) {
+function loadFont(needLoadFontList: { fontFamily: string; fontUrl: string }[]) {
   const fontFace = needLoadFontList.reduce((defaultString, fontObject) => {
     return (
-      defaultString +
-      `@font-face { font-family: ${fontObject.fontFamily};src: url('${fontObject.fontUrl}'); }`
-    );
-  }, "");
+      `${defaultString
+      }@font-face { font-family: ${fontObject.fontFamily};src: url('${fontObject.fontUrl}'); }`
+    )
+  }, '')
 
   let needLoadFont = needLoadFontList.reduce(
-    (defaultString, fontObject) => defaultString + fontObject.fontFamily + ",",
-    ""
-  );
+    (defaultString, fontObject) => `${defaultString + fontObject.fontFamily},`,
+    '',
+  )
 
-  needLoadFont = needLoadFont + "Microsoft YaHei, Helvetica Neue ,Helvetica, Arial, sans-serif"
+  needLoadFont = `${needLoadFont}Microsoft YaHei, Helvetica Neue ,Helvetica, Arial, sans-serif`
   return [fontFace, needLoadFont]
 }
-

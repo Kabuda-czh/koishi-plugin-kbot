@@ -8,10 +8,11 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Logger } from "koishi";
-import { Context as KoaContext } from "koa";
+import type { Context } from 'koishi'
+import { Logger } from 'koishi'
+import type { Context as KoaContext } from 'koa'
 
-const logger = new Logger("plugins/guildManage");
+const logger = new Logger('plugins/guildManage')
 
 export default function handleFunction<T = any>(
   context: Context,
@@ -20,24 +21,24 @@ export default function handleFunction<T = any>(
 ) {
   return async (ctx: KoaContext) => {
     await Promise.all(
-      context.bots.flatMap((bot) =>
-        bot.platform === "onebot"
-          ? functionName.includes("internal.")
-            ? bot.internal?.[functionName.slice(functionName.indexOf(".") + 1)](
-                ...args.map((arg) => (arg = ctx.query?.[arg] || ""))
-              )
+      context.bots.flatMap(bot =>
+        bot.platform === 'onebot'
+          ? functionName.includes('internal.')
+            ? bot.internal?.[functionName.slice(functionName.indexOf('.') + 1)](
+              ...args.map(arg => (arg = ctx.query?.[arg] || '')),
+            )
             : bot?.[functionName](
-                ...args.map((arg) => (arg = ctx.query?.[arg] || ""))
-              )
-          : []
-      )
+              ...args.map(arg => (arg = ctx.query?.[arg] || '')),
+            )
+          : [],
+      ),
     )
       .then((res: T[]) => {
-        ctx.body = res.flat();
+        ctx.body = res.flat()
       })
       .catch((err) => {
-        logger.error(err);
-        ctx.body = null;
-      });
-  };
+        logger.error(err)
+        ctx.body = null
+      })
+  }
 }

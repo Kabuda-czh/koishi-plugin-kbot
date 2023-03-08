@@ -8,49 +8,50 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Quester, Schema } from "koishi";
-import * as dynamic from "./dynamic";
-import * as url from "./url";
+import type { Context } from 'koishi'
+import { Quester, Schema } from 'koishi'
+import * as dynamic from './dynamic'
+import * as url from './url'
 
 export interface BilibiliChannel {}
 
-declare module "koishi" {
+declare module 'koishi' {
   interface Channel {
-    bilibili: BilibiliChannel;
+    bilibili: BilibiliChannel
   }
 }
 
-export interface Config {
-  dynamic: dynamic.Config;
-  quester: Quester.Config;
+export interface IConfig {
+  dynamic: dynamic.IConfig
+  quester: Quester.Config
 }
 
-export const Config: Schema<Config> = Schema.object({
+export const Config: Schema<IConfig> = Schema.object({
   dynamic: dynamic.Config.description(
-    "动态监听 (使用 dynamic 指令管理监听对象)"
+    '动态监听 (使用 dynamic 指令管理监听对象)',
   ),
-  quester: Quester.Config.description("Bilibili 请求配置"),
-});
+  quester: Quester.Config.description('Bilibili 请求配置'),
+})
 
-export function apply(context: Context, config: Config) {
-  context.model.extend("channel", {
+export function apply(context: Context, config: IConfig) {
+  context.model.extend('channel', {
     bilibili: {
-      type: "json",
+      type: 'json',
       initial: {},
     },
-  });
+  })
 
-  const ctx = context.isolate(["http"]);
+  const ctx = context.isolate(['http'])
 
   ctx.http = context.http.extend({
     headers: {
-      "User-Agent":
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36",
+      'User-Agent':
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36',
       ...config.quester.headers,
     },
     ...config.quester,
-  });
+  })
 
-  ctx.plugin(dynamic, config.dynamic);
-  ctx.plugin(url);
+  ctx.plugin(dynamic, config.dynamic)
+  ctx.plugin(url)
 }

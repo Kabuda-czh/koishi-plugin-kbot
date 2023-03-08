@@ -4,14 +4,14 @@
  * @LastEditors: Kabuda-czh
  * @LastEditTime: 2023-02-27 13:39:36
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\model\dynamic.model.ts
- * @Description: 
- * 
+ * @Description:
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 export interface DynamicNotifiction {
-  botId: string;
-  twitterId: string;
-  twitterName: string;
-  twitterRestId: string;
-  lastUpdated?: number;
+  botId: string
+  twitterId: string
+  twitterName: string
+  twitterRestId: string
+  lastUpdated?: number
 }

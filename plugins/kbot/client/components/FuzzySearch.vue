@@ -4,107 +4,108 @@
  * @LastEditors: Kabuda-czh
  * @LastEditTime: 2023-02-14 11:33:45
  * @FilePath: \KBot-App\plugins\kbot\client\components\FuzzySearch.vue
- * @Description: 
- * 
+ * @Description:
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
 -->
 <script setup lang="ts">
-import { Search } from "@element-plus/icons-vue";
-import { onMounted, ref, watch } from "vue";
+import { Search } from '@element-plus/icons-vue'
+import { onMounted, ref, watch } from 'vue'
 
-type SearchOptionType = {
-  label: string;
-  value: string;
-};
+interface SearchOptionType {
+  label: string
+  value: string
+}
 
 const props = withDefaults(
   defineProps<{
-    options: any[];
-    value?: "";
-    labelKey?: string;
-    valueKey?: string;
-    isDisabled?: boolean;
-    index?: number;
-    placeholder?: string;
+    options: any[]
+    value?: ''
+    labelKey?: string
+    valueKey?: string
+    isDisabled?: boolean
+    index?: number
+    placeholder?: string
   }>(),
   {
     options: () => [],
     isDisabled: false,
-    value: "",
-    labelKey: "label",
-    valueKey: "value",
+    value: '',
+    labelKey: 'label',
+    valueKey: 'value',
     index: 0,
-    placeholder: "请输入查询内容",
-  }
-);
+    placeholder: '请输入查询内容',
+  },
+)
 
-const emit = defineEmits(["selectData", "dataChange"]);
+const emit = defineEmits(['selectData', 'dataChange'])
 
-const state = ref<string>("");
+const state = ref<string>('')
 
-const searchOptions = ref<SearchOptionType[]>([]);
+const searchOptions = ref<SearchOptionType[]>([])
 const querySearch = (queryString: string, cb: any) => {
   const results = queryString
-    ? searchOptions.value.filter((item) =>
-        (item.label + item.value).includes(queryString)
-      )
-    : searchOptions.value;
+    ? searchOptions.value.filter(item =>
+      (item.label + item.value).includes(queryString),
+    )
+    : searchOptions.value
 
-  cb(results);
-};
+  cb(results)
+}
 
 const getFuzzySearch = (item: any) => {
-  emit("selectData", item, props?.index);
-};
+  emit('selectData', item, props?.index)
+}
 
 const checkValue = (
   options: any[],
   labelKey: string,
-  valueKey: string
+  valueKey: string,
 ): SearchOptionType[] => {
   const _options: SearchOptionType[] = options.reduce(
     (pre: SearchOptionType[], cur) => {
       pre.push({
         label: cur[`${labelKey}`],
         value: cur[`${valueKey}`],
-      });
-      return pre;
+      })
+      return pre
     },
-    [] as SearchOptionType[]
-  );
-  return _options;
-};
+    [] as SearchOptionType[],
+  )
+  return _options
+}
 
 const loadAll = () => {
-  const _options = checkValue(props.options, props.labelKey, props.valueKey);
-  searchOptions.value = _options;
+  const _options = checkValue(props.options, props.labelKey, props.valueKey)
+  searchOptions.value = _options
   if (!props.value) {
-    state.value = "";
+    state.value = ''
     if (props.options.length === 1) {
-      state.value = props.options[0].label;
+      state.value = props.options[0].label
       getFuzzySearch({
         label: props.options[0].label,
         value: props.options[0].value,
-      });
+      })
     }
-  } else {
-    state.value = props.options.find(
-      (option) => option[props.valueKey] === props.value
-    )?.[props.labelKey];
   }
-};
+  else {
+    state.value = props.options.find(
+      option => option[props.valueKey] === props.value,
+    )?.[props.labelKey]
+  }
+}
 
 const changeSearch = (val: string | number) => {
-  emit("dataChange", val, props?.index);
-};
+  emit('dataChange', val, props?.index)
+}
 
-watch(() => props.options, loadAll, { deep: true });
+watch(() => props.options, loadAll, { deep: true })
 
 // watch(() => props.value, loadAll, { deep: true });
 
 onMounted(() => {
-  loadAll();
-});
+  loadAll()
+})
 </script>
 
 <template>

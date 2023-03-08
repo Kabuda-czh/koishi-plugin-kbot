@@ -13,7 +13,7 @@ export function StringFormat(
   ...args: (string | number)[]
 ): string {
   args.forEach((arg) => {
-    str = str.replace(/%s/, arg.toString());
-  });
-  return str;
+    str = str.replace(/%s/, arg.toString())
+  })
+  return str
 }

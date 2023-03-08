@@ -8,57 +8,59 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Argv, Channel, Context, Dict, Quester } from "koishi";
-import { Config, logger } from ".";
-import {
+import type { Argv, Channel, Context, Dict, Quester } from 'koishi'
+import type {
   BilibiliDynamicItem,
   BilibiliUserInfoApiData,
   DynamicNotifiction,
-} from "../model";
-import { getDynamic } from "../utils";
-import { renderFunction } from "./render";
+} from '../model'
+import { getDynamic } from '../utils'
+import { renderFunction } from './render'
+import type { IConfig } from '.'
+import { logger } from '.'
 
 const fetchUserInfo = async (
   uid: string,
-  http: Quester
-): Promise<BilibiliUserInfoApiData["data"]> => {
+  http: Quester,
+): Promise<BilibiliUserInfoApiData['data']> => {
   const res = await http.get(
     `https://api.bilibili.com/x/space/acc/info?mid=${uid}&gaia_source=m_station`,
     {
       headers: {
         Referer: `https://space.bilibili.com/${uid}/dynamic`,
       },
-    }
-  );
-  if (res.code !== 0) throw new Error(`Failed to get user info. ${res}`);
-  return res.data;
-};
+    },
+  )
+  if (res.code !== 0)
+    throw new Error(`Failed to get user info. ${res}`)
+  return res.data
+}
 
 export async function bilibiliAdd(
-  { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
+  { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
   uid: string,
   list: Dict<
     [
-      Pick<Channel, "id" | "guildId" | "platform" | "bilibili">,
-      DynamicNotifiction
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
+      DynamicNotifiction,
     ][]
   >,
-  ctx: Context
+  ctx: Context,
 ) {
   if (
     session.channel.bilibili.dynamic.find(
-      (notification) => notification.bilibiliId === uid
+      notification => notification.bilibiliId === uid,
     )
-  ) {
-    return "该用户已在监听列表中。";
-  }
+  )
+    return '该用户已在监听列表中。'
+
   try {
-    const { name } = await fetchUserInfo(uid, ctx.http);
+    const { name } = await fetchUserInfo(uid, ctx.http)
     const notification: DynamicNotifiction = {
       botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
       bilibiliId: uid,
       bilibiliName: name,
-    };
+    }
     session.channel.bilibili.dynamic.push(notification);
     (list[uid] ||= []).push([
       {
@@ -68,82 +70,88 @@ export async function bilibiliAdd(
         bilibili: session.channel.bilibili,
       },
       notification,
-    ]);
-    return `成功添加 up主: ${name}`;
-  } catch (e) {
-    logger.error(`Failed to add user ${uid}. ${e}`);
-    return "请求失败，请检查 uid 是否正确或重试" + e;
+    ])
+    return `成功添加 up主: ${name}`
+  }
+  catch (e) {
+    logger.error(`Failed to add user ${uid}. ${e}`)
+    return `请求失败，请检查 uid 是否正确或重试${e}`
   }
 }
 
 export async function bilibiliRemove(
-  { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
+  { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
   uid: string,
   list: Dict<
     [
-      Pick<Channel, "id" | "guildId" | "platform" | "bilibili">,
-      DynamicNotifiction
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
+      DynamicNotifiction,
     ][]
-  >
+  >,
 ) {
-  const { channel } = session;
+  const { channel } = session
   const index = channel.bilibili.dynamic.findIndex(
-    (notification) => notification.bilibiliId === uid
-  );
-  if (index === -1) return "该用户不在监听列表中。";
-  channel.bilibili.dynamic.splice(index, 1);
+    notification => notification.bilibiliId === uid,
+  )
+  if (index === -1)
+    return '该用户不在监听列表中。'
+  channel.bilibili.dynamic.splice(index, 1)
   const listIndex = list[uid].findIndex(
     ([{ id, guildId, platform }, notification]) => {
       return (
-        channel.id === id &&
-        channel.guildId === guildId &&
-        channel.platform === platform &&
-        notification.bilibiliId === uid
-      );
-    }
-  );
-  if (listIndex === -1) throw new Error("Data is out of sync.");
-  const name = list[uid][listIndex]?.[1].bilibiliName;
-  delete list[uid];
-  return `成功删除 up主: ${name}`;
+        channel.id === id
+        && channel.guildId === guildId
+        && channel.platform === platform
+        && notification.bilibiliId === uid
+      )
+    },
+  )
+  if (listIndex === -1)
+    throw new Error('Data is out of sync.')
+  const name = list[uid][listIndex]?.[1].bilibiliName
+  delete list[uid]
+  return `成功删除 up主: ${name}`
 }
 
 export async function bilibiliList({
   session,
-}: Argv<never, "id" | "guildId" | "platform" | "bilibili", any, any>) {
-  if (session.channel.bilibili.dynamic.length === 0) return "监听列表为空。";
+}: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any, any>) {
+  if (session.channel.bilibili.dynamic.length === 0)
+    return '监听列表为空。'
   return session.channel.bilibili.dynamic
     .map(
-      (notification) =>
-        "- " + notification.bilibiliId + " " + notification.bilibiliName
+      notification =>
+        `- ${notification.bilibiliId} ${notification.bilibiliName}`,
     )
-    .join("\n");
+    .join('\n')
 }
 
 export async function bilibiliSearch(
-  { session }: Argv<never, "id" | "guildId" | "platform" | "bilibili", any>,
+  { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
   uid: string,
   list: Dict<
     [
-      Pick<Channel, "id" | "guildId" | "platform" | "bilibili">,
-      DynamicNotifiction
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
+      DynamicNotifiction,
     ][]
   >,
   ctx: Context,
-  config: Config
+  config: IConfig,
 ) {
   try {
-    const { data } = await getDynamic(ctx.http, uid);
-    const items = data.items as BilibiliDynamicItem[];
+    const { data } = await getDynamic(ctx.http, uid)
+    const items = data.items as BilibiliDynamicItem[]
 
-    if (items.length === 0) return "该 up 没有动态";
+    if (items.length === 0)
+      return '该 up 没有动态'
 
-    const dynamic =
-      items[0].modules.module_tag?.text === "置顶" ? items[1] : items[0];
+    const dynamic
+      = items[0].modules.module_tag?.text === '置顶' ? items[1] : items[0]
 
-    return renderFunction(ctx, dynamic, config);
-  } catch (e) {
-    logger.error(`Failed to get user dynamics. ${e}`);
-    return "动态获取失败" + e;
+    return renderFunction(ctx, dynamic, config)
+  }
+  catch (e) {
+    logger.error(`Failed to get user dynamics. ${e}`)
+    return `动态获取失败${e}`
   }
 }

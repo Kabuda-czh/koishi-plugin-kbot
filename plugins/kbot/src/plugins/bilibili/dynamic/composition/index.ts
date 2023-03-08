@@ -8,4 +8,4 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-export * from "./common";
+export * from './common'

@@ -8,18 +8,19 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Logger, Schema, segment, version } from "koishi";
-import { getSystemInfo } from "./utils";
-import { resolve } from "path";
-import { Page } from "puppeteer-core";
+import { resolve } from 'node:path'
+import type { Context } from 'koishi'
+import { Logger, Schema, segment, version } from 'koishi'
+import type { Page } from 'puppeteer-core'
+import { getSystemInfo } from './utils'
 
-export interface Config { }
+export interface IConfig { }
 
-export const Config: Schema<Config> = Schema.object({});
+export const Config: Schema<IConfig> = Schema.object({})
 
-export const logger = new Logger("KBot-status");
+export const logger = new Logger('KBot-status')
 
-export async function apply(ctx: Context, config: Config) {
+export async function apply(ctx: Context) {
   // FIXME jsx -> css 属性 stroke-dashoffset 无法渲染
   // ctx.command("checkBody", "检查机器人状态")
   //   .shortcut("检查身体")
@@ -94,32 +95,34 @@ export async function apply(ctx: Context, config: Config) {
   //     return status;
   //   });
 
-  ctx.command("kbot/body", "检查机器人状态", {
+  ctx.command('kbot/body', '检查机器人状态', {
     checkArgCount: true,
-    showWarning: false
-  }).shortcut("自检", { fuzzy: false })
-    .action(async ({ session }) => {
-      const systemInfo = await getSystemInfo("KBot", version, ctx.registry.size);
+    showWarning: false,
+  }).shortcut('自检', { fuzzy: false })
+    .action(async () => {
+      const systemInfo = await getSystemInfo('KBot', version, ctx.registry.size)
 
-      let page: Page;
+      let page: Page
       try {
-        page = await ctx.puppeteer.page();
-        await page.setViewport({ width: 1920 * 2, height: 1080 * 2 });
-        await page.goto(`file:///${resolve(__dirname, "./neko/template.html")}`)
-        await page.waitForNetworkIdle();
-        await page.evaluate(`action(${JSON.stringify(systemInfo)})`);
-        const element = await page.$("#background-page");
+        page = await ctx.puppeteer.page()
+        await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
+        await page.goto(`file:///${resolve(__dirname, './neko/template.html')}`)
+        await page.waitForNetworkIdle()
+        await page.evaluate(`action(${JSON.stringify(systemInfo)})`)
+        const element = await page.$('#background-page')
         return (
           segment.image(await element.screenshot({
-            encoding: "binary"
-          }), "image/png")
-        );
-      } catch (e) {
-        logger.error("状态渲染失败: ", e);
-        // throw new Error(`渲染失败: ${e.message}`);
-        return "渲染失败" + e.message;
-      } finally {
-        page?.close();
+            encoding: 'binary',
+          }), 'image/png')
+        )
       }
-    });
+      catch (e) {
+        logger.error('状态渲染失败: ', e)
+        // throw new Error(`渲染失败: ${e.message}`);
+        return `渲染失败${e.message}`
+      }
+      finally {
+        page?.close()
+      }
+    })
 }

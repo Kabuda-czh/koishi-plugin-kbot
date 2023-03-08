@@ -8,30 +8,32 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Quester } from "koishi";
+import type { Quester } from 'koishi'
 
 export async function b23Extract(text: string, http: Quester) {
-  const reg = /b23.(tv|wtf)[\\/]+(\w+)/;
-  const regValue = reg.exec(text);
-  if (!regValue) return "";
+  const reg = /b23.(tv|wtf)[\\/]+(\w+)/
+  const regValue = reg.exec(text)
+  if (!regValue)
+    return ''
 
-  const URL = `https://b23.tv/${regValue[2]}`;
+  const URL = `https://b23.tv/${regValue[2]}`
 
   try {
-    let b23URL = "";
+    let b23URL = ''
 
     await http.get(URL, {
       beforeRedirect: (options) => {
         if (
-          options.hostname === "space.bilibili.com" ||
-          options.host === "space.bilibili.com"
+          options.hostname === 'space.bilibili.com'
+          || options.host === 'space.bilibili.com'
         )
-          b23URL = options.href;
+          b23URL = options.href
       },
-    });
+    })
 
-    return b23URL;
-  } catch (e) {
-    return "";
+    return b23URL
+  }
+  catch (e) {
+    return ''
   }
 }

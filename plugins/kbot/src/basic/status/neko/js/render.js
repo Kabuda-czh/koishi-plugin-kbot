@@ -8,21 +8,21 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-const parser = new DOMParser();
+const parser = new DOMParser()
 
 function stringToElement(str) {
-  return parser.parseFromString(str, "text/html").body.childNodes[0];
+  return parser.parseFromString(str, 'text/html').body.childNodes[0]
 }
 
 function action(config) {
-  const nameInstance = document.querySelector("#config_name");
-  const dashboardColor = ["var(--main-color)", "#ffb3cc", "#fcaa93", "#b7a89e"];
-  const dashboardInstance = document.querySelector("#config_dashboard");
-  const informationInstance = document.querySelector("#config_information");
-  const footerInstance = document.querySelector("#config_footer");
+  const nameInstance = document.querySelector('#config_name')
+  const dashboardColor = ['var(--main-color)', '#ffb3cc', '#fcaa93', '#b7a89e']
+  const dashboardInstance = document.querySelector('#config_dashboard')
+  const informationInstance = document.querySelector('#config_information')
+  const footerInstance = document.querySelector('#config_footer')
 
-  nameInstance.innerHTML = config.name;
-  footerInstance.innerHTML = config.footer;
+  nameInstance.innerHTML = config.name
+  footerInstance.innerHTML = config.footer
   dashboardInstance.append(
     ...config.dashboard.map((item, index) =>
       stringToElement(
@@ -52,21 +52,21 @@ function action(config) {
                     <p class="__dashboard-block__info__value">${item.title}</p>
                 </div>
             </li>
-        `
-      )
-    )
-  );
+        `,
+      ),
+    ),
+  )
 
   informationInstance.append(
-    ...config.information.map((item) =>
+    ...config.information.map(item =>
       stringToElement(
         `
             <li class="__information-block">
                 <span class="__information-block__key">${item.key}</span>
                 <span class="__information-block__value">${item.value}</span>
             </li>
-        `
-      )
-    )
-  );
+        `,
+      ),
+    ),
+  )
 }

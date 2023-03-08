@@ -16,8 +16,8 @@
       // Even if you don't, do not delete this line,
       // as it bypasses a bug in tsconfig-path/register.
       // See: https://github.com/dividab/tsconfig-paths/issues/209
-      "*": ["packages/*/src"],
-    },
+      "*": ["packages/*/src"]
+    }
   },
-  "files": [],
+  "files": []
 }

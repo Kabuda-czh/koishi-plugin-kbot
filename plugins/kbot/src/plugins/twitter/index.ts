@@ -8,48 +8,49 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Quester, Schema } from "koishi";
-import * as dynamic from "./dynamic";
+import type { Context } from 'koishi'
+import { Quester, Schema } from 'koishi'
+import * as dynamic from './dynamic'
 
 export interface TwitterChannel {}
 
-declare module "koishi" {
+declare module 'koishi' {
   interface Channel {
-    twitter: TwitterChannel;
+    twitter: TwitterChannel
   }
 }
 
-export interface Config {
-  dynamic: dynamic.Config;
-  quester: Quester.Config;
+export interface IConfig {
+  dynamic: dynamic.IConfig
+  quester: Quester.Config
 }
 
-export const Config: Schema<Config> = Schema.object({
+export const Config: Schema<IConfig> = Schema.object({
   dynamic: dynamic.Config.description(
-    "动态监听 (使用 dynamic 指令管理监听对象)"
+    '动态监听 (使用 dynamic 指令管理监听对象)',
   ),
-  quester: Quester.Config.description("twitter 请求配置"),
-});
+  quester: Quester.Config.description('twitter 请求配置'),
+})
 
-export function apply(context: Context, config: Config) {
-  context.model.extend("channel", {
+export function apply(context: Context, config: IConfig) {
+  context.model.extend('channel', {
     twitter: {
-      type: "json",
+      type: 'json',
       initial: {},
     },
-  });
+  })
 
-  const ctx = context.isolate(["http"]);
+  const ctx = context.isolate(['http'])
 
   ctx.http = context.http.extend({
     headers: {
-      "User-Agent": "PostmanRuntime/7.31.0",
-      Authorization:
-        "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs=1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA",
+      'User-Agent': 'PostmanRuntime/7.31.0',
+      'Authorization':
+        'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs=1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA',
       ...config.quester.headers,
     },
     ...config.quester,
-  });
+  })
 
-  ctx.plugin(dynamic, config.dynamic);
+  ctx.plugin(dynamic, config.dynamic)
 }

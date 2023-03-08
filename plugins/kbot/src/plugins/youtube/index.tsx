@@ -8,158 +8,165 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Logger, Schema } from "koishi";
+import type { Context } from 'koishi'
+import { Logger, Schema } from 'koishi'
 import { } from 'koishi-plugin-puppeteer'
 
 interface ApiData {
-  kind: string;
-  etag: string;
-  items: Item[];
+  kind: string
+  etag: string
+  items: Item[]
   pageInfo: {
-    totalResults: number;
-    resultsPerPage: number;
-  };
+    totalResults: number
+    resultsPerPage: number
+  }
 }
 
 interface ImageSize {
-  url: string;
-  width: number;
-  height: number;
+  url: string
+  width: number
+  height: number
 }
 
 interface Thumbnails {
-  default: ImageSize;
-  medium: ImageSize;
-  high: ImageSize;
+  default: ImageSize
+  medium: ImageSize
+  high: ImageSize
 }
 
 interface Item {
-  kind: string;
-  etag: string;
-  id: string;
+  kind: string
+  etag: string
+  id: string
   snippet: {
-    publishedAt: string;
-    channelId: string;
-    title: string;
-    description: string;
-    thumbnails: Thumbnails;
-    channelTitle: string;
-    tags: string[];
-    categoryId: string;
-    liveBroadcastContent: string;
+    publishedAt: string
+    channelId: string
+    title: string
+    description: string
+    thumbnails: Thumbnails
+    channelTitle: string
+    tags: string[]
+    categoryId: string
+    liveBroadcastContent: string
     localized: {
-      title: string;
-      description: string;
-    };
-  };
+      title: string
+      description: string
+    }
+  }
   contentDetails: {
-    duration: string;
-    dimension: string;
-    definition: string;
-    caption: string;
-    licensedContent: boolean;
-    contentRating: any;
-    projection: string;
-  };
+    duration: string
+    dimension: string
+    definition: string
+    caption: string
+    licensedContent: boolean
+    contentRating: any
+    projection: string
+  }
   status: {
-    uploadStatus: string;
-    privacyStatus: string;
-    license: string;
-    embeddable: boolean;
-    publicStatsViewable: boolean;
-    madeForKids: boolean;
-  };
+    uploadStatus: string
+    privacyStatus: string
+    license: string
+    embeddable: boolean
+    publicStatsViewable: boolean
+    madeForKids: boolean
+  }
   statistics: {
-    viewCount: string;
-    likeCount: string;
-    favoriteCount: string;
-    commentCount: string;
-  };
+    viewCount: string
+    likeCount: string
+    favoriteCount: string
+    commentCount: string
+  }
 }
 
-export interface Config {
-  youtubeDataApiKey: string;
-  useImage?: boolean;
+export interface IConfig {
+  youtubeDataApiKey: string
+  useImage?: boolean
 }
 
 const logger = new Logger('plugins/youtube')
 
-export const Config: Schema<Config> = Schema.object({
+export const Config: Schema<IConfig> = Schema.object({
   youtubeDataApiKey: Schema.string()
     .required()
     .description(
-      "请提供YouTube Data API v3 (必填) 详情: https://developers.google.com/youtube/v3/getting-started"
+      '请提供YouTube Data API v3 (必填) 详情: https://developers.google.com/youtube/v3/getting-started',
     ),
-  useText: Schema.boolean().default(false).description("是否使用图片模式 (需要 puppeteer 支持!)"),
-});
+  useText: Schema.boolean().default(false).description('是否使用图片模式 (需要 puppeteer 支持!)'),
+})
 
-const apiEndPointPrefix = "https://www.googleapis.com/youtube/v3/videos";
+const apiEndPointPrefix = 'https://www.googleapis.com/youtube/v3/videos'
 
-const videoRegex =
-  /^(?:https?:\/\/)?(?:i\.|www\.|img\.)?(?:youtu\.be\/|youtube\.com\/|ytimg\.com\/)(?:embed\/|v\/|vi\/|vi_webp\/|watch\?v=|watch\?.+&v=)?((\w|-){11})(?:\S+)?$/;
+const videoRegex
+  = /^(?:https?:\/\/)?(?:i\.|www\.|img\.)?(?:youtu\.be\/|youtube\.com\/|ytimg\.com\/)(?:embed\/|v\/|vi\/|vi_webp\/|watch\?v=|watch\?.+&v=)?((\w|-){11})(?:\S+)?$/
 
 const fetchDataFromAPI = async (
   ctx: Context,
-  config: Config,
-  videoId: string
+  config: IConfig,
+  videoId: string,
 ): Promise<ApiData> => {
   try {
     const data = await ctx.http.get(
-      `${apiEndPointPrefix}?id=${videoId}&key=${config.youtubeDataApiKey}&part=snippet,contentDetails,statistics,status`
-    );
+      `${apiEndPointPrefix}?id=${videoId}&key=${config.youtubeDataApiKey}&part=snippet,contentDetails,statistics,status`,
+    )
     return data
-  } catch (error) {
-    logger.error(`YouTube API 请求失败: ${error}`);
-    throw new Error("YouTube API 请求失败");
   }
-};
+  catch (error) {
+    logger.error(`YouTube API 请求失败: ${error}`)
+    throw new Error('YouTube API 请求失败')
+  }
+}
 
 const getIDFromURLByRegex = (url: string): string | undefined => {
-  const [, id] = url.match(videoRegex) || [];
-  return id;
-};
+  const [, id] = url.match(videoRegex) || []
+  return id
+}
 
-export function apply(ctx: Context, config: Config) {
-
-  ctx.command("kbot/youtube", "YouTube视频链接解析")
+export function apply(ctx: Context, config: IConfig) {
+  ctx.command('kbot/youtube', 'YouTube视频链接解析')
 
   ctx.middleware(async (session, next) => {
-    const isYoutube =
-      session.content.includes("youtube.com") ||
-      session.content.includes("https://youtu.be");
-    if (!isYoutube) return next();
+    const isYoutube
+      = session.content.includes('youtube.com')
+      || session.content.includes('https://youtu.be')
+    if (!isYoutube)
+      return next()
 
     try {
-      logger.info(`捕获到 Youtube 视频链接: ${session.content}`);
+      logger.info(`捕获到 Youtube 视频链接: ${session.content}`)
 
-      let id,
-        tagString = "无";
+      let id
+      let tagString = '无'
 
-      if (session.content.includes("https://youtu.be")) {
-        const index = session.content.lastIndexOf("/");
-        id = session.content.substring(index + 1, session.content.length);
-      } else {
-        id = getIDFromURLByRegex(session.content);
+      if (session.content.includes('https://youtu.be')) {
+        const index = session.content.lastIndexOf('/')
+        id = session.content.substring(index + 1, session.content.length)
+      }
+      else {
+        id = getIDFromURLByRegex(session.content)
       }
 
-      const result = await fetchDataFromAPI(ctx, config, id);
+      const result = await fetchDataFromAPI(ctx, config, id)
 
-      if (result.items.length === 0) return "未能成功解析, 或许视频不存在";
+      if (result.items.length === 0)
+        return '未能成功解析, 或许视频不存在'
 
-      const { snippet: {
-        title,
-        description,
-        channelTitle,
-        thumbnails: {
-          medium: { url }
-        },
-        publishedAt,
-        tags
-      }, statistics } = result.items[0];
+      const {
+        snippet: {
+          title,
+          description,
+          channelTitle,
+          thumbnails: {
+            medium: { url },
+          },
+          publishedAt,
+          tags,
+        }, statistics,
+      } = result.items[0]
 
-      if (tags) tagString = tags.length > 1 ? tags.join(", ") : tags[0];
+      if (tags)
+        tagString = tags.length > 1 ? tags.join(', ') : tags[0]
 
-      logger.info(`Youtube视频解析成功: ${title}`);
+      logger.info(`Youtube视频解析成功: ${title}`)
 
       if (ctx.puppeteer && config.useImage) {
         // TODO 待优化样式
@@ -167,33 +174,35 @@ export function apply(ctx: Context, config: Config) {
           <html style={{
             padding: '1rem',
             color: '#fff',
-            background: '#000'
+            background: '#000',
           }}>
             <img src={url} />
             <p>频道: {channelTitle}</p>
             <p>标题: {title}</p>
-            <p>描述: {description.length > 50 ? description.slice(0, 50) + '...' : description}</p>
+            <p>描述: {description.length > 50 ? `${description.slice(0, 50)}...` : description}</p>
             <p>发布时间: {publishedAt}</p>
             <p>标签: {tagString}</p>
             <p>播放量: {statistics.viewCount}</p>
             <p>点赞: {statistics.likeCount}</p>
-          </html>
+          </html>,
         )
-      } else {
+      }
+      else {
         return `<image url="${url}" />
 频道: ${channelTitle}
 标题: ${title}
-描述: ${description.length > 50 ? description.slice(0, 50) + '...' : description}
+描述: ${description.length > 50 ? `${description.slice(0, 50)}...` : description}
 发布时间: ${publishedAt}
 标签: ${tagString}
 播放量: ${statistics.viewCount}
 点赞: ${statistics.likeCount}
-`;
+`
       }
-    } catch (error) {
-      logger.error(error);
-      return "Youtube视频解析发生错误";
     }
-    return next();
-  });
+    catch (error) {
+      logger.error(error)
+      return 'Youtube视频解析发生错误'
+    }
+    return next()
+  })
 }

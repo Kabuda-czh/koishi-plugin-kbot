@@ -8,116 +8,116 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Logger, Schema, sleep } from "koishi";
-import shuffle from "./shuffle";
-import { cards, meanings } from "./tarot.config";
-import path from "path";
+import path from 'node:path'
+import type { Context } from 'koishi'
+import { Logger, Schema, sleep } from 'koishi'
+import shuffle from './shuffle'
+import { cards, meanings } from './tarot.config'
 
-export interface Config { }
+export interface IConfig { }
 
-export const Config: Schema<Config> = Schema.object({});
+export const Config: Schema<IConfig> = Schema.object({})
 
-export const logger = new Logger("KBot-plugin-tarot");
+export const logger = new Logger('KBot-plugin-tarot')
 
-export async function apply(ctx: Context, config: Config) {
-  const cardLength = Object.keys(cards).length;
+export async function apply(ctx: Context) {
+  const cardLength = Object.keys(cards).length
 
-  ctx.command("kbot/抽塔罗牌", "抽单张塔罗牌", {
+  ctx.command('kbot/抽塔罗牌', '抽单张塔罗牌', {
     checkArgCount: true,
-    showWarning: false
+    showWarning: false,
   }).action(async ({ session }) => {
-    const randomIndex = Math.floor(Math.random() * cardLength);
-    let cardKey = Object.keys(cards)[randomIndex];
-    let imageFile: string = "file:///" + path.join(__dirname, "images", `${cardKey}.jpg`);
-    let cardValue: string = "";
+    const randomIndex = Math.floor(Math.random() * cardLength)
+    let cardKey = Object.keys(cards)[randomIndex]
+    let imageFile = `file:///${path.join(__dirname, 'images', `${cardKey}.jpg`)}`
+    let cardValue = ''
 
     // 特殊: 愚者有两张
     if (cardKey === '愚者') {
-      const rand = Math.floor(Math.random() * 2 + 1);
-      imageFile = "file:///" + path.join(__dirname, "images", `愚者${rand}.jpg`);
+      const rand = Math.floor(Math.random() * 2 + 1)
+      imageFile = `file:///${path.join(__dirname, 'images', `愚者${rand}.jpg`)}`
     }
 
     // 特殊: 正位和逆位
     if (typeof cards[cardKey] === 'object') {
-      const rand = Math.floor(Math.random() * 2 + 1);
-      cardValue = rand === 1 ? cards[cardKey].正位 : cards[cardKey].逆位;
-      cardKey += rand === 1 ? '（正位）' : '（逆位）';
-    } else {
+      const rand = Math.floor(Math.random() * 2 + 1)
+      cardValue = rand === 1 ? cards[cardKey].正位 : cards[cardKey].逆位
+      cardKey += rand === 1 ? '（正位）' : '（逆位）'
+    }
+    else {
       cardValue = cards[cardKey]
     }
 
     await session.send(<image url={imageFile} />)
 
-    sleep(1500);
+    sleep(1500)
 
     return <message>
       <p>锵锵锵，塔罗牌的预言是~</p>
       <p>{cardKey}</p>
       <p>其释义为: {cardValue}</p>
     </message>
-
   })
 
-
-  ctx.command("kbot/塔罗牌", "塔罗牌阵", {
+  ctx.command('kbot/塔罗牌', '塔罗牌阵', {
     checkArgCount: true,
-    showWarning: false
+    showWarning: false,
   }).action(async ({ session }) => {
-    const indiceArray = Array.from({ length: cardLength }, (_, i) => i + 1);
-    const randomIndices = new Set<number>();
+    const indiceArray = Array.from({ length: cardLength }, (_, i) => i + 1)
+    const randomIndices = new Set<number>()
     while (randomIndices.size < 4) {
-      const index = Math.floor(Math.random() * indiceArray.length);
-      if (!randomIndices.has(index)) {
-        randomIndices.add(index);
-      }
+      const index = Math.floor(Math.random() * indiceArray.length)
+      if (!randomIndices.has(index))
+        randomIndices.add(index)
     }
-    const indices = [...randomIndices];
-    const cardKeys = shuffle(Object.keys(cards));
-    const chain = [];
-    const timesKeys = [];
-    let rand: number, imageFile: string, cardKey: string, cardValue: string;
+    const indices = [...randomIndices]
+    const cardKeys = shuffle(Object.keys(cards))
+    const chain = []
+    const timesKeys = []
+    let rand: number, imageFile: string, cardKey: string, cardValue: string
 
     for (let i = 0; i < indices.length; i++) {
-      const index = indices[i];
-      cardKey = cardKeys[index - 1];
+      const index = indices[i]
+      cardKey = cardKeys[index - 1]
 
       if (!cardKey) {
-        logger.error("cardKey is undefined", cardKey, indices);
-        return "出现未知问题，请联系管理员"
+        logger.error('cardKey is undefined', cardKey, indices)
+        return '出现未知问题，请联系管理员'
       }
 
-      const meaningKey = Object.keys(meanings)[i];
-      const meaningValue = meanings[meaningKey];
-      imageFile = "file:///" + path.join(__dirname, "images", `${cardKey}.jpg`);
+      const meaningKey = Object.keys(meanings)[i]
+      const meaningValue = meanings[meaningKey]
+      imageFile = `file:///${path.join(__dirname, 'images', `${cardKey}.jpg`)}`
 
       // 特殊: 愚者有两张
       if (cardKey === '愚者') {
-        rand = Math.floor(Math.random() * 2 + 1);
-        imageFile = "file:///" + path.join(__dirname, "images", `愚者${rand}.jpg`);
+        rand = Math.floor(Math.random() * 2 + 1)
+        imageFile = `file:///${path.join(__dirname, 'images', `愚者${rand}.jpg`)}`
       }
 
       // 特殊: 正位和逆位
       if (typeof cards[cardKey] === 'object') {
-        rand = Math.floor(Math.random() * 2 + 1);
-        cardValue = rand === 1 ? cards[cardKey].正位 : cards[cardKey].逆位;
-        cardKey += rand === 1 ? '（正位）' : '（逆位）';
-      } else {
+        rand = Math.floor(Math.random() * 2 + 1)
+        cardValue = rand === 1 ? cards[cardKey].正位 : cards[cardKey].逆位
+        cardKey += rand === 1 ? '（正位）' : '（逆位）'
+      }
+      else {
         cardValue = cards[cardKey]
       }
 
-      const msg = `${meaningKey}，${meaningValue}\n${cardKey}，${cardValue}`;
+      const msg = `${meaningKey}，${meaningValue}\n${cardKey}，${cardValue}`
       timesKeys.push(cardKey)
       chain.push({
         text: `第 ${i + 1} 轮`,
         msg,
-        imageFile
-      });
+        imageFile,
+      })
     }
 
-    await session.send(`你抽到了：${timesKeys.join(' -- ')}`);
+    await session.send(`你抽到了：${timesKeys.join(' -- ')}`)
 
     return <message forward>
-      {chain.map(msg => {
+      {chain.map((msg) => {
         return <message>
           <author user-id={session.selfId} />
           <p>{msg.text}</p>
@@ -126,6 +126,5 @@ export async function apply(ctx: Context, config: Config) {
         </message>
       })}
     </message>
-
-  });
+  })
 }

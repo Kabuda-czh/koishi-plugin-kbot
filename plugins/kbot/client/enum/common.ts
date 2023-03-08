@@ -4,8 +4,8 @@
  * @LastEditors: Kabuda-czh
  * @LastEditTime: 2023-02-02 10:30:44
  * @FilePath: \KBot-App\plugins\kbot\client\enum\common.ts
- * @Description: 
- * 
+ * @Description:
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 /** 数据类型 */
@@ -23,5 +23,5 @@ export enum EnumDataType {
   promise = '[object Promise]',
   set = '[object Set]',
   map = '[object Map]',
-  file = '[object File]'
+  file = '[object File]',
 }
