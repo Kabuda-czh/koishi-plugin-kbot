@@ -14,19 +14,25 @@ import type { Context, Logger } from 'koishi'
 import type { Page } from 'puppeteer-core'
 
 export async function getTwitterToken(ctx: Context, logger: Logger) {
-  let page: Page, cookie: any
+  let page: Page, cookie: any, gtCookie: string
 
   try {
     logger.info('开始获取 token')
     page = await ctx.puppeteer.page()
+
+    // 监听 request 事件
+    const onRequest = (request: any) => {
+      const guestToken = request.headers()['x-guest-token']
+      if (guestToken) {
+        gtCookie = guestToken
+        page.removeAllListeners('request')
+      }
+    }
+
+    page.on('request', onRequest)
+
     await page.goto('https://twitter.com/')
     await page.waitForNetworkIdle()
-    let cookies = await page.cookies()
-    let gtCookie = ''
-    while (!gtCookie) {
-      cookies = await page.cookies()
-      gtCookie = cookies.find(x => x.name === 'gt')?.value
-    }
 
     fs.writeFileSync(
       resolve(__dirname, '../../../../../../public/kbot/twitter/cookie.json'),
