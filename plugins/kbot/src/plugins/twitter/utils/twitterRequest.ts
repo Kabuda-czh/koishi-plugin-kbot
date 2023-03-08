@@ -8,21 +8,21 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Logger, Quester } from "koishi";
-import { TwitterDynamicType } from "../enum";
-import {
+import type { Context, Logger, Quester } from 'koishi'
+import { TwitterDynamicType } from '../enum'
+import type {
   Entry,
   UserByScreenNameParam,
   UserByScreenNameResponse,
   UserTweetsParam,
   UserTweetsResponse,
-} from "../model";
-import { getTwitterToken } from "./reGetToken";
+} from '../model'
+import { getTwitterToken } from './reGetToken'
 
 export async function getTwitterRestId(
   twitterId: string,
   http: Quester,
-  logger: Logger
+  logger: Logger,
 ): Promise<string[]> {
   const param: UserByScreenNameParam = {
     variables: {
@@ -37,37 +37,37 @@ export async function getTwitterRestId(
       responsive_web_graphql_skip_user_profile_image_extensions_enabled: false,
       responsive_web_graphql_timeline_navigation_enabled: true,
     },
-  };
+  }
 
   // FIXME
   const data = await http
     .get<UserByScreenNameResponse>(
       `${TwitterDynamicType.UserByScreenNameURL}?variables=${encodeURIComponent(
-        JSON.stringify(param.variables)
+        JSON.stringify(param.variables),
       )}&features=${encodeURIComponent(JSON.stringify(param.features))}`,
       {
         // params: {
         //   variables: encodeURIComponent(JSON.stringify(param.variables)),
         //   features: encodeURIComponent(JSON.stringify(param.features)),
         // },
-      }
+      },
     )
     .then((res) => {
-      return [res.data.user.result.rest_id, res.data.user.result.legacy.name];
+      return [res.data.user.result.rest_id, res.data.user.result.legacy.name]
     })
     .catch((err) => {
-      logger.error(`error getTwitterRestId: ${err}`);
-      return [];
-    });
+      logger.error(`error getTwitterRestId: ${err.message}`)
+      return []
+    })
 
-  return data;
+  return data
 }
 
 export async function getTwitterTweets(
   restId: string,
   ctx: Context,
   logger: Logger,
-  isPure: boolean = false
+  isPure = false,
 ): Promise<Entry[]> {
   const param: UserTweetsParam = {
     variables: {
@@ -105,51 +105,52 @@ export async function getTwitterTweets(
       longform_notetweets_richtext_consumption_enabled: false,
       responsive_web_enhance_cards_enabled: false,
     },
-  };
+  }
 
-  let tokenError = false;
+  let tokenError = false
 
   const res: UserTweetsResponse = await ctx.http
     .get<UserTweetsResponse>(
       `${TwitterDynamicType.UserTweetsURL}?variables=${encodeURIComponent(
-        JSON.stringify(param.variables)
-      )}&features=${encodeURIComponent(JSON.stringify(param.features))}`
+        JSON.stringify(param.variables),
+      )}&features=${encodeURIComponent(JSON.stringify(param.features))}`,
     )
     .then((res) => {
-      return res;
+      return res
     })
     .catch((err) => {
       if (err?.response?.status === 403) {
-        tokenError = true;
-        return err;
+        tokenError = true
+        return err
       }
-      throw new Error(`${err}`);
-    });
+      throw new Error(`${err}`)
+    })
 
   if (tokenError) {
-    await getTwitterToken(ctx, logger);
-    throw new Error(`${res}`);
+    await getTwitterToken(ctx, logger)
+    throw new Error(`${res}`)
   }
 
-  if (!res) throw new Error(`Failed to get dynamics`);
+  if (!res)
+    throw new Error('Failed to get dynamics')
 
-  const instructions =
-    res.data.user?.result?.timeline_v2.timeline.instructions || [];
+  const instructions
+    = res.data.user?.result?.timeline_v2.timeline.instructions || []
 
   const entries = instructions.find(
-    (entry) => entry.type === "TimelineAddEntries"
-  )?.entries;
+    entry => entry.type === 'TimelineAddEntries',
+  )?.entries
 
   if (isPure) {
     const pureEntries = entries.find(
-      (entry) =>
+      entry =>
         !entry.content.itemContent.tweet_results.result?.quoted_status_result
-          ?.result &&
-        !entry.content.itemContent.tweet_results.result.legacy
-          ?.retweeted_status_result?.result
-    );
-    return [pureEntries];
+          ?.result
+        && !entry.content.itemContent.tweet_results.result.legacy
+          ?.retweeted_status_result?.result,
+    )
+    return [pureEntries]
   }
 
-  return entries;
+  return entries
 }

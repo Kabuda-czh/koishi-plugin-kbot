@@ -8,65 +8,67 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Argv, Channel, Context, Dict } from "koishi";
-import { Config, logger } from ".";
-import { DynamicNotifiction } from "../model";
-import { getTwitterRestId, getTwitterToken } from "../utils";
+import * as fs from 'node:fs'
+import { resolve } from 'node:path'
+import type { Argv, Channel, Context, Dict } from 'koishi'
+import type { DynamicNotifiction } from '../model'
+import { getTwitterRestId, getTwitterToken } from '../utils'
 import {
   twitterAdd,
-  twitterSearch,
   twitterList,
   twitterRemove,
-} from "./common";
-import * as fs from "fs";
-import { resolve } from "path";
+  twitterSearch,
+} from './common'
+import type { IConfig } from '.'
+import { logger } from '.'
 
 const dynamicStrategies = {
   add: twitterAdd,
   remove: twitterRemove,
   list: twitterList,
   search: twitterSearch,
-};
+}
 
 export const dynamicStrategy = async (
   {
     session,
     options,
-  }: Argv<never, "id" | "guildId" | "platform" | "twitter", any, any>,
+  }: Argv<never, 'id' | 'guildId' | 'platform' | 'twitter', any, any>,
   list: Dict<
     [
-      Pick<Channel, "id" | "guildId" | "platform" | "twitter">,
-      DynamicNotifiction
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'twitter'>,
+      DynamicNotifiction,
     ][]
   >,
   ctx: Context,
-  config: Config
+  config: IConfig,
 ) => {
-  let cookie;
+  let cookie
   try {
     cookie = JSON.parse(
       fs.readFileSync(
-        resolve(__dirname, "../../../../../../public/kbot/twitter/cookie.json"),
-        "utf-8"
-      )
-    );
-    ctx.http.config.headers["x-guest-token"] = cookie.cookies;
-  } catch (e) {
-    cookie = await getTwitterToken(ctx, logger);
+        resolve(__dirname, '../../../../../../public/kbot/twitter/cookie.json'),
+        'utf-8',
+      ),
+    )
+    ctx.http.config.headers['x-guest-token'] = cookie.cookies
+  }
+  catch (e) {
+    cookie = await getTwitterToken(ctx, logger)
   }
 
-  const strategyName = Object.keys(options).find((key) => options[key]);
+  const strategyName = Object.keys(options).find(key => options[key])
   if (strategyName) {
     let restId, twitterName
-    const twitterId = options[strategyName];
-    if (!["list"].includes(strategyName)) {
+    const twitterId = options[strategyName]
+    if (!['list'].includes(strategyName)) {
       [restId, twitterName] = await getTwitterRestId(
         twitterId,
         ctx.http,
-        logger
-      );
-      if (!["list"].includes(strategyName) && !restId)
-        return "未获取到对应 twitter 博主 ID 信息";
+        logger,
+      )
+      if (!['list'].includes(strategyName) && !restId)
+        return '未获取到对应 twitter 博主 ID 信息'
     }
 
     return dynamicStrategies[strategyName]?.(
@@ -74,7 +76,7 @@ export const dynamicStrategy = async (
       { twitterId, twitterName, twitterRestId: restId },
       list,
       ctx,
-      config
-    );
+      config,
+    )
   }
-};
+}

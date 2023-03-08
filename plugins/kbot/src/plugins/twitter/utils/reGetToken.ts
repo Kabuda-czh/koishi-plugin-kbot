@@ -8,13 +8,13 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { Context, Logger } from "koishi";
-import * as fs from "fs";
-import { resolve } from "path";
-import { Page } from "puppeteer-core";
+import * as fs from 'node:fs'
+import { resolve } from 'node:path'
+import type { Context, Logger } from 'koishi'
+import type { Page } from 'puppeteer-core'
 
 export async function getTwitterToken(ctx: Context, logger: Logger) {
-  let page: Page, cookie: any;
+  let page: Page, cookie: any
 
   try {
     logger.info('开始获取 token')
@@ -29,13 +29,13 @@ export async function getTwitterToken(ctx: Context, logger: Logger) {
     }
 
     fs.writeFileSync(
-      resolve(__dirname, "../../../../../../public/kbot/twitter/cookie.json"),
-      JSON.stringify({ cookies: gtCookie })
-    );
+      resolve(__dirname, '../../../../../../public/kbot/twitter/cookie.json'),
+      JSON.stringify({ cookies: gtCookie }),
+    )
 
-    ctx.http.config.headers["x-guest-token"] = gtCookie;
+    ctx.http.config.headers['x-guest-token'] = gtCookie
 
-    cookie = { cookies: gtCookie };
+    cookie = { cookies: gtCookie }
 
     logger.info('token 获取成功: ', gtCookie)
   }
@@ -47,5 +47,5 @@ export async function getTwitterToken(ctx: Context, logger: Logger) {
     page?.close()
   }
 
-  return cookie;
+  return cookie
 }
