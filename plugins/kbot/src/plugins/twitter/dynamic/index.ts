@@ -66,8 +66,13 @@ export async function apply(ctx: Context, config: Config) {
 
   if (!fileNames.includes("twitter")) {
     fs.mkdirSync(
-      path.resolve(__dirname, "../../../../../../public/kbot/twitter")
-    );
+      path.resolve(__dirname, '../../../../../../public/kbot/twitter'),
+    )
+    fs.writeFileSync(
+      path.resolve(__dirname, '../../../../../../public/kbot/twitter/cookie.json'),
+      JSON.stringify({ cookies: '' }),
+      { encoding: 'utf-8' },
+    )
   }
 
   const list = channels
@@ -115,12 +120,15 @@ export async function apply(ctx: Context, config: Config) {
         __dirname,
         "../../../../../../public/kbot/twitter/cookie.json"
       ),
-      { encoding: "utf-8" }
-    );
-    const cookie = JSON.parse(cookieJson).cookies;
-    ctx.http.config.headers["x-guest-token"] = cookie;
-  } catch {
-    await getTwitterToken(ctx, logger);
+      { encoding: 'utf-8' },
+    )
+    const cookie = JSON.parse(cookieJson).cookies
+    if (!cookie)
+      await getTwitterToken(ctx, logger)
+    else ctx.http.config.headers['x-guest-token'] = cookie
+  }
+  catch {
+    await getTwitterToken(ctx, logger)
   }
 
   const generator = listen(list, getTwitterTweets, ctx, config);

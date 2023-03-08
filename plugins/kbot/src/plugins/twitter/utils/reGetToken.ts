@@ -17,12 +17,16 @@ export async function getTwitterToken(ctx: Context, logger: Logger) {
   let page: Page, cookie: any;
 
   try {
-    logger.info("开始获取 token")
-    page = await ctx.puppeteer.page();
-    await page.goto("https://twitter.com/");
-    await page.waitForNetworkIdle();
-    const cookies = await page.cookies();
-    const gtCookie = cookies.find((x) => x.name === "gt")?.value;
+    logger.info('开始获取 token')
+    page = await ctx.puppeteer.page()
+    await page.goto('https://twitter.com/')
+    await page.waitForNetworkIdle()
+    let cookies = await page.cookies()
+    let gtCookie = ''
+    while (!gtCookie) {
+      cookies = await page.cookies()
+      gtCookie = cookies.find(x => x.name === 'gt')?.value
+    }
 
     fs.writeFileSync(
       resolve(__dirname, "../../../../../../public/kbot/twitter/cookie.json"),
@@ -33,10 +37,14 @@ export async function getTwitterToken(ctx: Context, logger: Logger) {
 
     cookie = { cookies: gtCookie };
 
-    logger.info("Twitter Token: ", gtCookie);
-  } catch (error) {
-  } finally {
-    page?.close();
+    logger.info('token 获取成功: ', gtCookie)
+  }
+  catch (error) {
+    logger.error('token 获取失败: ', error.message)
+    return { cookies: '' }
+  }
+  finally {
+    page?.close()
   }
 
   return cookie;
