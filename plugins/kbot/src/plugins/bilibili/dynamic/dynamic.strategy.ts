@@ -24,6 +24,7 @@ import {
   bilibiliVupCheck,
 } from './composition'
 import { logger } from '.'
+import type { IConfig } from '.'
 
 const dynamicStrategies = {
   add: bilibiliAdd,
