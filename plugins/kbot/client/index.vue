@@ -140,6 +140,10 @@ const broadcast = () => {
     })
 }
 
+const manageGroupPlugins = () => {
+
+}
+
 const selectData = (item: { label: string; value: string | number }) => {
   loading.value = true
   const filterList = defaultGroupList.value.filter(
@@ -248,6 +252,9 @@ onMounted(async () => {
           >
             向所有群广播消息
           </ElButton>
+          <ElButton type="primary" @click="manageGroupPlugins">
+            管理群插件列表
+          </ElButton>
         </div>
         <div style="display: flex; align-items: center; gap: 15px">
           <p>搜索群</p>
@@ -338,6 +345,8 @@ onMounted(async () => {
       groupId = 0;
     "
   />
+
+  <GroupPlugins />
 </template>
 
 <style scoped>
