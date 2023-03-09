@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 11:27:48
+ * @LastEditTime: 2023-03-09 17:03:31
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -226,6 +226,11 @@ const paginationClick = (val: number) => {
 
 const init = async () => {
   await Promise.all([getBotInfo(), getGroupList()])
+
+  // test
+  // await fetchSwitchCommands('123', 'test').then((res) => {
+  //   console.log(res)
+  // })
 }
 
 // 提高使用体验
@@ -245,11 +250,7 @@ onMounted(async () => {
     <div class="manage__layout">
       <div class="container__header">
         <div>
-          <ElButton
-            type="primary"
-            :disabled="groupList.length <= 1"
-            @click="broadcast"
-          >
+          <ElButton type="primary" :disabled="groupList.length <= 1" @click="broadcast">
             向所有群广播消息
           </ElButton>
           <ElButton type="primary" @click="manageGroupPlugins">
@@ -259,49 +260,28 @@ onMounted(async () => {
         <div style="display: flex; align-items: center; gap: 15px">
           <p>搜索群</p>
           <FuzzySearch
-            :options="defaultGroupList"
-            label-key="group_name"
-            value-key="group_id"
-            @select-data="selectData"
+            :options="defaultGroupList" label-key="group_name" value-key="group_id" @select-data="selectData"
             @data-change="dataChange"
           />
         </div>
       </div>
       <ElForm>
         <ElTable :data="groupList" max-height="70vh" style="width: 100%">
-          <ElTableColumn
-            align="center"
-            prop="group_id"
-            label="群号"
-            width="100"
-          />
+          <ElTableColumn align="center" prop="group_id" label="群号" width="100" />
           <ElTableColumn align="center" prop="group_name" label="群名称" />
           <ElTableColumn align="center" label="是否开启全员禁言">
             <template #default="{ row }">
-              <ElButton
-                type="primary"
-                :disabled="!['owner', 'admin'].includes(row.role)"
-                @click="muteGuild(row, true)"
-              >
+              <ElButton type="primary" :disabled="!['owner', 'admin'].includes(row.role)" @click="muteGuild(row, true)">
                 开启
               </ElButton>
-              <ElButton
-                type="primary"
-                :disabled="!['owner', 'admin'].includes(row.role)"
-                @click="muteGuild(row, false)"
-              >
+              <ElButton type="primary" :disabled="!['owner', 'admin'].includes(row.role)" @click="muteGuild(row, false)">
                 关闭
               </ElButton>
             </template>
           </ElTableColumn>
           <ElTableColumn align="center" label="查看群内人员">
             <template #default="{ row }">
-              <ElButton
-                :icon="View"
-                size="large"
-                circle
-                @click="checkGuildInfo(row.group_id, row.role)"
-              />
+              <ElButton :icon="View" size="large" circle @click="checkGuildInfo(row.group_id, row.role)" />
             </template>
           </ElTableColumn>
           <ElTableColumn align="center" label="操作">
@@ -309,10 +289,7 @@ onMounted(async () => {
               <ElButton @click="sendMessage(row.group_id, row.group_name)">
                 发送消息
               </ElButton>
-              <ElButton
-                type="danger"
-                @click="groupLeave(row.group_id, row.role === 'owner')"
-              >
+              <ElButton type="danger" @click="groupLeave(row.group_id, row.role === 'owner')">
                 {{ row.role === "owner" ? "解散群" : "退出群" }}
               </ElButton>
             </template>
@@ -324,10 +301,7 @@ onMounted(async () => {
 
         <div class="data__pagination">
           <el-pagination
-            background
-            :page-sizes="[10]"
-            layout="prev, pager, next"
-            :total="defaultGroupList.length"
+            background :page-sizes="[10]" layout="prev, pager, next" :total="defaultGroupList.length"
             @current-change="paginationClick"
           />
         </div>
@@ -336,11 +310,7 @@ onMounted(async () => {
   </k-layout>
 
   <GroupDialog
-    :visible="dialogVisible"
-    :group-id="groupId"
-    :bot-id="botId"
-    :bot-role="botRole"
-    @closed="
+    :visible="dialogVisible" :group-id="groupId" :bot-id="botId" :bot-role="botRole" @closed="
       dialogVisible = false;
       groupId = 0;
     "
@@ -376,7 +346,7 @@ onMounted(async () => {
   font-weight: 500;
   color: #333;
   text-align: center !important;
-  padding: 12px 0 !important ;
+  padding: 12px 0 !important;
 }
 
 .table-header-cell {

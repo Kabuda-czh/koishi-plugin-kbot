@@ -2,17 +2,15 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:24
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-01 17:17:23
+ * @LastEditTime: 2023-03-09 15:24:21
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\utils\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import type { Context } from 'koishi'
-import { Logger } from 'koishi'
 import type { Context as KoaContext } from 'koa'
-
-const logger = new Logger('plugins/guildManage')
+import { logger } from '..'
 
 export default function handleFunction<T = any>(
   context: Context,
