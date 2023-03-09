@@ -748,10 +748,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.5.3":
-  version "5.5.3"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.5.3.tgz#2cebf0df66b583f9be8e95fff438a8ad630da469"
-  integrity sha512-67YEWt8duKSZTPlWgV4CKo/d9lcl1NoMDBJej8u2+n+LHyUaV3572xyb5j4gLHQST5Eflps/YuTCOrjugO0GvQ==
+"@koishijs/plugin-console@5.5.4":
+  version "5.5.4"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.5.4.tgz#850a5c64ad7ccb1b4348142942a18e98f4d8777d"
+  integrity sha512-+p8Ra1oE3jYe5NqLAnZ6TjFqJt9faik2UiyVywIEwX6ktHYAQfP+lfGUoBefR/D66Ju+fW1tvwdfp8wu3BcR7w==
   dependencies:
     open "^8.4.2"
     uuid "^8.3.2"
@@ -769,10 +769,10 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-dataview/-/plugin-dataview-2.2.4.tgz#c0f983ffab478c0e5904f9855333db69498a6bbc"
   integrity sha512-c1LO3Uil0gugmv2vEK4uJph12EUbOVoIv91N6TI3ECJfA/vW4IcRZAswqMmH0npYIYnlvzPUaplFRstfL3OgIA==
 
-"@koishijs/plugin-help@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-help/-/plugin-help-2.2.0.tgz#71f476f4f44259af308af7ff02e7f98ae469ee00"
-  integrity sha512-mzB2O/JTAjsrZbweCgzwkkIr18XbGCDyOEn4vOC6HzxwSmGpa+HHRcKUUv5h7Kfrv66ZxJbbQjThZ9syzSlCmg==
+"@koishijs/plugin-help@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-help/-/plugin-help-2.2.1.tgz#b196b7d02c8e6689a0c024f37c047ea2f05e6e56"
+  integrity sha512-700jUuV+YaFAU5ZOKFu0bMFr4GHjXHpIWwqVDr2ypt49SyXgQD+WZz0E7yUq//+vqD4GO+BuU18/61hnFnxdWg==
 
 "@koishijs/plugin-insight@3.3.3":
   version "3.3.3"
@@ -3902,6 +3902,11 @@ koishi-plugin-puppeteer@3.4.11:
   dependencies:
     puppeteer-core "^19.6.2"
     puppeteer-finder "^1.0.3"
+
+koishi-plugin-switch@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npmmirror.com/koishi-plugin-switch/-/koishi-plugin-switch-1.1.1.tgz#a24a68a50050a19db6f3187f8d00f6c9fcf99de1"
+  integrity sha512-taQAUAtGr5NEWiwejnYwVb5Pq95CSdTqQo+U5nga4KGpvhu/uMNy77Z2eJ16nl+/BimsRBzRuDPBSB/KlarpAg==
 
 koishi@4.11.9:
   version "4.11.9"
