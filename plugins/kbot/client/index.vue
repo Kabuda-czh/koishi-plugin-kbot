@@ -22,8 +22,10 @@ import { nextTick, onMounted, ref } from 'vue'
 import {
   fetchBroadcast,
   fetchGroupLeave,
+  fetchGroupList,
   fetchGroupMemberList,
   fetchMuteGuild,
+  fetchSelf,
   fetchSendMessage,
 } from './api'
 import GroupDialog from './components/GroupDialog.vue'
@@ -70,17 +72,13 @@ const checkGuildInfo = (id: number, role: string) => {
 }
 
 const getBotInfo = async () => {
-  const botInfos = await fetch('/self').then((res) => {
-    return res.json() as Promise<UserInfo[]>
-  })
+  const botInfos = await fetchSelf().then(res => res as Promise<UserInfo[]>)
 
   botId.value = +botInfos?.[0]?.userId ?? ''
 }
 
 const getGroupList = async () => {
-  const groupDatas = await fetch('/groupList').then(
-    (res): Promise<Group[]> => res.json(),
-  )
+  const groupDatas = await fetchGroupList().then(res => res as Promise<Group[]>)
 
   if (groupDatas.length === 1 && !groupDatas[0])
     return
