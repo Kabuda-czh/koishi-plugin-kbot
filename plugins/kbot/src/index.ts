@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 11:43:55
+ * @LastEditTime: 2023-03-09 14:33:05
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -56,7 +56,7 @@ export const usage = `
 \t最后双击 \`authority\` 格, 更改自己的权限并保存
 - 第二步: 由于插件的权限问题，需要启用 koishi 内置的权限插件 \`Admin\`\n
 \t并通过 \`authorize <value> -u <user>\` 指令来授权其他用户\n
-\t详情请看链接 [authorize](https://koishi.chat/plugins/accessibility/admin.html#%E6%8C%87%E4%BB%A4-authorize)
+\t详情请看链接 [authorize](https://koishi.chat/plugins/common/admin.html#%E6%8C%87%E4%BB%A4-authorize)
 `
 
 interface IPluginEnableConfig {
@@ -147,6 +147,20 @@ export async function apply(ctx: Context, config: IConfig) {
     })
 
     ctx.command('kbot', 'kbot 相关功能')
+
+    ctx.on('friend-request', async (session) => {
+      await ctx.database.getUser(session.platform, session.userId).then(async (user) => {
+        if (user.authority >= 3)
+          await session.bot.handleFriendRequest(session.messageId, true)
+      })
+    })
+
+    ctx.on('guild-request', async (session) => {
+      await ctx.database.getUser(session.platform, session.userId).then(async (user) => {
+        if (user.authority >= 3)
+          await session.bot.handleGuildRequest(session.messageId, true)
+      })
+    })
 
     ctx.plugin(botBasic, config.KBotBasic)
 
