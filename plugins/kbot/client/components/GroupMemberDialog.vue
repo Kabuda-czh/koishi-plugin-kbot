@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-14 10:53:57
+ * @LastEditTime: 2023-03-10 09:46:19
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupMemberDialog.vue
  * @Description:
  *
@@ -10,7 +10,7 @@
 -->
 <script setup lang="ts">
 import { message, messageBox } from '@koishijs/client'
-import { ElCol, ElForm, ElFormItem, ElInputNumber, ElRow } from 'element-plus'
+import { ElInputNumber } from 'element-plus'
 import { computed, h, ref } from 'vue'
 import {
   fetchGroupAdmin,
