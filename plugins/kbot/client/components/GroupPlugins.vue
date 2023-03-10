@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 16:25:52
+ * @LastEditTime: 2023-03-10 16:34:47
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupPlugins.vue
  * @Description:
  *
@@ -103,13 +103,13 @@ const findParentCommand = (command: GroupCommand, commands: GroupCommand[]): Gro
 }
 
 const commandSwitch = (command: GroupCommand) => {
-  if (command.hasChildren)
-    command.children.map(child => child.disable = command.disable)
-  if (command.parent) {
+  const { hasChildren, children = [], disable, parent } = command || {}
+  if (hasChildren)
+    children.forEach(child => child.disable = disable)
+
+  if (parent) {
     const parent = findParentCommand(command, commands.value)
-    let disabled = 0
-    parent.children.forEach(child => child.disable && disabled++)
-    parent.disable = disabled === parent.children.length
+    parent.disable = parent.children?.every(child => child.disable)
   }
 }
 
