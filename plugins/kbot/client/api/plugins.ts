@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-09 16:55:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-09 17:04:06
+ * @LastEditTime: 2023-03-10 10:42:28
  * @FilePath: \KBot-App\plugins\kbot\client\api\plugins.ts
  * @Description:
  *
@@ -14,6 +14,10 @@ export function fetchCommands() {
   return http.request('get', '/commands')
 }
 
-export function fetchSwitchCommands(guildId: string | number, command: string) {
-  return http.request('get', '/switchCommands', { guildId, command })
+export function fetchDisabledCommands(guildId: string | number) {
+  return http.request('get', '/getDisabledCommands', { guildId })
+}
+
+export function fetchSwitchCommands(guildId: string | number, commands: string[]) {
+  return http.request('get', '/switchCommands', { guildId, commands })
 }

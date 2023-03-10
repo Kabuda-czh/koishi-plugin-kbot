@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-09 17:03:31
+ * @LastEditTime: 2023-03-10 15:35:09
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -21,6 +21,7 @@ import {
 import { nextTick, onMounted, ref } from 'vue'
 import {
   fetchBroadcast,
+  fetchCommands,
   fetchGroupLeave,
   fetchGroupList,
   fetchGroupMemberList,
@@ -30,33 +31,17 @@ import {
 } from './api'
 import GroupDialog from './components/GroupDialog.vue'
 import FuzzySearch from './components/FuzzySearch.vue'
+import GroupPlugins from './components/GroupPlugins.vue'
+import type { Group, GroupCommand, GroupList, UserInfo } from './interface'
 
 const loading = ref<boolean>(true)
-
-interface UserInfo {
-  userId: string
-  username: string
-  avatar?: string
-}
-
-interface Group {
-  group_id: number
-  group_name: string
-  member_count: number
-  max_member_count: number
-}
-
-interface GroupConfig {
-  role?: string
-}
-
-type GroupList = Group & GroupConfig
 
 // GroupList
 const defaultGroupList = ref<GroupList[]>([])
 const groupList = ref<GroupList[]>([])
 
 // pagination
+const currentPage = ref<number>(1)
 const pageSize = ref<number>(10)
 
 // dialog
@@ -64,6 +49,10 @@ const dialogVisible = ref<boolean>(false)
 const groupId = ref<string | number>('')
 const botId = ref<string | number>('')
 const botRole = ref<string>('')
+
+// plugin dialog
+const commands = ref<GroupCommand[]>([])
+const pluginDialogVisible = ref<boolean>(false)
 
 const checkGuildInfo = (id: number, role: string) => {
   groupId.value = id
@@ -75,6 +64,12 @@ const getBotInfo = async () => {
   const botInfos = await fetchSelf().then(res => res as Promise<UserInfo[]>)
 
   botId.value = +botInfos?.[0]?.userId ?? ''
+}
+
+const getCommands = async () => {
+  await fetchCommands().then((res: { [key: string]: GroupCommand }) => {
+    commands.value = Object.values(res)
+  })
 }
 
 const getGroupList = async () => {
@@ -140,8 +135,9 @@ const broadcast = () => {
     })
 }
 
-const manageGroupPlugins = () => {
-
+const manageGroupPlugins = (group_id: number) => {
+  pluginDialogVisible.value = true
+  groupId.value = group_id
 }
 
 const selectData = (item: { label: string; value: string | number }) => {
@@ -203,7 +199,12 @@ const groupLeave = (groupId: number, isOwner: boolean) => {
     )
     .then(() => {
       // TODO 解散群似乎没什么效果
-      fetchGroupLeave(groupId, isOwner)
+      fetchGroupLeave(groupId, isOwner).then(() => {
+        message.success('操作成功')
+        groupList.value = defaultGroupList.value.filter(
+          group => group.group_id !== groupId,
+        ).slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
+      })
     })
     .catch(() => {
       message.success('已取消操作')
@@ -218,19 +219,14 @@ const paginationClick = (val: number) => {
   setTimeout(() => {
     groupList.value = defaultGroupList.value.slice(
       start,
-      start + pageSize.value,
+      val * pageSize.value,
     )
     loading.value = false
   }, 1000)
 }
 
 const init = async () => {
-  await Promise.all([getBotInfo(), getGroupList()])
-
-  // test
-  // await fetchSwitchCommands('123', 'test').then((res) => {
-  //   console.log(res)
-  // })
+  await Promise.all([getBotInfo(), getGroupList(), getCommands()])
 }
 
 // 提高使用体验
@@ -253,9 +249,6 @@ onMounted(async () => {
           <ElButton type="primary" :disabled="groupList.length <= 1" @click="broadcast">
             向所有群广播消息
           </ElButton>
-          <ElButton type="primary" @click="manageGroupPlugins">
-            管理群插件列表
-          </ElButton>
         </div>
         <div style="display: flex; align-items: center; gap: 15px">
           <p>搜索群</p>
@@ -266,10 +259,10 @@ onMounted(async () => {
         </div>
       </div>
       <ElForm>
-        <ElTable :data="groupList" max-height="70vh" style="width: 100%">
+        <ElTable :data="groupList" max-height="70vh" style="width: 95vw">
           <ElTableColumn align="center" prop="group_id" label="群号" width="100" />
           <ElTableColumn align="center" prop="group_name" label="群名称" />
-          <ElTableColumn align="center" label="是否开启全员禁言">
+          <ElTableColumn align="center" label="是否开启全员禁言" width="200">
             <template #default="{ row }">
               <ElButton type="primary" :disabled="!['owner', 'admin'].includes(row.role)" @click="muteGuild(row, true)">
                 开启
@@ -279,13 +272,16 @@ onMounted(async () => {
               </ElButton>
             </template>
           </ElTableColumn>
-          <ElTableColumn align="center" label="查看群内人员">
+          <ElTableColumn align="center" label="查看群内人员" width="120">
             <template #default="{ row }">
               <ElButton :icon="View" size="large" circle @click="checkGuildInfo(row.group_id, row.role)" />
             </template>
           </ElTableColumn>
           <ElTableColumn align="center" label="操作">
             <template #default="{ row }">
+              <ElButton type="primary" @click="manageGroupPlugins(row.group_id)">
+                管理群指令
+              </ElButton>
               <ElButton @click="sendMessage(row.group_id, row.group_name)">
                 发送消息
               </ElButton>
@@ -302,7 +298,7 @@ onMounted(async () => {
         <div class="data__pagination">
           <el-pagination
             background :page-sizes="[10]" layout="prev, pager, next" :total="defaultGroupList.length"
-            @current-change="paginationClick"
+            :current-page="currentPage" :page-size="pageSize" @current-change="paginationClick"
           />
         </div>
       </ElForm>
@@ -316,7 +312,12 @@ onMounted(async () => {
     "
   />
 
-  <GroupPlugins />
+  <GroupPlugins
+    :visible="pluginDialogVisible" :group-id="groupId" :commands="commands" @closed="
+      pluginDialogVisible = false;
+      groupId = 0;
+    "
+  />
 </template>
 
 <style scoped>
@@ -408,5 +409,9 @@ onMounted(async () => {
 .el-date-editor .el-input__wrapper,
 .el-range-editor.el-input__wrapper {
   padding: 1px 11px !important;
+}
+
+.el-tree-node .el-tree-node__label {
+  width: 100% !important;
 }
 </style>

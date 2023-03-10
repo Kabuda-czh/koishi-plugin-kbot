@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-09 16:59:29
+ * @LastEditTime: 2023-03-10 15:15:07
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
  *
@@ -33,6 +33,21 @@ export const Config: Schema<IConfig> = Schema.object({})
 
 export const logger = new Logger('kbot-plugin-guildManage')
 
+const getChildren = (command: any) => {
+  if (command.children.length === 0) {
+    return []
+  }
+  else {
+    return command.children.map((child: any) => {
+      return {
+        name: child.name,
+        children: getChildren(child),
+        parent: command.name,
+        disable: false,
+      }
+    })
+  }
+}
 export function apply(context: Context) {
   context.model.extend('channel', {
     disable: 'list',
@@ -44,30 +59,51 @@ export function apply(context: Context) {
   })
 
   // check channel
-  context.before('command/execute', ({ session, command }: Argv<never, 'enable' | 'disable'>) => {
-    const { enable = [], disable = [] } = session.channel || {}
-    while (command) {
-      if (command.config.disabled) {
-        if (enable.includes(command.name))
-          return null
-        return ''
-      }
-      else {
+  context.before('command/execute', async ({ session, command }: Argv<never, 'enable' | 'disable'>) => {
+    return await session.observeChannel(['disable']).then((channel) => {
+      const { disable = [] } = channel || {}
+      while (command) {
         if (disable.includes(command.name))
           return ''
         command = command.parent as any
       }
-    }
+    })
   })
 
   context.router.get('/commands', async (ctx) => {
+    const commandsObject = {}
+    context.$commander._commands.forEach((command) => {
+      if (!command.parent && !commandsObject[command.name]) {
+        commandsObject[command.name] = {
+          name: command.name,
+          children: getChildren(command),
+          parent: command.parent?.name ?? '',
+          disable: false,
+          hasChildren: command.children.length > 0,
+        }
+      }
+    })
+
     // ctx.body = [...context.$commander._commands.keys()].filter(key => !key.includes('.'))
-    ctx.body = [...context.$commander._commands.keys()]
+    ctx.body = commandsObject
+  })
+
+  context.router.get('/getDisabledCommands', async (ctx) => {
+    const { guildId } = ctx.query
+    const channel = await context.database.get('channel', { id: guildId, platform: 'onebot', guildId })
+    ctx.body = channel[0]?.disable || []
   })
 
   context.router.get('/switchCommands', async (ctx) => {
-    logger.info(ctx.query)
-    ctx.body = ctx.query
+    const { guildId, commands } = ctx.query
+    try {
+      await context.database.upsert('channel', [{ id: guildId as string, platform: 'onebot', guildId: guildId as string, disable: commands }])
+      ctx.body = true
+    }
+    catch (err) {
+      logger.error(err)
+      ctx.body = false
+    }
   })
 
   Object.keys(routerStrategies).forEach((key) => {
