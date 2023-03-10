@@ -101,8 +101,6 @@ const changeSearch = (val: string | number) => {
 
 watch(() => props.options, loadAll, { deep: true })
 
-// watch(() => props.value, loadAll, { deep: true });
-
 onMounted(() => {
   loadAll()
 })
