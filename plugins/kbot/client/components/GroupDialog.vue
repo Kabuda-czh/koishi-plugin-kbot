@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 14:29:06
+ * @LastEditTime: 2023-03-10 16:45:16
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
@@ -141,7 +141,7 @@ const dataChange = (value: string | number) => {
     v-model="dialogVisible" width="50%" title="群成员列表" destroy-on-close @open="getMemberList"
     @closed="dialogVisible = false"
   >
-    <div class="dialogContainer">
+    <div class="dialogContainer" v-loading="dialogLoading">
       <div class="memberSearch">
         <FuzzySearch
           :options="defaultMemberList" label-key="username" value-key="userId" @select-data="selectData"
@@ -150,8 +150,8 @@ const dataChange = (value: string | number) => {
         <p>搜索群成员</p>
       </div>
       <ElAutoResizer>
-        <template #default="{ width }">
-          <ElTableV2 v-loading="dialogLoading" :data="memberList" :columns="columns" :height="700" :width="width" :max-height="700" />
+        <template #default="{ width, height }">
+          <ElTableV2 :data="memberList" :columns="columns" :height="700" :width="width" :max-height="height - 80" />
         </template>
       </ElAutoResizer>
     </div>
@@ -168,6 +168,7 @@ const dataChange = (value: string | number) => {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 60vh;
 }
 
 .memberSearch {
