@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 16:12:08
+ * @LastEditTime: 2023-03-10 16:25:52
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupPlugins.vue
  * @Description:
  *
@@ -160,14 +160,6 @@ init()
         />
         <p>搜索指令</p>
       </div>
-      <!-- <ElTable :data="commands" max-height="60vh" style="width: 95vw" row-key="id">
-        <ElTableColumn align="center" label="指令名称" prop="name" />
-        <ElTableColumn align="center" label="是否禁用">
-          <template #default="{ row }">
-            <ElSwitch v-model="row.disable" />
-          </template>
-        </ElTableColumn>
-      </ElTable> -->
       <el-scrollbar height="40vh">
         <el-tree
           :data="commands"
