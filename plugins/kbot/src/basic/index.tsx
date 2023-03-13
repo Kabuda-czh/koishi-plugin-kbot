@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 11:49:49
+ * @LastEditTime: 2023-03-13 17:08:15
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
@@ -18,7 +18,9 @@ export interface IConfig {
   news?: boolean
   weather?: boolean
   alApiToken?: string
-  body?: boolean
+  checkBody?: {
+    enabled: boolean
+  } & statusPlugin.IConfig
 }
 
 export const Config: Schema<IConfig> = Schema.object({
@@ -27,7 +29,20 @@ export const Config: Schema<IConfig> = Schema.object({
   alApiToken: Schema.string().description('ALAPI Token, 注: 前往 https://www.alapi.cn/ 个人中心获取token (可选)'),
   news: Schema.boolean().default(false).description('是否开启今日新闻 (需要alApiToken)'),
   weather: Schema.boolean().default(false).description('是否开启天气查询 (需要alApiToken)'),
-  body: Schema.boolean().default(false).description('是否开启自带的 status, 等同于插件 `status-pro` (需要 puppeteer)'),
+  checkBody: Schema.intersect([
+    Schema.object({
+      enabled: Schema.boolean().default(false).description('是否开启自带的 status, 等同于插件 `status-pro` (需要 puppeteer)'),
+    }),
+    Schema.union([
+      Schema.object({
+        enabled: Schema.const(true).required(),
+        ...statusPlugin.Config.dict,
+      }),
+      Schema.object({
+        enabled: Schema.const(false),
+      }),
+    ]) as statusPlugin.IConfig,
+  ]),
 })
 
 export const logger = new Logger('KBot-basic')
@@ -112,9 +127,9 @@ ${Object.values(weatherData.index).map((item: any) => `${item.name}: ${item.leve
         })
     }
   }
-  if (config.body) {
+  if (config.checkBody.enabled) {
     if (ctx.puppeteer)
-      ctx.plugin(statusPlugin)
+      ctx.plugin(statusPlugin, config.checkBody)
     else logger.warn('未安装 puppeteer, 无法使用自带的 status 插件')
   }
 }

@@ -2,16 +2,20 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 11:52:24
+ * @LastEditTime: 2023-03-13 17:39:39
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import os from 'node:os'
+import fs from 'node:fs'
+import path from 'node:path'
 import * as si from 'systeminformation'
 
 const ErrorInfo = 'N / A'
+
+export type SystemInfo = ReturnType<typeof getSystemInfo> extends Promise<infer T> ? T : never
 
 export async function getSystemInfo(
   name: string,
@@ -31,7 +35,7 @@ export async function getSystemInfo(
 
   const [
     { cpuUsage, cpuInfo },
-    { distro },
+    { distro, platform },
     { avg },
     { total, used, swaptotal, swapused },
     { disksize, diskused },
@@ -92,6 +96,7 @@ export async function getSystemInfo(
       },
     ],
     footer: durationTime(uptime),
+    platform,
   }
 
   return systemInfo
@@ -155,4 +160,15 @@ function durationTime(time: number) {
   const minute = Math.floor((time - day * 86400 - hour * 3600) / 60)
 
   return `已持续运行 ${day}天 ${hour}小时 ${minute}分钟`
+}
+
+export function writeBlobToFile(blobData: ArrayBuffer, fileName: string) {
+  const filePath = path.join(__dirname, `../../../../../../public/kbot/randomImage/${fileName}.jpg`)
+  const fileStream = fs.createWriteStream(filePath)
+  fileStream.write(Buffer.from(blobData))
+  fileStream.end()
+}
+
+export function blobToBase64(blobData: ArrayBuffer) {
+  return Buffer.from(blobData).toString('base64')
 }

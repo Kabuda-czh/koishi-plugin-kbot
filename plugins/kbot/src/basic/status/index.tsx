@@ -2,127 +2,55 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-21 17:24:45
+ * @LastEditTime: 2023-03-13 17:46:18
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import { resolve } from 'node:path'
+import fs from 'node:fs'
+import path from 'node:path'
 import type { Context } from 'koishi'
-import { Logger, Schema, segment, version } from 'koishi'
-import type { Page } from 'puppeteer-core'
-import { getSystemInfo } from './utils'
+import { Logger, Schema } from 'koishi'
+import { renderRandom } from './render'
 
-export interface IConfig { }
+export interface IConfig {
+  useModel?: any
+}
 
-export const Config: Schema<IConfig> = Schema.object({})
+export const Config: Schema<IConfig> = Schema.object({
+  useModel: Schema.union([
+    Schema.const('neko').description('猫羽雫'),
+    Schema.object({
+      sort: Schema.union(['random', 'iw233', 'top', 'yin', 'cat', 'xing', 'mp', 'pc']).default('mp').description('请前往 https://mirlkoi.ifast3.vipnps.vip/API/index.php 来选择你想要的 sort'),
+    }).description('随机图片'),
+  ]),
+})
 
 export const logger = new Logger('KBot-status')
 
-export async function apply(ctx: Context) {
-  // FIXME jsx -> css 属性 stroke-dashoffset 无法渲染
-  // ctx.command("checkBody", "检查机器人状态")
-  //   .shortcut("检查身体")
-  //   .action(async ({ session }) => {
-  //     const dashboardColor = ["var(--main-color)", "#ffb3cc", "#fcaa93", "#b7a89e"];
-  //     const systemInfo = await getSystemInfo(version, ctx.registry.size);
+export async function apply(ctx: Context, config: IConfig) {
+  const fileNames = fs.readdirSync(
+    path.resolve(__dirname, '../../../../../public/kbot'),
+  )
 
-  //     const status = <html>
-  //       <head>
-  //         <link href={resolve(__dirname, "./assets/css/renderA/font.css")} rel="stylesheet" />
-  //         <link href={resolve(__dirname, "./assets/css/renderA/circle.css")} rel="stylesheet" />
-  //         <link href={resolve(__dirname, "./assets/css/renderA/style.css")} rel="stylesheet" />
-  //       </head>
-  //       <div id="app">
-  //         <div id="background-page">
-  //           <div class="__title">
-  //             <span class="__title-text" id="config_name">{systemInfo.name}</span>
-  //             <img class="__title-image" src={resolve(__dirname, "./assets/image/marker.png")} />
-  //           </div>
-  //           <ul class="__dashboard" id="config_dashboard">
-  //             {
-  //               systemInfo.dashboard.map((item, index) => {
-  //                 return <li
-  //                   class="__dashboard-block __cpu"
-  //                   style={{
-  //                     "--block-color": dashboardColor[index]
-  //                   }}
-  //                 >
-  //                   <svg
-  //                     width="102"
-  //                     height="102"
-  //                     viewBox="0 0 200 200"
-  //                     class="circle-progress"
-  //                     style={{
-  //                       "--color": "var(--block-color)",
-  //                       "--progress": item.progress,
-  //                     }}
-  //                   >
-  //                     <circle
-  //                       class="__dashboard-block__progress circle-progress-bar"
-  //                       stroke-linecap="round"
-  //                       cx="100"
-  //                       cy="100"
-  //                       r="94"
-  //                       fill="none"
-  //                       transform="rotate(-93.8 100 100)"
-  //                       stroke-width="12"
-  //                     />
-  //                   </svg>
-  //                   <div class="__dashboard-block__info">
-  //                     <p class="__dashboard-block__info__value">{item.title}</p>
-  //                   </div>
-  //                 </li>
-  //               })
-  //             }
-  //           </ul>
-  //           <ul class="__information" id="config_information">
-  //             {
-  //               systemInfo.information.map((item) => {
-  //                 return <li class="__information-block">
-  //                   <span class="__information-block__key">{item.key}</span>
-  //                   <span class="__information-block__value">{item.value}</span>
-  //                 </li>
-  //               })
-  //             }
-  //           </ul>
-  //           <p class="__footer" id="config_footer">已持续运行 21天 13小时 32分钟</p>
-  //         </div>
-  //       </div>
-  //     </html>
-
-  //     return status;
-  //   });
+  if (!fileNames.includes('randomImage')) {
+    fs.mkdirSync(
+      path.resolve(__dirname, '../../../../../public/kbot/randomImage'),
+    )
+  }
 
   ctx.command('kbot/body', '检查机器人状态', {
     checkArgCount: true,
     showWarning: false,
   }).shortcut('自检', { fuzzy: false })
-    .action(async () => {
-      const systemInfo = await getSystemInfo('KBot', version, ctx.registry.size)
+    .action(async ({ session }) => {
+      // const systemInfo = await getSystemInfo('KBot', version, ctx.registry.size)
 
-      let page: Page
-      try {
-        page = await ctx.puppeteer.page()
-        await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
-        await page.goto(`file:///${resolve(__dirname, './neko/template.html')}`)
-        await page.waitForNetworkIdle()
-        await page.evaluate(`action(${JSON.stringify(systemInfo)})`)
-        const element = await page.$('#background-page')
-        return (
-          segment.image(await element.screenshot({
-            encoding: 'binary',
-          }), 'image/png')
-        )
-      }
-      catch (e) {
-        logger.error('状态渲染失败: ', e)
-        // throw new Error(`渲染失败: ${e.message}`);
-        return `渲染失败${e.message}`
-      }
-      finally {
-        page?.close()
-      }
+      // if (!config.useModel)
+      //   return await renderHtml(ctx, systemInfo)
+
+      // else
+      return await renderRandom(ctx, config.useModel.sort, session, {} as any)
     })
 }
