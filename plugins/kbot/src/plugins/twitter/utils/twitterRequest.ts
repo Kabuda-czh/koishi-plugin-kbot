@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 15:22:36
+ * @LastEditTime: 2023-03-13 16:46:30
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -123,19 +123,21 @@ export async function getTwitterTweets(
         tokenError = true
         return err
       }
-      throw new Error(`${err}`)
+      if (['ECONNRESET', 'ETIMEDOUT', 'ECONNREFUSED', 'ECONNABORTED'].includes(err.code))
+        throw new Error('请求超时, 网络错误')
+      throw new Error(`请求失败: ${err.message}`)
     })
 
   if (tokenError) {
     await getTwitterToken(ctx, logger)
-    throw new Error(`${res}`)
+    throw new Error('token 失效，重新获取')
   }
 
   if (!res)
-    throw new Error('Failed to get dynamics')
+    throw new Error('动态获取失败，请稍后再试')
 
   const instructions
-    = res.data.user?.result?.timeline_v2.timeline.instructions || []
+    = res.data.user?.result?.timeline_v2?.timeline?.instructions || []
 
   const entries = instructions.find(
     entry => entry.type === 'TimelineAddEntries',
