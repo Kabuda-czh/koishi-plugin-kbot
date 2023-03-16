@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-27 13:24:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 01:47:39
+ * @LastEditTime: 2023-03-16 10:53:14
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\reGetToken.ts
  * @Description:
  *
@@ -17,7 +17,7 @@ export async function getTwitterToken(ctx: Context, logger: Logger) {
   let page: Page, cookie: any, gtCookie: string
 
   try {
-    logger.info('开始获取 token')
+    logger.info('token 获取中...')
     page = await ctx.puppeteer.page()
 
     // 监听 request 事件

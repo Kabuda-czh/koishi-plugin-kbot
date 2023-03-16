@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-13 16:46:30
+ * @LastEditTime: 2023-03-16 10:53:01
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -130,7 +130,7 @@ export async function getTwitterTweets(
 
   if (tokenError) {
     await getTwitterToken(ctx, logger)
-    throw new Error('token 失效，重新获取')
+    throw new Error('token 失效')
   }
 
   if (!res)

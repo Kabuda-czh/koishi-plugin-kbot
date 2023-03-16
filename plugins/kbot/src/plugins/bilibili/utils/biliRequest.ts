@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-03 10:16:00
+ * @LastEditTime: 2023-03-16 11:10:23
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
@@ -16,7 +16,7 @@ import type { DanmukuData, MedalWall, MemberCard } from '../model'
 import { StringFormat } from '../../utils'
 
 export async function getDynamic(http: Quester, uid: string) {
-  return await http.get(
+  return http.get(
     StringFormat(BilibiliDynamicType.DynamicDetailURL, uid),
     {
       headers: {

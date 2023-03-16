@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 17:51:24
+ * @LastEditTime: 2023-03-16 11:42:56
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\listen.ts
  * @Description:
  *
@@ -61,7 +61,7 @@ export async function* listen(
             notifications.forEach(([channel, notification]) => {
               notification.lastUpdated
                 = neo[index].modules.module_author.pub_ts
-              ctx.bots[notification.botId].sendMessage(
+              ctx.bots[notification.botId]?.sendMessage(
                 channel.id,
                 text,
                 channel.guildId,
@@ -71,7 +71,7 @@ export async function* listen(
         }
       }
       catch (e) {
-        logger.error('error in listen', e)
+        logger.error(`轮询 Error: ${e.message}`)
       }
       yield
     }

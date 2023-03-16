@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:43:34
+ * @LastEditTime: 2023-03-16 13:35:18
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -144,10 +144,15 @@ async function request(
   uid: string,
   http: Quester,
 ): Promise<BilibiliDynamicItem[]> {
-  const res = await getDynamic(http, uid)
-  if (res.code !== 0)
-    throw new Error(`Failed to get dynamics. ${res}`)
-  return (res.data.items as BilibiliDynamicItem[]).sort(
-    (a, b) => b.modules.module_author.pub_ts - a.modules.module_author.pub_ts,
-  )
+  try {
+    const res = await getDynamic(http, uid)
+    return (res.data.items as BilibiliDynamicItem[]).sort(
+      (a, b) => b.modules.module_author.pub_ts - a.modules.module_author.pub_ts,
+    )
+  }
+  catch (e) {
+    if (['ECONNRESET', 'ETIMEDOUT', 'ECONNREFUSED', 'ECONNABORTED', 'read ECONNRESET'].includes(e.code))
+      throw new Error('请求超时, 网络错误')
+    throw e.message
+  }
 }
