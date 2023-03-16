@@ -2,7 +2,7 @@
 * @Author: Kabuda-czh
 * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:19:32
+ * @LastEditTime: 2023-03-16 19:43:49
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
 * @Description:
 *
@@ -42,7 +42,7 @@ export async function renderHtml(ctx: Context, systemInfo: SystemInfo) {
   }
 }
 
-export async function renderRandom(ctx: Context, sort: string, systemInfo: SystemInfo['random']) {
+export async function renderRandom(ctx: Context, sort: string, systemInfo: SystemInfo['random'], botUid: string) {
   const fontList = await getFontsList(logger)
   const [fontFace, fontFamily] = await loadFont(fontList)
   return ctx.http.axios<{ pic: string[] }>({
@@ -68,7 +68,7 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
         await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
         await page.goto(`file:///${resolve(__dirname, '../random/template.html')}`)
         await page.waitForNetworkIdle()
-        await page.evaluate(`action(${JSON.stringify(systemInfo)}, ${imageBase64})`)
+        await page.evaluate(`action(${JSON.stringify(systemInfo)}, '${imageBase64}', '${botUid.split(':')[1]}')`)
         const element = await page.$('#app')
         return (
           segment.image(await element.screenshot({
@@ -77,8 +77,8 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
         )
       }
       catch (e) {
-        logger.error('状态渲染失败: ', e.message)
-        return `渲染失败${e.message}`
+        logger.error('puppeteer 渲染失败: ', e.message)
+        return `puppeteer 渲染失败${e.message}`
       }
       finally {
         page?.close()

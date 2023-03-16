@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:19:38
+ * @LastEditTime: 2023-03-16 19:50:27
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.tsx
  * @Description:
  *
@@ -55,6 +55,6 @@ export async function apply(ctx: Context, config: IConfig) {
         return await renderHtml(ctx, systemInfo)
 
       else
-        return await renderRandom(ctx, config.useModel.sort, systemInfo.random)
+        return await renderRandom(ctx, config.useModel.sort, systemInfo.random, session.uid)
     })
 }

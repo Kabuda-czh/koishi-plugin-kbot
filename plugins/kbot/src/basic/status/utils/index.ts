@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:17:12
+ * @LastEditTime: 2023-03-16 19:21:20
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
@@ -117,7 +117,7 @@ export async function getSystemInfo(
           value: `🖥️ ${platform}`,
         },
       ],
-      function: {
+      functions: {
         CPU: {
           progress: +cpuUsage,
           args: {
