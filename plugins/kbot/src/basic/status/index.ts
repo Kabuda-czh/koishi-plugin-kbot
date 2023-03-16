@@ -51,7 +51,7 @@ export async function apply(ctx: Context, config: IConfig) {
     .action(async ({ session }) => {
       const systemInfo = await getSystemInfo('KBot', version, pVersion, ctx.registry.size)
 
-      if (!config.useModel)
+      if (config?.useModel === 'neko')
         return await renderHtml(ctx, systemInfo)
 
       else
