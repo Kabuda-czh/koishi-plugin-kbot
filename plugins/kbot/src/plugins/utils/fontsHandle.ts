@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-05 23:11:45
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-23 17:12:30
+ * @LastEditTime: 2023-03-14 11:21:16
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\utils\fontsHandle.ts
  * @Description:
  *
@@ -45,4 +45,21 @@ export async function getFontsList(
     }
     resolve(needLoadFontList)
   })
+}
+
+export async function loadFont(needLoadFontList: { fontFamily: string; fontUrl: string }[]) {
+  const fontFace = needLoadFontList.reduce((defaultString, fontObject) => {
+    return (
+      `${defaultString
+      }@font-face { font-family: ${fontObject.fontFamily};src: url('${fontObject.fontUrl}'); }`
+    )
+  }, '')
+
+  let needLoadFont = needLoadFontList.reduce(
+    (defaultString, fontObject) => `${defaultString + fontObject.fontFamily},`,
+    '',
+  )
+
+  needLoadFont = `${needLoadFont}Microsoft YaHei, Helvetica Neue ,Helvetica, Arial, sans-serif`
+  return [fontFace, needLoadFont]
 }

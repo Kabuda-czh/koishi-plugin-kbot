@@ -2,12 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-11 15:12:57
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-03 15:00:14
+ * @LastEditTime: 2023-03-14 11:21:40
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\render.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
+import { loadFont } from '../../../utils'
 import type { DanmukuData, List, MemberCard } from '../../model'
 
 export function renderVup(
@@ -369,21 +370,4 @@ function int2rgb(int: number) {
   const g = (int >> 8) & 255
   const b = int & 255
   return `rgb(${r}, ${g}, ${b})`
-}
-
-function loadFont(needLoadFontList: { fontFamily: string; fontUrl: string }[]) {
-  const fontFace = needLoadFontList.reduce((defaultString, fontObject) => {
-    return (
-      `${defaultString
-      }@font-face { font-family: ${fontObject.fontFamily};src: url('${fontObject.fontUrl}'); }`
-    )
-  }, '')
-
-  let needLoadFont = needLoadFontList.reduce(
-    (defaultString, fontObject) => `${defaultString + fontObject.fontFamily},`,
-    '',
-  )
-
-  needLoadFont = `${needLoadFont}Microsoft YaHei, Helvetica Neue ,Helvetica, Arial, sans-serif`
-  return [fontFace, needLoadFont]
 }
