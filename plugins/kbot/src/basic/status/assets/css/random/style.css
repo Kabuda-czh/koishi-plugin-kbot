@@ -1,10 +1,13 @@
-/* * {
+@import "https://fonts.googleapis.com/css?family=Noto+Sans+SC";
+@import "https://fonts.googleapis.com/css?family=Poppins";
+* {
   padding: 0;
   border: 0;
   margin: 0;
+  font-family: "Poppins", "Noto Sans SC", Arial, Helvetica, sans-serif;
   color: white;
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.4);
-} */
+}
 
 body {
   display: flex;
@@ -19,14 +22,13 @@ body {
   padding: 34px 34px 40px;
   box-sizing: border-box;
 }
-/* #app::after {
-  background-image: url(./assets/img/background.png);
+#app::after {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0.5;
   z-index: -1;
-} */
+}
 #app::before {
   background-color: rgb(41, 41, 41);
   z-index: -2;
@@ -282,3 +284,5 @@ body {
   text-shadow: none;
   color: rgba(255, 255, 255, 0.3);
 }
+
+/*# sourceMappingURL=style.css.map */
