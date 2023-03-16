@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-13 17:46:18
+ * @LastEditTime: 2023-03-16 19:13:07
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.tsx
  * @Description:
  *
@@ -11,8 +11,12 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import type { Context } from 'koishi'
-import { Logger, Schema } from 'koishi'
-import { renderRandom } from './render'
+import { Logger, Schema, version } from 'koishi'
+import { renderHtml, renderRandom } from './random'
+import { getSystemInfo } from './utils'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { version: pVersion } = require('../../../package.json')
 
 export interface IConfig {
   useModel?: any
@@ -45,12 +49,12 @@ export async function apply(ctx: Context, config: IConfig) {
     showWarning: false,
   }).shortcut('自检', { fuzzy: false })
     .action(async ({ session }) => {
-      // const systemInfo = await getSystemInfo('KBot', version, ctx.registry.size)
+      const systemInfo = await getSystemInfo('KBot', version, pVersion, ctx.registry.size)
 
-      // if (!config.useModel)
-      //   return await renderHtml(ctx, systemInfo)
+      if (!config.useModel)
+        return await renderHtml(ctx, systemInfo)
 
-      // else
-      return await renderRandom(ctx, config.useModel.sort, session, {} as any)
+      else
+        return await renderRandom(ctx, config.useModel.sort, systemInfo.random)
     })
 }

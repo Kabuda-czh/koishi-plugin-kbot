@@ -1,0 +1,284 @@
+/* * {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  color: white;
+  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.4);
+} */
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#app {
+  position: relative;
+  max-width: 636px;
+  padding: 34px 34px 40px;
+  box-sizing: border-box;
+}
+/* #app::after {
+  background-image: url(./assets/img/background.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  z-index: -1;
+} */
+#app::before {
+  background-color: rgb(41, 41, 41);
+  z-index: -2;
+}
+#app::before, #app::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+#app .card {
+  border-radius: 12px;
+  backdrop-filter: blur(32px);
+  background-color: rgba(222, 222, 222, 0.1);
+  background-image: url(../../image/glass.png);
+  background-repeat: repeat;
+  box-sizing: border-box;
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 20px;
+}
+#app .card:last-child {
+  margin-bottom: 0;
+}
+
+#card-header {
+  margin-top: 64px;
+}
+#card-header .__panel {
+  display: flex;
+  flex-direction: row;
+  margin: -50px 24px 0;
+}
+#card-header .__panel__head {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 6px solid white;
+  box-sizing: border-box;
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.4);
+}
+#card-header .__panel__name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-top: 64px;
+  margin-left: 20px;
+  flex: 1;
+}
+#card-header .__panel__name__text {
+  font-size: 28px;
+  font-weight: bold;
+}
+#card-header .__panel__name__tag {
+  color: rgba(0, 0, 0, 0.65);
+  background: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 12px;
+  border-radius: 50px 50px 50px 0;
+  text-shadow: none;
+}
+#card-header .__info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 30px 28px 18px;
+  gap: 20px;
+}
+#card-header .__info__block__title {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  text-shadow: none;
+}
+#card-header .__info__block__value {
+  font-size: 16px;
+}
+
+#card-function {
+  padding: 4px 28px;
+}
+#card-function .__item {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#card-function .__item:last-child {
+  border-bottom: none;
+}
+#card-function .__item__status {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+#card-function .__item__status.green {
+  background-color: rgb(56, 248, 139);
+}
+#card-function .__item__status.yellow {
+  background-color: rgb(243, 180, 113);
+}
+#card-function .__item__status.red {
+  background-color: rgb(235, 68, 68);
+}
+#card-function .__item__name {
+  margin-left: 8px;
+  width: 84px;
+}
+#card-function .__item__args {
+  position: relative;
+  text-shadow: none;
+  color: rgba(255, 255, 255, 0.6);
+  margin-right: 11px;
+}
+#card-function .__item__args::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -7px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+#card-function .__item__args:last-child::after {
+  display: none;
+}
+#card-function .__item__name, #card-function .__item__args {
+  font-size: 15px;
+}
+#card-function .__item__progress {
+  margin-right: 24px;
+  list-style: none;
+  height: 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+#card-function .__item__progress li {
+  height: 100%;
+  width: 3px;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+#card-function .__item__progress li.full {
+  background-color: rgb(56, 248, 139);
+}
+#card-function .__item__progress.network li.full {
+  background-color: rgb(0, 255, 238);
+}
+
+#card-disk {
+  padding: 28px 28px;
+}
+#card-disk .__chart {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+#card-disk .__chart__block {
+  width: calc(50% - 28px);
+}
+#card-disk .__chart__block____title {
+  display: flex;
+  flex-direction: row;
+}
+#card-disk .__chart__block____title__info {
+  flex: 1;
+  margin-left: 12px;
+}
+#card-disk .__chart__block____title__info .__title {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: none;
+}
+#card-disk .__chart__block____title__circle {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#card-disk .__chart__block____title__circle svg {
+  position: relative;
+  transform: rotate(-90deg);
+  width: 24px;
+  height: 24px;
+  z-index: 1000;
+}
+#card-disk .__chart__block____title__circle svg circle {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.12);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transform: translate(5px, 5px);
+}
+#card-disk .__chart__block____title__circle svg circle:nth-child(2) {
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+}
+#card-disk .__chart__block____title__circle svg circle:nth-child(2) {
+  stroke-dashoffset: calc(440 - 44000 * var(--progress) / 100);
+  stroke: rgb(255, 255, 255);
+}
+
+#card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 28px;
+}
+#card-footer .__footer__block {
+  display: flex;
+  flex-direction: row;
+}
+#card-footer .__footer__block__title {
+  color: rgba(255, 255, 255, 0.4);
+  text-shadow: none;
+  width: 102px;
+}
+#card-footer .__footer__block__title, #card-footer .__footer__block__value {
+  font-size: 14px;
+}
+
+#footer {
+  padding-top: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+#footer svg {
+  width: 16px;
+  height: 16px;
+}
+#footer svg path {
+  fill: rgba(255, 255, 255, 0.3);
+}
+#footer span {
+  font-size: 16px;
+  text-shadow: none;
+  color: rgba(255, 255, 255, 0.3);
+}
