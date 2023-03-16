@@ -110,7 +110,7 @@ export async function getSystemInfo(
         },
         {
           title: '编译环境',
-          value: `💿 ${process.version}`,
+          value: `📦 Node ${process.version}`,
         },
         {
           title: '系统环境',
