@@ -22,25 +22,29 @@ body {
   padding: 34px 34px 40px;
   box-sizing: border-box;
 }
-#app::after {
+
+.__app__after {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.5;
-  z-index: -1;
-}
-#app::before {
-  background-color: rgb(41, 41, 41);
+
   z-index: -2;
 }
-#app::before, #app::after {
-  content: "";
+
+.__app__before {
+  background-color: rgb(41, 41, 41, 0.5);
+  z-index: -1;
+}
+
+.__app__before,
+.__app__after {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
 }
+
 #app .card {
   border-radius: 12px;
   backdrop-filter: blur(32px);
