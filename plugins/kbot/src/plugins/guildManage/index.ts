@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 18:22:14
+ * @LastEditTime: 2023-03-16 19:17:57
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
  *
@@ -68,42 +68,6 @@ export function apply(context: Context) {
         command = command.parent as any
       }
     })
-  })
-
-  context.router.get('/commands', async (ctx) => {
-    const commandsObject = {}
-    context.$commander._commands.forEach((command) => {
-      if (!command.parent && !commandsObject[command.name]) {
-        commandsObject[command.name] = {
-          name: command.name,
-          children: getChildren(command),
-          parent: command.parent?.name ?? '',
-          disable: false,
-          hasChildren: command.children.length > 0,
-        }
-      }
-    })
-
-    // ctx.body = [...context.$commander._commands.keys()].filter(key => !key.includes('.'))
-    ctx.body = commandsObject
-  })
-
-  context.router.get('/getDisabledCommands', async (ctx) => {
-    const { guildId } = ctx.query
-    const channel = await context.database.get('channel', { id: guildId, platform: 'onebot', guildId })
-    ctx.body = channel[0]?.disable || []
-  })
-
-  context.router.get('/switchCommands', async (ctx) => {
-    const { guildId, commands } = ctx.query
-    try {
-      await context.database.upsert('channel', [{ id: guildId as string, platform: 'onebot', guildId: guildId as string, disable: commands }])
-      ctx.body = true
-    }
-    catch (err) {
-      logger.error(err)
-      ctx.body = false
-    }
   })
 
   Object.keys(routerStrategies).forEach((key) => {
