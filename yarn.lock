@@ -668,27 +668,22 @@
     vue "^3.2.47"
     vue-router "^4.1.6"
 
-"@koishijs/core@4.11.9":
-  version "4.11.9"
-  resolved "https://registry.npmmirror.com/@koishijs/core/-/core-4.11.9.tgz#9cfdce9182801650743e56ea4c3e8a77abb0e2cb"
-  integrity sha512-KINCsGDoJHcqGZVO4EwlIdneeNumbcADVT9kjejGwujfPO49M/xBQgtfHitRT2dLfxPPAUkzXW1eEoatsYw9FA==
+"@koishijs/core@4.12.0":
+  version "4.12.0"
+  resolved "https://registry.npmmirror.com/@koishijs/core/-/core-4.12.0.tgz#7e518d33647c991d40c157c682bf939945f3ff30"
+  integrity sha512-ZPbKhrsPO41V2waMzKClPfHcZ/zsQ0Y+N47egvcqVlFrTteEnRb8de9sr6a3hF2BKyAMSmfkMRN9HQLJE3m3qg==
   dependencies:
     "@koishijs/utils" "^7.0.1"
-    "@minatojs/core" "^2.2.2"
+    "@minatojs/core" "^2.3.1"
     "@satorijs/core" "^2.2.1"
     cordis "^2.7.4"
     cosmokit "^1.4.1"
     fastest-levenshtein "^1.0.16"
 
-"@koishijs/helpers@^1.2.7":
-  version "1.2.7"
-  resolved "https://registry.npmmirror.com/@koishijs/helpers/-/helpers-1.2.7.tgz#48e0bf5996046caf5198a39f565228f84ef02abc"
-  integrity sha512-H9DVVS1lKMcfoWcEtuy0f3Wm3uceutcudfhUsKiYIsyFTud0z+Hy9ZdfNQjAYvn1GDIYxcIidYieB+3y28A/Ng==
-
-"@koishijs/loader@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.npmmirror.com/@koishijs/loader/-/loader-3.0.3.tgz#2ea1d769dc8461c44b6f0a296affa0af19895f4a"
-  integrity sha512-84GNYdVpzsxTLPSq+YBh8q447LHJU3f8XXKNiV+qOxmFMFVG0WtuHZMRjcG8C2INMn5T5H6cdsJZGgIzbRiUYg==
+"@koishijs/loader@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npmmirror.com/@koishijs/loader/-/loader-3.1.0.tgz#3516d843bca32f8d4f5a01f0c0e8b1a8f44e31c0"
+  integrity sha512-JBC1gnL1ELfZO4YquQpxd809A08Q36LZWSqYIYdCPUb8edn6Ug/eT8fay5J7WloTvU0xaCn1f0N5y4oGz3HmWQ==
   dependencies:
     dotenv "^16.0.3"
     js-yaml "^4.1.0"
@@ -715,12 +710,12 @@
   dependencies:
     "@satorijs/adapter-kook" "^3.6.2"
 
-"@koishijs/plugin-adapter-onebot@5.6.1":
-  version "5.6.1"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-onebot/-/plugin-adapter-onebot-5.6.1.tgz#d42ddabb9b00591f743a6a15c1c73a7e3e7681b7"
-  integrity sha512-8tf5PIg+cpn6sP4eOXUqxhBnA6x/3ejyQxsu49YTposYi/2JaFQjre3sGoRJKBF1GNvoJG6TIvZX3DsI2Tgw6w==
+"@koishijs/plugin-adapter-onebot@5.6.2":
+  version "5.6.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-onebot/-/plugin-adapter-onebot-5.6.2.tgz#648d906ca1dd9cb76109ca661d81be65432a39f9"
+  integrity sha512-Rl3FfKXy32FQQoOacLm6GihWpI+sAIUQZbpXXgUPW08HlwIGzvif0K2U7xZpgc6Qcv3nxAb+9gtaYOO4/ZRo8w==
   dependencies:
-    "@satorijs/adapter-onebot" "^5.6.1"
+    "@satorijs/adapter-onebot" "^5.6.2"
 
 "@koishijs/plugin-adapter-telegram@3.7.0":
   version "3.7.0"
@@ -729,27 +724,25 @@
   dependencies:
     "@satorijs/adapter-telegram" "^3.7.0"
 
-"@koishijs/plugin-admin@1.1.6":
-  version "1.1.6"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-admin/-/plugin-admin-1.1.6.tgz#b9f3cf12349ac524fc5a8c95ef4c1600a7b15c5e"
-  integrity sha512-h9LHXd00FmKQfQUoWhVvJ8Dkcp/I0S4vGN9VAi6wr3ehB3GTDJFp+1PM1oAwpTZvlS3rJJ2O7tdLs3GNd0LN2Q==
-  dependencies:
-    "@koishijs/helpers" "^1.2.7"
+"@koishijs/plugin-admin@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-admin/-/plugin-admin-1.2.0.tgz#0dd253771720d159ff59e1d5b66b6183974e725e"
+  integrity sha512-ZoXep7ro90P8pwX/rv71Zd88qJ9pJm/I6rY5XXofGnv2cxpJZ569CScw5+4wO+X9TEAfuhvn5cYfMiy/9vdzlw==
 
 "@koishijs/plugin-analytics@1.0.3":
   version "1.0.3"
   resolved "https://registry.npmmirror.com/@koishijs/plugin-analytics/-/plugin-analytics-1.0.3.tgz#04ddc7f920cfa60fa88868e2b6576f92e50899ae"
   integrity sha512-eUfAaomrFL8gNlo8ZhVZGPzdAs4BJZezeu+EKacC4SZzUDezVqpmqJHICk8lxZj7epIkqiwDzT1crqP4mmm2GQ==
 
-"@koishijs/plugin-bind@1.3.3":
-  version "1.3.3"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-bind/-/plugin-bind-1.3.3.tgz#bb9cbdc71aa19c0dd903137d7ddb396f76793084"
-  integrity sha512-+31HBqhHReoaMCNilojXqtQnSBoTcxglH+4137PXEz12M8Mn3gspe7QnUQTCGHvFjcTRfjtQz1tHnpub4J4zXA==
+"@koishijs/plugin-bind@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-bind/-/plugin-bind-1.4.0.tgz#7911577d31d27f77cea572614b0887cfc9a5276a"
+  integrity sha512-zHCHJx+K8JERJySKpUpIc2oNchb1ldAOJKQBCTB7uZ5+pc4WSHL4JXNO15jVHzDtQ9iCbPyjU4LyM/whSQ6eAw==
 
-"@koishijs/plugin-commands@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-commands/-/plugin-commands-3.0.0.tgz#8af8973333394d1d97942cccbc39db98b6f3c6b4"
-  integrity sha512-cLy2I2ZGLwdl8JGXPa1qXuzgkurvYD/cxDT9sIPeFXxoBnLB2GxYZ0Ok6ohQv2mm29EMO0lEYBsbME3n/BG1Tg==
+"@koishijs/plugin-commands@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-commands/-/plugin-commands-3.0.1.tgz#0104f759847c24cbb5073db91c8149a6619afc0d"
+  integrity sha512-Mptihddq7AUPJhFhOgGhQD2G6/LWAwFUL1Xn2Z5tSWDbG7q0kaUI00VyH8c74DpErGJkwiAdgD6D51lXzVNpsQ==
   dependencies:
     throttle-debounce "^3.0.1"
 
@@ -762,22 +755,30 @@
     uuid "^8.3.2"
     ws "^8.12.1"
 
-"@koishijs/plugin-database-sqlite@3.3.11":
-  version "3.3.11"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.3.11.tgz#67cdd56efada3289c9b5b38675f76a242f05a53b"
-  integrity sha512-XBZ7D6on1LkGdGoqihkds6sHKHGstGSB6zocnOkWPS/TTjeO1KUvCBEnGTVlTSetozBuWbeeTP8IfcoDnXw5pg==
+"@koishijs/plugin-database-sqlite@3.4.1":
+  version "3.4.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.4.1.tgz#b92e7ea2913efcd733e66ab2bc784e54cae8a4b9"
+  integrity sha512-VQ9NNWPMwWWpvyKxZ4+A7V1k4fHtbObIJBr1nkq+kcGAxZLlOEUbe+BCYqy1D+A4G+NKGE6+HnviP/3vKUN0EQ==
   dependencies:
-    "@minatojs/driver-sqlite" "^3.3.11"
+    "@minatojs/driver-sqlite" "^3.4.1"
 
-"@koishijs/plugin-dataview@2.2.4":
-  version "2.2.4"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-dataview/-/plugin-dataview-2.2.4.tgz#c0f983ffab478c0e5904f9855333db69498a6bbc"
-  integrity sha512-c1LO3Uil0gugmv2vEK4uJph12EUbOVoIv91N6TI3ECJfA/vW4IcRZAswqMmH0npYIYnlvzPUaplFRstfL3OgIA==
+"@koishijs/plugin-dataview@2.2.6":
+  version "2.2.6"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-dataview/-/plugin-dataview-2.2.6.tgz#75d44e99e227e02ea9d885e8d05e18dd77cd9aa9"
+  integrity sha512-Zxc++UQSZIRhiqnoM0xYrycz6iHdVtdEEL01dUQtd+5+hwDi3Qa5rZqZSFeVLXQv+yu1M15lT7dTjM+pNKhrVA==
 
 "@koishijs/plugin-help@2.2.1":
   version "2.2.1"
   resolved "https://registry.npmmirror.com/@koishijs/plugin-help/-/plugin-help-2.2.1.tgz#b196b7d02c8e6689a0c024f37c047ea2f05e6e56"
   integrity sha512-700jUuV+YaFAU5ZOKFu0bMFr4GHjXHpIWwqVDr2ypt49SyXgQD+WZz0E7yUq//+vqD4GO+BuU18/61hnFnxdWg==
+
+"@koishijs/plugin-hmr@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-hmr/-/plugin-hmr-1.0.0.tgz#33b008132bacbc197961c3c9f8a693785fcfb3d0"
+  integrity sha512-93VPZm0ueIbXlM+Sw5VrV85QP7moHvvV8oZ49bfYKwmqHVEDNeEG1tGmzvOBJuBiyYHs7GHoncIxG8BSsF78VA==
+  dependencies:
+    chokidar "^3.5.3"
+    throttle-debounce "^3.0.1"
 
 "@koishijs/plugin-insight@3.3.3":
   version "3.3.3"
@@ -786,10 +787,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-locales@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.2.1.tgz#3013744931f0ec1ada251ff9aaadeeca88088d60"
-  integrity sha512-LcinC6W+SJlUycHyKTd9wjaNIT6+N244wATldXBpJZmyfiqoNAbAGAehO1BMWWf2e0uTYPNr+mx/9/xyLMBpSA==
+"@koishijs/plugin-locales@2.2.3":
+  version "2.2.3"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.2.3.tgz#aa04a75cac99fe14fd88d345086a90da3ec73fc3"
+  integrity sha512-+MaWD+A09dDotfqubOtpxtxMPBo3I3Hztjw/o0NmQq0aE6UBwmDvxt2uMaaWmZkA6TrOB78ybFFWfSkSd7O4bg==
   dependencies:
     js-yaml "^4.1.0"
     throttle-debounce "^3.0.1"
@@ -812,17 +813,15 @@
     throttle-debounce "^3.0.1"
     which-pm-runs "^1.1.0"
 
-"@koishijs/plugin-rate-limit@1.2.8":
-  version "1.2.8"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-rate-limit/-/plugin-rate-limit-1.2.8.tgz#406e1f25c7b0d91a74f300eb222cf26b095a2270"
-  integrity sha512-ugeVK/wfYdLD5qIgy3/1p/t8iSqskdtZSDKvvMByIM2XnDcSSDoe9xe+/CNwvJYuMoBO1mpkTWtcHDosuslsAw==
-  dependencies:
-    "@koishijs/helpers" "^1.2.7"
+"@koishijs/plugin-rate-limit@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-rate-limit/-/plugin-rate-limit-1.3.0.tgz#20f56758d3244dbdfea4fa9363c86625c6cd440b"
+  integrity sha512-EWzJHVACBI0aqI7K8fEzT+BFZwi+a8gHUZVeJjG8OfD/ROwM74UyuRlT1BZD37ROtfln8koZsSNGf1hNG/YuHA==
 
-"@koishijs/plugin-sandbox@2.7.0":
-  version "2.7.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-sandbox/-/plugin-sandbox-2.7.0.tgz#df4b85633d8606aa86fec43cb2cf05aef9f3158a"
-  integrity sha512-U08TqvdfRpPGsNztrLiT9M8wPdhpcSt16g8e8ap1Jp3cK/iSPdLjwgq2mZ7nzMGrNOrMu5VklouhuRMjfNjkUA==
+"@koishijs/plugin-sandbox@2.7.1":
+  version "2.7.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-sandbox/-/plugin-sandbox-2.7.1.tgz#cd3a3d4feb3e0147f9a5ea61f7a237a130d978a9"
+  integrity sha512-yqIJr4MZ2a686tZoMu7PXjHeIM5NaIQ/2Rw7iMaP9m5r79NI473iCZtQmlDtui8JDJuruGCvdaJ6nQE0DrN8QQ==
 
 "@koishijs/plugin-status@7.1.2":
   version "7.1.2"
@@ -876,29 +875,29 @@
   resolved "https://registry.npmmirror.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@minatojs/core@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.npmmirror.com/@minatojs/core/-/core-2.2.2.tgz#9bcf3410372a465f1904ded4ca04d0d6468d43d0"
-  integrity sha512-bZJ58RGtZ1LSw6zsAGoejvhAfgyhPhgrBmaNbTtAam3z+8XsJtR3dU4iWEa7cV6BcWfKTyTHNBAJM+9MvkZ4mg==
+"@minatojs/core@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.npmmirror.com/@minatojs/core/-/core-2.3.1.tgz#678211f72c2ee19315d898ead60106e81c1c4250"
+  integrity sha512-3q37agKnVq9QHrJozw3ACk/Gt+i1xDY/o7363kFJmjQSxQfaQg5dHT0NqjwVxe4AyqYpTWh3487IVyEAAMe9kw==
   dependencies:
-    cosmokit "^1.4.0"
+    cosmokit "^1.4.1"
 
-"@minatojs/driver-sqlite@^3.3.11":
-  version "3.3.11"
-  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.3.11.tgz#fd1798dca4918820aee2489640c0e7ae33245ae0"
-  integrity sha512-VmxNdg9x8G9lG3hQs+kWm9BtTw+ozgpczoMfd13o9jBbQlUkpij5k1xm7NAwZuoe7RZcUSEzLY/fHRugpSvA+w==
+"@minatojs/driver-sqlite@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.4.1.tgz#d0f6db16592c7a5f5f99b5fa778b2b2bd2a15a2b"
+  integrity sha512-LvqlK5yqsaW5wkE+wvIwu2LW+R4l9d/Utj2OVFAiU+mgylvEYeVHWi4Mx0r0dVzaUDB9RjL52sXKCZfyOXug8g==
   dependencies:
-    "@minatojs/sql-utils" "^4.0.2"
+    "@minatojs/sql-utils" "^4.0.3"
     "@minatojs/sql.js" "^2.0.0"
     cosmokit "^1.4.1"
     reggol "^1.3.5"
 
-"@minatojs/sql-utils@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.npmmirror.com/@minatojs/sql-utils/-/sql-utils-4.0.2.tgz#978c67ecf3905e610873599c9d5d8cb59dc8f08b"
-  integrity sha512-tOZ/2L2unY2NDLGXCnNLkKhpiwWSryVIAUrJ1/6Yu7cFSqc4QBZcJ1syJQFiltB51TWQYLpneRGuYUveafuPEg==
+"@minatojs/sql-utils@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.npmmirror.com/@minatojs/sql-utils/-/sql-utils-4.0.3.tgz#396ceb4e2598b15c7384a1d861357878af861d9e"
+  integrity sha512-m66BGxq7zYU/tyOcJYwDOZuq1L5Ts+z0EjgVh57AJydY9S9TTy4P5Eq+ukJeQbHVljn5iq4/HRzk132xPUPCmA==
   dependencies:
-    cosmokit "^1.4.0"
+    cosmokit "^1.4.1"
 
 "@minatojs/sql.js@^2.0.0":
   version "2.0.0"
@@ -986,10 +985,10 @@
   dependencies:
     form-data "^4.0.0"
 
-"@satorijs/adapter-onebot@^5.6.1":
-  version "5.6.1"
-  resolved "https://registry.npmmirror.com/@satorijs/adapter-onebot/-/adapter-onebot-5.6.1.tgz#b1058dec2403fceb21ed85dcc685be60825a61a5"
-  integrity sha512-OD9EGuTuxBqoFmv+uIDwhU8cYanDiNfHnEYMkXOPhpJY4/kJ6y7oAe9JIO8NO0RkxgWrbUEpJU2cP5+7KQNMnw==
+"@satorijs/adapter-onebot@^5.6.2":
+  version "5.6.2"
+  resolved "https://registry.npmmirror.com/@satorijs/adapter-onebot/-/adapter-onebot-5.6.2.tgz#eec84fceba5433755d26d63b784bfd6f786e77b4"
+  integrity sha512-4uiqOpmd9vhsrqsDxe57E3aaHPtde5xJuLGVaN7dqXyCGuY+6YO4IoFveDbSE50n7+qSt4I6YY804gz1wVRcQQ==
   dependencies:
     qface "^1.3.0"
 
@@ -3910,25 +3909,18 @@ koishi-plugin-puppeteer@3.4.11:
     puppeteer-core "^19.6.2"
     puppeteer-finder "^1.0.3"
 
-koishi-plugin-switch@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmmirror.com/koishi-plugin-switch/-/koishi-plugin-switch-1.1.1.tgz#a24a68a50050a19db6f3187f8d00f6c9fcf99de1"
-  integrity sha512-taQAUAtGr5NEWiwejnYwVb5Pq95CSdTqQo+U5nga4KGpvhu/uMNy77Z2eJ16nl+/BimsRBzRuDPBSB/KlarpAg==
-
-koishi@4.11.9:
-  version "4.11.9"
-  resolved "https://registry.npmmirror.com/koishi/-/koishi-4.11.9.tgz#8dda4422b84468bf3c15906d9a9ce67c47a21fb3"
-  integrity sha512-IIKAzEgaJnRML+Xk+dXd8mZVh6ncGAh9plqI4Vw3eyCTugqylpwO9zNV+lg2Uk5us06Qn3zAxpqS39p09lR5qw==
+koishi@4.12.0:
+  version "4.12.0"
+  resolved "https://registry.npmmirror.com/koishi/-/koishi-4.12.0.tgz#449e9d62dc532349f0810d5ee5925f64170d36f5"
+  integrity sha512-vzcFzfpTAyCTHAJgRwoE5nvhVkRBQbM43dw+hSMhnuAf4g00bUdB93tp8P/dbBiOXu/Msb1VftR8Quq46yOOMQ==
   dependencies:
-    "@koishijs/core" "4.11.9"
-    "@koishijs/loader" "3.0.3"
+    "@koishijs/core" "4.12.0"
+    "@koishijs/loader" "3.1.0"
     "@koishijs/utils" "^7.0.1"
     "@satorijs/satori" "^2.2.1"
     cac "^6.7.14"
-    chokidar "^3.5.3"
     kleur "^4.1.5"
     ns-require "^1.1.4"
-    throttle-debounce "^3.0.1"
 
 latest-version@^5.1.0:
   version "5.1.0"
