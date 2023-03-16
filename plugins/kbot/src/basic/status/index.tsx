@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:13:07
+ * @LastEditTime: 2023-03-16 19:19:38
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.tsx
  * @Description:
  *
@@ -12,7 +12,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import type { Context } from 'koishi'
 import { Logger, Schema, version } from 'koishi'
-import { renderHtml, renderRandom } from './random'
+import { renderHtml, renderRandom } from './render'
 import { getSystemInfo } from './utils'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

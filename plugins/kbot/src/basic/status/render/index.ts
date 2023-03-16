@@ -2,8 +2,8 @@
 * @Author: Kabuda-czh
 * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:07:03
- * @FilePath: \KBot-App\plugins\kbot\src\basic\status\random\index.tsx
+ * @LastEditTime: 2023-03-16 19:19:32
+ * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
 * @Description:
 *
 * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
