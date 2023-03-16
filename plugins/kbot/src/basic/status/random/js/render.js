@@ -18,11 +18,11 @@ function fixValue(value, num = 0) {
   return value.toFixed(num)
 }
 
-function action(config, base64Image, botId) {
-  document.querySelector('#app').style.backgroundImage = `url(data:image/png;base64,${base64Image})`
+function action(config, backgroundBase64, botQQ) {
+  document.querySelector('.__app__after').style.backgroundImage = `url(data:image/png;base64,${backgroundBase64})`
 
   const imageInstance = document.querySelector('.__panel__head')
-  imageInstance.src = `https://q1.qlogo.cn/g?b=qq&nk=${botId}&s=640`
+  imageInstance.src = `https://q1.qlogo.cn/g?b=qq&nk=${botQQ}&s=640`
 
   const nameInstance = document.querySelector('.__panel__name__text')
   const footerSpanInstance = document.querySelector('.footer__span')
@@ -66,7 +66,7 @@ function action(config, base64Image, botId) {
           <div class="__chart__block">
             <div class="__chart__block____title">
               <div class="__chart__block____title__circle">
-                <svg viewBox="0 0 150 150" style="--progress: ${fixValue(item.use, 4)}">
+                <svg viewBox="0 0 150 150" style="--progress: ${fixValue(item.use / 100, 4)}">
                   <circle cx="70" cy="70" r="70"></circle>
                   <circle cx="70" cy="70" r="70"></circle>
                 </svg>
