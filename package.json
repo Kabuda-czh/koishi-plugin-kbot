@@ -51,7 +51,7 @@
     "@koishijs/plugin-locales": "2.2.3",
     "@koishijs/plugin-logger": "2.2.3",
     "@koishijs/plugin-market": "1.12.2",
-    "@koishijs/plugin-rate-limit": "1.3.0",
+    "@koishijs/plugin-rate-limit": "1.3.1",
     "@koishijs/plugin-sandbox": "2.7.1",
     "@koishijs/plugin-status": "7.1.2",
     "koishi": "4.12.0",
