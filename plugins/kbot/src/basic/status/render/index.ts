@@ -59,13 +59,12 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
     }).then(async (resp) => {
       const imageBase64 = Buffer.from(resp.data, 'binary').toString('base64')
       writeBlobToFile(resp.data, new Date().toLocaleString().replace(/[/:]/g, '-'))
-      const botQQ = botUid.split(':')[1]
       let page: Page
       try {
         page = await ctx.puppeteer.page()
         await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
         await page.goto(`file:///${resolve(__dirname, '../random/template.html')}`)
-        await page.evaluate(`action(${JSON.stringify(systemInfo)}, '${imageBase64}', '${botQQ}')`)
+        await page.evaluate(`action(${JSON.stringify(systemInfo)}, '${imageBase64}', '${botUid}')`)
         const element = await page.$('#app')
         await page.waitForNetworkIdle()
         return (
