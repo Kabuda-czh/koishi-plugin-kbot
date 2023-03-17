@@ -2,7 +2,7 @@
 * @Author: Kabuda-czh
 * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:43:49
+ * @LastEditTime: 2023-03-17 09:34:33
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
 * @Description:
 *
@@ -33,7 +33,6 @@ export async function renderHtml(ctx: Context, systemInfo: SystemInfo) {
     )
   }
   catch (e) {
-    console.log(e)
     logger.error('puppeteer 渲染失败: ', e.message)
     return `渲染失败${e.message}`
   }
