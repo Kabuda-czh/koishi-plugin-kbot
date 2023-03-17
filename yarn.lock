@@ -813,10 +813,10 @@
     throttle-debounce "^3.0.1"
     which-pm-runs "^1.1.0"
 
-"@koishijs/plugin-rate-limit@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-rate-limit/-/plugin-rate-limit-1.3.0.tgz#20f56758d3244dbdfea4fa9363c86625c6cd440b"
-  integrity sha512-EWzJHVACBI0aqI7K8fEzT+BFZwi+a8gHUZVeJjG8OfD/ROwM74UyuRlT1BZD37ROtfln8koZsSNGf1hNG/YuHA==
+"@koishijs/plugin-rate-limit@1.3.1":
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/@koishijs/plugin-rate-limit/-/plugin-rate-limit-1.3.1.tgz#2ee08e4f153960725feadf37d4c2aef8a5a5b006"
+  integrity sha512-b1fnISkD8T2ecmE+8tjXMyTbVFMPrsGyKBuN9m9Zi1Bsoux7X5+xvLnSJBsDC5nlovWkyv83+SjyAwgvuwS0FQ==
 
 "@koishijs/plugin-sandbox@2.7.1":
   version "2.7.1"
