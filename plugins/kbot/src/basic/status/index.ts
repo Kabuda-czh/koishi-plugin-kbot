@@ -55,6 +55,6 @@ export async function apply(ctx: Context, config: IConfig) {
         return await renderHtml(ctx, systemInfo)
 
       else
-        return await renderRandom(ctx, config.useModel.sort, systemInfo.random, session.uid)
+        return await renderRandom(ctx, config.useModel.sort, systemInfo.random, session.bot.selfId)
     })
 }
