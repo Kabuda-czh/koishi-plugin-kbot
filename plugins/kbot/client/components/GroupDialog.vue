@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 16:45:16
+ * @LastEditTime: 2023-03-17 10:38:41
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
@@ -107,7 +107,7 @@ const getMemberList = async () => {
   if (props.groupId) {
     dialogLoading.value = true
 
-    defaultMemberList.value = memberList.value = await fetchGuildMemberList(props.groupId).finally(() => {
+    defaultMemberList.value = memberList.value = await fetchGuildMemberList(props.botId, props.groupId).finally(() => {
       setTimeout(() => (dialogLoading.value = false), 500)
     })
   }

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 15:35:09
+ * @LastEditTime: 2023-03-17 11:00:13
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -22,11 +22,11 @@ import { nextTick, onMounted, ref } from 'vue'
 import {
   fetchBroadcast,
   fetchCommands,
+  fetchGetBots,
   fetchGroupLeave,
   fetchGroupList,
   fetchGroupMemberList,
   fetchMuteGuild,
-  fetchSelf,
   fetchSendMessage,
 } from './api'
 import GroupDialog from './components/GroupDialog.vue'
@@ -35,6 +35,9 @@ import GroupPlugins from './components/GroupPlugins.vue'
 import type { Group, GroupCommand, GroupList, UserInfo } from './interface'
 
 const loading = ref<boolean>(true)
+
+// bots
+const botList = ref<UserInfo[]>([])
 
 // GroupList
 const defaultGroupList = ref<GroupList[]>([])
@@ -54,16 +57,14 @@ const botRole = ref<string>('')
 const commands = ref<GroupCommand[]>([])
 const pluginDialogVisible = ref<boolean>(false)
 
+// bot dialog
+const botDialogLoading = ref<boolean>(false)
+const botDialogVisible = ref<boolean>(false)
+
 const checkGuildInfo = (id: number, role: string) => {
   groupId.value = id
   botRole.value = role
   dialogVisible.value = true
-}
-
-const getBotInfo = async () => {
-  const botInfos = await fetchSelf().then(res => res as Promise<UserInfo[]>)
-
-  botId.value = +botInfos?.[0]?.userId ?? ''
 }
 
 const getCommands = async () => {
@@ -73,13 +74,13 @@ const getCommands = async () => {
 }
 
 const getGroupList = async () => {
-  const groupDatas = await fetchGroupList().then(res => res as Promise<Group[]>)
+  const groupDatas = await fetchGroupList(botId.value).then(res => res as Promise<Group[]>)
 
   if (groupDatas.length === 1 && !groupDatas[0])
     return
 
   const groupMemberList = await Promise.all(
-    groupDatas.map(async group => fetchGroupMemberList(group.group_id, true)),
+    groupDatas.map(async group => fetchGroupMemberList(botId.value, group.group_id, true)),
   )
 
   groupMemberList.flat().forEach((member) => {
@@ -108,7 +109,7 @@ const muteGuild = (row: GroupList, mute: boolean) => {
       },
     )
     .then(() => {
-      fetchMuteGuild(row.group_id, ~~mute)
+      fetchMuteGuild(botId.value, row.group_id, ~~mute)
     })
     .catch(() => {
       message.success('已取消操作')
@@ -128,11 +129,18 @@ const broadcast = () => {
     .then(({ value }) => {
       const channels = groupList.value.map(group => group.group_id)
 
-      fetchBroadcast(channels, value)
+      fetchBroadcast(botId.value, channels, value)
     })
     .catch(() => {
       message.success('已取消操作')
     })
+}
+
+const changeBot = async (userId: string | number) => {
+  botDialogLoading.value = true
+  botId.value = userId
+  await Promise.all([getGroupList(), getCommands()])
+  botDialogLoading.value = false
 }
 
 const manageGroupPlugins = (group_id: number) => {
@@ -173,7 +181,7 @@ const sendMessage = (groupId: number, groupName: string) => {
       inputErrorMessage: '消息不能为空',
     })
     .then(({ value }) => {
-      fetchSendMessage(groupId, value)
+      fetchSendMessage(botId.value, groupId, value)
     })
     .catch(() => {
       message.success('已取消发送')
@@ -199,7 +207,7 @@ const groupLeave = (groupId: number, isOwner: boolean) => {
     )
     .then(() => {
       // TODO 解散群似乎没什么效果
-      fetchGroupLeave(groupId, isOwner).then(() => {
+      fetchGroupLeave(botId.value, groupId, isOwner).then(() => {
         message.success('操作成功')
         groupList.value = defaultGroupList.value.filter(
           group => group.group_id !== groupId,
@@ -226,7 +234,16 @@ const paginationClick = (val: number) => {
 }
 
 const init = async () => {
-  await Promise.all([getBotInfo(), getGroupList(), getCommands()])
+  await fetchGetBots().then((res) => {
+    botList.value = res
+    botId.value = res[0]?.userId
+  }).then(async () => {
+    if (botList.value.length === 0) {
+      message.error('当前没有可用的Bot')
+      return
+    }
+    await Promise.all([getGroupList(), getCommands()])
+  })
 }
 
 // 提高使用体验
@@ -249,6 +266,9 @@ onMounted(async () => {
           <ElButton type="primary" :disabled="groupList.length <= 1" @click="broadcast">
             向所有群广播消息
           </ElButton>
+          <ElButton v-show="botList.length > 1" type="primary" @click="botDialogVisible = true">
+            切换 Bot
+          </ElButton>
         </div>
         <div style="display: flex; align-items: center; gap: 15px">
           <p>搜索群</p>
@@ -260,7 +280,7 @@ onMounted(async () => {
       </div>
       <ElForm>
         <ElTable :data="groupList" max-height="70vh" style="width: 95vw">
-          <ElTableColumn align="center" prop="group_id" label="群号" width="100" />
+          <ElTableColumn align="center" prop="group_id" label="群号" width="120" />
           <ElTableColumn align="center" prop="group_name" label="群名称" />
           <ElTableColumn align="center" label="是否开启全员禁言" width="200">
             <template #default="{ row }">
@@ -318,6 +338,30 @@ onMounted(async () => {
       groupId = 0;
     "
   />
+
+  <el-dialog
+    v-model="botDialogVisible" width="30%" title="bot 切换管理" destroy-on-close
+    @closed="botDialogVisible = false"
+  >
+    <div v-loading="botDialogLoading" class="dialogContainer">
+      <ElTable :data="botList" border style="width: 100%">
+        <ElTableColumn align="center" prop="nickname" label="名称" />
+        <ElTableColumn align="center" prop="userId" label="qq号" />
+        <ElTableColumn align="center" label="头像">
+          <template #default="{ row }">
+            <img :src="row.avatar" style="width: 30px; height: 30px; border-radius: 50%">
+          </template>
+        </ElTableColumn>
+        <ElTableColumn align="center" label="操作" width="120">
+          <template #default="{ row }">
+            <ElButton type="primary" :disabled="botId === row.userId" @click="changeBot(row.userId)">
+              切换
+            </ElButton>
+          </template>
+        </ElTableColumn>
+      </ElTable>
+    </div>
+  </el-dialog>
 </template>
 
 <style scoped>

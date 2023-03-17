@@ -14,9 +14,9 @@ import handleFunction from '../utils'
 
 export const guildRoutes: IRouterStrategy = {
   '/guildList': function (context: Context) {
-    return handleFunction<Universal.Guild>(context, 'getGuildList')
+    return handleFunction<Universal.Guild>(context, 'getGuildList', 'botId')
   },
   '/guildMemberList': function (context: Context) {
-    return handleFunction<GuildMemberInfo>(context, 'getGuildMemberList', 'guildId')
+    return handleFunction<GuildMemberInfo>(context, 'getGuildMemberList', 'botId', 'guildId')
   },
 }

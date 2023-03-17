@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-02 11:22:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 13:35:59
+ * @LastEditTime: 2023-03-17 10:22:44
  * @FilePath: \KBot-App\plugins\kbot\client\api\bot.ts
  * @Description:
  *
@@ -10,14 +10,14 @@
  */
 import { http } from '../utils'
 
-export function fetchSelf() {
-  return http.request('get', '/self')
+export function fetchGetBots() {
+  return http.request('get', '/getBots')
 }
 
-export function fetchSendMessage(guildId: string | number, message: string) {
-  return http.request('get', '/sendMessage', { guildId, message })
+export function fetchSendMessage(botId: string | number, guildId: string | number, message: string) {
+  return http.request('get', '/sendMessage', { botId, guildId, message })
 }
 
-export function fetchBroadcast(channels: (number | string)[], message: string, delay = 500) {
-  return http.request('get', '/broadcast', { channels, message, delay })
+export function fetchBroadcast(botId: string | number, channels: (number | string)[], message: string, delay = 500) {
+  return http.request('get', '/broadcast', { botId, channels, message, delay })
 }

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:24
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-09 15:24:21
+ * @LastEditTime: 2023-03-17 10:46:28
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\utils\index.ts
  * @Description:
  *
@@ -20,13 +20,13 @@ export default function handleFunction<T = any>(
   return async (ctx: KoaContext) => {
     await Promise.all(
       context.bots.flatMap(bot =>
-        bot.platform === 'onebot'
+        (bot.platform === 'onebot' && bot.selfId === ctx.query[args[0]])
           ? functionName.includes('internal.')
             ? bot.internal?.[functionName.slice(functionName.indexOf('.') + 1)](
-              ...args.map(arg => (arg = ctx.query?.[arg] || '')),
+              ...args.slice(1).map(arg => (arg = ctx.query?.[arg] || '')),
             )
             : bot?.[functionName](
-              ...args.map(arg => (arg = ctx.query?.[arg] || '')),
+              ...args.slice(1).map(arg => (arg = ctx.query?.[arg] || '')),
             )
           : [],
       ),

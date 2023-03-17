@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 09:46:19
+ * @LastEditTime: 2023-03-17 10:38:32
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupMemberDialog.vue
  * @Description:
  *
@@ -102,7 +102,7 @@ const getMemberInfo = async () => {
   if (props.groupId && props.botId) {
     dialogLoading.value = true
 
-    await fetchGroupMemberInfo(props.groupId, props.memberId, true)
+    await fetchGroupMemberInfo(props.botId, props.groupId, props.memberId, true)
       .then((res) => {
         memberInfo.value = res[0]
       })
@@ -180,6 +180,7 @@ const muteMember = () => {
         + muteHour.value * 3600
         + muteMinute.value * 60
       fetchMuteMember(
+        props.botId,
         memberInfo.value.group_id,
         memberInfo.value.user_id,
         duration * 1000,
@@ -197,7 +198,7 @@ const muteMember = () => {
 }
 
 const cancelMuteMember = () => {
-  fetchMuteMember(memberInfo.value.group_id, memberInfo.value.user_id, 0).then(
+  fetchMuteMember(props.botId, memberInfo.value.group_id, memberInfo.value.user_id, 0).then(
     () => message.success(`取消禁言 ${memberInfo.value.nickname} 成功`),
   )
 }
@@ -220,7 +221,7 @@ const groupSetAdmin = () => {
       },
     )
     .then(() => {
-      fetchGroupAdmin(props.groupId, props.memberId, !isSetAdmin).then(() => {
+      fetchGroupAdmin(props.botId, props.groupId, props.memberId, !isSetAdmin).then(() => {
         message.success(`${isSetAdmin ? '取消' : ''}设置管理员成功`)
         getMemberInfo()
       })
@@ -245,6 +246,7 @@ const groupKick = () => {
     )
     .then(() => {
       fetchGroupKick(
+        props.botId,
         props.groupId,
         props.memberId,
         rejectAddRequest.value,

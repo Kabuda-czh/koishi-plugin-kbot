@@ -53,12 +53,13 @@ const getCommandList = async () => {
       setDisable(command.children, disables)
     }
   }
-
-  await fetchDisabledCommands(props.groupId).then((res: string[]) => {
-    const sliceCommands = props.commands.slice()
-    setDisable(sliceCommands, res)
-    defaultCommands.value = commands.value = sliceCommands
-  })
+  if (props.groupId) {
+    await fetchDisabledCommands(props.groupId).then((res: string[]) => {
+      const sliceCommands = props.commands.slice()
+      setDisable(sliceCommands, res)
+      defaultCommands.value = commands.value = sliceCommands
+    })
+  }
 }
 
 const selectData = (item: { label: string; value: string }) => {
