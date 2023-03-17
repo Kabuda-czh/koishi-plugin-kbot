@@ -724,20 +724,20 @@
   dependencies:
     "@satorijs/adapter-telegram" "^3.7.0"
 
-"@koishijs/plugin-admin@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-admin/-/plugin-admin-1.2.0.tgz#0dd253771720d159ff59e1d5b66b6183974e725e"
-  integrity sha512-ZoXep7ro90P8pwX/rv71Zd88qJ9pJm/I6rY5XXofGnv2cxpJZ569CScw5+4wO+X9TEAfuhvn5cYfMiy/9vdzlw==
+"@koishijs/plugin-admin@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-admin/-/plugin-admin-1.2.1.tgz#550540a1d6b2221bdbc0b06b9ce3fe039696e20a"
+  integrity sha512-1ntQeMcfyGuaZslTqV/GRn/jVukSA8sKI4Sa9DS/o0lBpO7hQgn2BTDgEmjquged+UjeeFErg3lSRrRqaenspg==
 
 "@koishijs/plugin-analytics@1.0.3":
   version "1.0.3"
   resolved "https://registry.npmmirror.com/@koishijs/plugin-analytics/-/plugin-analytics-1.0.3.tgz#04ddc7f920cfa60fa88868e2b6576f92e50899ae"
   integrity sha512-eUfAaomrFL8gNlo8ZhVZGPzdAs4BJZezeu+EKacC4SZzUDezVqpmqJHICk8lxZj7epIkqiwDzT1crqP4mmm2GQ==
 
-"@koishijs/plugin-bind@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-bind/-/plugin-bind-1.4.0.tgz#7911577d31d27f77cea572614b0887cfc9a5276a"
-  integrity sha512-zHCHJx+K8JERJySKpUpIc2oNchb1ldAOJKQBCTB7uZ5+pc4WSHL4JXNO15jVHzDtQ9iCbPyjU4LyM/whSQ6eAw==
+"@koishijs/plugin-bind@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-bind/-/plugin-bind-1.4.1.tgz#de753df7e6c2e9ce243ca7a66397b2e4ad6ce4b5"
+  integrity sha512-vECemephpWgtX5CVUFwMrgJ0mMBzMQIfMmgfrZNYWOnZb/0BP/9EFjdiZefomXUg6zMO8Yug2fPFrszfsUojhg==
 
 "@koishijs/plugin-commands@3.0.1":
   version "3.0.1"
@@ -787,10 +787,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-locales@2.2.3":
-  version "2.2.3"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.2.3.tgz#aa04a75cac99fe14fd88d345086a90da3ec73fc3"
-  integrity sha512-+MaWD+A09dDotfqubOtpxtxMPBo3I3Hztjw/o0NmQq0aE6UBwmDvxt2uMaaWmZkA6TrOB78ybFFWfSkSd7O4bg==
+"@koishijs/plugin-locales@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.2.4.tgz#6e43bd369a4e3fa48083ab89e7cba6fd74355467"
+  integrity sha512-EIHSCZWnaNC7nFlD/rUPgNFPNCyJoiRXD+chsL0JMQmSha6JdDu5Rezpt5jZvrPVvaAWYJOknF6uiiw8wu7gVw==
   dependencies:
     js-yaml "^4.1.0"
     throttle-debounce "^3.0.1"
@@ -813,10 +813,10 @@
     throttle-debounce "^3.0.1"
     which-pm-runs "^1.1.0"
 
-"@koishijs/plugin-rate-limit@1.3.1":
-  version "1.3.1"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-rate-limit/-/plugin-rate-limit-1.3.1.tgz#2ee08e4f153960725feadf37d4c2aef8a5a5b006"
-  integrity sha512-b1fnISkD8T2ecmE+8tjXMyTbVFMPrsGyKBuN9m9Zi1Bsoux7X5+xvLnSJBsDC5nlovWkyv83+SjyAwgvuwS0FQ==
+"@koishijs/plugin-rate-limit@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-rate-limit/-/plugin-rate-limit-1.3.2.tgz#2d5f18b1abe42e96230f6526821ac7ca8643e96c"
+  integrity sha512-DqvXz8owZlBpIdVqmQQYcjce/n6hPlKUlyt7UIwriPX+jE5mfVitrufxhDMqDohAldIB60+p6Vi0KDPPtQ6Z3A==
 
 "@koishijs/plugin-sandbox@2.7.1":
   version "2.7.1"
