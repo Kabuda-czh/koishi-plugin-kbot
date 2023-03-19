@@ -112,7 +112,13 @@ export async function apply(ctx: Context, config: IConfig) {
     logger.error('未设置超级管理员QQ号')
   }
   else {
-    const fileNames = fs.readdirSync(resolve(__dirname, '../../../public'))
+    let fileNames: string[] = []
+    try {
+      fileNames = fs.readdirSync(resolve(__dirname, '../../../public'))
+    } catch(e) {
+      logger.error('未找到 public 文件夹, 正在创建')
+      fs.mkdirSync(resolve(__dirname, '../../../public'))
+    }
 
     if (!fileNames.includes('kbot'))
       fs.mkdirSync(resolve(__dirname, '../../../public/kbot'))
