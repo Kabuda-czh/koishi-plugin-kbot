@@ -28,7 +28,7 @@ export const Config: Schema<IConfig> = Schema.object({
     Schema.object({
       sort: Schema.union(['random', 'iw233', 'top', 'yin', 'cat', 'xing', 'mp', 'pc']).default('mp').description('请前往 https://mirlkoi.ifast3.vipnps.vip/API/index.php 来选择你想要的 sort'),
     }).description('随机图片'),
-  ]),
+  ]).default('neko').description('请选择你想要的模式'),
 })
 
 export const logger = new Logger('KBot-status')
