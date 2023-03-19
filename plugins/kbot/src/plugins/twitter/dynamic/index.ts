@@ -93,17 +93,17 @@ export async function apply(ctx: Context, config: IConfig) {
     .usage(`最低权限: ${config.authority} 级`)
     .option(
       'add',
-      '-a <uid:string> 添加订阅, 请输入要添加的 twitter 博主的 id 名字(指 @后的字符串)',
+      '-a <userId:string> 添加订阅, 请输入要添加的 twitter 博主的 id 名字(指 @后的字符串)',
       { authority: config.authority },
     )
     .option(
       'remove',
-      '-r <uid:string> 移除订阅, 请输入要移除的 twitter 博主的 id 名字(指 @后的字符串)',
+      '-r <userId:string> 移除订阅, 请输入要移除的 twitter 博主的 id 名字(指 @后的字符串)',
       { authority: config.authority },
     )
     .option(
       'search',
-      '-s <upInfo:string> 查看最新动态, 请输入要查看动态的 twitter 博主的 id 名字(指 @后的字符串)',
+      '-s <userId:string> 查看最新动态, 请输入要查看动态的 twitter 博主的 id 名字(指 @后的字符串)',
       { authority: config.authority },
     )
     .option('list', '-l 展示当前订阅 twitter 博主列表', {
