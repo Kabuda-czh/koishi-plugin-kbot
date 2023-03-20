@@ -2,8 +2,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:50:27
- * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.tsx
+ * @LastEditTime: 2023-03-20 18:37:05
+ * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -20,6 +20,7 @@ const { version: pVersion } = require('../../../package.json')
 
 export interface IConfig {
   useModel?: any
+  botName?: string
 }
 
 export const Config: Schema<IConfig> = Schema.object({
@@ -29,6 +30,7 @@ export const Config: Schema<IConfig> = Schema.object({
       sort: Schema.union(['random', 'iw233', 'top', 'yin', 'cat', 'xing', 'mp', 'pc']).default('mp').description('请前往 https://mirlkoi.ifast3.vipnps.vip/API/index.php 来选择你想要的 sort'),
     }).description('随机图片'),
   ]).default('neko').description('请选择你想要的模式'),
+  botName: Schema.string().default('KBot').description('在自检图片中显示的名称(如果不填写则显示机器人的昵称, 不要太长哦)'),
 })
 
 export const logger = new Logger('KBot-status')
@@ -49,7 +51,7 @@ export async function apply(ctx: Context, config: IConfig) {
     showWarning: false,
   }).shortcut('自检', { fuzzy: false })
     .action(async ({ session }) => {
-      const systemInfo = await getSystemInfo('KBot', version, pVersion, ctx.registry.size)
+      const systemInfo = await getSystemInfo(config.botName || session.bot.username, version, pVersion, ctx.registry.size)
 
       if (config?.useModel === 'neko')
         return await renderHtml(ctx, systemInfo)

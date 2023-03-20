@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-16 17:54:12
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:36:27
+ * @LastEditTime: 2023-03-20 18:32:52
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\random\js\render.js
  * @Description:
  *
@@ -26,7 +26,7 @@ function action(config, backgroundBase64, botQQ) {
 
   const nameInstance = document.querySelector('.__panel__name__text')
   const footerSpanInstance = document.querySelector('.footer__span')
-  nameInstance.innerHTML = 'KBot'
+  nameInstance.innerHTML = config.name
   footerSpanInstance.innerHTML = config.footerSpan
 
   const headerInfoInstance = document.querySelector('#card-header > .__info')

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:21:20
+ * @LastEditTime: 2023-03-20 18:32:49
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
@@ -103,6 +103,7 @@ export async function getSystemInfo(
     footer: durationTime(uptime),
     platform,
     random: {
+      name,
       systemInfo: [
         {
           title: '系统持续运行',
