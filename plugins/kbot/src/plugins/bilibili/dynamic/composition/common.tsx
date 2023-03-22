@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:54:23
+ * @LastEditTime: 2023-03-22 16:36:51
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -107,7 +107,7 @@ export async function bilibiliVupCheck(
       if (vups.length > 50)
         await session.send('成分太多了, 只显示前50个')
 
-      const image = renderVup(searchUserCardInfo, vups, vupsLength, medalMap, needLoadFontList)
+      const image = await renderVup(searchUserCardInfo, vups, vupsLength, medalMap, needLoadFontList)
 
       await session.send(image)
     }

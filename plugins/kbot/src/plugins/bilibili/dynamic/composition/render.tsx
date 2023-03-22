@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-11 15:12:57
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-14 11:21:40
+ * @LastEditTime: 2023-03-22 16:35:33
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\render.tsx
  * @Description:
  *
@@ -11,7 +11,7 @@
 import { loadFont } from '../../../utils'
 import type { DanmukuData, List, MemberCard } from '../../model'
 
-export function renderVup(
+export async function renderVup(
   searchUserCardInfo: MemberCard,
   vups: any[],
   vupsLength: number,
@@ -21,6 +21,7 @@ export function renderVup(
     fontUrl: string
   }[],
 ) {
+  const loadList = await loadFont(needLoadFontList)
   return <html>
     <style>
       {`
@@ -29,7 +30,7 @@ export function renderVup(
         padding: 0;
       }
 
-      ${loadFont(needLoadFontList)[0]}
+      ${loadList[0]}
 
       .flex-cc {
         display: flex;
@@ -55,7 +56,7 @@ export function renderVup(
 
       #card {
         font-size: 12px;
-        font-family: ${loadFont(needLoadFontList)[1]};
+        font-family: ${loadList[1]};
       }
 
       .header {
@@ -129,7 +130,7 @@ export function renderVup(
       </div>
       <div class="vup">
         {
-          vups.forEach((vup, index) => {
+          ...vups.map((vup, index) => {
             if (medalMap[vup.mid] && medalMap[vup.mid].medal_info.level) {
               return <div class={(index % 2) && 'medalBg'}>
                 <div class="vupInfo">
@@ -137,27 +138,29 @@ export function renderVup(
                   <div class="flex-cc uid">
                     <p>{vup.mid}</p>
                   </div>
-                  {
-                    <div class="flex-cc" style={{
-                      backgroundImage: `linear-gradient(to right, ${int2rgb(medalMap[vup.mid].medal_info.medal_color_start)}, ${int2rgb(medalMap[vup.mid].medal_info.medal_color_end)})`,
-                      border: `1px solid ${int2rgb(medalMap[vup.mid].medal_info.medal_color_border)}`,
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundImage: `linear-gradient(to right, ${int2rgb(medalMap[vup.mid].medal_info.medal_color_start)}, ${int2rgb(medalMap[vup.mid].medal_info.medal_color_end)})`,
+                    border: `1px solid ${int2rgb(medalMap[vup.mid].medal_info.medal_color_border)}`,
+                  }}>
+                    <p class="padding-x5" style={{
+                      color: '#FFF',
                     }}>
-                      <p class="padding-x5" style={{
-                        color: '#FFF',
-                      }}>
                         {medalMap[vup.mid].medal_info.medal_name}
-                      </p>
-                      <p class="padding-x5" style={{
-                        backgroundColor: '#FFF',
-                        color: `${int2rgb(medalMap[vup.mid].medal_info.medal_color_border)}`,
-                      }}>
+                    </p>
+                    <p class="padding-x5" style={{
+                      backgroundColor: '#FFF',
+                      color: `${int2rgb(medalMap[vup.mid].medal_info.medal_color_border)}`,
+                    }}>
                         {medalMap[vup.mid].medal_info.level}
-                      </p>
-                    </div>
-                  }
+                    </p>
+                  </div>
                 </div>
               </div>
             }
+            return null
           })
         }
       </div>
