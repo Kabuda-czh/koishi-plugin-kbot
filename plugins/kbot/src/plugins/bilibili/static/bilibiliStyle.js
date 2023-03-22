@@ -3,8 +3,8 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 11:18:49
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-06 01:49:40
- * @FilePath: \koishi-plugin-kbot\plugins\kbot\src\plugins\bilibili\static\bilibiliStyle.js
+ * @LastEditTime: 2023-03-22 16:40:08
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\static\bilibiliStyle.js
  * @Description: 用于初始化手机动态页面的样式以及图片大小
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
@@ -163,16 +163,16 @@ async function getBilibiliStyle() {
   })
 }
 
-function setFont(needLoadFontList) {
+async function setFont(needLoadFontList) {
   const emojiFontList = [
     'Apple Color Emoji',
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     'Noto Color Emoji',
-  ];
+  ]
 
   // 字体按需加载方法
-  (() => {
+  await (async () => {
     const code = needLoadFontList.reduce((defaultString, fontObject) => {
       return (
         `${defaultString
