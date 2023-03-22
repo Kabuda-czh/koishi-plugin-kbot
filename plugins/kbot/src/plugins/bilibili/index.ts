@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:27
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-09 15:29:55
+ * @LastEditTime: 2023-03-22 17:08:10
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\index.ts
  * @Description:
  *
@@ -34,6 +34,8 @@ export const Config: Schema<IConfig> = Schema.object({
 })
 
 export function apply(context: Context, config: IConfig) {
+  context.guild().command('kbot/bilibili', 'Bilibili 相关功能')
+
   context.model.extend('channel', {
     bilibili: {
       type: 'json',

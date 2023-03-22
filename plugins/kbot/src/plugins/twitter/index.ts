@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:27
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 17:43:26
+ * @LastEditTime: 2023-03-22 17:10:45
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\index.ts
  * @Description:
  *
@@ -33,6 +33,8 @@ export const Config: Schema<IConfig> = Schema.object({
 })
 
 export function apply(context: Context, config: IConfig) {
+  context.guild().command('kbot/twitter', 'Twitter 相关功能')
+
   context.model.extend('channel', {
     twitter: {
       type: 'json',

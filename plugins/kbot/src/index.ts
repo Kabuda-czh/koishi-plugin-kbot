@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-09 14:33:05
+ * @LastEditTime: 2023-03-22 17:28:23
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -115,7 +115,8 @@ export async function apply(ctx: Context, config: IConfig) {
     let fileNames: string[] = []
     try {
       fileNames = fs.readdirSync(resolve(__dirname, '../../../public'))
-    } catch(e) {
+    }
+    catch (e) {
       logger.error('未找到 public 文件夹, 正在创建')
       fs.mkdirSync(resolve(__dirname, '../../../public'))
     }

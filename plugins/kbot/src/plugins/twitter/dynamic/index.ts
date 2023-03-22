@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:58:31
+ * @LastEditTime: 2023-03-22 17:11:07
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -87,7 +87,7 @@ export async function apply(ctx: Context, config: IConfig) {
 
   ctx
     .guild()
-    .command('kbot/twitter', '推特相关')
+    .command('kbot/twitter', 'Twitter 相关功能')
     .channelFields(['id', 'guildId', 'platform', 'twitter'])
     .before(checkDynamic)
     .usage(`最低权限: ${config.authority} 级`)
