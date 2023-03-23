@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 11:03:20
+ * @LastEditTime: 2023-03-23 10:08:52
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -53,7 +53,7 @@ export async function getTwitterRestId(
       },
     )
     .then((res) => {
-      return [res.data.user.result.rest_id, res.data.user.result.legacy.name]
+      return [res?.data?.user?.result?.rest_id, res?.data?.user?.result?.legacy?.name]
     })
     .catch((err) => {
       logger.error(`error getTwitterRestId: ${err.message}`)
@@ -146,9 +146,9 @@ export async function getTwitterTweets(
   if (isPure) {
     const pureEntries = entries.find(
       entry =>
-        !entry.content.itemContent.tweet_results.result?.quoted_status_result
+        !entry?.content?.itemContent?.tweet_results?.result?.quoted_status_result
           ?.result
-        && !entry.content.itemContent.tweet_results.result.legacy
+        && !entry?.content?.itemContent?.tweet_results?.result?.legacy
           ?.retweeted_status_result?.result,
     )
     return [pureEntries]

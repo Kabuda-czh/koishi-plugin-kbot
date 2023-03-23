@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-08 11:12:15
+ * @LastEditTime: 2023-03-23 10:08:17
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -38,11 +38,11 @@ export async function renderFunction(
 async function renderImage(ctx: Context, entry: Entry): Promise<string> {
   const twitterRestId = entry.sortIndex
   const twitterScreenName
-    = entry.content.itemContent.tweet_results.result.core.user_results.result
-      .legacy.screen_name
+    = entry?.content?.itemContent?.tweet_results?.result?.core?.user_results?.result
+      ?.legacy?.screen_name
   const twitterName
-    = entry.content.itemContent.tweet_results.result.core.user_results.result
-      .legacy.name
+    = entry?.content?.itemContent?.tweet_results?.result?.core?.user_results?.result
+      ?.legacy?.name
   let page: Page
   try {
     // const needLoadFontList = await getFontsList(logger);
@@ -97,13 +97,13 @@ async function renderText(
     throw new Error('数据获取失败')
 
   try {
-    const name = entryResult.core.user_results.result.legacy.name
-    const screenName = entryResult.core.user_results.result.legacy.screen_name
+    const name = entryResult.core.user_results?.result?.legacy?.name
+    const screenName = entryResult.core.user_results?.result?.legacy?.screen_name
     const quote = entryResult?.quoted_status_result?.result
     const is_quote = !!quote
-    const retweet = entryResult.legacy?.retweeted_status_result?.result
+    const retweet = entryResult?.legacy?.retweeted_status_result?.result
     const is_retweet = !!retweet
-    const data = entryResult.legacy
+    const data = entryResult?.legacy
     const tweetId = data.id_str
     const url = `推文地址: \nhttps://twitter.com/${screenName}/status/${tweetId}`
 
@@ -132,11 +132,11 @@ async function renderText(
     }
     else if (is_retweet) {
       text = `${name} 发布了动态: \n`
-      const retweetName = retweet.core.user_results.result.legacy.name
-      const retweetText = retweet.legacy.full_text
+      const retweetName = retweet?.core?.user_results?.result?.legacy?.name
+      const retweetText = retweet?.legacy?.full_text
       text += `转发了 ${retweetName} 的推文:
   ${retweetText}\n`
-      const mediaData = retweet.legacy.entities
+      const mediaData = retweet?.legacy?.entities
       if (mediaData.media) {
         mediaData.media.forEach((item) => {
           media.push(item.media_url_https)
@@ -156,7 +156,7 @@ async function renderText(
     hasShortURL
       = data.full_text.includes('https://t.co')
       || (is_quote && quote?.legacy?.full_text?.includes('https://t.co'))
-      || (is_retweet && retweet?.legacy.full_text?.includes('https://t.co'))
+      || (is_retweet && retweet?.legacy?.full_text?.includes('https://t.co'))
 
     if (isListen && onlyMedia && media.length === 0)
       return

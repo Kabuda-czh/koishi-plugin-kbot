@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-14 14:25:21
+ * @LastEditTime: 2023-03-23 10:06:32
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\listen.ts
  * @Description:
  *
@@ -45,7 +45,7 @@ export async function* listen(
             ([, notification]) =>
               (notification.lastUpdated
                 = new Date(
-                  items[0]?.content.itemContent?.tweet_results?.result?.legacy?.created_at,
+                  items[0]?.content?.itemContent?.tweet_results?.result?.legacy?.created_at || 0,
                 ).getTime() / 1000 || Math.ceil(+new Date() / 1000)),
           )
           continue
@@ -53,7 +53,7 @@ export async function* listen(
         const neo = items.filter(
           item =>
             new Date(
-              item.content.itemContent?.tweet_results?.result?.legacy?.created_at || 0,
+              item?.content?.itemContent?.tweet_results?.result?.legacy?.created_at || 0,
             ).getTime()
               / 1000
             > time,
@@ -69,7 +69,7 @@ export async function* listen(
                 = new Date(
                   neo[
                     index
-                  ].content.itemContent?.tweet_results?.result?.legacy?.created_at,
+                  ]?.content?.itemContent?.tweet_results?.result?.legacy?.created_at || 0,
                 ).getTime() / 1000 || Math.ceil(+new Date() / 1000)
               ctx.bots[notification.botId].sendMessage(
                 channel.id,
