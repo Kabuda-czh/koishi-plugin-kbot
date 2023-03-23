@@ -114,7 +114,7 @@ async function renderText(
     if (is_quote) {
       text = `${name} 发布了动态: \n${data.full_text}\n`
       const mediaData = data.entities
-      if (mediaData.media) {
+      if (mediaData?.media) {
         mediaData.media.forEach((item) => {
           media.push(item.media_url_https)
         })
@@ -137,7 +137,7 @@ async function renderText(
       text += `转发了 ${retweetName} 的推文:
   ${retweetText}\n`
       const mediaData = retweet?.legacy?.entities
-      if (mediaData.media) {
+      if (mediaData?.media) {
         mediaData.media.forEach((item) => {
           media.push(item.media_url_https)
         })
@@ -146,7 +146,7 @@ async function renderText(
     else {
       text = `${name} 发布了动态: \n${data.full_text}\n`
       const mediaData = data.entities
-      if (mediaData.media) {
+      if (mediaData?.media) {
         mediaData.media.forEach((item) => {
           media.push(item.media_url_https)
         })
@@ -161,7 +161,7 @@ async function renderText(
     if (isListen && onlyMedia && media.length === 0)
       return
 
-    return `${text}\n${media.reduce(
+    return `${segment.escape(text)}\n${media.reduce(
       (str, httpStr) => (str += `<image url="${httpStr}" />\n`),
       '',
     )}${hasShortURL ? '' : `\n${url}`}`
