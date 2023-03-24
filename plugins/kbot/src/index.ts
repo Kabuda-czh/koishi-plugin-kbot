@@ -105,7 +105,7 @@ export const Config: Schema<IConfig> = Schema.object({
 
 export const logger = new Logger('KBot')
 
-export const using = ['console', 'database', 'puppeteer'] as const
+export const using = ['console', 'database'] as const
 
 export async function apply(ctx: Context, config: IConfig) {
   if (!config.superAdminQQ || config.superAdminQQ.length === 0) {

@@ -22,11 +22,15 @@ export async function renderFunction(
   item: BilibiliDynamicItem,
   config: IConfig,
 ): Promise<string> {
-  if (ctx.puppeteer && config.useImage) {
-    if (config.device === 'pc')
-      return pcRenderImage(ctx, item)
-    else
-      return mobileRenderImage(ctx, item)
+  if (config.useImage) {
+    if (ctx.puppeteer) {
+      if (config.device === 'pc')
+        return pcRenderImage(ctx, item)
+      else
+        return mobileRenderImage(ctx, item)
+    } else {
+      return '未安装/启用 puppeteer 插件，无法使用图片渲染'
+    }
   }
   else {
     return renderText(item)

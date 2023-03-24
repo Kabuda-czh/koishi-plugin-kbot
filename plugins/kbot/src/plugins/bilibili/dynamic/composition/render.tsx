@@ -168,7 +168,7 @@ export async function renderVup(
   </html>
 }
 
-export function renderDanmu(
+export async function renderDanmu(
   searchUserCardInfo: MemberCard,
   danmukuData: DanmukuData,
   needLoadFontList: {
@@ -187,6 +187,8 @@ export function renderDanmu(
     8: '直播继续',
   }
 
+  const loadList = await loadFont(needLoadFontList)
+
   return <html>
     <style>{`
       * {
@@ -194,11 +196,11 @@ export function renderDanmu(
         padding: 0;
       }
 
-      ${loadFont(needLoadFontList)[0]}
+      ${loadList[0]}
 
       #card {
         font-size: 12px;
-        font-family: ${loadFont(needLoadFontList)[1]};
+        font-family: ${loadList[1]};
       }
 
       .user {

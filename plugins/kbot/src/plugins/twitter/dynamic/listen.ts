@@ -57,7 +57,7 @@ export async function* listen(
             ).getTime()
               / 1000
             > time,
-        )
+        ) || []
         if (neo.length !== 0) {
           const rendered = await Promise.all(
             neo.map(item => renderFunction(ctx, item, config)),

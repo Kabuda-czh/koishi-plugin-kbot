@@ -30,7 +30,7 @@ export async function renderFunction(
       return renderText(ctx, entry, isListen, config.onlyMedia)
   }
   catch (err) {
-    logger.error('twitter render error: ', err.message)
+    logger.error('推特渲染失败: ', err.message)
     throw err.message
   }
 }
@@ -78,8 +78,8 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
     )
   }
   catch (e) {
-    logger.error('twitter render error', e)
-    throw e
+    logger.error('推特图片渲染失败:', e.message)
+    throw e.message
   }
   finally {
     page?.close()
@@ -167,7 +167,7 @@ async function renderText(
     )}${hasShortURL ? '' : `\n${url}`}`
   }
   catch (err) {
-    logger.error('twitter render error: ', err.message)
+    logger.error('推特文字渲染失败: ', err.message)
     throw err.message
   }
 }

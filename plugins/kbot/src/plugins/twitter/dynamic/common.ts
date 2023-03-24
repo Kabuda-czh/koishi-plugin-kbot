@@ -131,7 +131,7 @@ export async function twitterSearch(
     return renderFunction(ctx, entries[0], config, false)
   }
   catch (e) {
-    logger.error(`Failed to get user dynamics. ${e}`)
-    return `动态获取失败${e}`
+    logger.error(`推特动态获取失败: ${e.message}`)
+    return `动态获取失败${e.message}`
   }
 }
