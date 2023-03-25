@@ -14,7 +14,7 @@ import type { Context } from 'koishi'
 import { segment } from 'koishi'
 import type { Page } from 'puppeteer-core'
 import type { SystemInfo } from '../utils'
-import { writeBlobToFile } from '../utils'
+// import { writeBlobToFile } from '../utils'
 import { logger } from '..'
 
 export async function renderHtml(ctx: Context, systemInfo: SystemInfo) {
@@ -58,7 +58,7 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
       },
     }).then(async (resp) => {
       const imageBase64 = Buffer.from(resp.data, 'binary').toString('base64')
-      writeBlobToFile(resp.data, new Date().toLocaleString().replace(/[/:]/g, '-'))
+      // writeBlobToFile(resp.data, new Date().toLocaleString().replace(/[/:]/g, '-'))
       let page: Page
       try {
         page = await ctx.puppeteer.page()
