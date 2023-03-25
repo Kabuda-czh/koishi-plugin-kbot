@@ -179,11 +179,8 @@ export async function apply(ctx: Context, config: IConfig) {
       ctx.plugin(musicPlugin, config.KBotMusic)
     if (config.KBotYoutube.enabled)
       ctx.plugin(youtubePlugin, config.KBotYoutube)
-    if (config.KBotTwitter.enabled) {
-      if (ctx.puppeteer)
-        ctx.plugin(twitterPlugin, config.KBotTwitter)
-      else logger.warn('未启用 puppeteer, Twitter 动态推送功能将不可用')
-    }
+    if (config.KBotTwitter.enabled)
+      ctx.plugin(twitterPlugin, config.KBotTwitter)
     if (config.KBotTarot.enabled)
       ctx.plugin(tarotPlugin, config.KBotTarot)
 

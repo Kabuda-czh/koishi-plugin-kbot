@@ -127,9 +127,6 @@ ${Object.values(weatherData.index).map((item: any) => `${item.name}: ${item.leve
         })
     }
   }
-  if (config.checkBody.enabled) {
-    if (ctx.puppeteer)
-      ctx.plugin(statusPlugin, config.checkBody)
-    else logger.warn('未安装/启动 puppeteer, 无法使用自带的 status 插件')
-  }
+  if (config.checkBody.enabled)
+    ctx.plugin(statusPlugin, config.checkBody)
 }
