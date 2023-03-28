@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:37
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 10:43:56
+ * @LastEditTime: 2023-03-28 14:33:07
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router\group.ts
  * @Description:
  *
@@ -14,7 +14,7 @@ import handleFunction from '../utils'
 
 export const groupRoutes: IRouterStrategy = {
   '/groupList': function (context: Context) {
-    return handleFunction(context, 'internal.getGroupList', 'botId')
+    return handleFunction(context, 'internal.getGroupList', 'botId', 'noCache')
   },
   '/groupMemberInfo': function (context: Context) {
     return handleFunction(context, 'internal.getGroupMemberInfo', 'botId', 'groupId', 'userId', 'noCache')

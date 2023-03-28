@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 11:00:13
+ * @LastEditTime: 2023-03-28 14:40:53
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -75,6 +75,7 @@ const getCommands = async () => {
 
 const getGroupList = async () => {
   const groupDatas = await fetchGroupList(botId.value).then(res => res as Promise<Group[]>)
+  defaultGroupList.value = []
 
   if (groupDatas.length === 1 && !groupDatas[0])
     return
@@ -209,9 +210,8 @@ const groupLeave = (groupId: number, isOwner: boolean) => {
       // TODO 解散群似乎没什么效果
       fetchGroupLeave(botId.value, groupId, isOwner).then(() => {
         message.success('操作成功')
-        groupList.value = defaultGroupList.value.filter(
-          group => group.group_id !== groupId,
-        ).slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
+        // getGroupList()
+        location.reload()
       })
     })
     .catch(() => {
@@ -221,6 +221,8 @@ const groupLeave = (groupId: number, isOwner: boolean) => {
 
 const paginationClick = (val: number) => {
   loading.value = true
+
+  currentPage.value = val
 
   const start = (val - 1) * pageSize.value
 

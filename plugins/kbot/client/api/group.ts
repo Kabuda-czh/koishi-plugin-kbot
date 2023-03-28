@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-02 11:22:38
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 10:29:13
+ * @LastEditTime: 2023-03-28 14:32:55
  * @FilePath: \KBot-App\plugins\kbot\client\api\group.ts
  * @Description:
  *
@@ -11,7 +11,11 @@
 import { http } from '../utils'
 
 export function fetchGroupList(botId: string | number) {
-  return http.request('get', '/groupList', { botId })
+  return http.request('get', '/groupList', { botId, no_cache: true }, {
+    headers: {
+      'Cache-Control': 'no-cache',
+    },
+  })
 }
 
 export function fetchGroupMemberInfo(botId: string | number, groupId: string | number, userId: string | number, noCache: boolean) {

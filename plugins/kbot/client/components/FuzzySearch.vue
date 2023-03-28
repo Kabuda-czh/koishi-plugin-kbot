@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-14 11:21:29
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-14 11:33:45
+ * @LastEditTime: 2023-03-28 14:28:17
  * @FilePath: \KBot-App\plugins\kbot\client\components\FuzzySearch.vue
  * @Description:
  *
@@ -81,10 +81,10 @@ const loadAll = () => {
   if (!props.value) {
     state.value = ''
     if (props.options.length === 1) {
-      state.value = props.options[0].label
+      state.value = props.options[0][props.labelKey]
       getFuzzySearch({
-        label: props.options[0].label,
-        value: props.options[0].value,
+        label: props.options[0][props.labelKey],
+        value: props.options[0][props.valueKey],
       })
     }
   }
