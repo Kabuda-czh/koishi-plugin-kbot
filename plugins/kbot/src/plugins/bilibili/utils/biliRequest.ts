@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 11:10:23
+ * @LastEditTime: 2023-03-29 14:29:34
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
@@ -110,12 +110,12 @@ export async function getMedalWall(
     )
 
     if (resp.code === -101)
-      throw new Error('cookie is invalid')
+      throw new Error('cookie 信息已过期, 请使用 --ck 或 --cookie 更新cookie信息')
 
     return resp
   }
   catch (e) {
-    throw new Error(`Failed to get medal wall [${e.message}]`)
+    throw new Error(e.message)
   }
 }
 

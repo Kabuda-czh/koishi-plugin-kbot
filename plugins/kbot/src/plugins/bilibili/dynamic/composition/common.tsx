@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-22 16:36:51
+ * @LastEditTime: 2023-03-29 14:30:15
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -37,7 +37,6 @@ export async function bilibiliVupCheck(
   try {
     if (config.useImage) {
       if (ctx.puppeteer) {
-
         const searchUserCardInfo = await getMemberCard(ctx.http, uid)
 
         const needLoadFontList = await getFontsList(logger)
@@ -53,7 +52,7 @@ export async function bilibiliVupCheck(
           )
         }
         catch (e) {
-          logger.error(`Failed to get vup info. ${e}`)
+          logger.error(`Failed to get vup info. ${e.message}`)
           throw new Error('vtb信息未找到, 请使用 --re 或 --refresh 更新vup信息')
         }
 
@@ -66,7 +65,7 @@ export async function bilibiliVupCheck(
           )
         }
         catch (e) {
-          logger.error(`Failed to get cookie info. ${e}`)
+          logger.error(`Failed to get cookie info. ${e.message}`)
           throw new Error('cookie信息未找到, 请使用 --ck 或 --cookie 更新cookie信息')
         }
 
@@ -112,7 +111,8 @@ export async function bilibiliVupCheck(
         const image = await renderVup(searchUserCardInfo, vups, vupsLength, medalMap, needLoadFontList)
 
         await session.send(image)
-      } else {
+      }
+      else {
         return '未安装/启用puppeteer, 无法渲染成分信息!'
       }
     }
@@ -121,7 +121,10 @@ export async function bilibiliVupCheck(
     }
   }
   catch (e) {
-    logger.error(`Failed to get vup info. ${e}`)
+    if (['ECONNREFUSED', 'ECONNRESET'].includes(e.code))
+      return '成分获取失败: 网络连接超时'
+
+    logger.error(`Failed to get vup info. ${e.message}`)
     return `成分获取失败: ${e.message}`
   }
 }
@@ -150,7 +153,8 @@ export async function bilibiliDanmuCheck(
         const image = await renderDanmu(searchUserCardInfo, danmuku, needLoadFontList)
 
         await session.send(image)
-      } else {
+      }
+      else {
         return '未安装/启用puppeteer, 无法渲染弹幕信息!'
       }
     }
@@ -159,8 +163,10 @@ export async function bilibiliDanmuCheck(
     }
   }
   catch (e) {
-    logger.error(`Failed to get danmu info. ${e}`)
-    return `弹幕获取失败${e}`
+    if (['ECONNREFUSED', 'ECONNRESET'].includes(e.code))
+      return '弹幕获取失败: 网络连接超时'
+    logger.error(`Failed to get danmu info. ${e.message}`)
+    return `弹幕获取失败: ${e.message}`
   }
 }
 
@@ -203,8 +209,10 @@ export async function bilibiliRefreshVup() {
     return 'vup 更新成功'
   }
   catch (err) {
-    logger.error(`Failed to update vup. ${err}`)
-    return `vup 更新失败: ${err}`
+    if (['ECONNREFUSED', 'ECONNRESET'].includes(err.code))
+      return 'vup 更新失败: 网络连接超时'
+    logger.error(`Failed to update vup. ${err.message}`)
+    return `vup 更新失败: ${err.message}`
   }
 }
 

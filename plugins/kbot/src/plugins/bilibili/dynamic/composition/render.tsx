@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-11 15:12:57
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-22 16:35:33
+ * @LastEditTime: 2023-03-29 10:22:11
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\render.tsx
  * @Description:
  *
@@ -23,84 +23,84 @@ export async function renderVup(
 ) {
   const loadList = await loadFont(needLoadFontList)
   return <html>
-    <style>
-      {`
-      * {
-        margin: 0;
-        padding: 0;
-      }
+  <style>
+    {`
+    * {
+      margin: 0;
+      padding: 0;
+    }
 
-      ${loadList[0]}
+    ${loadList[0]}
 
-      .flex-cc {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    .flex-cc {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-      .uid {
-        color: #696969;
-        background-color: #DDDDDD;
-        border-radius: 2px;
-        font-size: 11px;
-        padding: 0 5px;
-      }
+    .uid {
+      color: #696969;
+      background-color: #DDDDDD;
+      border-radius: 2px;
+      font-size: 11px;
+      padding: 0 5px;
+    }
 
-      .medalBg {
-        background-color: #F6F6F6;
-      }
+    .medalBg {
+      background-color: #F6F6F6;
+    }
 
-      .padding-x5 {
-        padding: 0 5px;
-      }
+    .padding-x5 {
+      padding: 0 5px;
+    }
 
-      #card {
-        font-size: 12px;
-        font-family: ${loadList[1]};
-      }
+    #card {
+      font-size: 12px;
+      font-family: ${loadList[1]};
+    }
 
-      .header {
-        display: flex;
-        align-items: center;
-      }
+    .header {
+      display: flex;
+      align-items: center;
+    }
 
-      .headerImg {
-        height: 120px;
-        width: 120px;
-      }
+    .headerImg {
+      height: 120px;
+      width: 120px;
+    }
 
-      .info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        margin: 0 10px;
-        font-size: 10px;
-      }
+    .info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin: 0 10px;
+      font-size: 10px;
+    }
 
-      .info div {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 10px;
-        width: 100%;
-      }
+    .info div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      width: 100%;
+    }
 
-      .vup {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-      }
+    .vup {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
 
-      .vupInfo {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        gap: 5px;
-      }
-    `}
-    </style>
+    .vupInfo {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      gap: 5px;
+    }
+  `}
+  </style>
     <div id="card">
       <div class="header">
         <img class="headerImg" src={searchUserCardInfo.card.face} />
@@ -165,7 +165,7 @@ export async function renderVup(
         }
       </div>
     </div>
-  </html>
+</html>
 }
 
 export async function renderDanmu(
