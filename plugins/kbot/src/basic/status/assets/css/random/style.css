@@ -1,5 +1,13 @@
-@import "https://fonts.googleapis.com/css?family=Noto+Sans+SC";
-@import "https://fonts.googleapis.com/css?family=Poppins";
+@font-face {
+  font-family: "Poppins";
+  src: url("../../../assets/font/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  src: url("../../../assets/font/NotoSansSC-Regular.otf") format("opentype");
+}
+
 * {
   padding: 0;
   border: 0;
