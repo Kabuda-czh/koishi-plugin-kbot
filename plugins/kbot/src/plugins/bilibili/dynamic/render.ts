@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:52:05
+ * @LastEditTime: 2023-03-28 16:55:23
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -28,7 +28,8 @@ export async function renderFunction(
         return pcRenderImage(ctx, item)
       else
         return mobileRenderImage(ctx, item)
-    } else {
+    }
+    else {
       return '未安装/启用 puppeteer 插件，无法使用图片渲染'
     }
   }
@@ -65,6 +66,7 @@ async function pcRenderImage(
     if (needLoadFontList.length > 0)
       await page.evaluate(`setFont(${JSON.stringify(needLoadFontList)})`)
 
+    await page.evaluate(() => document.fonts.ready)
     const element = await page.$('.bili-dyn-item')
     const elementClip = await element.boundingBox()
 
@@ -130,6 +132,7 @@ async function mobileRenderImage(
     if (needLoadFontList.length > 0)
       await page.evaluate(`setFont(${JSON.stringify(needLoadFontList)})`)
 
+    await page.evaluate(() => document.fonts.ready)
     const element
       = (await page.$('.opus-modules')) ?? (await page.$('.dyn-card'))
     const elementClip = await element.boundingBox()

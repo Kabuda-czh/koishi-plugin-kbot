@@ -2,7 +2,7 @@
 * @Author: Kabuda-czh
 * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 09:34:33
+ * @LastEditTime: 2023-03-29 10:00:08
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
 * @Description:
 *
@@ -24,8 +24,10 @@ export async function renderHtml(ctx: Context, systemInfo: SystemInfo) {
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
     await page.goto(`file:///${resolve(__dirname, '../neko/template.html')}`)
     await page.evaluate(`action(${JSON.stringify(systemInfo)})`)
-    const element = await page.$('#background-page')
     await page.waitForNetworkIdle()
+    const element = await page.$('#background-page')
+    await page.evaluate(() => document.fonts.ready)
+
     return (
       segment.image(await element.screenshot({
         encoding: 'binary',
@@ -65,8 +67,9 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
         await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
         await page.goto(`file:///${resolve(__dirname, '../random/template.html')}`)
         await page.evaluate(`action(${JSON.stringify(systemInfo)}, '${imageBase64}', '${botUid}')`)
-        const element = await page.$('#app')
         await page.waitForNetworkIdle()
+        const element = await page.$('#app')
+        await page.evaluate(() => document.fonts.ready)
         return (
           segment.image(await element.screenshot({
             encoding: 'binary',
