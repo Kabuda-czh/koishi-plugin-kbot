@@ -710,12 +710,12 @@
   dependencies:
     "@satorijs/adapter-kook" "^3.6.4"
 
-"@koishijs/plugin-adapter-onebot@5.6.4":
-  version "5.6.4"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-onebot/-/plugin-adapter-onebot-5.6.4.tgz#4fc99b3cf41469f03843e2c0191e62c1ea4128ae"
-  integrity sha512-6/kX8CAxwhK6EOg8sHdkiGkyu0JHmB7Pjc1C3I73QvYoOZk8JYPrTMDdS4fRhjgQ+jUERqJzyVrriauRvbmDJA==
+"@koishijs/plugin-adapter-onebot@5.6.5":
+  version "5.6.5"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-onebot/-/plugin-adapter-onebot-5.6.5.tgz#15d4d6bf31e3af7aa8024d220c1c05d2f2434c82"
+  integrity sha512-yguovnk0MKms6W0ffJXLCrjZQlsC/xWwGl69CmEK7iDJgy9wZbcFAygkxRO0xXF09PR/6OgQt14d8JHtiiy09Q==
   dependencies:
-    "@satorijs/adapter-onebot" "^5.6.4"
+    "@satorijs/adapter-onebot" "^5.6.5"
 
 "@koishijs/plugin-adapter-telegram@3.7.1":
   version "3.7.1"
@@ -985,10 +985,10 @@
   dependencies:
     form-data "^4.0.0"
 
-"@satorijs/adapter-onebot@^5.6.4":
-  version "5.6.4"
-  resolved "https://registry.npmmirror.com/@satorijs/adapter-onebot/-/adapter-onebot-5.6.4.tgz#c8d91820144538d3f0a163f57bef4c98d4860205"
-  integrity sha512-eIdFSTw+qhAEenCnOphY6sv4C58029Wy/nWc+xFSnJe5xFleykyUr2l7EZY/55yu9jj3pguBp3Ft5mJNUGPi8g==
+"@satorijs/adapter-onebot@^5.6.5":
+  version "5.6.5"
+  resolved "https://registry.npmmirror.com/@satorijs/adapter-onebot/-/adapter-onebot-5.6.5.tgz#3d035f779d7905cf28493079f180bd00bde0a4a9"
+  integrity sha512-6fopJT5/xWiWRukWlSWIV97VeGWAkEYW2pYg5Zav4uLFJb8fjVVl95duQtPTQJXtUQlA5NgKQJdCAvM5k/83Sg==
   dependencies:
     qface "^1.4.0"
 
