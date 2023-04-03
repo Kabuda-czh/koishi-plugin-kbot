@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-23 10:08:52
+ * @LastEditTime: 2023-04-03 19:07:37
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -68,6 +68,7 @@ export async function getTwitterTweets(
   ctx: Context,
   logger: Logger,
   isPure = false,
+  isListen = false,
 ): Promise<Entry[]> {
   const param: UserTweetsParam = {
     variables: {
@@ -123,8 +124,11 @@ export async function getTwitterTweets(
         tokenError = true
         return err
       }
-      if (['ECONNRESET', 'ETIMEDOUT', 'ECONNREFUSED', 'ECONNABORTED'].includes(err.code))
-        throw new Error('请求超时, 网络错误')
+      if (['ECONNRESET', 'ETIMEDOUT', 'ECONNREFUSED', 'ECONNABORTED'].includes(err.code)) {
+        if (isListen)
+          return 'continue'
+        else throw new Error('请求超时, 网络错误')
+      }
       throw new Error(`请求失败: ${err.message}`)
     })
 
@@ -132,6 +136,9 @@ export async function getTwitterTweets(
     await getTwitterToken(ctx, logger)
     return []
   }
+
+  if (res as unknown as string === 'continue')
+    return []
 
   if (!res)
     throw new Error('动态获取失败，请稍后再试')

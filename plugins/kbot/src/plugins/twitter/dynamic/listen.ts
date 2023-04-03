@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-23 10:06:32
+ * @LastEditTime: 2023-04-03 19:08:15
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\listen.ts
  * @Description:
  *
@@ -21,7 +21,7 @@ export async function* listen(
       DynamicNotifiction,
     ][]
   >,
-  request: (restId: string, ctx: Context, logger: Logger, isPure?: boolean) => Promise<Entry[]>,
+  request: (restId: string, ctx: Context, logger: Logger, isPure?: boolean, isListen?: boolean) => Promise<Entry[]>,
   ctx: Context,
   config: IConfig,
 ) {
@@ -36,7 +36,7 @@ export async function* listen(
         continue
       const time = notifications[0][1].lastUpdated
       try {
-        const items = await request(restId, ctx, logger, config.usePure)
+        const items = await request(restId, ctx, logger, config.usePure, true)
         if (items.length === 0)
           continue
         // setup time on every start up

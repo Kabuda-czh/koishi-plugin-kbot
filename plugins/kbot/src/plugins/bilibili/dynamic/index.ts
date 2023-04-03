@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 13:35:18
+ * @LastEditTime: 2023-04-03 17:10:52
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -152,7 +152,7 @@ async function request(
   }
   catch (e) {
     if (['ECONNRESET', 'ETIMEDOUT', 'ECONNREFUSED', 'ECONNABORTED', 'read ECONNRESET'].includes(e.code))
-      throw new Error('请求超时, 网络错误')
+      return
     throw e.message
   }
 }
