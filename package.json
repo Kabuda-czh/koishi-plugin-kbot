@@ -64,6 +64,7 @@
     "koishi-plugin-genshin-voice": "1.0.3",
     "koishi-plugin-gocqhttp": "3.4.6",
     "koishi-plugin-image-search": "4.2.2",
+    "koishi-plugin-messages": "0.1.0",
     "koishi-plugin-puppeteer": "3.5.0",
     "koishi-plugin-status-pro": "1.1.7"
   },
