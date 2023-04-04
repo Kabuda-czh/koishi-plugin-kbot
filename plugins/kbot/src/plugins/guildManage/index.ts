@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 19:17:57
+ * @LastEditTime: 2023-04-04 10:14:34
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
  *
@@ -33,21 +33,6 @@ export const Config: Schema<IConfig> = Schema.object({})
 
 export const logger = new Logger('kbot-plugin-guildManage')
 
-const getChildren = (command: any) => {
-  if (command.children.length === 0) {
-    return []
-  }
-  else {
-    return command.children.map((child: any) => {
-      return {
-        name: child.name,
-        children: getChildren(child),
-        parent: command.name,
-        disable: false,
-      }
-    })
-  }
-}
 export function apply(context: Context) {
   context.model.extend('channel', {
     disable: 'list',
