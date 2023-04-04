@@ -22,7 +22,6 @@ declare module 'koishi' {
   }
 
   interface Channel {
-    enable: string[]
     disable: string[]
   }
 }
@@ -44,7 +43,7 @@ export function apply(context: Context) {
   })
 
   // check channel
-  context.before('command/execute', async ({ session, command }: Argv<never, 'enable' | 'disable'>) => {
+  context.before('command/execute', async ({ session, command }: Argv<never, 'disable'>) => {
     return await session.observeChannel(['disable']).then((channel) => {
       const { disable = [] } = channel || {}
       while (command) {
