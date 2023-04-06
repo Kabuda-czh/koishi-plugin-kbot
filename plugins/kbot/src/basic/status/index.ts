@@ -2,14 +2,12 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-20 18:37:05
+ * @LastEditTime: 2023-04-06 11:13:33
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import fs from 'node:fs'
-import path from 'node:path'
 import type { Context } from 'koishi'
 import { Logger, Schema, version } from 'koishi'
 import { renderHtml, renderRandom } from './render'
@@ -36,16 +34,6 @@ export const Config: Schema<IConfig> = Schema.object({
 export const logger = new Logger('KBot-status')
 
 export async function apply(ctx: Context, config: IConfig) {
-  const fileNames = fs.readdirSync(
-    path.resolve(__dirname, '../../../../../public/kbot'),
-  )
-
-  if (!fileNames.includes('randomImage')) {
-    fs.mkdirSync(
-      path.resolve(__dirname, '../../../../../public/kbot/randomImage'),
-    )
-  }
-
   ctx.command('kbot/body', '检查机器人状态', {
     checkArgCount: true,
     showWarning: false,

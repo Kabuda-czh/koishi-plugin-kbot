@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 13:32:59
+ * @LastEditTime: 2023-04-06 10:43:37
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\dynamic.strategy.ts
  * @Description:
  *
@@ -46,7 +46,7 @@ export const dynamicStrategy = async (
   let cookie
   try {
     cookie = JSON.parse(
-      fs.readFileSync(
+      await fs.promises.readFile(
         resolve(__dirname, '../../../../../../public/kbot/twitter/cookie.json'),
         'utf-8',
       ),

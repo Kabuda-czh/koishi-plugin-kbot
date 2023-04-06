@@ -2,18 +2,18 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-29 14:29:34
+ * @LastEditTime: 2023-04-06 11:09:37
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as fs from 'node:fs'
-import { resolve } from 'node:path'
 import type { Logger, Quester } from 'koishi'
 import { BilibiliDynamicType } from '../enum'
 import type { DanmukuData, MedalWall, MemberCard } from '../model'
 import { StringFormat } from '../../utils'
+import { bilibiliCookiePath } from '../../../config'
 
 export async function getDynamic(http: Quester, uid: string) {
   return http.get(
@@ -35,11 +35,8 @@ export async function searchUser(
   let cookie
   try {
     cookie = JSON.parse(
-      fs.readFileSync(
-        resolve(
-          __dirname,
-          '../../../../../../public/kbot/bilibili/cookie.json',
-        ),
+      await fs.promises.readFile(
+        bilibiliCookiePath,
         'utf-8',
       ),
     )

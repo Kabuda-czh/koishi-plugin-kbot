@@ -2,14 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-22 17:28:23
+ * @LastEditTime: 2023-04-06 11:13:12
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as fs from 'node:fs'
-import { resolve } from 'node:path'
 import type { Context } from 'koishi'
 import { Logger, Schema } from 'koishi'
 
@@ -21,6 +20,7 @@ import * as youtubePlugin from './plugins/youtube'
 import * as managePlugin from './plugins/guildManage'
 import * as twitterPlugin from './plugins/twitter'
 import * as tarotPlugin from './plugins/tarot'
+import { kbotDir, publicDir } from './config'
 
 export const name = 'kbot'
 
@@ -114,15 +114,15 @@ export async function apply(ctx: Context, config: IConfig) {
   else {
     let fileNames: string[] = []
     try {
-      fileNames = fs.readdirSync(resolve(__dirname, '../../../public'))
+      fileNames = await fs.promises.readdir(publicDir)
     }
     catch (e) {
       logger.error('未找到 public 文件夹, 正在创建')
-      fs.mkdirSync(resolve(__dirname, '../../../public'))
+      await fs.promises.mkdir(publicDir)
     }
 
     if (!fileNames.includes('kbot'))
-      fs.mkdirSync(resolve(__dirname, '../../../public/kbot'))
+      await fs.promises.mkdir(kbotDir)
 
     ctx.bots.forEach(async (bot) => {
       if (

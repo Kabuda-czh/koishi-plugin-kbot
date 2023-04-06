@@ -15,16 +15,17 @@ import type { Logger } from 'koishi'
 export async function getFontsList(
   logger: Logger,
 ): Promise<{ fontFamily: string; fontUrl: string }[]> {
-  return new Promise((resolve) => {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve) => {
     const needLoadFontList: { fontFamily: string; fontUrl: string }[] = []
 
-    const fileNames = fs.readdirSync(
+    const fileNames = await fs.promises.readdir(
       path.resolve(__dirname, '../../assets/fonts'),
     )
 
-    for (const fontFileName of fileNames) {
+    await Promise.all(fileNames.map(async (fontFileName) => {
       try {
-        const fileBuffer = fs.readFileSync(
+        const fileBuffer = await fs.promises.readFile(
           path.resolve(
             __dirname,
             `../../assets/fonts/${fontFileName}`,
@@ -42,7 +43,7 @@ export async function getFontsList(
       catch (err) {
         logger.error(`字体 ${fontFileName} 加载失败`, err)
       }
-    }
+    }))
     resolve(needLoadFontList)
   })
 }

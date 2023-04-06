@@ -2,14 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-04 11:17:19
+ * @LastEditTime: 2023-04-06 11:10:40
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as fs from 'node:fs'
-import path from 'node:path'
 
 import type { Argv, Channel, Context, Dict, Quester } from 'koishi'
 import { Logger, Schema } from 'koishi'
@@ -18,6 +17,7 @@ import {} from 'koishi-plugin-puppeteer'
 import type { BilibiliDynamicItem, DynamicNotifiction } from '../model'
 import { getDynamic } from '../utils'
 
+import { bilibiliDir, kbotDir } from '../../../config'
 import { dynamicStrategy } from './dynamic.strategy'
 import { listen } from './listen'
 
@@ -64,15 +64,10 @@ export async function apply(ctx: Context, config: IConfig) {
     'bilibili',
   ])
 
-  const fileNames = fs.readdirSync(
-    path.resolve(__dirname, '../../../../../../public/kbot'),
-  )
+  const fileNames = await fs.promises.readdir(kbotDir)
 
-  if (!fileNames.includes('bilibili')) {
-    fs.mkdirSync(
-      path.resolve(__dirname, '../../../../../../public/kbot/bilibili'),
-    )
-  }
+  if (!fileNames.includes('bilibili'))
+    await fs.promises.mkdir(bilibiliDir, { recursive: true })
 
   const list = channels
     .filter(channel => channel.bilibili.dynamic)

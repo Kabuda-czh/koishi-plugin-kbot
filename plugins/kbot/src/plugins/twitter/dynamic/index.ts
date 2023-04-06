@@ -2,20 +2,20 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-22 17:11:07
+ * @LastEditTime: 2023-04-06 11:05:34
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as fs from 'node:fs'
-import path from 'node:path'
 import type { Argv, Channel, Context, Dict } from 'koishi'
 import { Logger, Schema } from 'koishi'
 import {} from 'koishi-plugin-puppeteer'
 
 import type { DynamicNotifiction } from '../model'
 import { getTwitterToken, getTwitterTweets } from '../utils'
+import { kbotDir, twitterCookiePath, twitterDir } from '../../../config'
 import { listen } from './listen'
 import { dynamicStrategy } from './dynamic.strategy'
 
@@ -61,16 +61,12 @@ export async function apply(ctx: Context, config: IConfig) {
     'twitter',
   ])
 
-  const fileNames = fs.readdirSync(
-    path.resolve(__dirname, '../../../../../../public/kbot'),
-  )
+  const fileNames = await fs.promises.readdir(kbotDir)
 
   if (!fileNames.includes('twitter')) {
-    fs.mkdirSync(
-      path.resolve(__dirname, '../../../../../../public/kbot/twitter'),
-    )
-    fs.writeFileSync(
-      path.resolve(__dirname, '../../../../../../public/kbot/twitter/cookie.json'),
+    await fs.promises.mkdir(twitterDir, { recursive: true })
+    await fs.promises.writeFile(
+      twitterCookiePath,
       JSON.stringify({ cookies: '' }),
       { encoding: 'utf-8' },
     )
@@ -117,11 +113,8 @@ export async function apply(ctx: Context, config: IConfig) {
     })
 
   try {
-    const cookieJson = fs.readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../../../public/kbot/twitter/cookie.json',
-      ),
+    const cookieJson = await fs.promises.readFile(
+      twitterCookiePath,
       { encoding: 'utf-8' },
     )
     const cookie = JSON.parse(cookieJson).cookies

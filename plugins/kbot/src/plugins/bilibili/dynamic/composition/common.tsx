@@ -2,14 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-29 14:30:15
+ * @LastEditTime: 2023-04-06 11:07:34
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as fs from 'node:fs'
-import { resolve } from 'node:path'
 
 import type { Argv, Channel, Context, Dict } from 'koishi'
 
@@ -20,6 +19,7 @@ import type { DynamicNotifiction } from '../../model'
 import { getDanmukuData, getMedalWall, getMemberCard } from '../../utils'
 
 import { getFontsList } from '../../../utils'
+import { bilibiliCookiePath, bilibiliDir, bilibiliVupPath } from '../../../../config'
 import { renderDanmu, renderVup } from './render'
 
 export async function bilibiliVupCheck(
@@ -45,8 +45,8 @@ export async function bilibiliVupCheck(
 
         try {
           vdb = JSON.parse(
-            fs.readFileSync(
-              resolve(__dirname, '../../../../../../../public/kbot/bilibili/vup.json'),
+            await fs.promises.readFile(
+              bilibiliVupPath,
               'utf-8',
             ),
           )
@@ -58,8 +58,8 @@ export async function bilibiliVupCheck(
 
         try {
           cookie = JSON.parse(
-            fs.readFileSync(
-              resolve(__dirname, '../../../../../../../public/kbot/bilibili/cookie.json'),
+            await fs.promises.readFile(
+              bilibiliCookiePath,
               'utf-8',
             ),
           )
@@ -198,11 +198,11 @@ export async function bilibiliRefreshVup() {
     })
 
     if (
-      !fs.existsSync(resolve(__dirname, '../../../../../../../public/kbot/bilibili'))
+      !(await fs.promises.stat(bilibiliDir)).isDirectory()
     )
-      fs.mkdirSync(resolve(__dirname, '../../../../../../../public/kbot/bilibili'))
-    fs.writeFileSync(
-      resolve(__dirname, '../../../../../../../public/kbot/bilibili/vup.json'),
+      await fs.promises.mkdir(bilibiliDir, { recursive: true })
+    await fs.promises.writeFile(
+      bilibiliVupPath,
       JSON.stringify(vtbs),
     )
 
@@ -246,11 +246,11 @@ export async function bilibiliCookie({
     })
 
     if (
-      !fs.existsSync(resolve(__dirname, '../../../../../../../public/kbot/bilibili'))
+      !(await fs.promises.stat(bilibiliDir)).isDirectory()
     )
-      fs.mkdirSync(resolve(__dirname, '../../../../../../../public/kbot/bilibili'))
-    fs.writeFileSync(
-      resolve(__dirname, '../../../../../../../public/kbot/bilibili/cookie.json'),
+      await fs.promises.mkdir(bilibiliDir, { recursive: true })
+    await fs.promises.writeFile(
+      bilibiliCookiePath,
       JSON.stringify(cookieJson),
     )
 
