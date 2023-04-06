@@ -31,9 +31,9 @@ export const botRoutes: IRouterStrategy = {
     return getBots(context)
   },
   '/sendMessage': function (context: Context) {
-    return handleFunction(context, 'sendMessage', 'guildId', 'message', '')
+    return handleFunction(context, 'sendMessage', 'botId', 'guildId', 'message', '')
   },
   '/broadcast': function (context: Context) {
-    return handleFunction(context, 'broadcast', 'channels', 'message', 'delay')
+    return handleFunction(context, 'broadcast', 'botId','channels', 'message', 'delay')
   },
 }
