@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 10:38:41
+ * @LastEditTime: 2023-04-07 11:40:20
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
@@ -93,7 +93,7 @@ const columns = reactive<Column<any>[]>([
           circle: true,
           size: 'large',
           icon: View,
-          onClick: (e) => {
+          onClick: () => {
             memberId.value = userId
             memberDialogVisible.value = true
           },
@@ -141,7 +141,7 @@ const dataChange = (value: string | number) => {
     v-model="dialogVisible" width="50%" title="群成员列表" destroy-on-close @open="getMemberList"
     @closed="dialogVisible = false"
   >
-    <div class="dialogContainer" v-loading="dialogLoading">
+    <div v-loading="dialogLoading" class="dialogContainer">
       <div class="memberSearch">
         <FuzzySearch
           :options="defaultMemberList" label-key="username" value-key="userId" @select-data="selectData"

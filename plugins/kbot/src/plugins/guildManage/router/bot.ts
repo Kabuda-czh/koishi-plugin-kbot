@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:37
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 10:56:37
+ * @LastEditTime: 2023-04-07 11:13:28
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router\bot.ts
  * @Description:
  *
@@ -34,6 +34,6 @@ export const botRoutes: IRouterStrategy = {
     return handleFunction(context, 'sendMessage', 'botId', 'guildId', 'message', '')
   },
   '/broadcast': function (context: Context) {
-    return handleFunction(context, 'broadcast', 'botId','channels', 'message', 'delay')
+    return handleFunction(context, 'broadcast', 'botId', 'channels', 'message', 'delay')
   },
 }

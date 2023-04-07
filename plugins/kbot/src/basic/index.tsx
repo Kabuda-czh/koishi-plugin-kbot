@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-13 17:08:15
+ * @LastEditTime: 2023-04-07 11:41:23
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
@@ -107,7 +107,7 @@ export async function apply(ctx: Context, config: IConfig) {
       ctx
         .command('kbot/天气 <city:string>', '查询城市天气')
         .shortcut(/^查询(.+)天气$/, { args: ['$1'] })
-        .action(async ({ session }, city) => {
+        .action(async (_, city) => {
           const weather = await ctx.http
             .get(`https://v2.alapi.cn/api/tianqi?token=${config.alApiToken}&city=${city}`)
             .catch((err) => {
