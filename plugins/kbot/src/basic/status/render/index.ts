@@ -8,7 +8,7 @@
 *
 * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
 */
-
+import { pathToFileURL } from 'node:url'
 import { resolve } from 'node:path'
 import type { Context } from 'koishi'
 import { segment } from 'koishi'
@@ -22,7 +22,7 @@ export async function renderHtml(ctx: Context, systemInfo: SystemInfo) {
   try {
     page = await ctx.puppeteer.page()
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
-    await page.goto(`file:///${resolve(__dirname, '../neko/template.html')}`)
+    await page.goto(`${pathToFileURL(resolve(__dirname, '../neko/template.html'))}`)
     await page.evaluate(`action(${JSON.stringify(systemInfo)})`)
     await page.waitForNetworkIdle()
     const element = await page.$('#background-page')
@@ -65,7 +65,7 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
       try {
         page = await ctx.puppeteer.page()
         await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
-        await page.goto(`file:///${resolve(__dirname, '../random/template.html')}`)
+        await page.goto(`${pathToFileURL(resolve(__dirname, '../random/template.html'))}`)
         await page.evaluate(`action(${JSON.stringify(systemInfo)}, '${imageBase64}', '${botUid}')`)
         await page.waitForNetworkIdle()
         const element = await page.$('#app')

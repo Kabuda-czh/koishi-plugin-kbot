@@ -8,6 +8,7 @@
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
+import { pathToFileURL } from 'node:url'
 import path from 'node:path'
 import type { Context } from 'koishi'
 import { Logger, Schema, sleep } from 'koishi'
@@ -29,13 +30,13 @@ export async function apply(ctx: Context) {
   }).action(async ({ session }) => {
     const randomIndex = Math.floor(Math.random() * cardLength)
     let cardKey = Object.keys(cards)[randomIndex]
-    let imageFile = `file:///${path.join(__dirname, 'images', `${cardKey}.jpg`)}`
+    let imageFile = `${pathToFileURL(path.join(__dirname, 'images', `${cardKey}.jpg`))}`
     let cardValue = ''
 
     // 特殊: 愚者有两张
     if (cardKey === '愚者') {
       const rand = Math.floor(Math.random() * 2 + 1)
-      imageFile = `file:///${path.join(__dirname, 'images', `愚者${rand}.jpg`)}`
+      imageFile = `${pathToFileURL(path.join(__dirname, 'images', `愚者${rand}.jpg`))}`
     }
 
     // 特殊: 正位和逆位
@@ -87,12 +88,12 @@ export async function apply(ctx: Context) {
 
       const meaningKey = Object.keys(meanings)[i]
       const meaningValue = meanings[meaningKey]
-      imageFile = `file:///${path.join(__dirname, 'images', `${cardKey}.jpg`)}`
+      imageFile = `${pathToFileURL(path.join(__dirname, 'images', `${cardKey}.jpg`))}`
 
       // 特殊: 愚者有两张
       if (cardKey === '愚者') {
         rand = Math.floor(Math.random() * 2 + 1)
-        imageFile = `file:///${path.join(__dirname, 'images', `愚者${rand}.jpg`)}`
+        imageFile = `${pathToFileURL(path.join(__dirname, 'images', `愚者${rand}.jpg`))}`
       }
 
       // 特殊: 正位和逆位
