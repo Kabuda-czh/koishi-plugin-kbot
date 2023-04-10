@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-06 11:13:33
+ * @LastEditTime: 2023-04-10 18:29:40
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.ts
  * @Description:
  *
@@ -39,6 +39,9 @@ export async function apply(ctx: Context, config: IConfig) {
     showWarning: false,
   }).shortcut('自检', { fuzzy: false })
     .action(async ({ session }) => {
+      if (!ctx.puppeteer)
+        return '未安装/启用 puppeteer 插件，无法使用图片渲染'
+
       const systemInfo = await getSystemInfo(config.botName || session.bot.username, version, pVersion, ctx.registry.size)
 
       if (config?.useModel === 'neko')
