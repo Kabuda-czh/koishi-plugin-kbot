@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-23 10:08:17
+ * @LastEditTime: 2023-04-10 18:32:06
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -30,7 +30,7 @@ export async function renderFunction(
       return renderText(ctx, entry, isListen, config.onlyMedia)
   }
   catch (err) {
-    logger.error('推特渲染失败: ', err.message)
+    logger.error('推特渲染失败: ', err)
     throw err.message
   }
 }
@@ -78,7 +78,7 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
     )
   }
   catch (e) {
-    logger.error('推特图片渲染失败:', e.message)
+    logger.error('推特图片渲染失败:', e)
     throw e.message
   }
   finally {
@@ -167,7 +167,7 @@ async function renderText(
     )}${hasShortURL ? '' : `\n${url}`}`
   }
   catch (err) {
-    logger.error('推特文字渲染失败: ', err.message)
+    logger.error('推特文字渲染失败: ', err)
     throw err.message
   }
 }

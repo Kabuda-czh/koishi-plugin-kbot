@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-27 13:24:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-06 11:06:18
+ * @LastEditTime: 2023-04-10 18:31:59
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\reGetToken.ts
  * @Description:
  *
@@ -46,7 +46,7 @@ export async function getTwitterToken(ctx: Context, logger: Logger) {
     logger.info('token 获取成功: ', gtCookie)
   }
   catch (error) {
-    logger.error('token 获取失败: ', error.message)
+    logger.error('token 获取失败: ', error)
     return { cookies: '' }
   }
   finally {

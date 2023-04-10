@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-06 11:07:34
+ * @LastEditTime: 2023-04-10 18:31:12
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -52,7 +52,7 @@ export async function bilibiliVupCheck(
           )
         }
         catch (e) {
-          logger.error(`Failed to get vup info. ${e.message}`)
+          logger.error(`Failed to get vup info. ${e}`)
           throw new Error('vtb信息未找到, 请使用 --re 或 --refresh 更新vup信息')
         }
 
@@ -65,7 +65,7 @@ export async function bilibiliVupCheck(
           )
         }
         catch (e) {
-          logger.error(`Failed to get cookie info. ${e.message}`)
+          logger.error(`Failed to get cookie info. ${e}`)
           throw new Error('cookie信息未找到, 请使用 --ck 或 --cookie 更新cookie信息')
         }
 
@@ -124,7 +124,7 @@ export async function bilibiliVupCheck(
     if (['ECONNREFUSED', 'ECONNRESET'].includes(e.code))
       return '成分获取失败: 网络连接超时'
 
-    logger.error(`Failed to get vup info. ${e.message}`)
+    logger.error(`Failed to get vup info. ${e}`)
     return `成分获取失败: ${e.message}`
   }
 }
@@ -165,7 +165,7 @@ export async function bilibiliDanmuCheck(
   catch (e) {
     if (['ECONNREFUSED', 'ECONNRESET'].includes(e.code))
       return '弹幕获取失败: 网络连接超时'
-    logger.error(`Failed to get danmu info. ${e.message}`)
+    logger.error(`Failed to get danmu info. ${e}`)
     return `弹幕获取失败: ${e.message}`
   }
 }
@@ -211,7 +211,7 @@ export async function bilibiliRefreshVup() {
   catch (err) {
     if (['ECONNREFUSED', 'ECONNRESET'].includes(err.code))
       return 'vup 更新失败: 网络连接超时'
-    logger.error(`Failed to update vup. ${err.message}`)
+    logger.error(`Failed to update vup. ${err}`)
     return `vup 更新失败: ${err.message}`
   }
 }

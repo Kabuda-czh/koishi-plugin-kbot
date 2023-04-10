@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-09 18:27:13
+ * @LastEditTime: 2023-04-10 18:30:44
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -75,7 +75,7 @@ export async function bilibiliAdd(
   }
   catch (e) {
     logger.error(`Failed to add user ${uid}. ${e}`)
-    return `请求失败，请检查 uid 是否正确或重试${e}`
+    return `请求失败，请检查 uid 是否正确或重试${e.message}`
   }
 }
 
@@ -152,6 +152,6 @@ export async function bilibiliSearch(
   }
   catch (e) {
     logger.error(`Failed to get user dynamics. ${e}`)
-    return `动态获取失败${e}`
+    return `动态获取失败${e.message}`
   }
 }

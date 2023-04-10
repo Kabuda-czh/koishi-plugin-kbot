@@ -2,7 +2,7 @@
 * @Author: Kabuda-czh
 * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-29 10:00:08
+ * @LastEditTime: 2023-04-10 18:27:47
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
 * @Description:
 *
@@ -35,7 +35,7 @@ export async function renderHtml(ctx: Context, systemInfo: SystemInfo) {
     )
   }
   catch (e) {
-    logger.error('puppeteer 渲染失败: ', e.message)
+    logger.error('puppeteer 渲染失败: ', e)
     return `渲染失败${e.message}`
   }
   finally {
@@ -77,7 +77,7 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
         )
       }
       catch (e) {
-        logger.error('puppeteer 渲染失败: ', e.message)
+        logger.error('puppeteer 渲染失败: ', e)
         return `puppeteer 渲染失败${e.message}`
       }
       finally {
@@ -85,7 +85,7 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
       }
     })
   }).catch((err) => {
-    logger.error(err.code, err.message)
+    logger.error('render random error:', err)
     if (['ECONNRESET', 'ETIMEDOUT', 'ECONNREFUSED', 'ECONNABORTED', 'read ECONNRESET'].includes(err.code))
       return '渲染失败: 请求超时, 网络错误'
     return `渲染失败: ${err.message}`

@@ -56,7 +56,7 @@ export async function getTwitterRestId(
       return [res?.data?.user?.result?.rest_id, res?.data?.user?.result?.legacy?.name]
     })
     .catch((err) => {
-      logger.error(`error getTwitterRestId: ${err.message}`)
+      logger.error(`error getTwitterRestId: ${err}`)
       return []
     })
 
