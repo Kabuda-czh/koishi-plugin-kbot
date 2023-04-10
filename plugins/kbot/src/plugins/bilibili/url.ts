@@ -3,7 +3,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:44:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-08 01:13:47
+ * @LastEditTime: 2023-04-10 11:17:19
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\url.ts
  * @Description:
  *
@@ -64,7 +64,7 @@ async function render(avid: string, http: Quester) {
     `https://api.bilibili.com/x/web-interface/view?aid=${avid}`,
   )
   const up
-    = data.staff?.map(staff => staff.name).join('/') || data.owner.name
+    = data?.staff?.map(staff => staff.name).join('/') || data.owner.name
 
   if (data.desc.includes('\n'))
     data.desc = data.desc.replaceAll(/\n/g, '')
