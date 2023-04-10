@@ -3,14 +3,14 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:44:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 11:17:19
+ * @LastEditTime: 2023-04-10 17:30:57
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\url.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import type { Context, Quester } from 'koishi'
-import { Logger, Schema } from 'koishi'
+import { Logger, Schema, segment } from 'koishi'
 import { toAvid } from './utils'
 
 // av -> 6 avid -> 8 bv -> 9
@@ -28,13 +28,17 @@ const logger = new Logger('KBot-bilibili-url')
 
 export function apply(ctx: Context) {
   ctx.middleware(async ({ content }, next) => {
-    try {
-      const avid = await testVideo(content, ctx.http)
-      if (avid)
-        return next(async () => await render(avid, ctx.http))
-    }
-    catch (e) {
-      logger.error('请求时发生异常: ', e)
+    const json = segment.select(content, 'json')
+    if (json.length > 0) {
+      content = segment.select(content, 'json')[0]?.attrs?.data.replace(/\\\//g, '/')
+      try {
+        const avid = await testVideo(content, ctx.http)
+        if (avid)
+          return next(async () => await render(avid, ctx.http))
+      }
+      catch (e) {
+        logger.error('请求时发生异常: ', e)
+      }
     }
     return next()
   })
