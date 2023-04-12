@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-08 11:13:29
+ * @LastEditTime: 2023-04-12 15:57:48
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
@@ -24,7 +24,7 @@ export async function twitterAdd(
       DynamicNotifiction,
     ][]
   >,
-  ctx: Context,
+  _ctx: Context,
 ) {
   const { twitterId, twitterName, twitterRestId } = twitter
 
@@ -110,9 +110,9 @@ export async function twitterList({
 }
 
 export async function twitterSearch(
-  { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'twitter', any>,
+  _: Argv<never, 'id' | 'guildId' | 'platform' | 'twitter', any>,
   twitter: { twitterId: string; twitterName: string; twitterRestId: string },
-  list: Dict<
+  _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'twitter'>,
       DynamicNotifiction,

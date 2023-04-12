@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 18:30:44
+ * @LastEditTime: 2023-04-12 15:56:29
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -127,9 +127,9 @@ export async function bilibiliList({
 }
 
 export async function bilibiliSearch(
-  { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
+  _: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
   uid: string,
-  list: Dict<
+  _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
       DynamicNotifiction,

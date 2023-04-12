@@ -25,7 +25,7 @@ import { renderDanmu, renderVup } from './render'
 export async function bilibiliVupCheck(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
   uid: string,
-  list: Dict<
+  _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
       DynamicNotifiction,
@@ -132,7 +132,7 @@ export async function bilibiliVupCheck(
 export async function bilibiliDanmuCheck(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
   uid: string,
-  list: Dict<
+  _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
       DynamicNotifiction,
