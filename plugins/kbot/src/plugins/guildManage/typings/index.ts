@@ -36,6 +36,13 @@ export interface Message {
   raw_message: string
 }
 
+export interface GroupInfo {
+  group_id: number
+  group_name: string
+  max_member_count: number
+  member_count: number
+}
+
 export interface GroupMemberInfo {
   group_id: number
   user_id: number
