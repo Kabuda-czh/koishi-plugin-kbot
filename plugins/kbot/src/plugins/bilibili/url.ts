@@ -3,15 +3,17 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:44:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 17:30:57
+ * @LastEditTime: 2023-04-17 10:33:43
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\url.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import type { Context, Quester } from 'koishi'
+import type { Context, Next, Quester } from 'koishi'
 import { Logger, Schema, segment } from 'koishi'
 import { toAvid } from './utils'
+
+const sendedTimes: Record<string, NodeJS.Timeout> = {}
 
 // av -> 6 avid -> 8 bv -> 9
 const VIDEO_REGEX
@@ -26,19 +28,26 @@ export const Config: Schema<IConfig> = Schema.object({})
 
 const logger = new Logger('KBot-bilibili-url')
 
+async function processContent(content: string, http: Quester, next: Next) {
+  try {
+    const avid = await testVideo(content, http)
+    if (avid)
+      return next(async () => await render(avid, http))
+  }
+  catch (e) {
+    logger.error('请求时发生异常: ', e)
+  }
+}
+
 export function apply(ctx: Context) {
   ctx.middleware(async ({ content }, next) => {
     const json = segment.select(content, 'json')
     if (json.length > 0) {
       content = segment.select(content, 'json')[0]?.attrs?.data.replace(/\\\//g, '/')
-      try {
-        const avid = await testVideo(content, ctx.http)
-        if (avid)
-          return next(async () => await render(avid, ctx.http))
-      }
-      catch (e) {
-        logger.error('请求时发生异常: ', e)
-      }
+      return await processContent(content, ctx.http, next)
+    }
+    else if (VIDEO_REGEX.test(content) || B23_REGEX.test(content)) {
+      return await processContent(content, ctx.http, next)
     }
     return next()
   })
@@ -64,6 +73,9 @@ async function parseB23(value: string, http: Quester): Promise<string> {
 }
 
 async function render(avid: string, http: Quester) {
+  if (avid in sendedTimes)
+    return
+
   const { data } = await http.get(
     `https://api.bilibili.com/x/web-interface/view?aid=${avid}`,
   )
@@ -72,6 +84,16 @@ async function render(avid: string, http: Quester) {
 
   if (data.desc.includes('\n'))
     data.desc = data.desc.replaceAll(/\n/g, '')
+
+  if (Object.keys(sendedTimes).length > 3) {
+    const id = Object.keys(sendedTimes)[0]
+    clearTimeout(sendedTimes[id])
+    delete sendedTimes[id]
+  }
+
+  sendedTimes[avid] = setTimeout(() => {
+    delete sendedTimes[avid]
+  }, 30 * 1000)
 
   return `<image url="${data.pic}"/>
 标题: ${data.title}
