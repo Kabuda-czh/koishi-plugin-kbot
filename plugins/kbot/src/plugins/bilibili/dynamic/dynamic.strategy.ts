@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:15:12
+ * @LastEditTime: 2023-04-17 11:17:08
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\dynamic.strategy.ts
  * @Description:
  *
@@ -52,6 +52,7 @@ export const dynamicStrategy = async (
   config: IConfig,
 ) => {
   const strategyName = Object.keys(options).find(key => options[key])
+  // FIXME: 如果关闭 help 就会检测到 h 选项, 但是没有 h 选项的处理, twitter 同理
   if (strategyName) {
     const value = options[strategyName]
     try {
