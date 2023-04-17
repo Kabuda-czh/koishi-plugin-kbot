@@ -1,6 +1,6 @@
 {
   "name": "koishi-plugin-kbot",
-  "version": "0.9.8-alpha.3",
+  "version": "0.9.8-alpha.4",
   "description": "A muti-function qq bot for koishi",
   "license": "AGPL-3.0",
   "repository": {
