@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:59:52
+ * @LastEditTime: 2023-04-17 09:58:33
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -96,6 +96,8 @@ export const Config: Schema<IConfig> = Schema.object({
 
 const apiEndPointPrefix = 'https://www.googleapis.com/youtube/v3/videos'
 
+const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?(?=.*v=\w+)(?:\S+)?|embed\/\w+|\S+)|youtu\.be\/\w+)(?:\S+)?/ig
+
 const videoRegex
   = /^(?:https?:\/\/)?(?:i\.|www\.|img\.)?(?:youtu\.be\/|youtube\.com\/|ytimg\.com\/)(?:embed\/|v\/|vi\/|vi_webp\/|watch\?v=|watch\?.+&v=)?((\w|-){11})(?:\S+)?$/
 
@@ -125,52 +127,52 @@ export function apply(ctx: Context, config: IConfig) {
   ctx.command('kbot/youtube', 'YouTube视频链接解析')
 
   ctx.middleware(async (session, next) => {
-    const isYoutube
-      = session.content.includes('youtube.com')
-      || session.content.includes('https://youtu.be')
+    const contentArray = session.content.match(youtubeRegex)
+    const isYoutube = contentArray && contentArray.length > 0
     if (!isYoutube)
       return next()
 
     try {
-      logger.info(`捕获到 Youtube 视频链接: ${session.content}`)
+      contentArray.map(async (content) => {
+        logger.info(`捕获到 Youtube 视频链接: ${content}`)
 
-      let id
-      let tagString = '无'
+        let id
+        let tagString = '无'
 
-      if (session.content.includes('https://youtu.be')) {
-        const index = session.content.lastIndexOf('/')
-        id = session.content.substring(index + 1, session.content.length)
-      }
-      else {
-        id = getIDFromURLByRegex(session.content)
-      }
+        if (content.includes('https://youtu.be')) {
+          const index = content.lastIndexOf('/')
+          id = content.substring(index + 1, content.length)
+        }
+        else {
+          id = getIDFromURLByRegex(content)
+        }
 
-      const result = await fetchDataFromAPI(ctx, config, id)
+        const result = await fetchDataFromAPI(ctx, config, id)
 
-      if (result.items.length === 0)
-        return '未能成功解析, 或许视频不存在'
+        if (result.items.length === 0)
+          return '未能成功解析, 或许视频不存在'
 
-      const {
-        snippet: {
-          title,
-          description,
-          channelTitle,
-          thumbnails: {
-            medium: { url },
-          },
-          publishedAt,
-          tags,
-        }, statistics,
-      } = result.items[0]
+        const {
+          snippet: {
+            title,
+            description,
+            channelTitle,
+            thumbnails: {
+              medium: { url },
+            },
+            publishedAt,
+            tags,
+          }, statistics,
+        } = result.items[0]
 
-      if (tags)
-        tagString = tags.length > 1 ? tags.join(', ') : tags[0]
+        if (tags)
+          tagString = tags.length > 1 ? tags.join(', ') : tags[0]
 
-      logger.info(`Youtube视频解析成功: ${title}`)
+        logger.info(`Youtube视频解析成功: ${title}`)
 
-      if (ctx.puppeteer && config.useImage) {
+        if (ctx.puppeteer && config.useImage) {
         // TODO 待优化样式
-        await session.send(
+          await session.send(
           <html style={{
             padding: '1rem',
             color: '#fff',
@@ -185,10 +187,10 @@ export function apply(ctx: Context, config: IConfig) {
             <p>播放量: {statistics.viewCount}</p>
             <p>点赞: {statistics.likeCount}</p>
           </html>,
-        )
-      }
-      else {
-        return `<image url="${url}" />
+          )
+        }
+        else {
+          await session.send(`<image url="${url}" />
 频道: ${channelTitle}
 标题: ${title}
 描述: ${description.length > 50 ? `${description.slice(0, 50)}...` : description}
@@ -196,8 +198,9 @@ export function apply(ctx: Context, config: IConfig) {
 标签: ${tagString}
 播放量: ${statistics.viewCount}
 点赞: ${statistics.likeCount}
-`
-      }
+`)
+        }
+      })
     }
     catch (error) {
       logger.error(error)
