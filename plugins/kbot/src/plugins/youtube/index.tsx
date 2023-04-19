@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-17 09:58:33
+ * @LastEditTime: 2023-04-18 16:03:16
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -136,7 +136,7 @@ export function apply(ctx: Context, config: IConfig) {
       contentArray.map(async (content) => {
         logger.info(`捕获到 Youtube 视频链接: ${content}`)
 
-        let id
+        let id: string | undefined
         let tagString = '无'
 
         if (content.includes('https://youtu.be')) {
