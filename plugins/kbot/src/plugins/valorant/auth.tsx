@@ -33,6 +33,12 @@ const FORCED_CIPHERS = [
   'RSA+3DES',
 ]
 
+const agent = new https.Agent({
+  rejectUnauthorized: true,
+  minVersion: 'TLSv1.3',
+  ciphers: FORCED_CIPHERS.join(':'),
+})
+
 export default class Auth {
   // 默认 UA
   private static readonly RIOT_CLIENT_USER_AGENT: string = 'RiotClient/60.0.6.4770705.4749685 rso-auth (Windows;10;;Professional, x64)'
@@ -89,6 +95,7 @@ export default class Auth {
       method: 'POST',
       data,
       headers: this._headers,
+      httpsAgent: agent,
     }).then((res) => {
       res.headers['set-cookie'].forEach((cookie: string) => {
         cookies.push(cookie.split(';')[0])
@@ -110,6 +117,7 @@ export default class Auth {
         ...this._headers,
         Cookie: cookies.join(';'),
       },
+      httpsAgent: agent,
     }).then((res) => {
       cookies = []
       res.headers['set-cookie'].forEach((cookie: string) => {
@@ -162,6 +170,7 @@ export default class Auth {
     return await this._http.axios<Valorant.EntitlementsResponse>(ValorantApi.Entitlements, {
       method: 'POST',
       headers,
+      httpsAgent: agent,
     }).then((res) => {
       // 提取令牌
       const { data } = res
@@ -178,6 +187,7 @@ export default class Auth {
     return await this._http.axios<Valorant.UserInfoResponse>(ValorantApi.Userinfo, {
       method: 'POST',
       headers,
+      httpsAgent: agent,
     }).then((res) => {
       // 提取用户信息
       const { data } = res
@@ -201,6 +211,7 @@ export default class Auth {
       method: 'PUT',
       headers,
       data,
+      httpsAgent: agent,
     }).then((res) => {
       // 提取区域信息
       const { data } = res
