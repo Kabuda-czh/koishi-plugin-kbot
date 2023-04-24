@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-24 10:41:08
+ * @LastEditTime: 2023-04-24 16:57:09
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -96,7 +96,7 @@ export async function apply(ctx: Context, config: IConfig) {
       '-s <upInfo:string> 查看最新动态, 请输入要查看动态的 up 主的 uid 或者 名字 或者 空间短链',
       { authority: config.authority },
     )
-    .option('list', '-l 展示当前订阅up主列表', { authority: config.authority })
+    .option('list', '-l 展示当前订阅 up 主列表', { authority: config.authority })
     .option(
       'vup',
       '-v <upInfo:string> 查成分, 请输入要查看成分的 up 主的 uid 或者 名字',
@@ -107,8 +107,8 @@ export async function apply(ctx: Context, config: IConfig) {
       '-d <upInfo:string> 查弹幕, 请输入要查看弹幕的 up 主的 uid 或者 名字',
       { authority: config.authority },
     )
-    .option('refresh', '--re 更新vup', { authority: config.authority })
-    .option('cookie', '--ck <cookie:string> 更新cookie', {
+    .option('refresh', '--re 更新 vup', { authority: config.authority })
+    .option('cookie', '--ck <cookie:string> 更新 cookie', {
       authority: config.authority,
     })
     .action(async ({ session, options }) => {
