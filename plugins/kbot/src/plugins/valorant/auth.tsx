@@ -2,14 +2,15 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-19 13:47:26
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-19 18:23:38
+ * @LastEditTime: 2023-04-24 16:11:21
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\valorant\auth.tsx
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import type { Session } from 'koishi'
-import { type Quester, Time } from 'koishi'
+import https from 'node:https'
+import { Time } from 'koishi'
+import type { Quester, Session } from 'koishi'
 import { ValorantApi } from './enum'
 import type { Valorant } from './types'
 
@@ -47,6 +48,7 @@ export default class Auth {
   private _headers: Record<string, string> = {}
   private user_agent: string
 
+  // 初始化
   constructor(http: Quester) {
     this._http = http
     this._headers = {
@@ -57,6 +59,7 @@ export default class Auth {
     this.user_agent = Auth.RIOT_CLIENT_USER_AGENT
   }
 
+  // 静态解析 token
   static _extract_tokens(data: Record<string, any>) {
     const pattern = /access_token=([^&]*)|id_token=([^&]*)|expires_in=([^&]*)/ig
     const match = data?.response?.parameters?.uri?.match(pattern)
@@ -67,6 +70,7 @@ export default class Auth {
     }
   }
 
+  // 静态解析 token
   static _extract_tokens_from_url(session: Session, url: string): string[] {
     try {
       const access_token = url.split('access_token=')[1].split('&scope')[0]
@@ -78,6 +82,15 @@ export default class Auth {
     }
   }
 
+  /**
+   * 用于认证用户的函数
+   * @param session Koishi 的 session, 用于转义 i18n, 后续可能会换成标签
+   * @param username 要认证的用户名
+   * @param password 要认证的密码
+   * @returns 如果认证成功, 则返回包含认证数据的字典, 包括 cookie, 访问令牌和令牌 ID.
+   *          如果认证需要 2FA, 则此函数返回一个包含 cookie 数据和提示用户输入 2FA 代码的消息的字典.
+   *          否则, 此函数返回 null.
+   */
   async authenticate(session: Session, username: string, password: string): Promise<Record<string, any>> {
     let cookies = []
 
@@ -97,6 +110,7 @@ export default class Auth {
       headers: this._headers,
       httpsAgent: agent,
     }).then((res) => {
+      // 准备授权请求的 cookies
       res.headers['set-cookie'].forEach((cookie: string) => {
         cookies.push(cookie.split(';')[0])
       })
@@ -110,6 +124,7 @@ export default class Auth {
       remember: true,
     }
 
+    // 发送身份认证请求
     return await this._http.axios<Valorant.AuthorizationResponse | Valorant.AuthorizationMultifactorResponse>(ValorantApi.Authorization, {
       method: 'PUT',
       data: userData,
@@ -129,7 +144,7 @@ export default class Auth {
       if (data.type === 'response') {
         const { access_token, id_token } = Auth._extract_tokens(data)
 
-        // 设置令牌到期时间
+        // TODO: 设置令牌到期时间
         const expiry_token = new Date().getTime() + Time.hour
         cookies.push(`expiry_token=${expiry_token}`)
 
@@ -145,6 +160,7 @@ export default class Auth {
       }
       else if (data.type === 'multifactor') {
         if (res.status === 429)
+          // 请求次数过多
           throw new Error(<i18n path=".errors.auth.ratelimit" />)
 
         const method = data?.multifactor?.method
@@ -157,12 +173,19 @@ export default class Auth {
             message: session.text('.errors.auth.input_2fa_email', data.multifactor),
           }
         }
+        // 不支持的 2FA 方法
         else { throw new Error(<i18n path=".errors.auth.temp_login_not_suppport_2fa" />) }
       }
+      // 账号密码错误
       else { throw new Error(<i18n path="errors.auth.invalid_password" />) }
     })
   }
 
+  /**
+   *
+   * @param accessToken 访问令牌
+   * @returns 返回对应的 jwt token
+   */
   async getEntitlementsToken(accessToken: string): Promise<string> {
     // 准备对应请求头
     const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` }
@@ -180,6 +203,11 @@ export default class Auth {
     })
   }
 
+  /**
+   * 用于获取用户信息的方法
+   * @param accessToken 访问令牌
+   * @returns 返回包含 puuid, name, tag 的数组
+   */
   async getUserInfo(accessToken: string): Promise<string[]> {
     // 准备对应请求头
     const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` }
@@ -200,6 +228,12 @@ export default class Auth {
     })
   }
 
+  /**
+   * 用于获取区域的方法
+   * @param accessToken 访问令牌
+   * @param idToken 令牌 ID
+   * @returns 区域的字符串
+   */
   async getRegion(accessToken: string, idToken: string): Promise<string> {
     // 准备对应请求头
     const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` }
@@ -207,6 +241,7 @@ export default class Auth {
     // 准备请求体
     const data = { id_token: idToken }
 
+    // 发送区域请求
     return await this._http.axios<Valorant.RegionResponse>(ValorantApi.Region, {
       method: 'PUT',
       headers,
@@ -222,6 +257,13 @@ export default class Auth {
     })
   }
 
+  /**
+   * 用于输入 2fa 验证码的方法
+   * @param session koishi 的 session 用于处理 i18n
+   * @param code 2fa 验证码
+   * @param cookies cookie 字符串
+   * @returns 身份信息的对象
+   */
   async get2faCode(session: Session, code: string, cookies: string): Promise<Record<string, any>> {
     // 准备请求体
     const data = { type: 'multifactor', code, rememberDevice: true }
@@ -234,8 +276,10 @@ export default class Auth {
         Cookie: cookies,
       },
       data,
+      httpsAgent: agent,
     }).then((res) => {
       const { data } = res
+      // 如果成功输入 2FA 验证码，则返回包含身份验证信息的字典
       if (data.type === 'response') {
         const cookies = []
         res.headers['set-cookie'].forEach((cookie: string) => {
@@ -252,11 +296,128 @@ export default class Auth {
           },
         }
       }
+      // 超时判断/无效
+      else {
+        return {
+          auth: 'failed',
+          error: <i18n path=".errors.auth.2fa_invalid_code" />,
+        }
+      }
     }).catch(() => {
       return {
         auth: 'failed',
         error: <i18n path=".errors.auth.2fa_invalid_code" />,
       }
     })
+  }
+
+  async redeemCookies(session: Session, cookies: string) {
+    // 准备请求 params
+    const params = {
+      redirect_uri: 'https://playvalorant.com/Fopt_in',
+      client_id: 'play-valorant-web-prod',
+      response_type: 'token id_token',
+      scope: 'account openid',
+      nonce: '1',
+    }
+
+    return await this._http.axios(ValorantApi.Authorize, {
+      method: 'GET',
+      params,
+      headers: {
+        Cookie: cookies,
+      },
+      httpsAgent: agent,
+      maxRedirects: 0,
+    }).then(async (res) => {
+      if (res.status !== 303)
+        throw new Error(<i18n path=".errors.auth.cookies_expired" />)
+
+      if (res.headers.Location.startsWith('/login'))
+        throw new Error(<i18n path=".errors.auth.cookies_expired" />)
+
+      const newCookies = []
+      res.headers['set-cookie'].forEach((cookie: string) => {
+        newCookies.push(cookie.split(';')[0])
+      })
+
+      const [accessToken, _idToken] = Auth._extract_tokens_from_url(session, res.data)
+      const entitlementsToken = await this.getEntitlementsToken(accessToken)
+
+      return [newCookies.join(';'), accessToken, entitlementsToken]
+    })
+  }
+
+  async tempAuth(session: Session, username: string, password: string) {
+    const authenticate = await this.authenticate(session, username, password)
+    if (authenticate.auth === 'response') {
+      const { accessToken, idToken } = authenticate.data
+      const entitlementsToken = await this.getEntitlementsToken(accessToken)
+      const [puuid, name, tag] = await this.getUserInfo(accessToken)
+      const region = await this.getRegion(accessToken, idToken)
+
+      const playerName = name ? `${name}#${tag}` : 'no_username'
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-Riot-Entitlements-JWT': entitlementsToken,
+        'Authorization': `Bearer ${accessToken}`,
+      }
+
+      return {
+        puuid,
+        playerName,
+        region,
+        headers,
+      }
+    }
+
+    throw new Error(<i18n path=".errors.auth.temp_login_not_suppport_2fa" />)
+  }
+
+  async loginWithCookies(session: Session, cookies: string) {
+    const cookiePayload = cookies.startsWith('e') ? `ssid=${cookies}` : cookies
+
+    this._headers.Cookie = cookiePayload
+
+    // 准备请求 params
+    const params = {
+      redirect_uri: 'https://playvalorant.com/Fopt_in',
+      client_id: 'play-valorant-web-prod',
+      response_type: 'token id_token',
+      scope: 'account openid',
+      nonce: '1',
+    }
+
+    // 发送请求
+    return await this._http.axios(ValorantApi.Authorize, {
+      method: 'GET',
+      params,
+      headers: this._headers,
+      httpsAgent: agent,
+      maxRedirects: 0,
+    }).then(async (res) => {
+      if (res.status !== 303)
+        throw new Error(<i18n path=".errors.auth.cookies_expired" />)
+      const newCookies = []
+      res.headers['set-cookie'].forEach((cookie: string) => {
+        newCookies.push(cookie.split(';')[0])
+      })
+
+      const [accessToken, idToken] = Auth._extract_tokens_from_url(session, res.data)
+      const entitlementsToken = await this.getEntitlementsToken(accessToken)
+
+      return {
+        cookies: newCookies.join(';'),
+        accessToken,
+        idToken,
+
+      }
+    }).finally(() => {
+      delete this._headers.Cookie
+    })
+  }
+
+  async refreshToken(session: Session, refreshToken: string) {
+    return await this.redeemCookies(session, refreshToken)
   }
 }
