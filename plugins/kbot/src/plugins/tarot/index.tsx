@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-02 17:14:17
+ * @LastEditTime: 2023-04-24 10:11:14
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\tarot\index.tsx
  * @Description:
  *
@@ -67,7 +67,7 @@ export async function apply(ctx: Context) {
     const indiceArray = Array.from({ length: cardLength }, (_, i) => i + 1)
     const randomIndices = new Set<number>()
     while (randomIndices.size < 4) {
-      const index = Math.floor(Math.random() * indiceArray.length)
+      const index = Math.floor(Math.random() * indiceArray.length + 1)
       if (!randomIndices.has(index))
         randomIndices.add(index)
     }
