@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-19 14:38:06
+ * @LastEditTime: 2023-04-24 10:43:39
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -20,7 +20,7 @@ import * as youtubePlugin from './plugins/youtube'
 import * as managePlugin from './plugins/guildManage'
 import * as twitterPlugin from './plugins/twitter'
 import * as tarotPlugin from './plugins/tarot'
-import * as valorantPlugin from './plugins/valorant'
+// import * as valorantPlugin from './plugins/valorant'
 
 import { kbotDir, publicDir } from './config'
 
@@ -186,7 +186,7 @@ export async function apply(ctx: Context, config: IConfig) {
     if (config.KBotTarot.enabled)
       ctx.plugin(tarotPlugin, config.KBotTarot)
 
-    ctx.plugin(valorantPlugin)
+    // ctx.plugin(valorantPlugin)
 
     logger.success('KBot 内置插件加载完毕')
   }
