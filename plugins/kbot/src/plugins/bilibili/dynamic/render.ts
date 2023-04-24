@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-28 16:55:23
+ * @LastEditTime: 2023-04-24 13:58:12
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -180,7 +180,7 @@ async function renderText(item: BilibiliDynamicItem): Promise<string> {
   }
   else if (item.type === 'DYNAMIC_TYPE_FORWARD') {
     const dynamic = item.modules.module_dynamic
-    result = `${author.name} 转发动态: ${dynamic.desc.text}\n${renderText(
+    result = `${author.name} 转发动态: ${dynamic.desc.text}\n${await renderText(
       item.orig,
     )}`
   }
