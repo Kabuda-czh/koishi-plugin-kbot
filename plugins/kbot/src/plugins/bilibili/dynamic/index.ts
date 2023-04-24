@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-06 11:10:40
+ * @LastEditTime: 2023-04-24 10:26:36
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -86,14 +86,14 @@ export async function apply(ctx: Context, config: IConfig) {
     .usage(`最低权限: ${config.authority} 级`)
     .option(
       'add',
-      '-a <uid:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字 或者 空间短链',
+      '-a <upInfo:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字 或者 空间短链',
       {
         authority: config.authority,
       },
     )
     .option(
       'remove',
-      '-r <uid:string> 移除订阅, 请输入要移除的 up 主的 uid 或者 名字 或者 空间短链',
+      '-r <upInfo:string> 移除订阅, 请输入要移除的 up 主的 uid 或者 名字 或者 空间短链',
       {
         authority: config.authority,
       },
