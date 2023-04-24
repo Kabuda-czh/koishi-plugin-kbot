@@ -2,13 +2,12 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-24 10:26:36
+ * @LastEditTime: 2023-04-24 10:41:08
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import * as fs from 'node:fs'
 
 import type { Argv, Channel, Context, Dict, Quester } from 'koishi'
 import { Logger, Schema } from 'koishi'
@@ -17,7 +16,6 @@ import {} from 'koishi-plugin-puppeteer'
 import type { BilibiliDynamicItem, DynamicNotifiction } from '../model'
 import { getDynamic } from '../utils'
 
-import { bilibiliDir, kbotDir } from '../../../config'
 import { dynamicStrategy } from './dynamic.strategy'
 import { listen } from './listen'
 
@@ -63,11 +61,6 @@ export async function apply(ctx: Context, config: IConfig) {
     'platform',
     'bilibili',
   ])
-
-  const fileNames = await fs.promises.readdir(kbotDir)
-
-  if (!fileNames.includes('bilibili'))
-    await fs.promises.mkdir(bilibiliDir, { recursive: true })
 
   const list = channels
     .filter(channel => channel.bilibili.dynamic)

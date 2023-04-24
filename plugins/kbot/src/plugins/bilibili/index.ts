@@ -2,14 +2,16 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:27
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-22 17:08:10
+ * @LastEditTime: 2023-04-24 10:40:51
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
+import fs from 'node:fs'
 import type { Context } from 'koishi'
 import { Quester, Schema } from 'koishi'
+import { bilibiliDir, kbotDir } from '../../config'
 import * as dynamic from './dynamic'
 import * as url from './url'
 
@@ -33,7 +35,7 @@ export const Config: Schema<IConfig> = Schema.object({
   quester: Quester.Config.description('Bilibili 请求配置'),
 })
 
-export function apply(context: Context, config: IConfig) {
+export async function apply(context: Context, config: IConfig) {
   context.guild().command('kbot/bilibili', 'Bilibili 相关功能')
 
   context.model.extend('channel', {
@@ -42,6 +44,11 @@ export function apply(context: Context, config: IConfig) {
       initial: {},
     },
   })
+
+  const fileNames = await fs.promises.readdir(kbotDir)
+
+  if (!fileNames.includes('bilibili'))
+    await fs.promises.mkdir(bilibiliDir, { recursive: true })
 
   const ctx = context.isolate(['http'])
 
