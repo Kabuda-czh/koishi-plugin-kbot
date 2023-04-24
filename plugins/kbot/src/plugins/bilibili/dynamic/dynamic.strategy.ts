@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-17 11:17:08
+ * @LastEditTime: 2023-04-24 10:37:47
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\dynamic.strategy.ts
  * @Description:
  *
@@ -56,9 +56,12 @@ export const dynamicStrategy = async (
   if (strategyName) {
     const value = options[strategyName]
     try {
-      const uid = await uidExtract(value, { session }, logger, ctx)
-      if (!['list', 'cookie', 'refresh'].includes(strategyName) && !uid)
-        return '未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接'
+      let uid: string
+      if (!['list', 'cookie', 'refresh'].includes(strategyName)) {
+        uid = await uidExtract(value, { session }, logger, ctx)
+        if (!uid)
+          return '未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接'
+      }
 
       return dynamicStrategies[strategyName]?.(
         { session, options },
