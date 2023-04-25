@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-24 16:57:09
+ * @LastEditTime: 2023-04-25 11:18:00
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -79,21 +79,21 @@ export async function apply(ctx: Context, config: IConfig) {
     .usage(`最低权限: ${config.authority} 级`)
     .option(
       'add',
-      '-a <upInfo:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字 或者 空间短链',
+      '-a <upInfo:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字',
       {
         authority: config.authority,
       },
     )
     .option(
       'remove',
-      '-r <upInfo:string> 移除订阅, 请输入要移除的 up 主的 uid 或者 名字 或者 空间短链',
+      '-r <upInfo:string> 移除订阅, 请输入要移除的 up 主的 uid 或者 名字',
       {
         authority: config.authority,
       },
     )
     .option(
       'search',
-      '-s <upInfo:string> 查看最新动态, 请输入要查看动态的 up 主的 uid 或者 名字 或者 空间短链',
+      '-s <upInfo:string> 查看最新动态, 请输入要查看动态的 up 主的 uid 或者 名字',
       { authority: config.authority },
     )
     .option('list', '-l 展示当前订阅 up 主列表', { authority: config.authority })
@@ -111,6 +111,7 @@ export async function apply(ctx: Context, config: IConfig) {
     .option('cookie', '--ck <cookie:string> 更新 cookie', {
       authority: config.authority,
     })
+    .example('使用方法: bilibili -a 123456 或者 bilibili -a 名字')
     .action(async ({ session, options }) => {
       if (Object.keys(options).length > 1)
         return '请不要同时使用多个参数'

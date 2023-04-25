@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-18 16:03:16
+ * @LastEditTime: 2023-04-25 11:20:58
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -124,8 +124,6 @@ const getIDFromURLByRegex = (url: string): string | undefined => {
 }
 
 export function apply(ctx: Context, config: IConfig) {
-  ctx.command('kbot/youtube', 'YouTube视频链接解析')
-
   ctx.middleware(async (session, next) => {
     const contentArray = session.content.match(youtubeRegex)
     const isYoutube = contentArray && contentArray.length > 0

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-06 11:05:34
+ * @LastEditTime: 2023-04-25 11:19:51
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -105,6 +105,7 @@ export async function apply(ctx: Context, config: IConfig) {
     .option('list', '-l 展示当前订阅 twitter 博主列表', {
       authority: config.authority,
     })
+    .example('使用方法: twitter -a xxxxx')
     .action(async ({ session, options }) => {
       if (Object.keys(options).length > 1)
         return '请不要同时使用多个参数'
