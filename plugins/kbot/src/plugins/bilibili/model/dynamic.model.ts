@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 17:18:37
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-03 17:37:59
+ * @LastEditTime: 2023-04-26 10:40:28
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\model\dynamic.model.ts
  * @Description:
  *
@@ -126,4 +126,5 @@ export interface LivePlayInfo {
   title: string
   cover: string
   link: string
+  live_play_info: LivePlayInfo
 }

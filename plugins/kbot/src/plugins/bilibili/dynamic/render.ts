@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-24 13:58:12
+ * @LastEditTime: 2023-04-26 10:40:46
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -187,9 +187,9 @@ async function renderText(item: BilibiliDynamicItem): Promise<string> {
   else if (item.type === 'DYNAMIC_TYPE_LIVE_RCMD') {
     const dynamic = item.modules.module_dynamic
     const info: LivePlayInfo = JSON.parse(dynamic.major.live_rcmd.content)
-    result = `${author.name} 开始直播: ${info.title}`
+    result = `${author.name} 开始直播: ${info.title || info.live_play_info.title}`
     if (info.cover)
-      result += `\n${segment.image(info.cover)}`
+      result += `\n${segment.image(info.cover || info.live_play_info.cover)}`
   }
   else {
     result = `${author.name} 发布了未知类型的动态: ${(item as any).type}`
