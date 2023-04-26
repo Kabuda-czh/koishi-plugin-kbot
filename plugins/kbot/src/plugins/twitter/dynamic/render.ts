@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 18:32:06
+ * @LastEditTime: 2023-04-26 11:46:52
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -36,6 +36,10 @@ export async function renderFunction(
 }
 
 async function renderImage(ctx: Context, entry: Entry): Promise<string> {
+  // 判断是否是时间线动态, 是的话用文字渲染处理
+  if (entry?.content?.itemContent?.tweet_results?.result?.legacy?.self_thread)
+    return renderText(ctx, entry)
+
   const twitterRestId = entry.sortIndex
   const twitterScreenName
     = entry?.content?.itemContent?.tweet_results?.result?.core?.user_results?.result
@@ -45,7 +49,6 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
       ?.legacy?.name
   let page: Page
   try {
-    // const needLoadFontList = await getFontsList(logger);
     const url = StringFormat(
       TwitterDynamicType.UserStatusURL,
       twitterScreenName,
@@ -56,9 +59,6 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
     await page.goto(url)
     await page.waitForNetworkIdle()
-
-    // if (needLoadFontList.length > 0)
-    //   await page.evaluate(`setFont(${JSON.stringify(needLoadFontList)})`);
 
     const element = await page.$('article')
     const elementClip = await element.boundingBox()
@@ -92,7 +92,7 @@ async function renderText(
   isListen = true,
   onlyMedia = false,
 ): Promise<string> {
-  const entryResult = entry.content.itemContent.tweet_results.result
+  const entryResult = entry?.content?.itemContent?.tweet_results?.result
   if (!entryResult)
     throw new Error('数据获取失败')
 
