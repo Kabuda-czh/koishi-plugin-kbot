@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-12 15:56:29
+ * @LastEditTime: 2023-04-26 17:39:12
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -98,6 +98,7 @@ export async function bilibiliRemove(
     ][]
   >,
 ) {
+  uid = String(uid)
   const { channel } = session
   const index = channel.bilibili.dynamic.findIndex(
     notification => notification.bilibiliId === uid,
