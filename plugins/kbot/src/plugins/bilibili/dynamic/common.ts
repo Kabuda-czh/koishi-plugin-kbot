@@ -23,7 +23,7 @@ const fetchUserInfo = async (
   uid: string,
   http: Quester,
 ): Promise<BilibiliUserInfoApiData['data']> => {
-  const res = await http.get(
+  let res = await http.get(
     `https://api.bilibili.com/x/space/acc/info?mid=${uid}&gaia_source=m_station`,
     {
       headers: {
@@ -31,6 +31,15 @@ const fetchUserInfo = async (
       },
     },
   )
+
+  // 对接 code -509 异常返回
+  if (res.code === undefined) {
+    const regex = /(?<=})\s*(?={)/g
+    const jsonStrings = res.split(regex)
+    if (+JSON.parse(jsonStrings[0]).code === -509)
+      res = JSON.parse(jsonStrings[1])
+  }
+
   if (res.code !== 0)
     throw new Error(`获取 ${uid} 信息失败: [${res}]`)
   return res.data
