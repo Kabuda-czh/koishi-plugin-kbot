@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-06 10:43:37
+ * @LastEditTime: 2023-04-26 11:58:32
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\dynamic.strategy.ts
  * @Description:
  *
@@ -58,7 +58,7 @@ export const dynamicStrategy = async (
   }
 
   const strategyName = Object.keys(options).find(key => options[key])
-  if (strategyName) {
+  if (Object.keys(dynamicStrategies).includes(strategyName)) {
     let restId, twitterName
     const twitterId = options[strategyName]
     if (!['list'].includes(strategyName)) {
