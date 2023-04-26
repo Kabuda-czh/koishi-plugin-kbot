@@ -90,6 +90,10 @@
   font-size: 28px;
   font-family: "Gugi";
   color: #b7a89e;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #background-page .__footer {
