@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-12 15:57:48
+ * @LastEditTime: 2023-04-26 17:41:19
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
@@ -55,7 +55,7 @@ export async function twitterAdd(
     return `成功添加: ${twitterName}`
   }
   catch (e) {
-    logger.error(`Failed to add user ${twitterId}. ${e}`)
+    logger.error(`添加推特用户 ${twitterId} 失败: [${e}]`)
     return `请求失败，请检查 id 是否正确或重试${e}`
   }
 }
