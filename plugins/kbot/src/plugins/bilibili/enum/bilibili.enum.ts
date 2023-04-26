@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 11:39:18
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 10:07:13
+ * @LastEditTime: 2023-04-26 11:21:56
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\enum\bilibili.enum.ts
  * @Description:
  *
@@ -17,4 +17,11 @@ export enum BilibiliDynamicType {
   MedalWallURL = 'https://api.live.bilibili.com/xlive/web-ucenter/user/MedalWall?target_id=%s',
   DanmakuAPI = 'https://danmakus.com/api/search/user/detail?uid=%s&pagenum=%s&pagesize=5',
   DanmakuAPI2 = 'https://ukamnads.icu/api/search/user/detail?uid=%s&pagenum=%s&pagesize=5',
+}
+
+export enum BilibiliDynamicItemType {
+  DYNAMIC_TYPE_AV = '发布了视频',
+  DYNAMIC_TYPE_DRAW = '发布了动态',
+  DYNAMIC_TYPE_WORD = '发布了动态',
+  DYNAMIC_TYPE_LIVE = '开始直播了',
 }

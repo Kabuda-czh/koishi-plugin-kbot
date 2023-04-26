@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-26 10:40:46
+ * @LastEditTime: 2023-04-26 11:22:26
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -14,6 +14,7 @@ import { segment } from 'koishi'
 import type { Page } from 'puppeteer-core'
 import type { BilibiliDynamicItem, LivePlayInfo } from '../model'
 import { getFontsList } from '../../utils'
+import { BilibiliDynamicItemType } from '../enum'
 import { logger } from '.'
 import type { IConfig } from '.'
 
@@ -71,7 +72,7 @@ async function pcRenderImage(
     const elementClip = await element.boundingBox()
 
     return (
-      `${item.modules.module_author.name} 发布了动态:\n${
+      `${item.modules.module_author.name} ${BilibiliDynamicItemType[item.type] || '发布了动态'}:\n${
       segment.image(
         await element.screenshot({
           clip: elementClip,
@@ -138,7 +139,7 @@ async function mobileRenderImage(
     const elementClip = await element.boundingBox()
 
     return (
-      `${item.modules.module_author.name} 发布了动态:\n${
+      `${item.modules.module_author.name} ${BilibiliDynamicItemType[item.type] || '发布了动态'}:\n${
       segment.image(
         await page.screenshot({
           clip: elementClip,
