@@ -32,7 +32,7 @@ const fetchUserInfo = async (
     },
   )
   if (res.code !== 0)
-    throw new Error(`Failed to get user info. ${res}`)
+    throw new Error(`获取 ${uid} 信息失败: [${res}]`)
   return res.data
 }
 
@@ -74,7 +74,7 @@ export async function bilibiliAdd(
     return `成功添加 up主: ${name}`
   }
   catch (e) {
-    logger.error(`Failed to add user ${uid}. ${e}`)
+    logger.error(e)
     return `请求失败，请检查 uid 是否正确或重试${e.message}`
   }
 }
@@ -151,7 +151,7 @@ export async function bilibiliSearch(
     return renderFunction(ctx, dynamic, config)
   }
   catch (e) {
-    logger.error(`Failed to get user dynamics. ${e}`)
+    logger.error(`${uid} 动态获取失败: [${e}]`)
     return `动态获取失败${e.message}`
   }
 }
