@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-19 13:47:26
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-24 16:11:21
+ * @LastEditTime: 2023-04-25 11:24:47
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\valorant\auth.tsx
  * @Description:
  *
@@ -311,6 +311,12 @@ export default class Auth {
     })
   }
 
+  /**
+   * 用于兑换新的 cookie 的方法
+   * @param session koishi 的 session 用于处理 i18n
+   * @param cookies cookie 字符串
+   * @returns 数组，包含兑换后的 cookie 和 access_token 和 entitlements_token
+   */
   async redeemCookies(session: Session, cookies: string) {
     // 准备请求 params
     const params = {
@@ -348,6 +354,13 @@ export default class Auth {
     })
   }
 
+  /**
+   * 临时登录, 返回用户信息
+   * @param session koishi 的 session 用于处理 i18n
+   * @param username 用户名
+   * @param password 密码
+   * @returns 返回玩家信息对象, 包含 puuid, playerName, region, headers
+   */
   async tempAuth(session: Session, username: string, password: string) {
     const authenticate = await this.authenticate(session, username, password)
     if (authenticate.auth === 'response') {
@@ -374,6 +387,12 @@ export default class Auth {
     throw new Error(<i18n path=".errors.auth.temp_login_not_suppport_2fa" />)
   }
 
+  /**
+   * 使用 cookie 登录并返回包含访问令牌, 令牌 ID 和资格令牌的字典
+   * @param session koishi 的 session 用于处理 i18n
+   * @param cookies cookie 字符串
+   * @returns 包含访问令牌, 令牌 ID, 资格令牌和 cookie 等字段的对象
+   */
   async loginWithCookies(session: Session, cookies: string) {
     const cookiePayload = cookies.startsWith('e') ? `ssid=${cookies}` : cookies
 
@@ -417,6 +436,12 @@ export default class Auth {
     })
   }
 
+  /**
+   * 刷新 cookie
+   * @param session koishi 的 session 用于处理 i18n
+   * @param refreshToken 需要刷新的 refresh_token
+   * @returns 数组，包含兑换后的 cookie 和 access_token 和 entitlements_token
+   */
   async refreshToken(session: Session, refreshToken: string) {
     return await this.redeemCookies(session, refreshToken)
   }
