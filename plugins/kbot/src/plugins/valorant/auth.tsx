@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-19 13:47:26
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-25 11:24:47
+ * @LastEditTime: 2023-04-26 17:52:19
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\valorant\auth.tsx
  * @Description:
  *
@@ -10,7 +10,7 @@
  */
 import https from 'node:https'
 import { Time } from 'koishi'
-import type { Quester, Session } from 'koishi'
+import type { Quester } from 'koishi'
 import { ValorantApi } from './enum'
 import type { Valorant } from './types'
 
@@ -71,27 +71,26 @@ export default class Auth {
   }
 
   // 静态解析 token
-  static _extract_tokens_from_url(session: Session, url: string): string[] {
+  static _extract_tokens_from_url(url: string): string[] {
     try {
       const access_token = url.split('access_token=')[1].split('&scope')[0]
       const id_token = url.split('id_token=')[1].split('&')[0]
       return [access_token, id_token]
     }
     catch (err) {
-      throw new Error(session.text('invalid_cookie'))
+      throw new Error(<i18n path=".errors.auth.invalid_cookie" />)
     }
   }
 
   /**
    * 用于认证用户的函数
-   * @param session Koishi 的 session, 用于转义 i18n, 后续可能会换成标签
    * @param username 要认证的用户名
    * @param password 要认证的密码
    * @returns 如果认证成功, 则返回包含认证数据的字典, 包括 cookie, 访问令牌和令牌 ID.
    *          如果认证需要 2FA, 则此函数返回一个包含 cookie 数据和提示用户输入 2FA 代码的消息的字典.
    *          否则, 此函数返回 null.
    */
-  async authenticate(session: Session, username: string, password: string): Promise<Record<string, any>> {
+  async authenticate(username: string, password: string): Promise<Record<string, any>> {
     let cookies = []
 
     // 初始授权参数
@@ -169,8 +168,8 @@ export default class Auth {
           return {
             auth: '2fa',
             cookie: cookies.join(';'),
-            label: session.text('.errors.auth.input_2fa_code'),
-            message: session.text('.errors.auth.input_2fa_email', data.multifactor),
+            label: <i18n path=".errors.auth.input_2fa_code" />,
+            message: <i18n path=".errors.auth.2fa_to_email">{ [data.multifactor] }</i18n>,
           }
         }
         // 不支持的 2FA 方法
@@ -259,12 +258,11 @@ export default class Auth {
 
   /**
    * 用于输入 2fa 验证码的方法
-   * @param session koishi 的 session 用于处理 i18n
    * @param code 2fa 验证码
    * @param cookies cookie 字符串
    * @returns 身份信息的对象
    */
-  async get2faCode(session: Session, code: string, cookies: string): Promise<Record<string, any>> {
+  async get2faCode(code: string, cookies: string): Promise<Record<string, any>> {
     // 准备请求体
     const data = { type: 'multifactor', code, rememberDevice: true }
 
@@ -286,7 +284,7 @@ export default class Auth {
           cookies.push(cookie.split(';')[0])
         })
         const uri = data?.response?.parameters?.uri
-        const [access_token, id_token] = Auth._extract_tokens_from_url(session, uri)
+        const [access_token, id_token] = Auth._extract_tokens_from_url(uri)
         return {
           auth: 'response',
           data: {
@@ -313,11 +311,10 @@ export default class Auth {
 
   /**
    * 用于兑换新的 cookie 的方法
-   * @param session koishi 的 session 用于处理 i18n
    * @param cookies cookie 字符串
    * @returns 数组，包含兑换后的 cookie 和 access_token 和 entitlements_token
    */
-  async redeemCookies(session: Session, cookies: string) {
+  async redeemCookies(cookies: string) {
     // 准备请求 params
     const params = {
       redirect_uri: 'https://playvalorant.com/Fopt_in',
@@ -347,7 +344,7 @@ export default class Auth {
         newCookies.push(cookie.split(';')[0])
       })
 
-      const [accessToken, _idToken] = Auth._extract_tokens_from_url(session, res.data)
+      const [accessToken, _idToken] = Auth._extract_tokens_from_url(res.data)
       const entitlementsToken = await this.getEntitlementsToken(accessToken)
 
       return [newCookies.join(';'), accessToken, entitlementsToken]
@@ -356,13 +353,12 @@ export default class Auth {
 
   /**
    * 临时登录, 返回用户信息
-   * @param session koishi 的 session 用于处理 i18n
    * @param username 用户名
    * @param password 密码
    * @returns 返回玩家信息对象, 包含 puuid, playerName, region, headers
    */
-  async tempAuth(session: Session, username: string, password: string) {
-    const authenticate = await this.authenticate(session, username, password)
+  async tempAuth(username: string, password: string) {
+    const authenticate = await this.authenticate(username, password)
     if (authenticate.auth === 'response') {
       const { accessToken, idToken } = authenticate.data
       const entitlementsToken = await this.getEntitlementsToken(accessToken)
@@ -389,11 +385,10 @@ export default class Auth {
 
   /**
    * 使用 cookie 登录并返回包含访问令牌, 令牌 ID 和资格令牌的字典
-   * @param session koishi 的 session 用于处理 i18n
    * @param cookies cookie 字符串
    * @returns 包含访问令牌, 令牌 ID, 资格令牌和 cookie 等字段的对象
    */
-  async loginWithCookies(session: Session, cookies: string) {
+  async loginWithCookies(cookies: string) {
     const cookiePayload = cookies.startsWith('e') ? `ssid=${cookies}` : cookies
 
     this._headers.Cookie = cookiePayload
@@ -422,7 +417,7 @@ export default class Auth {
         newCookies.push(cookie.split(';')[0])
       })
 
-      const [accessToken, idToken] = Auth._extract_tokens_from_url(session, res.data)
+      const [accessToken, idToken] = Auth._extract_tokens_from_url(res.data)
       const entitlementsToken = await this.getEntitlementsToken(accessToken)
 
       return {
@@ -438,11 +433,10 @@ export default class Auth {
 
   /**
    * 刷新 cookie
-   * @param session koishi 的 session 用于处理 i18n
    * @param refreshToken 需要刷新的 refresh_token
    * @returns 数组，包含兑换后的 cookie 和 access_token 和 entitlements_token
    */
-  async refreshToken(session: Session, refreshToken: string) {
-    return await this.redeemCookies(session, refreshToken)
+  async refreshToken(refreshToken: string) {
+    return await this.redeemCookies(refreshToken)
   }
 }
