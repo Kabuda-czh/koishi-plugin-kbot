@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-07 11:41:23
+ * @LastEditTime: 2023-04-25 11:44:33
  * @FilePath: \KBot-App\plugins\kbot\src\basic\index.tsx
  * @Description:
  *
@@ -11,6 +11,7 @@
 import type { Context } from 'koishi'
 import { Logger, Schema } from 'koishi'
 import * as statusPlugin from './status'
+import * as ttsPlugin from './tts'
 
 export interface IConfig {
   yiyan?: boolean
@@ -21,6 +22,7 @@ export interface IConfig {
   checkBody?: {
     enabled: boolean
   } & statusPlugin.IConfig
+  tts?: boolean
 }
 
 export const Config: Schema<IConfig> = Schema.object({
@@ -43,6 +45,7 @@ export const Config: Schema<IConfig> = Schema.object({
       }),
     ]) as statusPlugin.IConfig,
   ]),
+  tts: Schema.boolean().default(false).description('是否开启文字转语音, API 来源于 https://www.text-to-speech.cn/'),
 })
 
 export const logger = new Logger('KBot-basic')
@@ -129,4 +132,6 @@ ${Object.values(weatherData.index).map((item: any) => `${item.name}: ${item.leve
   }
   if (config.checkBody.enabled)
     ctx.plugin(statusPlugin, config.checkBody)
+  if (config.tts)
+    ctx.plugin(ttsPlugin)
 }
