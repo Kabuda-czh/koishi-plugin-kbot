@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "types": [
+      "@koishijs/client/global"
+    ]
+  },
+  "include": [
+    "."
+  ]
+}

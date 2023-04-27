@@ -1,0 +1,1 @@
+./plugins/kbot/readme.md

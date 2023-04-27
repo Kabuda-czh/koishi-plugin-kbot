@@ -1,0 +1,82 @@
+commands:
+  valorant:
+    messages:
+      login:
+        name: 登录
+        description: 使用您的Riot 账户登录
+        describe:
+          username: 请输入账号名!
+          password: 请输入登录密码!
+        success: 登录成功
+        failed: 登录失败, 请再试一次
+      logout:
+        name: 登出
+        description: 登出并从数据库中删除您的账户
+        success: 成功登出
+        failed: 登出失败，请再试一次
+      store:
+        name: 商店
+        description: 在您的账户中显示您的每日商店
+        describe:
+          username: 请输入账号名! (暂时登录)
+          password: 请输入登录密码! (暂时登录)
+        response: |
+          <message>
+            <p>{0} 的每日商店</p>
+            <p>剩余 {1}</p>
+          </message>
+      point:
+        name: 点数
+        description: 查看您剩余的特务币和辐能点数(VP/RP)
+        point: 点数
+      mission:
+        name: 任务
+        description: 查看您的每日/每周任务进度
+        title: 任务
+        daily: 每日
+        weekly: 每周
+        new_player: 新玩家
+        no_mission: 无可用任务
+        daily_reset: <message>重设倒数 {0}</message>
+        refills: <message>更新剩下时间 {0}</message>
+      nightmarket:
+        name: 夜市
+        description: 显示夜市皮肤
+        response: |
+          <message>
+            <p>{0} 的每日商店</p>
+            <p>剩余 {1}</p>
+          </message>
+        nightmarket_end: 夜市已经结束
+      battlepass:
+        name: 战斗通行证
+        description: 查看您当前战斗通行证的级别
+        response: |
+          <message>
+            <p>下一个奖励: {0}</p>
+            <p>类型: {1}</p>
+            <p>经验值: {2}</p>
+            <p>此章结束于: {3}</p>
+          </message>
+        tier: 级别
+        player_card: 玩家卡面
+        spray: 涂鸦
+        buddy: 吊饰
+        point: 点数
+        player_title: 称号
+        skin: 皮肤
+      errors:
+        unknown_error: 发生了未知的错误
+        auth:
+          invalid_cookie: cookie 获取错误, 请联系管理员
+          invalid_password: 您的用户名或密码可能不正确!
+          ratelimit: 请稍等几分钟后再尝试
+          cookies_expired: Cookies 已过期，请再次使用 /login 登录!
+          no_name_tag: 此用户尚未创建一个名称或标签
+          region_not_found: 发生未知的错误, 请再试一次
+          login_cookie_failed: 使用 cookie 登录失败
+          input_2fa_code: 请输入两步验证代码!
+          2fa_enable: 您的账号启用了两步验证!
+          2fa_to_email: <message>Riot 向邮箱 {0} 发送了一个代码</message>
+          2fa_invalid_code: 代码无效. 请再次使用 /login
+          temp_login_not_suppport_2fa: 不支持 2FA, 请使用 /login 并使用其他命令不包含用户名和密码
