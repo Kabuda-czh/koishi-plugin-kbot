@@ -15,6 +15,7 @@ export default (ctx: Context) => {
   ctx.page({
     name: '群管理页面',
     path: '/groupManage',
+    authority: 4,
     component: ManageIndex,
   })
 }
