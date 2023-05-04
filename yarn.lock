@@ -294,26 +294,33 @@
   dependencies:
     file-type "^16.5.4"
 
-"@koishijs/client@^5.6.2":
-  version "5.6.2"
-  resolved "https://registry.yarnpkg.com/@koishijs/client/-/client-5.6.2.tgz#6c08b5d67dff1d8cd4c1fce54d1aff801af08810"
-  integrity sha512-U17XhAoK/OjWqWLYZrJrVfhLMnZn6ndMWxK0FyZSYKsvcr3zx6Zqrb+QuZrJfukwi+esorQpulyA6hJZyBWNtg==
+"@koishijs/client@^5.7.2":
+  version "5.7.2"
+  resolved "https://registry.npmmirror.com/@koishijs/client/-/client-5.7.2.tgz#886ed013f2512b7fa32bc9a9276a55fc2c04c11b"
+  integrity sha512-s4mr2hCQJZ1pe6+u8MuiNLVlZlsWWV0pIO1YxZV59aUzAU3ybs6/gX685blsOAPNjiaS6nkk36+ALFLXWIE4mg==
   dependencies:
-    "@satorijs/components" "^0.5.7"
-    "@satorijs/element" "^2.3.6"
+    "@koishijs/components" "^1.0.3"
+    "@satorijs/element" "^2.4.1"
     "@vitejs/plugin-vue" "^4.1.0"
     "@vueuse/core" "^9.13.0"
     cac "^6.7.14"
     cordis "^2.7.4"
-    cosmokit "^1.4.1"
-    element-plus "2.2.17"
-    marked-vue "^1.2.2"
+    cosmokit "^1.4.2"
+    element-plus "2.3.4"
+    marked-vue "^1.2.3"
     ns-require "^1.1.4"
-    sass "^1.59.3"
-    schemastery-vue "^3.1.0"
-    vite "^4.2.0"
+    sass "^1.62.0"
+    vite "^4.3.1"
     vue "^3.2.47"
     vue-router "^4.1.6"
+
+"@koishijs/components@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmmirror.com/@koishijs/components/-/components-1.0.3.tgz#7702929ae6ec30f4d98acd3d81021efc738e75ab"
+  integrity sha512-y3xklp8KoVy5uW8jsJboU3shrUm+3ii56V95mgf723bdtBGPSgKgqvFDc5ZazP7KchuEgQbOqszFH0dkaxjdAg==
+  dependencies:
+    "@satorijs/element" "^2.4.1"
+    schemastery-vue "^4.0.0"
 
 "@koishijs/core@4.12.7":
   version "4.12.7"
@@ -600,14 +607,6 @@
   dependencies:
     form-data "^4.0.0"
 
-"@satorijs/components@^0.5.7":
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/@satorijs/components/-/components-0.5.7.tgz#35b12ab813b5793bc9ef82fff7634af5bed2dea3"
-  integrity sha512-2Po2/rE/LUtxuHy1wQDSiMv2YU5kInzheTM2eVPl5mPlNTU/BwYlxCSrsGIapAVD0iLYnHdBv0WbN7ico0scBg==
-  dependencies:
-    "@popperjs/core" "npm:@sxzz/popperjs-es@^2.11.7"
-    "@satorijs/element" "^2.3.6"
-
 "@satorijs/core@2.3.3", "@satorijs/core@^2.3.3":
   version "2.3.3"
   resolved "https://registry.npmmirror.com/@satorijs/core/-/core-2.3.3.tgz#f419e54de0b91b9d2ca7e0ea3cfb9171c0f7d51b"
@@ -620,13 +619,6 @@
     reggol "^1.3.5"
     schemastery "^3.7.3"
     ws "^8.13.0"
-
-"@satorijs/element@^2.3.6":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@satorijs/element/-/element-2.4.0.tgz#5ed2435c881d265d3c6601ed522fc16b4b5d0e04"
-  integrity sha512-c7jWFRonrD1PUB6R8xGxELC7l4Kge9SmWicnaj/KmH35eq4gAPU5+Us/O1z2xiyGI0LhFSYpYcanNOE82bvoeg==
-  dependencies:
-    cosmokit "^1.4.1"
 
 "@satorijs/element@^2.4.1":
   version "2.4.2"
@@ -815,10 +807,10 @@
   resolved "https://registry.npmmirror.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
   integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
 
-"@types/node@^18.16.0":
-  version "18.16.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.1.tgz#5db121e9c5352925bb1f1b892c4ae620e3526799"
-  integrity sha512-DZxSZWXxFfOlx7k7Rv4LAyiMroaxa3Ly/7OOzZO8cBNho0YzAi4qlbrx8W27JGqG57IgR/6J7r+nOJWw6kcvZA==
+"@types/node@^18.16.3":
+  version "18.16.3"
+  resolved "https://registry.npmmirror.com/@types/node/-/node-18.16.3.tgz#6bda7819aae6ea0b386ebc5b24bdf602f1b42b01"
+  integrity sha512-OPs5WnnT1xkCBiuQrZA4+YAV4HEJejmHneyraIaxsbev5yCEr6KMwINNFP9wQeFIw8FWcoTqF3vQsa5CDaI+8Q==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -1802,10 +1794,10 @@ ee-first@1.1.1:
   resolved "https://registry.npmmirror.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-element-plus@2.2.17:
-  version "2.2.17"
-  resolved "https://registry.npmmirror.com/element-plus/-/element-plus-2.2.17.tgz#abbb12c19dc029c95b0271822ea9a0e635704bc2"
-  integrity sha512-MGwMIE/q+FFD3kgS23x8HIe5043tmD1cTRwjhIX9o6fim1avFnUkrsfYRvybbz4CkyqSb185EheZS5AUPpXh2g==
+element-plus@2.3.4:
+  version "2.3.4"
+  resolved "https://registry.npmmirror.com/element-plus/-/element-plus-2.3.4.tgz#4319f6b0a1096cfac9c53b69da2fe23ac5aea63e"
+  integrity sha512-SQr0J9z7N4z48WYk/l9NE2tizl8Q7j2OhqlpTc42k4pGncry3+rVX6dsmcsglFynn6vt3NzYxWJqmLFyDKQq+g==
   dependencies:
     "@ctrl/tinycolor" "^3.4.1"
     "@element-plus/icons-vue" "^2.0.6"
@@ -3459,18 +3451,18 @@ magic-string@^0.25.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
-marked-vue@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.npmmirror.com/marked-vue/-/marked-vue-1.2.2.tgz#0bd7d32ef67fc4e29b735666193ef53b3445460b"
-  integrity sha512-DV/KQlFrK/t+3mn01er4fspy6fjGr/DAwg1RODosTcaiQs1KJ5f/7UNTlEjePV2QlNbP0uWuzXalTsMoI/x2qQ==
+marked-vue@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.npmmirror.com/marked-vue/-/marked-vue-1.2.3.tgz#fc62c2a68db0f973e3fa4ed40af8aa78ad46bf96"
+  integrity sha512-1By8xo49DDsDnKKT84owAG25MHh3qu//UrAA8LRM/PPXROIq5c9ZwR835h8zTj1nbDOsUDDS19R+7HMLTe6heg==
   dependencies:
-    marked "^4.2.12"
+    marked "^4.3.0"
     xss "^1.0.14"
 
-marked@^4.2.12:
-  version "4.2.12"
-  resolved "https://registry.npmmirror.com/marked/-/marked-4.2.12.tgz#d69a64e21d71b06250da995dcd065c11083bebb5"
-  integrity sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==
+marked@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npmmirror.com/marked/-/marked-4.3.0.tgz#796362821b019f734054582038b116481b456cf3"
+  integrity sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==
 
 mdast-util-from-markdown@^0.8.5:
   version "0.8.5"
@@ -3624,6 +3616,11 @@ nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.npmmirror.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
+
+nanoid@^3.3.6:
+  version "3.3.6"
+  resolved "https://registry.npmmirror.com/nanoid/-/nanoid-3.3.6.tgz#443380c856d6e9f9824267d960b4236ad583ea4c"
+  integrity sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==
 
 natural-compare-lite@^1.4.0:
   version "1.4.0"
@@ -3934,12 +3931,21 @@ postcss-selector-parser@^6.0.9:
     cssesc "^3.0.0"
     util-deprecate "^1.0.2"
 
-postcss@^8.1.10, postcss@^8.4.21:
+postcss@^8.1.10:
   version "8.4.21"
   resolved "https://registry.npmmirror.com/postcss/-/postcss-8.4.21.tgz#c639b719a57efc3187b13a1d765675485f4134f4"
   integrity sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==
   dependencies:
     nanoid "^3.3.4"
+    picocolors "^1.0.0"
+    source-map-js "^1.0.2"
+
+postcss@^8.4.23:
+  version "8.4.23"
+  resolved "https://registry.npmmirror.com/postcss/-/postcss-8.4.23.tgz#df0aee9ac7c5e53e1075c24a3613496f9e6552ab"
+  integrity sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==
+  dependencies:
+    nanoid "^3.3.6"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
@@ -4176,10 +4182,10 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rollup@^3.18.0:
-  version "3.20.2"
-  resolved "https://registry.npmmirror.com/rollup/-/rollup-3.20.2.tgz#f798c600317f216de2e4ad9f4d9ab30a89b690ff"
-  integrity sha512-3zwkBQl7Ai7MFYQE0y1MeQ15+9jsi7XxfrqwTb/9EK8D9C9+//EBR4M+CuA1KODRaNbFez/lWxA5vhEGZp4MUg==
+rollup@^3.21.0:
+  version "3.21.4"
+  resolved "https://registry.npmmirror.com/rollup/-/rollup-3.21.4.tgz#61af40f1d48d0d04fb20114af73db7367f7151fa"
+  integrity sha512-N5LxpvDolOm9ueiCp4NfB80omMDqb45ShtsQw2+OT3f11uJ197dv703NZvznYHP6RWR85wfxanXurXKG3ux2GQ==
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -4216,19 +4222,19 @@ safe-regex@^2.1.1:
   resolved "https://registry.npmmirror.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.59.3:
-  version "1.60.0"
-  resolved "https://registry.npmmirror.com/sass/-/sass-1.60.0.tgz#657f0c23a302ac494b09a5ba8497b739fb5b5a81"
-  integrity sha512-updbwW6fNb5gGm8qMXzVO7V4sWf7LMXnMly/JEyfbfERbVH46Fn6q02BX7/eHTdKpE7d+oTkMMQpFWNUMfFbgQ==
+sass@^1.62.0:
+  version "1.62.1"
+  resolved "https://registry.npmmirror.com/sass/-/sass-1.62.1.tgz#caa8d6bf098935bc92fc73fa169fb3790cacd029"
+  integrity sha512-NHpxIzN29MXvWiuswfc1W3I0N8SXBd8UR26WntmDlRYf0bSADnwnOjsyMZ3lMezSlArD33Vs3YFhp7dWvL770A==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
     source-map-js ">=0.6.2 <2.0.0"
 
-schemastery-vue@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/schemastery-vue/-/schemastery-vue-3.1.0.tgz#719f3e915f68b0e68f591738ed9deba5ce164341"
-  integrity sha512-6VSGaorT6YkFUfq3SfKGqRfTJFBCVC+1xqJUu1z4GuRNRaAISP5I6mFMm9sFqeT4SnGp4rJX1VIT909UXTU8dg==
+schemastery-vue@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmmirror.com/schemastery-vue/-/schemastery-vue-4.0.0.tgz#b6ce080b9b28f68a5768a5e1ac9ad75c7acbda43"
+  integrity sha512-caaik15VCZFaIBcOqaIuWcd39ekhThyQCQMoLzdlCV1Htv+ugYcAJEgn+t1IE0XTAmJk9X2UCL66AMWd2NfCMg==
   dependencies:
     schemastery "^3.7.2"
 
@@ -4717,15 +4723,14 @@ vary@^1.1.2:
   resolved "https://registry.npmmirror.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-vite@^4.2.0:
-  version "4.2.1"
-  resolved "https://registry.npmmirror.com/vite/-/vite-4.2.1.tgz#6c2eb337b0dfd80a9ded5922163b94949d7fc254"
-  integrity sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==
+vite@^4.3.1:
+  version "4.3.4"
+  resolved "https://registry.npmmirror.com/vite/-/vite-4.3.4.tgz#1c518d763d5a700d890c3a19ab59220f06e7a7d5"
+  integrity sha512-f90aqGBoxSFxWph2b39ae2uHAxm5jFBBdnfueNxZAT1FTpM13ccFQExCaKbR2xFW5atowjleRniQ7onjJ22QEg==
   dependencies:
     esbuild "^0.17.5"
-    postcss "^8.4.21"
-    resolve "^1.22.1"
-    rollup "^3.18.0"
+    postcss "^8.4.23"
+    rollup "^3.21.0"
   optionalDependencies:
     fsevents "~2.3.2"
 
