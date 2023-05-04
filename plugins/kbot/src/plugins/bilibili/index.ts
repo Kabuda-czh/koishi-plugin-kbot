@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:27
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-24 10:40:51
+ * @LastEditTime: 2023-05-04 10:19:09
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\index.ts
  * @Description:
  *
@@ -25,6 +25,7 @@ declare module 'koishi' {
 
 export interface IConfig {
   dynamic: dynamic.IConfig
+  url: boolean
   quester: Quester.Config
 }
 
@@ -32,6 +33,7 @@ export const Config: Schema<IConfig> = Schema.object({
   dynamic: dynamic.Config.description(
     '动态监听 (使用 dynamic 指令管理监听对象)',
   ),
+  url: Schema.boolean().default(true).description('是否启用 URL 自动解析'),
   quester: Quester.Config.description('Bilibili 请求配置'),
 })
 
@@ -62,5 +64,6 @@ export async function apply(context: Context, config: IConfig) {
   })
 
   ctx.plugin(dynamic, config.dynamic)
-  ctx.plugin(url)
+  if (config.url)
+    ctx.plugin(url)
 }
