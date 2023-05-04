@@ -400,10 +400,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.7.2":
-  version "5.7.2"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.7.2.tgz#e5a4ab6be0fb2472dcbc2081cb9a977d65d27f04"
-  integrity sha512-zkL5HcWkuaL0Dv6UuJDO8C2uPBPPoSzBA0BDY+peBaOJF5+rHleE5IF9xV9XhUtQfUIzCwdc+Nds2wMjqwvTTg==
+"@koishijs/plugin-console@5.7.3":
+  version "5.7.3"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.7.3.tgz#23976d5cc2070129a676a712938c9e077e499849"
+  integrity sha512-hpvvUSgUZyGX+rSjhGiQHIaRVURxqGNec88Y95nhBr+D+DmiVLgk8nAqmj17KyYubIWUGxaTc/vpTtdafuhGUw==
   dependencies:
     open "^8.4.2"
     uuid "^8.3.2"
@@ -454,10 +454,10 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-logger/-/plugin-logger-2.2.3.tgz#4876eb4d6d15c3c42ec109f3a7acebff6853d562"
   integrity sha512-OqZK6UOVJUtcqhdOvcABqWYraALzwDhN+Apr32F4DF3fDtjJ9ld0fX9ndFMgPBucfSXYrCM7ciJ2Cqj563Tdjg==
 
-"@koishijs/plugin-market@1.13.3":
-  version "1.13.3"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.13.3.tgz#a84d396839e7741460c75ea56bd8e2d466afb49e"
-  integrity sha512-FBOMLi4gn5bgYGwy3IYtKyHCKoBcYH/nPVsdemeR9udv+sI+IcdYRai24YQat0JtvdEXu2Az7OmwKaTP6kUK0Q==
+"@koishijs/plugin-market@1.13.4":
+  version "1.13.4"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.13.4.tgz#bd6d2246fd2836c366b3cc03c166fa5692c4f521"
+  integrity sha512-OcipMKwLIu6Qws9m5M4cLckS851xrJTgMpyVvo95OWcX9cR7laMVIW/Jn8mT+ygIpTXcG5po+e6ojUKWKr2bjA==
   dependencies:
     "@koishijs/registry" "^4.6.1"
     execa "^5.1.1"
