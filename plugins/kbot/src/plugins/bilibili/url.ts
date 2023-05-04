@@ -46,7 +46,7 @@ export function apply(ctx: Context) {
       content = segment.select(content, 'json')[0]?.attrs?.data.replace(/\\\//g, '/')
       return await processContent(content, channelId, ctx.http, next)
     }
-    else if (VIDEO_REGEX.test(content) || B23_REGEX.test(content)) {
+    else if ((VIDEO_REGEX.test(content) || B23_REGEX.test(content)) && segment.select(content, 'image').length === 0) {
       return await processContent(content, channelId, ctx.http, next)
     }
     return next()
