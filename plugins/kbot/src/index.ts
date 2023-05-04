@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-27 14:12:37
+ * @LastEditTime: 2023-05-04 15:10:57
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -25,6 +25,23 @@ import * as tarotPlugin from './plugins/tarot'
 import { kbotDir, publicDir } from './config'
 
 export const name = 'kbot'
+
+export const usage = `
+# KBot v1.0.2 更新日志
+
+## Note
+- 优化了 \`bilibili\` 插件
+- 修复了 \`guildmanage\` 插件的权限
+
+## Features
+- \`bilibili\` 插件中动态推送的 \`换行\` 以及 \`时间\` 的优化 [7605ee4](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/7605ee4240f62671e9a2ebe835ff3e165a947a0a)
+- \`bilibili\` 插件中 \`url\` 子插件的开关控制 [98fd95e](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/98fd95e6c5c6b640ebb5ec4fd5d492d6a1e9b5ac)
+
+## Bug Fix
+- 修复了 \`guildmanage\` 插件在公网情况中, 任意用户能直接访问的问题 [28a0936](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/28a0936ec8da51bc6455b82b9731d6ade3ff42bc)
+- 修复了 \`bilibili\` 插件中 \`url\` 子插件在不同群接收到相同视频链接的时候, 只会在某一个群发送视频解析的问题 [6f63d4f](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/6f63d4fc89af8c4a3b8cc28bf407e7adf825f7ae)
+- 修复了 \`bilibili\` 插件中 \`url\` 子插件在接收到图片的时候可能会解析为视频的问题 [36e862d](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/36e862d8f6b85583d9c593e182eb1d082f551224)
+`
 
 interface IPluginEnableConfig {
   enabled: boolean

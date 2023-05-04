@@ -3,7 +3,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:44:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-17 10:33:43
+ * @LastEditTime: 2023-05-04 14:36:38
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\url.ts
  * @Description:
  *
@@ -28,11 +28,11 @@ export const Config: Schema<IConfig> = Schema.object({})
 
 const logger = new Logger('KBot-bilibili-url')
 
-async function processContent(content: string, http: Quester, next: Next) {
+async function processContent(content: string, channelId: string, http: Quester, next: Next) {
   try {
     const avid = await testVideo(content, http)
     if (avid)
-      return next(async () => await render(avid, http))
+      return next(async () => await render(avid, channelId, http))
   }
   catch (e) {
     logger.error('请求时发生异常: ', e)
@@ -40,14 +40,14 @@ async function processContent(content: string, http: Quester, next: Next) {
 }
 
 export function apply(ctx: Context) {
-  ctx.middleware(async ({ content }, next) => {
+  ctx.middleware(async ({ content, channelId }, next) => {
     const json = segment.select(content, 'json')
     if (json.length > 0) {
       content = segment.select(content, 'json')[0]?.attrs?.data.replace(/\\\//g, '/')
-      return await processContent(content, ctx.http, next)
+      return await processContent(content, channelId, ctx.http, next)
     }
-    else if (VIDEO_REGEX.test(content) || B23_REGEX.test(content)) {
-      return await processContent(content, ctx.http, next)
+    else if ((VIDEO_REGEX.test(content) || B23_REGEX.test(content)) && segment.select(content, 'image').length === 0) {
+      return await processContent(content, channelId, ctx.http, next)
     }
     return next()
   })
@@ -72,8 +72,8 @@ async function parseB23(value: string, http: Quester): Promise<string> {
   return result.headers.location
 }
 
-async function render(avid: string, http: Quester) {
-  if (avid in sendedTimes)
+async function render(avid: string, channelId: string, http: Quester) {
+  if (`${avid}-${channelId}` in sendedTimes)
     return
 
   const { data } = await http.get(
@@ -91,8 +91,8 @@ async function render(avid: string, http: Quester) {
     delete sendedTimes[id]
   }
 
-  sendedTimes[avid] = setTimeout(() => {
-    delete sendedTimes[avid]
+  sendedTimes[`${avid}-${channelId}`] = setTimeout(() => {
+    delete sendedTimes[`${avid}-${channelId}`]
   }, 30 * 1000)
 
   return `<image url="${data.pic}"/>
