@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-26 11:22:26
+ * @LastEditTime: 2023-05-04 10:05:55
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -72,7 +72,7 @@ async function pcRenderImage(
     const elementClip = await element.boundingBox()
 
     return (
-      `${item.modules.module_author.name} ${BilibiliDynamicItemType[item.type] || '发布了动态'}:\n${
+      `${item.modules.module_author.name} ${new Date(item.modules.module_author.pub_ts * 1000).toLocaleString()}\n${BilibiliDynamicItemType[item.type] || '发布了动态'}:\n${
       segment.image(
         await element.screenshot({
           clip: elementClip,
@@ -139,7 +139,7 @@ async function mobileRenderImage(
     const elementClip = await element.boundingBox()
 
     return (
-      `${item.modules.module_author.name} ${BilibiliDynamicItemType[item.type] || '发布了动态'}:\n${
+      `${item.modules.module_author.name} ${new Date(item.modules.module_author.pub_ts * 1000).toLocaleString()}\n${BilibiliDynamicItemType[item.type] || '发布了动态'}:\n${
       segment.image(
         await page.screenshot({
           clip: elementClip,
@@ -161,15 +161,15 @@ async function mobileRenderImage(
 
 async function renderText(item: BilibiliDynamicItem): Promise<string> {
   const author = item.modules.module_author
-  let result: string
+  let result = `${author.name} ${new Date(author.pub_ts * 1000).toLocaleString()}\n`
 
   if (item.type === 'DYNAMIC_TYPE_AV') {
     const dynamic = item.modules.module_dynamic
-    result = `${author.name} 发布了视频: ${dynamic.major.archive.title}\n<image url="${dynamic.major.archive.cover}"/>`
+    result += `发布了视频: \n${dynamic.major.archive.title}\n<image url="${dynamic.major.archive.cover}"/>`
   }
   else if (item.type === 'DYNAMIC_TYPE_DRAW') {
     const dynamic = item.modules.module_dynamic
-    result = `${author.name} 发布了动态: ${
+    result += `发布了动态: \n${
       dynamic.desc.text
     }\n${dynamic.major.draw.items
       .map(item => `<image url="${item.src}"/>`)
@@ -177,23 +177,23 @@ async function renderText(item: BilibiliDynamicItem): Promise<string> {
   }
   else if (item.type === 'DYNAMIC_TYPE_WORD') {
     const dynamic = item.modules.module_dynamic
-    result = `${author.name} 发布了动态: ${dynamic.desc.text}`
+    result += `发布了动态: \n${dynamic.desc.text}`
   }
   else if (item.type === 'DYNAMIC_TYPE_FORWARD') {
     const dynamic = item.modules.module_dynamic
-    result = `${author.name} 转发动态: ${dynamic.desc.text}\n${await renderText(
+    result += `转发动态: \n${dynamic.desc.text}\n${await renderText(
       item.orig,
     )}`
   }
   else if (item.type === 'DYNAMIC_TYPE_LIVE_RCMD') {
     const dynamic = item.modules.module_dynamic
     const info: LivePlayInfo = JSON.parse(dynamic.major.live_rcmd.content)
-    result = `${author.name} 开始直播: ${info.title || info.live_play_info.title}`
+    result += `开始直播: \n${info.title || info.live_play_info.title}`
     if (info.cover)
       result += `\n${segment.image(info.cover || info.live_play_info.cover)}`
   }
   else {
-    result = `${author.name} 发布了未知类型的动态: ${(item as any).type}`
+    result += `发布了未知类型的动态: \n${(item as any).type}`
   }
   return `${result}\nhttps://t.bilibili.com/${item.id_str}`
 }
