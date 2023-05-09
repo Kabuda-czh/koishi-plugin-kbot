@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-04 15:10:57
+ * @LastEditTime: 2023-05-09 12:00:59
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -27,20 +27,19 @@ import { kbotDir, publicDir } from './config'
 export const name = 'kbot'
 
 export const usage = `
-# KBot v1.0.2 更新日志
+# KBot v1.0.3 更新日志
 
 ## Note
-- 优化了 \`bilibili\` 插件
-- 修复了 \`guildmanage\` 插件的权限
+- 修复 \`basic\` 插件在安卓端的获取问题
+- 修复了 \`guildmanage\` webui 的暗色模式适配
+- 增加了 \`guildmanage\` 的选择多个群发送消息的功能
 
 ## Features
-- \`bilibili\` 插件中动态推送的 \`换行\` 以及 \`时间\` 的优化 [7605ee4](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/7605ee4240f62671e9a2ebe835ff3e165a947a0a)
-- \`bilibili\` 插件中 \`url\` 子插件的开关控制 [98fd95e](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/98fd95e6c5c6b640ebb5ec4fd5d492d6a1e9b5ac)
+- \`guildmanage\` 插件中 webui 中选择多个群发送的功能 [3f16912](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/3f16912ede1a4fae282cefac5706d48fc6e63b37)
 
 ## Bug Fix
-- 修复了 \`guildmanage\` 插件在公网情况中, 任意用户能直接访问的问题 [28a0936](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/28a0936ec8da51bc6455b82b9731d6ade3ff42bc)
-- 修复了 \`bilibili\` 插件中 \`url\` 子插件在不同群接收到相同视频链接的时候, 只会在某一个群发送视频解析的问题 [6f63d4f](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/6f63d4fc89af8c4a3b8cc28bf407e7adf825f7ae)
-- 修复了 \`bilibili\` 插件中 \`url\` 子插件在接收到图片的时候可能会解析为视频的问题 [36e862d](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/36e862d8f6b85583d9c593e182eb1d082f551224)
+- 修复了 \`guildmanage\` 暗色模式适配问题 [0fed130](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/0fed13044c1b83e188bdacb4b5d6f1b8859b253c)
+- 修复 \`basic\` 插件在安卓端获取数据的异常问题 [9b33d26](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/9b33d26c329550bd63aad9d9b31bdb69fcacfc1b)
 `
 
 interface IPluginEnableConfig {
