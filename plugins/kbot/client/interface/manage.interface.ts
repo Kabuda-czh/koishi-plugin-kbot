@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-10 14:26:39
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 15:17:51
+ * @LastEditTime: 2023-05-09 11:28:39
  * @FilePath: \KBot-App\plugins\kbot\client\interface\manage.interface.ts
  * @Description:
  *
@@ -24,6 +24,7 @@ export interface Group {
 
 export interface GroupConfig {
   role?: string
+  checked?: boolean
 }
 
 export interface GroupCommand {
