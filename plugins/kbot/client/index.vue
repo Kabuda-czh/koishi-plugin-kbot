@@ -425,7 +425,6 @@ onMounted(async () => {
 <style>
 .el-table__cell {
   font-weight: 500;
-  color: #333;
   text-align: center !important;
   padding: 12px 0 !important;
 }
@@ -442,7 +441,6 @@ onMounted(async () => {
   width: 150px;
   font-weight: 500;
   font-size: 14px !important;
-  color: #333;
   line-height: 37px !important;
 }
 

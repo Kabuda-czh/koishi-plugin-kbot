@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-07 11:40:20
+ * @LastEditTime: 2023-05-09 10:51:28
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
@@ -151,7 +151,7 @@ const dataChange = (value: string | number) => {
       </div>
       <ElAutoResizer>
         <template #default="{ width, height }">
-          <ElTableV2 :data="memberList" :columns="columns" :height="700" :width="width" :max-height="height - 80" />
+          <ElTableV2 :data="memberList" :columns="columns" :height="600" :width="width" :max-height="height - 80" />
         </template>
       </ElAutoResizer>
     </div>

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-20 18:32:49
+ * @LastEditTime: 2023-05-09 11:21:36
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
@@ -46,26 +46,26 @@ export async function getSystemInfo(
   const formatSize = (size: number) => (size / 1024 ** 3).toFixed(2)
 
   // memory
-  const memoryTotal = `${formatSize(total)} GB`
-  const memoryUsed = formatSize(used)
-  const memoryUsage = (used / total).toFixed(2)
+  const memoryTotal = `${formatSize(total || 0)} GB`
+  const memoryUsed = formatSize(used || 0)
+  const memoryUsage = ((used || 0) / (total || 1)).toFixed(2)
   const memoryFree = formatSize(total - used)
   // swap
-  const swapTotal = `${formatSize(swaptotal)} GB`
-  const swapUsed = formatSize(swapused)
-  const swapUsage = (swapused / swaptotal).toFixed(2)
+  const swapTotal = `${formatSize(swaptotal || 0)} GB`
+  const swapUsed = formatSize(swapused || 0)
+  const swapUsage = ((swapused || 0) / (swaptotal || 1)).toFixed(2)
   const swapFree = formatSize(swaptotal - swapused)
   // disk
-  const diskTotal = `${formatSize(disksize)} GB`
-  const diskUsed = formatSize(diskused)
-  const diskUsage = (diskused / disksize).toFixed(2)
+  const diskTotal = `${formatSize(disksize || 0)} GB`
+  const diskUsed = formatSize(diskused || 0)
+  const diskUsage = ((diskused || 0) / (disksize || 1)).toFixed(2)
 
   const systemInfo = {
     name,
     dashboard: [
       {
-        progress: +cpuUsage,
-        title: `${(+cpuUsage * 100).toFixed(0)}% - ${avg}Ghz  [${cores}core]`,
+        progress: +cpuUsage || 0,
+        title: `${((+cpuUsage || 0) * 100).toFixed(0)}% - ${avg}Ghz  [${cores}core]`,
       },
       {
         progress: +memoryUsage || 0,
@@ -162,8 +162,8 @@ async function getDiskUsage() {
   let disksize = 0
   let diskused = 0
   disks.forEach((disk) => {
-    disksize += disk.size
-    diskused += disk.used
+    disksize += disk?.size || 0
+    diskused += disk?.used || 0
   })
 
   return {
@@ -180,11 +180,11 @@ async function getCPUUsage() {
 
   const t2 = getCPUInfo()
 
-  const idle = t2.idle - t1.idle
-  const total = t2.total - t1.total
+  const idle = (t2?.idle || 0) - (t1?.idle || 0)
+  const total = (t2.total || 0) - (t1.total || 0)
 
   const cpuUsage = (1 - idle / total).toFixed(2)
-  const cpuInfo = os.cpus()[0].model
+  const cpuInfo = os.cpus()[0]?.model || 'unknown'
 
   return {
     cpuUsage,
@@ -196,11 +196,11 @@ function getCPUInfo() {
   const cpus = os.cpus()
   let idle = 0
 
-  const total = cpus.reduce((acc, cpu) => {
-    for (const type in cpu.times)
+  const total = cpus?.reduce((acc, cpu) => {
+    for (const type in cpu?.times)
       acc += cpu.times[type]
 
-    idle += cpu.times.idle
+    idle += cpu?.times?.idle || 0
     return acc
   }, 0)
 
