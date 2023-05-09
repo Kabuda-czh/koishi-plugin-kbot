@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-09 10:58:13
+ * @LastEditTime: 2023-05-09 11:46:34
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -42,6 +42,7 @@ const botList = ref<UserInfo[]>([])
 // GroupList
 const defaultGroupList = ref<GroupList[]>([])
 const groupList = ref<GroupList[]>([])
+const sendGroupListDisable = ref<boolean>(true)
 
 // pagination
 const currentPage = ref<number>(1)
@@ -115,6 +116,31 @@ const muteGuild = (row: GroupList, mute: boolean) => {
     .catch(() => {
       message.success('已取消操作')
     })
+}
+
+const test = () => {
+  const sendGroupList = defaultGroupList.value.filter(group => group.checked)
+  messageBox
+    .prompt('请输入要发送的消息', '指定群广播', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      inputType: 'textarea',
+      inputPlaceholder: '请输入要发送的消息',
+      inputPattern: /\S/,
+      inputErrorMessage: '消息不能为空',
+    })
+    .then(({ value }) => {
+      Promise.all(sendGroupList.map(groupInfo => fetchSendMessage(botId.value, groupInfo.group_id, value)))
+    })
+    .catch(() => {
+      message.success('已取消发送')
+    })
+}
+
+const groupCheck = (val: boolean, index: number) => {
+  const defaultListIndex = index + (currentPage.value - 1) * pageSize.value
+  defaultGroupList.value[defaultListIndex].checked = val
+  sendGroupListDisable.value = defaultGroupList.value.filter(group => group.checked).length < 2
 }
 
 const broadcast = () => {
@@ -265,6 +291,9 @@ onMounted(async () => {
     <div class="manage__layout">
       <div class="container__header">
         <div>
+          <ElButton type="primary" :disabled="sendGroupListDisable" @click="test">
+            向所选群发送消息
+          </ElButton>
           <ElButton type="primary" :disabled="groupList.length <= 1" @click="broadcast">
             向所有群广播消息
           </ElButton>
@@ -282,6 +311,11 @@ onMounted(async () => {
       </div>
       <ElForm>
         <ElTable :data="groupList" max-height="70vh" style="width: 95vw">
+          <ElTableColumn align="center" label="选择" width="80">
+            <template #default="{ row, $index }">
+              <ElCheckbox v-model="row.checked" @change="groupCheck(row.checked, $index)" />
+            </template>
+          </ElTableColumn>
           <ElTableColumn align="center" prop="group_id" label="群号" width="120" />
           <ElTableColumn align="center" prop="group_name" label="群名称" />
           <ElTableColumn align="center" label="是否开启全员禁言" width="200">
