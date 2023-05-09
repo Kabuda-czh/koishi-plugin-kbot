@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-28 14:40:53
+ * @LastEditTime: 2023-05-09 10:58:13
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -391,7 +391,6 @@ onMounted(async () => {
 <style>
 .el-table__cell {
   font-weight: 500;
-  color: #333;
   text-align: center !important;
   padding: 12px 0 !important;
 }
@@ -408,7 +407,6 @@ onMounted(async () => {
   width: 150px;
   font-weight: 500;
   font-size: 14px !important;
-  color: #333;
   line-height: 37px !important;
 }
 
