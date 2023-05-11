@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-25 11:20:58
+ * @LastEditTime: 2023-05-11 15:59:47
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -175,6 +175,10 @@ export function apply(ctx: Context, config: IConfig) {
             padding: '1rem',
             color: '#fff',
             background: '#000',
+            fontSize: '14px',
+            lineHeight: '1.5',
+            fontFamily: 'sans-serif',
+            fontWeight: 'normal',
           }}>
             <img src={url} />
             <p>频道: {channelTitle}</p>
