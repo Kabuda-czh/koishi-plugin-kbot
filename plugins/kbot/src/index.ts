@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-09 12:00:59
+ * @LastEditTime: 2023-05-11 11:22:56
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -27,19 +27,17 @@ import { kbotDir, publicDir } from './config'
 export const name = 'kbot'
 
 export const usage = `
-# KBot v1.0.3 更新日志
+# KBot v1.0.4 更新日志
 
 ## Note
-- 修复 \`basic\` 插件在安卓端的获取问题
-- 修复了 \`guildmanage\` webui 的暗色模式适配
-- 增加了 \`guildmanage\` 的选择多个群发送消息的功能
+- 修复 \`messages\` 插件依赖
+- 更新 \`guildmanage\` 插件 \`recall\` 功能
 
 ## Features
-- \`guildmanage\` 插件中 webui 中选择多个群发送的功能 [3f16912](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/3f16912ede1a4fae282cefac5706d48fc6e63b37)
+- 更新 \`guildmanage\` 插件中 \`recall\` 功能在不依赖 \`messages\` 后获取历史记录并撤回的功能 [be22a26](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/be22a26210e5255f7e1ef1c4711e2a66c3709e59)
 
 ## Bug Fix
-- 修复了 \`guildmanage\` 暗色模式适配问题 [0fed130](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/0fed13044c1b83e188bdacb4b5d6f1b8859b253c)
-- 修复 \`basic\` 插件在安卓端获取数据的异常问题 [9b33d26](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/9b33d26c329550bd63aad9d9b31bdb69fcacfc1b)
+- 移除了 \`messages\` 依赖导致的内存飙升以及 \`sqlite\` 崩溃等问题 [be22a26](https://github.com/Kabuda-czh/koishi-plugin-kbot/commit/be22a26210e5255f7e1ef1c4711e2a66c3709e59)
 `
 
 interface IPluginEnableConfig {
