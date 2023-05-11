@@ -407,10 +407,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.7.5":
-  version "5.7.5"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.7.5.tgz#d1c16d0350d1611d78fd0626b455bde369ebd87e"
-  integrity sha512-/+nAMbrHtl7Yyxh3FK672XR3q1zjbjyn01Cy9AQG/pcngCiEYB1CDiQCVCRUTuDnDSYPSEBJGHcdR3tHBnQ9yw==
+"@koishijs/plugin-console@5.7.6":
+  version "5.7.6"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.7.6.tgz#da8cd40b42fd336d7580b895fe81788901bd70f5"
+  integrity sha512-3RHVYSpx7QDae2crsjdR72R2K5NbOJMhF7TaGTv5ViTc/oaZDjVH+uPpr3LNklL1K2rzlbeXrWAKiWxXkRkLmg==
   dependencies:
     open "^8.4.2"
     uuid "^8.3.2"
@@ -3329,10 +3329,10 @@ koishi-plugin-assets-local@3.0.3:
     "@koishijs/assets" "^1.0.2"
     file-type "^16.5.4"
 
-koishi-plugin-desktop@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npmmirror.com/koishi-plugin-desktop/-/koishi-plugin-desktop-0.0.3.tgz#2b989fcda1b270f5a6e999df6612830129672e14"
-  integrity sha512-SZlXPnBXgBE4Erm0D9JA0IRn5LFgXliz/Lp8P0Gy7FUiFAzXGexB4msWLH3tk4mp70GFibjvtV6ToTgMsLQ32Q==
+koishi-plugin-desktop@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.npmmirror.com/koishi-plugin-desktop/-/koishi-plugin-desktop-0.0.4.tgz#8ea2f63949b69ac6545c4af146e945d81730f0ce"
+  integrity sha512-uk5Nfc5M5pGPArTn4G6unMxCfalNpGxupaSLMGy7waCkiRJhiZxUydtxbgbohfEaJKOlWx3MZ7fqvB84MaOt6w==
 
 koishi-plugin-gocqhttp@3.5.0:
   version "3.5.0"
