@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:38:19
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-04 11:05:12
+ * @LastEditTime: 2023-05-11 10:39:03
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\typings\index.ts
  * @Description:
  *
@@ -21,19 +21,33 @@ export interface GuildMemberInfo extends UserInfo {
   nickname: string
 }
 
+interface Sender {
+  age: number
+  area: string
+  card: string
+  level: string
+  nickname: string
+  role: 'owner' | 'admin' | 'member'
+  sex: string
+  title: string
+  user_id: number
+}
+
 export interface Message {
-  group: boolean
-  group_id: number
-  message_id: number
-  real_id: number
+  post_type: string
   message_type: 'private' | 'group'
-  sender: {
-    user_id: number
-    nickname: string
-  }
   time: number
+  self_id: number
+  sub_type: string
+  font: number
   message: string
   raw_message: string
+  sender: Sender
+  user_id: number
+  anonymous?: any
+  group_id: number
+  message_seq: number
+  message_id: number
 }
 
 export interface GroupInfo {
