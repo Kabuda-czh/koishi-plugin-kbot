@@ -40,7 +40,6 @@
   "peerDependencies": {
     "@koishijs/plugin-admin": "^1.1.5",
     "koishi": "^4.12.6",
-    "koishi-plugin-messages": "^0.1.0",
     "koishi-plugin-puppeteer": "^3.3.1"
   },
   "peerDependenciesMeta": {
