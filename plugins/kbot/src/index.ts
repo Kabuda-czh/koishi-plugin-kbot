@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-11 11:22:56
+ * @LastEditTime: 2023-05-11 11:34:50
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -30,7 +30,7 @@ export const usage = `
 # KBot v1.0.4 更新日志
 
 ## Note
-- 修复 \`messages\` 插件依赖
+- 移除 \`messages\` 插件依赖
 - 更新 \`guildmanage\` 插件 \`recall\` 功能
 
 ## Features
