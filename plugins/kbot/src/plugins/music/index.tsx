@@ -88,6 +88,10 @@ export function apply(ctx: Context, config: IConfig) {
         color: '#ffffff',
         background: '#333333',
         padding: '1rem',
+        fontSize: '14px',
+        lineHeight: '1.5',
+        fontFamily: 'sans-serif',
+        fontWeight: 'normal',
       }}>
         <style>{`
           th, td {
