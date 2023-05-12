@@ -148,7 +148,7 @@ export async function getTwitterTweets(
 
   const entries = instructions.find(
     entry => entry.type === 'TimelineAddEntries',
-  )?.entries
+  )?.entries || []
 
   if (isPure) {
     const pureEntries = entries.find(
