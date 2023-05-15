@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-04 22:39:47
+ * @LastEditTime: 2023-05-15 10:09:31
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
  *
@@ -12,7 +12,6 @@ import { resolve } from 'node:path'
 import { Logger, Schema } from 'koishi'
 import type { Argv, Context } from 'koishi'
 import { } from '@koishijs/plugin-console'
-import {} from 'koishi-plugin-messages'
 import { routerStrategies } from './router'
 import { initCommand } from './command'
 
