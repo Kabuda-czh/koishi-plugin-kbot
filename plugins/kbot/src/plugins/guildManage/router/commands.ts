@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-16 16:24:21
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 16:34:19
+ * @LastEditTime: 2023-05-15 10:16:22
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router\commands.ts
  * @Description:
  *
@@ -75,7 +75,7 @@ export const commandRoutes: IRouterStrategy = {
   '/commands': function (context: Context) {
     return commands(context)
   },
-  '/getDisabledCommands': function (context: Context) {
+  '/disabledCommands': function (context: Context) {
     return getDisabledCommands(context)
   },
   '/switchCommands': function (context: Context) {

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-02 11:22:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 10:22:44
+ * @LastEditTime: 2023-05-15 10:15:19
  * @FilePath: \KBot-App\plugins\kbot\client\api\bot.ts
  * @Description:
  *
@@ -11,7 +11,7 @@
 import { http } from '../utils'
 
 export function fetchGetBots() {
-  return http.request('get', '/getBots')
+  return http.request('get', '/bots')
 }
 
 export function fetchSendMessage(botId: string | number, guildId: string | number, message: string) {
