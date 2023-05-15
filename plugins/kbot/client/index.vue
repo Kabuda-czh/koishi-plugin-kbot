@@ -118,7 +118,7 @@ const muteGuild = (row: GroupList, mute: boolean) => {
     })
 }
 
-const test = () => {
+const sendGroupMessage = () => {
   const sendGroupList = defaultGroupList.value.filter(group => group.checked)
   messageBox
     .prompt('请输入要发送的消息', '指定群广播', {
@@ -291,7 +291,7 @@ onMounted(async () => {
     <div class="manage__layout">
       <div class="container__header">
         <div>
-          <ElButton type="primary" :disabled="sendGroupListDisable" @click="test">
+          <ElButton type="primary" :disabled="sendGroupListDisable" @click="sendGroupMessage">
             向所选群发送消息
           </ElButton>
           <ElButton type="primary" :disabled="groupList.length <= 1" @click="broadcast">
