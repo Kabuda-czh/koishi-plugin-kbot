@@ -1,14 +1,13 @@
 /*
-
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
  * @LastEditTime: 2023-05-15 11:29:29
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
-   *
+ *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
-   */
+*/
 import { resolve } from 'node:path'
 import { Logger, Schema } from 'koishi'
 import type { Argv, Context } from 'koishi'
@@ -17,12 +16,6 @@ import { routerStrategies } from './router'
 import { initCommand } from './command'
 
 declare module 'koishi' {
-  namespace Command {
-    interface Config {
-      disabled?: boolean
-    }
-  }
-
   interface Channel {
     disable: string[]
     watchDelete: boolean
