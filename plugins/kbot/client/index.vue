@@ -95,6 +95,8 @@ const getGroupList = async () => {
     }
   })
 
+  defaultGroupList.value = defaultGroupList.value.sort((a, b) => +a.group_id - +b.group_id)
+
   groupList.value = defaultGroupList.value.slice(0, pageSize.value)
 }
 
