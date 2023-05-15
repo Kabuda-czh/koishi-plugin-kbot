@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-10 14:26:39
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-09 11:28:39
+ * @LastEditTime: 2023-05-15 11:07:26
  * @FilePath: \KBot-App\plugins\kbot\client\interface\manage.interface.ts
  * @Description:
  *
@@ -25,6 +25,7 @@ export interface Group {
 export interface GroupConfig {
   role?: string
   checked?: boolean
+  isWatch?: boolean
 }
 
 export interface GroupCommand {
@@ -34,6 +35,11 @@ export interface GroupCommand {
   parent: string
   children: GroupCommand[]
   hasChildren: boolean
+}
+
+export interface GuildWatch {
+  guildId: number
+  isWatch: boolean
 }
 
 export type GroupList = Group & GroupConfig
