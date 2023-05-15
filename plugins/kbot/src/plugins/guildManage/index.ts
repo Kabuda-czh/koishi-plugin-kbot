@@ -16,12 +16,6 @@ import { routerStrategies } from './router'
 import { initCommand } from './command'
 
 declare module 'koishi' {
-  namespace Command {
-    interface Config {
-      disabled?: boolean
-    }
-  }
-
   interface Channel {
     disable: string[]
   }
