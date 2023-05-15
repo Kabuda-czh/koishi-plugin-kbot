@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-09 11:46:34
+ * @LastEditTime: 2023-05-15 11:27:47
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -32,7 +32,8 @@ import {
 import GroupDialog from './components/GroupDialog.vue'
 import FuzzySearch from './components/FuzzySearch.vue'
 import GroupPlugins from './components/GroupPlugins.vue'
-import type { Group, GroupCommand, GroupList, UserInfo } from './interface'
+import type { Group, GroupCommand, GroupList, GuildWatch, UserInfo } from './interface'
+import { fetchGuildWatchList, fetchSetGuildWatch } from './api/guild'
 
 const loading = ref<boolean>(true)
 
@@ -76,6 +77,8 @@ const getCommands = async () => {
 
 const getGroupList = async () => {
   const groupDatas = await fetchGroupList(botId.value).then(res => res as Promise<Group[]>)
+  const watchList = await fetchGuildWatchList().then(res => res as Promise<GuildWatch[]>)
+
   defaultGroupList.value = []
 
   if (groupDatas.length === 1 && !groupDatas[0])
@@ -90,6 +93,7 @@ const getGroupList = async () => {
       const groupInfo = {
         ...groupDatas.find(data => data.group_id === member.group_id),
         role: member.role,
+        isWatch: watchList.find(watch => watch.guildId === member.group_id)?.isWatch || false,
       }
       defaultGroupList.value.push(groupInfo)
     }
@@ -118,7 +122,7 @@ const muteGuild = (row: GroupList, mute: boolean) => {
     })
 }
 
-const test = () => {
+const sendGroupMessage = () => {
   const sendGroupList = defaultGroupList.value.filter(group => group.checked)
   messageBox
     .prompt('请输入要发送的消息', '指定群广播', {
@@ -245,6 +249,17 @@ const groupLeave = (groupId: number, isOwner: boolean) => {
     })
 }
 
+const setGuildWatch = (row: GroupList) => {
+  row.isWatch = !row.isWatch
+  fetchSetGuildWatch(row.group_id, row.isWatch).then((res: boolean) => {
+    if (!res) {
+      message.error('操作失败')
+      return
+    }
+    message.success(row.isWatch ? '开启成功' : '关闭成功')
+  })
+}
+
 const paginationClick = (val: number) => {
   loading.value = true
 
@@ -291,7 +306,7 @@ onMounted(async () => {
     <div class="manage__layout">
       <div class="container__header">
         <div>
-          <ElButton type="primary" :disabled="sendGroupListDisable" @click="test">
+          <ElButton type="primary" :disabled="sendGroupListDisable" @click="sendGroupMessage">
             向所选群发送消息
           </ElButton>
           <ElButton type="primary" :disabled="groupList.length <= 1" @click="broadcast">
@@ -343,6 +358,9 @@ onMounted(async () => {
               </ElButton>
               <ElButton type="danger" @click="groupLeave(row.group_id, row.role === 'owner')">
                 {{ row.role === "owner" ? "解散群" : "退出群" }}
+              </ElButton>
+              <ElButton type="primary" @click="setGuildWatch(row)">
+                {{ row.isWatch ? '已开启' : '未开启' }}
               </ElButton>
             </template>
           </ElTableColumn>
