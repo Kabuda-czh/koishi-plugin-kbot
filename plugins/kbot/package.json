@@ -52,7 +52,7 @@
     "systeminformation": "^5.17.12"
   },
   "devDependencies": {
-    "@koishijs/client": "^5.7.2",
+    "@koishijs/client": "^5.8.0",
     "@types/qs": "^6.9.7",
     "@types/systeminformation": "^3.54.1"
   }
