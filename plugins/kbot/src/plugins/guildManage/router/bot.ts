@@ -27,7 +27,7 @@ const getBots = (context: Context) => {
 }
 
 export const botRoutes: IRouterStrategy = {
-  '/getBots': function (context: Context) {
+  '/bots': function (context: Context) {
     return getBots(context)
   },
   '/sendMessage': function (context: Context) {
