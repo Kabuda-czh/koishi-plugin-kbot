@@ -401,19 +401,19 @@
   dependencies:
     "@satorijs/adapter-discord" "^3.6.1"
 
-"@koishijs/plugin-adapter-feishu@1.2.3":
-  version "1.2.3"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-feishu/-/plugin-adapter-feishu-1.2.3.tgz#c316e839d9fe565b89b707f35cd39d3d90262b03"
-  integrity sha512-haGTTiQTyDnWd83QsZp73WULYBAOJ4eQ1njCjk1f/IlmZ5wf/oSyaut8/Fyvsz4nUlHAbOxjr5OxB+YLKWOf4w==
-  dependencies:
-    "@satorijs/adapter-feishu" "^1.2.3"
-
 "@koishijs/plugin-adapter-kook@3.8.2":
   version "3.8.2"
   resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-kook/-/plugin-adapter-kook-3.8.2.tgz#a5122eb9ac7f75adcbd25f3d313f4bafb8f5c945"
   integrity sha512-osk41NIUmMdMTooStH3Gs4WTXqbeUgP5cYeIuUkfiY1VdQzFNZU6yUc4qsGlFmmOA4na0OWzzvAuhyFAuBlbIA==
   dependencies:
     "@satorijs/adapter-kook" "^3.8.2"
+
+"@koishijs/plugin-adapter-lark@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-adapter-lark/-/plugin-adapter-lark-2.0.2.tgz#0fc84c28aebef85e4e062209acf57e726cafc5eb"
+  integrity sha512-toBzhqrhrM3J64l0GsFTcKewymZ+/V4iF6tD50nLPgOKbLZNIPvIAdndztnK/6/HmS5t/dWc1toc6vt664PTzA==
+  dependencies:
+    "@satorijs/adapter-lark" "^2.0.2"
 
 "@koishijs/plugin-adapter-onebot@5.7.1":
   version "5.7.1"
@@ -444,17 +444,24 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-bind/-/plugin-bind-1.4.1.tgz#de753df7e6c2e9ce243ca7a66397b2e4ad6ce4b5"
   integrity sha512-vECemephpWgtX5CVUFwMrgJ0mMBzMQIfMmgfrZNYWOnZb/0BP/9EFjdiZefomXUg6zMO8Yug2fPFrszfsUojhg==
 
-"@koishijs/plugin-commands@3.1.3":
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/@koishijs/plugin-commands/-/plugin-commands-3.1.3.tgz#099937b50887a3318d2107bb9dc930d7a0b3b2a3"
-  integrity sha512-kKueGd3sIgpEclo8P3ztHdqNHb6yceD3B+Pyxg1gOiscuvJ+e92WHH66YrvNQxXM2j9zYsZQJStWD7rVbs/oXg==
+"@koishijs/plugin-commands@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-commands/-/plugin-commands-3.2.0.tgz#a81ef2cb88dbaab9fb8a9b589fa15fa96f6be337"
+  integrity sha512-Yozw7YTVzMP8wzsksFrUpovnDanrVHOYMlOG51nWZECXECD+9sF38odJdzTIZcKIX4WqyEFjXkKCfCGYTpSuXQ==
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.8.0":
-  version "5.8.0"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.8.0.tgz#8d7864ea66df5f38257a82ac12171470e9911b04"
-  integrity sha512-URGlbkgj/PXj0Wgt/wPzIXGcQitZXVfQCGI6qCFBCKZ3RaPKs6UKEHuszwENc+QEfUDhyXCP73kEgdNuCtndLA==
+"@koishijs/plugin-config@2.0.0-alpha.1":
+  version "2.0.0-alpha.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-config/-/plugin-config-2.0.0-alpha.1.tgz#a6c91d9c8c94ba6c795fb84afb89777aee6e4a7a"
+  integrity sha512-Y3/NsLSoChFCea0Y8Z8e8beU1aVoKv8V9yWjtWv4hxxvVCrQpuBkJiPlkGBKCQDYZejyYxhE5/be+P5oYVhcGA==
+  dependencies:
+    throttle-debounce "^3.0.1"
+
+"@koishijs/plugin-console@5.8.3":
+  version "5.8.3"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.8.3.tgz#03f50cd7f3c2a6a90d1510efdd0d22ab2154d989"
+  integrity sha512-juuHx0mIlEdzbD0aaarR0rx7ZetZBVgl+PcvTihYH3HnK75CuzFUTcIGPPpEZ5vnKXuBA2nBd/pazcx7GGVIqQ==
   dependencies:
     open "^8.4.2"
     uuid "^8.3.2"
@@ -506,16 +513,16 @@
   resolved "https://registry.npmmirror.com/@koishijs/plugin-logger/-/plugin-logger-2.2.3.tgz#4876eb4d6d15c3c42ec109f3a7acebff6853d562"
   integrity sha512-OqZK6UOVJUtcqhdOvcABqWYraALzwDhN+Apr32F4DF3fDtjJ9ld0fX9ndFMgPBucfSXYrCM7ciJ2Cqj563Tdjg==
 
-"@koishijs/plugin-market@1.13.5":
-  version "1.13.5"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-1.13.5.tgz#f3615a0ad60f3636efb3aed6b06f66f36617ee34"
-  integrity sha512-4sWwymGQG7En29CKBADJgVeDZadyoK6pcc+L9M7zDY74MhhJY3s8JSaBCqLUz52Bu5ewaLomYJGQC0HGh7BQ+Q==
+"@koishijs/plugin-market@2.0.0-alpha.1":
+  version "2.0.0-alpha.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-2.0.0-alpha.1.tgz#572ce9fc30cf27f1ac958e820febba327b9fc7c6"
+  integrity sha512-tLytODeeQOCHVKWhOXs05MdDeOpZ1qke8tg+Xh6TXP5Ve72lpvpL2Pc/DZ9IAChxlmBGL28xbIvYEeQhDilH6g==
   dependencies:
-    "@koishijs/registry" "^4.6.1"
+    "@koishijs/registry" "^5.0.0"
     execa "^5.1.1"
     get-registry "^1.1.0"
     ns-require "^1.1.4"
-    semver "^7.5.0"
+    semver "^7.5.1"
     throttle-debounce "^3.0.1"
     which-pm-runs "^1.1.0"
 
@@ -537,14 +544,14 @@
     envinfo "^7.8.1"
     which-pm-runs "^1.1.0"
 
-"@koishijs/registry@^4.6.1":
-  version "4.6.1"
-  resolved "https://registry.npmmirror.com/@koishijs/registry/-/registry-4.6.1.tgz#0eacec1afe8151acf69437428496c004849ac84c"
-  integrity sha512-m+uV+AfOuRLyY+uTnIeIGl02zuG2oUlv0NLaRo3uLVNW9BcEIIA2JLChYKzx+6yRTGK8nOPbxMELCwAnaxk1RQ==
+"@koishijs/registry@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.npmmirror.com/@koishijs/registry/-/registry-5.0.0.tgz#c1c90cb91441f6963893c337de4ebff35221ee65"
+  integrity sha512-j/vJanwl0ptFiXbFBc7ggcHyfbvj+hzYWAw22b/8BG68lLrsLIFxjt8sZaxu2t4OaV6VWDIObe9sdhsieAkNrQ==
   dependencies:
     cosmokit "^1.4.2"
     p-map "^4.0.0"
-    semver "^7.5.0"
+    semver "^7.5.1"
 
 "@koishijs/scripts@^3.4.2":
   version "3.4.2"
@@ -649,17 +656,17 @@
   dependencies:
     form-data "^4.0.0"
 
-"@satorijs/adapter-feishu@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.npmmirror.com/@satorijs/adapter-feishu/-/adapter-feishu-1.2.3.tgz#7bb7edd2c714336a390d46f7431ac1c71d9af859"
-  integrity sha512-Ib1/l+02YjUyTHEa0ZhCwVNTim4WsOx6OA6W+1S3/jiFtS8m55NrJTOdM0QVZlpKOjOT7vUl9il5TpO3dHSF8w==
-  dependencies:
-    form-data "^4.0.0"
-
 "@satorijs/adapter-kook@^3.8.2":
   version "3.8.2"
   resolved "https://registry.npmmirror.com/@satorijs/adapter-kook/-/adapter-kook-3.8.2.tgz#44d63a390dfe403b8e2ed70ced8f9b09bcf2d7d1"
   integrity sha512-KgW1ZvxToXEugvBnVYHB0R9SaSQXVYBmKWg7uax30WB3r0YPC+50ryupNyfaUhKw4XrTcYSpDl2iqtr9Sjr1Cw==
+  dependencies:
+    form-data "^4.0.0"
+
+"@satorijs/adapter-lark@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.npmmirror.com/@satorijs/adapter-lark/-/adapter-lark-2.0.2.tgz#142d4e04b9680b58e02cb5292ba8d734313f4326"
+  integrity sha512-Pk4aE1wImzCPf0QMg2gRgWi00Zw9IEjDLSJ+DyFWoXcTIBX18AFz20inBJgfp6eANRrtLuTb/M8IASC6Ebs45Q==
   dependencies:
     form-data "^4.0.0"
 
@@ -3422,6 +3429,13 @@ koishi-plugin-puppeteer@3.5.0:
     puppeteer-core "^19.7.4"
     puppeteer-finder "^1.1.0"
 
+koishi-plugin-qdvc@0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npmmirror.com/koishi-plugin-qdvc/-/koishi-plugin-qdvc-0.2.2.tgz#009feacc93c11062a7e623414cefdaae603fc8b3"
+  integrity sha512-bwazOcvq9o7JL9V8lujFv3dlYBGJJkjAkwuNfCPGvRkqJfQ5N/Futt3ABShwBuqIg/VvWXkdf8GiShy3p7UHaw==
+  dependencies:
+    qdvc-web "^0.2.2"
+
 koishi@4.12.9:
   version "4.12.9"
   resolved "https://registry.npmmirror.com/koishi/-/koishi-4.12.9.tgz#5d2688edbfb4f519c9531ed958fa99726a8a8db7"
@@ -4081,6 +4095,11 @@ puppeteer-finder@^1.1.0:
   resolved "https://registry.npmmirror.com/puppeteer-finder/-/puppeteer-finder-1.1.0.tgz#bcef412e1aec6eb7a354ace02dddc342d2fbe22a"
   integrity sha512-EING8kD8fYXrBH895pG+3yrnjUVcLAj95wn+xSVvFgenILSfvO7yFQdtFhYiQcVmZNx2frU3ooFr1P7bLwLYKA==
 
+qdvc-web@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npmmirror.com/qdvc-web/-/qdvc-web-0.2.2.tgz#f9d9f713e1e82f4a7322ad61017191840ab67dca"
+  integrity sha512-qRmxoisEdhs+VZCl19F+wNPjyTi5BuiqIIJO6VH0XTbFkux9PGTZ36RyjKb7CYOPqCyoNC98oftb4Wjcj6LZ4Q==
+
 qface@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/qface/-/qface-1.4.1.tgz#f256faee447f9e10d65abb94b6b6cdd8e74dc617"
@@ -4337,10 +4356,10 @@ semver@^7.0.0, semver@^7.3.5, semver@^7.3.6, semver@^7.3.7, semver@^7.3.8:
   dependencies:
     lru-cache "^6.0.0"
 
-semver@^7.5.0:
-  version "7.5.0"
-  resolved "https://registry.npmmirror.com/semver/-/semver-7.5.0.tgz#ed8c5dc8efb6c629c88b23d41dc9bf40c1d96cd0"
-  integrity sha512-+XC0AD/R7Q2mPSRuy2Id0+CGTZ98+8f+KvwirxOKIEyid+XSx6HbC63p+O4IndTHuX5Z+JxQ0TghCkO5Cg/2HA==
+semver@^7.5.1:
+  version "7.5.1"
+  resolved "https://registry.npmjs.org/semver/-/semver-7.5.1.tgz#c90c4d631cf74720e46b21c1d37ea07edfab91ec"
+  integrity sha512-Wvss5ivl8TMRZXXESstBA4uR5iXgEN/VC5/sOcuXdVLzcdkz4HWetIoRfG5gb5X+ij/G9rw9YoGn3QoQ8OCSpw==
   dependencies:
     lru-cache "^6.0.0"
 
