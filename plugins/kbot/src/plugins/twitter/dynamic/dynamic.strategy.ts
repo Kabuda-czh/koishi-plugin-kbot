@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-26 11:58:32
+ * @LastEditTime: 2023-05-17 11:20:51
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\dynamic.strategy.ts
  * @Description:
  *
@@ -54,7 +54,7 @@ export const dynamicStrategy = async (
     ctx.http.config.headers['x-guest-token'] = cookie.cookies
   }
   catch (e) {
-    cookie = await getTwitterToken(ctx, logger)
+    await getTwitterToken(ctx, logger)
   }
 
   const strategyName = Object.keys(options).find(key => options[key])
@@ -67,8 +67,10 @@ export const dynamicStrategy = async (
         ctx.http,
         logger,
       )
-      if (!['list'].includes(strategyName) && !restId)
+      if (!['list'].includes(strategyName) && !restId) {
+        await getTwitterToken(ctx, logger)
         return '未获取到对应 twitter 博主 ID 信息'
+      }
     }
 
     return dynamicStrategies[strategyName]?.(
