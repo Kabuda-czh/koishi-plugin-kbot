@@ -56,9 +56,9 @@ export function apply(context: Context) {
 
   // 监听群撤回消息
   // TODO 因 messages 插件暂时无法正确使用, 所以暂时无法监听群撤回消息
-  context.guild().on('message-deleted', async (session) => {
+  // context.guild().on('message-deleted', async (session) => {
 
-  })
+  // })
 
   initCommand(context)
 

@@ -361,9 +361,9 @@ onMounted(async () => {
               <ElButton type="danger" @click="groupLeave(row.group_id, row.role === 'owner')">
                 {{ row.role === "owner" ? "解散群" : "退出群" }}
               </ElButton>
-              <ElButton type="primary" @click="setGuildWatch(row)">
-                {{ row.isWatch ? '已开启' : '未开启' }}
-              </ElButton>
+              <!-- <ElButton type="primary" @click="setGuildWatch(row)">
+                {{ row.isWatch ? '监控已开启' : '监控未开启' }}
+              </ElButton> -->
             </template>
           </ElTableColumn>
           <template #empty>
