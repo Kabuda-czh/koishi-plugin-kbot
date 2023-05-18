@@ -24,7 +24,7 @@ const fetchUserInfo = async (
   http: Quester,
 ): Promise<BilibiliUserInfoApiData['data']> => {
   let res = await http.get(
-    `https://api.bilibili.com/x/space/acc/info?mid=${uid}&gaia_source=m_station`,
+    `https://api.bilibili.com/x/space/wbi/acc/info?mid=${uid}&token=&platform=web`,
     {
       headers: {
         Referer: `https://space.bilibili.com/${uid}/dynamic`,
@@ -39,9 +39,8 @@ const fetchUserInfo = async (
     if (+JSON.parse(jsonStrings[0]).code === -509)
       res = JSON.parse(jsonStrings[1])
   }
-
   if (res.code !== 0)
-    throw new Error(`获取 ${uid} 信息失败: [${res}]`)
+    throw new Error(`获取 ${uid} 信息失败: [${res.message}]`)
   return res.data
 }
 
