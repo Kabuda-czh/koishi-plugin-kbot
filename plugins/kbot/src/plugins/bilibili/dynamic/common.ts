@@ -57,13 +57,14 @@ export async function bilibiliAdd(
 ) {
   if (
     session.channel.bilibili.dynamic.find(
-      notification => notification.bilibiliId === uid,
+      notification => notification.bilibiliId === uid || +notification.bilibiliId === +uid,
     )
   )
     return '该用户已在监听列表中。'
 
   try {
     const { name } = await fetchUserInfo(uid, ctx.http)
+    uid = String(uid)
     const notification: DynamicNotifiction = {
       botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
       bilibiliId: uid,
@@ -100,7 +101,7 @@ export async function bilibiliRemove(
   uid = String(uid)
   const { channel } = session
   const index = channel.bilibili.dynamic.findIndex(
-    notification => notification.bilibiliId === uid,
+    notification => notification.bilibiliId === uid || +notification.bilibiliId === +uid,
   )
   if (index === -1)
     return '该用户不在监听列表中。'
