@@ -480,7 +480,7 @@
   resolved "https://registry.npmjs.org/@koishijs/plugin-help/-/plugin-help-2.2.3.tgz#e05ce28bf9050888e8fd08ebb2e5dd7f6060c45d"
   integrity sha512-kknD+k+PagJIhvLy1fim0DGmwZWkI7RPvYtmuecce/JYR1/QhTSfMF/oLcGcCa4FAcvi5udFHUdydKh1TCmRMw==
 
-"@koishijs/plugin-hmr@1.2.0":
+"@koishijs/plugin-hmr@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@koishijs/plugin-hmr/-/plugin-hmr-1.2.0.tgz#2235b58dc158b79a2116acc2c6254d94be9e3548"
   integrity sha512-RM6beHe8MFWoNBsqVFyszGF5qxQnpam6pWLCScVPbG01V5BAc4h1xA3EKVpgux2D1VWFsguuthoSgY9q49XFZQ==
