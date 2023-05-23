@@ -46,7 +46,7 @@
     "@koishijs/plugin-database-sqlite": "3.4.4",
     "@koishijs/plugin-dataview": "2.3.1",
     "@koishijs/plugin-help": "2.2.3",
-    "@koishijs/plugin-hmr": "1.2.0",
+    "@koishijs/plugin-hmr": "^1.2.0",
     "@koishijs/plugin-insight": "3.3.4",
     "@koishijs/plugin-locales": "2.2.7",
     "@koishijs/plugin-logger": "2.2.3",
