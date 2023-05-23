@@ -13,7 +13,7 @@ import type { Context as KoaContext } from 'koa'
 import type { IRouterStrategy } from '../typings'
 import handleFunction from '../utils'
 
-const getBots = (context: Context) => {
+function getBots(context: Context) {
   return async (ctx: KoaContext) => {
     const bots = context.bots.filter(bot => bot.platform === 'onebot' && bot.status === 'online')
     ctx.body = bots.map((bot) => {

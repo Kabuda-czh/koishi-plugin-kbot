@@ -13,7 +13,7 @@ import type { Context as KoaContext } from 'koa'
 import type { GuildMemberInfo, IRouterStrategy } from '../typings'
 import handleFunction from '../utils'
 
-const getGuildWatchList = (context: Context) => {
+function getGuildWatchList(context: Context) {
   return async (ctx: KoaContext) => {
     const channelInfo = await context.database.get('channel', { platform: 'onebot' })
     ctx.body = channelInfo.map((channel) => {
@@ -25,7 +25,7 @@ const getGuildWatchList = (context: Context) => {
   }
 }
 
-const getSetGuildWatch = (context: Context) => {
+function getSetGuildWatch(context: Context) {
   return async (ctx: KoaContext) => {
     const { guildId, isWatch } = ctx.query
     const channel = await context.database.get('channel', { id: guildId, platform: 'onebot', guildId })

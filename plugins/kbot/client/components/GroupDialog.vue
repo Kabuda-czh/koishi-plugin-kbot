@@ -103,7 +103,7 @@ const columns = reactive<Column<any>[]>([
   },
 ])
 
-const getMemberList = async () => {
+async function getMemberList() {
   if (props.groupId) {
     dialogLoading.value = true
 
@@ -113,7 +113,7 @@ const getMemberList = async () => {
   }
 }
 
-const selectData = (item: { label: string; value: string | number }) => {
+function selectData(item: { label: string; value: string | number }) {
   dialogLoading.value = true
   const filterList = defaultMemberList.value.filter(
     member => +member.userId === +item.value,
@@ -125,7 +125,7 @@ const selectData = (item: { label: string; value: string | number }) => {
   }, 1000)
 }
 
-const dataChange = (value: string | number) => {
+function dataChange(value: string | number) {
   if (!value) {
     dialogLoading.value = true
     setTimeout(() => {

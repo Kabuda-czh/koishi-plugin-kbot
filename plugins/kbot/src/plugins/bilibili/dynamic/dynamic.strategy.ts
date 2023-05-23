@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-26 11:57:57
+ * @LastEditTime: 2023-05-23 10:37:44
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\dynamic.strategy.ts
  * @Description:
  *
@@ -37,7 +37,7 @@ const dynamicStrategies = {
   cookie: bilibiliCookie,
 }
 
-export const dynamicStrategy = async (
+export async function dynamicStrategy(
   {
     session,
     options,
@@ -50,7 +50,7 @@ export const dynamicStrategy = async (
   >,
   ctx: Context,
   config: IConfig,
-) => {
+) {
   const strategyName = Object.keys(options).find(key => options[key])
   if (Object.keys(dynamicStrategies).includes(strategyName)) {
     const value = options[strategyName]

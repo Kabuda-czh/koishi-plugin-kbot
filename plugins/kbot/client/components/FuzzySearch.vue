@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-14 11:21:29
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-28 14:28:17
+ * @LastEditTime: 2023-05-23 10:36:03
  * @FilePath: \KBot-App\plugins\kbot\client\components\FuzzySearch.vue
  * @Description:
  *
@@ -43,7 +43,7 @@ const emit = defineEmits(['selectData', 'dataChange'])
 const state = ref<string>('')
 
 const searchOptions = ref<SearchOptionType[]>([])
-const querySearch = (queryString: string, cb: any) => {
+function querySearch(queryString: string, cb: any) {
   const results = queryString
     ? searchOptions.value.filter(item =>
       (item.label + item.value).includes(queryString),
@@ -53,15 +53,15 @@ const querySearch = (queryString: string, cb: any) => {
   cb(results)
 }
 
-const getFuzzySearch = (item: any) => {
+function getFuzzySearch(item: any) {
   emit('selectData', item, props?.index)
 }
 
-const checkValue = (
+function checkValue(
   options: any[],
   labelKey: string,
   valueKey: string,
-): SearchOptionType[] => {
+): SearchOptionType[] {
   const _options: SearchOptionType[] = options.reduce(
     (pre: SearchOptionType[], cur) => {
       pre.push({
@@ -75,7 +75,7 @@ const checkValue = (
   return _options
 }
 
-const loadAll = () => {
+function loadAll() {
   const _options = checkValue(props.options, props.labelKey, props.valueKey)
   searchOptions.value = _options
   if (!props.value) {
@@ -95,7 +95,7 @@ const loadAll = () => {
   }
 }
 
-const changeSearch = (val: string | number) => {
+function changeSearch(val: string | number) {
   emit('dataChange', val, props?.index)
 }
 

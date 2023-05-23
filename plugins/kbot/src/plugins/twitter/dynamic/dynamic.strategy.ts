@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-17 11:20:51
+ * @LastEditTime: 2023-05-23 10:38:28
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\dynamic.strategy.ts
  * @Description:
  *
@@ -29,7 +29,7 @@ const dynamicStrategies = {
   search: twitterSearch,
 }
 
-export const dynamicStrategy = async (
+export async function dynamicStrategy(
   {
     session,
     options,
@@ -42,7 +42,7 @@ export const dynamicStrategy = async (
   >,
   ctx: Context,
   config: IConfig,
-) => {
+) {
   let cookie
   try {
     cookie = JSON.parse(

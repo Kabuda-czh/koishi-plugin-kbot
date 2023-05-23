@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-09 11:21:36
+ * @LastEditTime: 2023-05-23 10:33:13
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
@@ -220,6 +220,7 @@ function durationTime(time: number) {
 
 export function writeBlobToFile(blobData: ArrayBuffer, fileName: string) {
   const filePath = path.join(__dirname, '../../../../../../public/kbot/randomImage', `${fileName}.png`)
+  // eslint-disable-next-line n/prefer-global/buffer
   fs.writeFile(filePath, Buffer.from(blobData), (err) => {
     if (err)
       throw err
@@ -227,5 +228,6 @@ export function writeBlobToFile(blobData: ArrayBuffer, fileName: string) {
 }
 
 export function blobToBase64(blobData: ArrayBuffer) {
+  // eslint-disable-next-line n/prefer-global/buffer
   return Buffer.from(blobData).toString('base64')
 }

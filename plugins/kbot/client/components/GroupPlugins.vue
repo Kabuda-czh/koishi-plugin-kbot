@@ -45,7 +45,7 @@ const commandId = ref<number>(1)
 const commandArray = ref<GroupCommand[]>([])
 const defaultCommands = ref<GroupCommand[]>([])
 
-const getCommandList = async () => {
+async function getCommandList() {
   const setDisable = (commands: GroupCommand[], disables: string[]) => {
     for (const command of commands) {
       command.id = commandId.value++
@@ -62,7 +62,7 @@ const getCommandList = async () => {
   }
 }
 
-const selectData = (item: { label: string; value: string }) => {
+function selectData(item: { label: string; value: string }) {
   dialogLoading.value = true
   const filterList = defaultCommands.value.filter(
     commands => commands.name === item.value,
@@ -74,7 +74,7 @@ const selectData = (item: { label: string; value: string }) => {
   }, 1000)
 }
 
-const dataChange = (value: string | number) => {
+function dataChange(value: string | number) {
   if (!value) {
     dialogLoading.value = true
     setTimeout(() => {
@@ -84,7 +84,7 @@ const dataChange = (value: string | number) => {
   }
 }
 
-const findParentCommand = (command: GroupCommand, commands: GroupCommand[]): GroupCommand => {
+function findParentCommand(command: GroupCommand, commands: GroupCommand[]): GroupCommand {
   const parentName = command.parent
   if (!parentName)
     return null
@@ -103,7 +103,7 @@ const findParentCommand = (command: GroupCommand, commands: GroupCommand[]): Gro
   return null
 }
 
-const commandSwitch = (command: GroupCommand) => {
+function commandSwitch(command: GroupCommand) {
   const { hasChildren, children = [], disable, parent } = command || {}
   if (hasChildren)
     children.forEach(child => child.disable = disable)
@@ -114,7 +114,7 @@ const commandSwitch = (command: GroupCommand) => {
   }
 }
 
-const getAllDisable = (commands: GroupCommand[]): string[] => {
+function getAllDisable(commands: GroupCommand[]): string[] {
   const disables: string[] = []
 
   for (const cmd of commands) {
@@ -128,7 +128,7 @@ const getAllDisable = (commands: GroupCommand[]): string[] => {
   return disables
 }
 
-const setCommands = async () => {
+async function setCommands() {
   const disabledCommands = getAllDisable(commandArray.value)
   await fetchSwitchCommands(String(props.groupId), disabledCommands).then((res: boolean) => {
     if (res)
@@ -139,7 +139,7 @@ const setCommands = async () => {
   })
 }
 
-const init = async () => {
+async function init() {
   dialogLoading.value = true
   await getCommandList()
   dialogLoading.value = false

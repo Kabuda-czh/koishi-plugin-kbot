@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 15:28:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:57:31
+ * @LastEditTime: 2023-05-23 10:33:27
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\music\index.tsx
  * @Description:
  *
@@ -12,7 +12,7 @@ import type { Context } from 'koishi'
 import { Schema, segment, version } from 'koishi'
 import { } from 'koishi-plugin-puppeteer'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const { version: pVersion } = require('../../../package.json')
 
 export type Platform = 'netease' | 'qq'

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 18:29:40
+ * @LastEditTime: 2023-05-23 10:31:59
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.ts
  * @Description:
  *
@@ -13,7 +13,7 @@ import { Logger, Schema, version } from 'koishi'
 import { renderHtml, renderRandom } from './render'
 import { getSystemInfo } from './utils'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const { version: pVersion } = require('../../../package.json')
 
 export interface IConfig {

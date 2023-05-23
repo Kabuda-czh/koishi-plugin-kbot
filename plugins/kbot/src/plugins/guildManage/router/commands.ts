@@ -13,7 +13,7 @@ import type { Context as KoaContext } from 'koa'
 import type { IRouterStrategy } from '../typings'
 import { logger } from '..'
 
-const getChildren = (command: any) => {
+function getChildren(command: any) {
   if (command.children.length === 0) {
     return []
   }
@@ -29,7 +29,7 @@ const getChildren = (command: any) => {
   }
 }
 
-const commands = (context: Context) => {
+function commands(context: Context) {
   return async (ctx: KoaContext) => {
     const commandsObject = {}
     context.$commander._commands.forEach((command) => {
@@ -49,7 +49,7 @@ const commands = (context: Context) => {
   }
 }
 
-const getDisabledCommands = (context: Context) => {
+function getDisabledCommands(context: Context) {
   return async (ctx: KoaContext) => {
     const { guildId } = ctx.query
     const channel = await context.database.get('channel', { id: guildId, platform: 'onebot', guildId })
@@ -57,7 +57,7 @@ const getDisabledCommands = (context: Context) => {
   }
 }
 
-const switchCommands = (context: Context) => {
+function switchCommands(context: Context) {
   return async (ctx: KoaContext) => {
     const { guildId, commands } = ctx.query
     try {

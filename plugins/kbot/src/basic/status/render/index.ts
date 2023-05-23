@@ -1,19 +1,20 @@
 /*
-* @Author: Kabuda-czh
-* @Date: 2023-03-13 17:14:23
+ * @Author: Kabuda-czh
+ * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 18:27:47
+ * @LastEditTime: 2023-05-23 10:32:53
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
-* @Description:
-*
-* Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
-*/
+ * @Description:
+ *
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
+ */
 import { pathToFileURL } from 'node:url'
 import { resolve } from 'node:path'
 import type { Context } from 'koishi'
 import { segment } from 'koishi'
 import type { Page } from 'puppeteer-core'
 import type { SystemInfo } from '../utils'
+
 // import { writeBlobToFile } from '../utils'
 import { logger } from '..'
 
@@ -59,6 +60,7 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
         referer: 'https://weibo.com/',
       },
     }).then(async (resp) => {
+      // eslint-disable-next-line n/prefer-global/buffer
       const imageBase64 = Buffer.from(resp.data, 'binary').toString('base64')
       // writeBlobToFile(resp.data, new Date().toLocaleString().replace(/[/:]/g, '-'))
       let page: Page

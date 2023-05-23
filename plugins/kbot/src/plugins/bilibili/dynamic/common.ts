@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 09:44:07
+ * @LastEditTime: 2023-05-23 10:29:40
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -19,10 +19,10 @@ import { renderFunction } from './render'
 import type { IConfig } from '.'
 import { logger } from '.'
 
-const fetchUserInfo = async (
+async function fetchUserInfo(
   uid: string,
   http: Quester,
-): Promise<BilibiliUserInfoApiData['data']> => {
+): Promise<BilibiliUserInfoApiData['data']> {
   let res = await http.get(
     `https://api.bilibili.com/x/space/wbi/acc/info?mid=${uid}&token=&platform=web`,
     {

@@ -63,19 +63,19 @@ const pluginDialogVisible = ref<boolean>(false)
 const botDialogLoading = ref<boolean>(false)
 const botDialogVisible = ref<boolean>(false)
 
-const checkGuildInfo = (id: number, role: string) => {
+function checkGuildInfo(id: number, role: string) {
   groupId.value = id
   botRole.value = role
   dialogVisible.value = true
 }
 
-const getCommands = async () => {
+async function getCommands() {
   await fetchCommands().then((res: { [key: string]: GroupCommand }) => {
     commands.value = Object.values(res)
   })
 }
 
-const getGroupList = async () => {
+async function getGroupList() {
   const groupDatas = await fetchGroupList(botId.value).then(res => res as Promise<Group[]>)
   const watchList = await fetchGuildWatchList().then(res => res as Promise<GuildWatch[]>)
 
@@ -104,7 +104,7 @@ const getGroupList = async () => {
   groupList.value = defaultGroupList.value.slice(0, pageSize.value)
 }
 
-const muteGuild = (row: GroupList, mute: boolean) => {
+function muteGuild(row: GroupList, mute: boolean) {
   messageBox
     .confirm(
       '<p>全体禁言并不会判断机器人是否为管理/群主</p><p>以及当前群是否已经开启全体禁言</p><p>确定要继续吗?</p>',
@@ -124,7 +124,7 @@ const muteGuild = (row: GroupList, mute: boolean) => {
     })
 }
 
-const sendGroupMessage = () => {
+function sendGroupMessage() {
   const sendGroupList = defaultGroupList.value.filter(group => group.checked)
   messageBox
     .prompt('请输入要发送的消息', '指定群广播', {
@@ -143,13 +143,13 @@ const sendGroupMessage = () => {
     })
 }
 
-const groupCheck = (val: boolean, index: number) => {
+function groupCheck(val: boolean, index: number) {
   const defaultListIndex = index + (currentPage.value - 1) * pageSize.value
   defaultGroupList.value[defaultListIndex].checked = val
   sendGroupListDisable.value = defaultGroupList.value.filter(group => group.checked).length < 2
 }
 
-const broadcast = () => {
+function broadcast() {
   messageBox
     .prompt('请输入要广播的消息', '广播消息', {
       confirmButtonText: '确定',
@@ -169,19 +169,19 @@ const broadcast = () => {
     })
 }
 
-const changeBot = async (userId: string | number) => {
+async function changeBot(userId: string | number) {
   botDialogLoading.value = true
   botId.value = userId
   await Promise.all([getGroupList(), getCommands()])
   botDialogLoading.value = false
 }
 
-const manageGroupPlugins = (group_id: number) => {
+function manageGroupPlugins(group_id: number) {
   pluginDialogVisible.value = true
   groupId.value = group_id
 }
 
-const selectData = (item: { label: string; value: string | number }) => {
+function selectData(item: { label: string; value: string | number }) {
   loading.value = true
   const filterList = defaultGroupList.value.filter(
     group => group.group_id === +item.value,
@@ -193,7 +193,7 @@ const selectData = (item: { label: string; value: string | number }) => {
   }, 1000)
 }
 
-const dataChange = (value: string | number) => {
+function dataChange(value: string | number) {
   if (!value) {
     loading.value = true
     setTimeout(() => {
@@ -203,7 +203,7 @@ const dataChange = (value: string | number) => {
   }
 }
 
-const sendMessage = (groupId: number, groupName: string) => {
+function sendMessage(groupId: number, groupName: string) {
   messageBox
     .prompt('请输入要发送的消息', `向群 ${groupName}(${groupId}) 发送消息`, {
       confirmButtonText: '确定',
@@ -221,7 +221,7 @@ const sendMessage = (groupId: number, groupName: string) => {
     })
 }
 
-const groupLeave = (groupId: number, isOwner: boolean) => {
+function groupLeave(groupId: number, isOwner: boolean) {
   messageBox
     .confirm(
       `<strong>确定要${isOwner ? '解散群' : '退群'}吗?</strong>
@@ -262,7 +262,7 @@ const groupLeave = (groupId: number, isOwner: boolean) => {
 //   })
 // }
 
-const paginationClick = (val: number) => {
+function paginationClick(val: number) {
   loading.value = true
 
   currentPage.value = val
@@ -278,7 +278,7 @@ const paginationClick = (val: number) => {
   }, 1000)
 }
 
-const init = async () => {
+async function init() {
   await fetchGetBots().then((res) => {
     botList.value = res
     botId.value = res[0]?.userId

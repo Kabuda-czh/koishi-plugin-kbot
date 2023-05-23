@@ -20,6 +20,7 @@ import * as youtubePlugin from './plugins/youtube'
 import * as managePlugin from './plugins/guildManage'
 import * as twitterPlugin from './plugins/twitter'
 import * as tarotPlugin from './plugins/tarot'
+
 // import * as valorantPlugin from './plugins/valorant'
 
 import { kbotDir, publicDir } from './config'
@@ -59,8 +60,8 @@ interface IConfig {
   KBotTarot?: tarotPlugin.IConfig & IPluginEnableConfig
 }
 
-const pluginLoad = <T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> =>
-  Schema.intersect([
+function pluginLoad<T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> {
+  return Schema.intersect([
     Schema.object({
       enabled: Schema.boolean().default(false).description('是否启用插件'),
     }),
@@ -74,6 +75,7 @@ const pluginLoad = <T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> =>
       }),
     ]) as Schema<T>,
   ])
+}
 
 export const Config: Schema<IConfig> = Schema.object({
   superAdminQQ: Schema.array(String).description('超级管理员QQ号 (必填)'),

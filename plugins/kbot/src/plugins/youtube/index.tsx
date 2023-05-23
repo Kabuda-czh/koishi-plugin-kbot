@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-11 15:59:47
+ * @LastEditTime: 2023-05-23 10:35:34
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\youtube\index.tsx
  * @Description:
  *
@@ -101,11 +101,11 @@ const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?(?=.*
 const videoRegex
   = /^(?:https?:\/\/)?(?:i\.|www\.|img\.)?(?:youtu\.be\/|youtube\.com\/|ytimg\.com\/)(?:embed\/|v\/|vi\/|vi_webp\/|watch\?v=|watch\?.+&v=)?((\w|-){11})(?:\S+)?$/
 
-const fetchDataFromAPI = async (
+async function fetchDataFromAPI(
   ctx: Context,
   config: IConfig,
   videoId: string,
-): Promise<ApiData> => {
+): Promise<ApiData> {
   try {
     const data = await ctx.http.get(
       `${apiEndPointPrefix}?id=${videoId}&key=${config.youtubeDataApiKey}&part=snippet,contentDetails,statistics,status`,
@@ -118,7 +118,7 @@ const fetchDataFromAPI = async (
   }
 }
 
-const getIDFromURLByRegex = (url: string): string | undefined => {
+function getIDFromURLByRegex(url: string): string | undefined {
   const [, id] = url.match(videoRegex) || []
   return id
 }

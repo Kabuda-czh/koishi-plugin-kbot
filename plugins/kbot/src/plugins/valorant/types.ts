@@ -2,12 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-19 17:43:19
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-19 17:58:09
+ * @LastEditTime: 2023-05-23 10:34:37
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\valorant\types.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Valorant {
   export interface UserInfoResponse {
     country: string

@@ -98,7 +98,7 @@ const botEditRole = computed(() => {
   )
 })
 
-const getMemberInfo = async () => {
+async function getMemberInfo() {
   if (props.groupId && props.botId) {
     dialogLoading.value = true
 
@@ -113,7 +113,7 @@ const getMemberInfo = async () => {
 }
 
 // 禁言操作
-const muteMember = () => {
+function muteMember() {
   const muteDay = ref<number>(0) // 天
   const muteHour = ref<number>(0) // 小时
   const muteMinute = ref<number>(1) // 分钟
@@ -197,14 +197,14 @@ const muteMember = () => {
     .catch(() => message.success('已取消操作'))
 }
 
-const cancelMuteMember = () => {
+function cancelMuteMember() {
   fetchMuteMember(props.botId, memberInfo.value.group_id, memberInfo.value.user_id, 0).then(
     () => message.success(`取消禁言 ${memberInfo.value.nickname} 成功`),
   )
 }
 
 // 群管理操作
-const groupSetAdmin = () => {
+function groupSetAdmin() {
   const isSetAdmin = RoleObject[memberInfo.value.role]?.role === 2
 
   messageBox
@@ -229,7 +229,7 @@ const groupSetAdmin = () => {
     .catch(() => message.success('已取消操作'))
 }
 
-const groupKick = () => {
+function groupKick() {
   // TODO 因为动态渲染的原因，这里的弹窗暂时未开发允许再次加入的选项
   const rejectAddRequest = ref<boolean>(false)
 
