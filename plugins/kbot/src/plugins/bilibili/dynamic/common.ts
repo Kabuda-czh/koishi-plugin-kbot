@@ -2,12 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 10:29:40
+ * @LastEditTime: 2023-05-23 11:10:43
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
+import * as crypto from 'node:crypto'
 import type { Argv, Channel, Context, Dict, Quester } from 'koishi'
 import type {
   BilibiliDynamicItem,
@@ -19,15 +20,35 @@ import { renderFunction } from './render'
 import type { IConfig } from '.'
 import { logger } from '.'
 
+// 每次请求生成 w_rid 参数
+function wrid(uid: string | number) {
+  const wts = Math.floor(Date.now() / 1000).toString() // 获得时间戳
+  const c = '72136226c6a73669787ee4fd02a74c27'
+  const b = `mid=${uid}&platform=web&token=&web_location=1550101`
+  const a = `${b}&wts=${wts}${c}`
+  return crypto.createHash('md5').update(a).digest('hex')
+}
+
 async function fetchUserInfo(
   uid: string,
   http: Quester,
 ): Promise<BilibiliUserInfoApiData['data']> {
   let res = await http.get(
-    `https://api.bilibili.com/x/space/wbi/acc/info?mid=${uid}&token=&platform=web`,
+    'https://api.bilibili.com/x/space/wbi/acc/info',
     {
+      params: {
+        mid: uid,
+        token: '',
+        platform: 'web',
+        web_location: 1550101,
+        w_rid: wrid(uid),
+        wts: Math.floor(Date.now() / 1000),
+      },
       headers: {
         'Referer': `https://space.bilibili.com/${uid}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json, text/plain, */*',
+        'Origin': 'https://space.bilibili.com',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
       },
     },
@@ -40,9 +61,9 @@ async function fetchUserInfo(
     if (+JSON.parse(jsonStrings[0]).code === -509)
       res = JSON.parse(jsonStrings[1])
   }
-  if (res.code !== 0)
+  if (res.code !== 0 && res.code !== -403)
     throw new Error(`获取 ${uid} 信息失败: [code: ${res.code}, message: ${res.message}]`)
-  return res.data
+  return res.data || {}
 }
 
 export async function bilibiliAdd(
@@ -69,7 +90,7 @@ export async function bilibiliAdd(
     const notification: DynamicNotifiction = {
       botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
       bilibiliId: uid,
-      bilibiliName: name,
+      bilibiliName: name || uid,
     }
     session.channel.bilibili.dynamic.push(notification);
     (list[uid] ||= []).push([
@@ -81,11 +102,11 @@ export async function bilibiliAdd(
       },
       notification,
     ])
-    return `成功添加 up主: ${name}`
+    return `成功添加 up主: ${name || uid}`
   }
   catch (e) {
     logger.error(e)
-    return `请求失败，请检查 uid 是否正确或重试${e.message}`
+    return `请求失败，请检查 uid 是否正确或重试，${e.message}`
   }
 }
 
