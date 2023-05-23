@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-22 11:13:28
+ * @LastEditTime: 2023-05-23 09:44:07
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -27,8 +27,8 @@ const fetchUserInfo = async (
     `https://api.bilibili.com/x/space/wbi/acc/info?mid=${uid}&token=&platform=web`,
     {
       headers: {
-        Referer: `https://space.bilibili.com/${uid}`,
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36'
+        'Referer': `https://space.bilibili.com/${uid}`,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
       },
     },
   )

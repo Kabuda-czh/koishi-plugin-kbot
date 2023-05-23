@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-10 16:34:47
+ * @LastEditTime: 2023-05-23 10:08:44
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupPlugins.vue
  * @Description:
  *
@@ -42,7 +42,7 @@ const dialogLoading = ref<boolean>(false)
 
 // commands
 const commandId = ref<number>(1)
-const commands = ref<GroupCommand[]>([])
+const commandArray = ref<GroupCommand[]>([])
 const defaultCommands = ref<GroupCommand[]>([])
 
 const getCommandList = async () => {
@@ -57,7 +57,7 @@ const getCommandList = async () => {
     await fetchDisabledCommands(props.groupId).then((res: string[]) => {
       const sliceCommands = props.commands.slice()
       setDisable(sliceCommands, res)
-      defaultCommands.value = commands.value = sliceCommands
+      defaultCommands.value = commandArray.value = sliceCommands
     })
   }
 }
@@ -69,7 +69,7 @@ const selectData = (item: { label: string; value: string }) => {
   )
 
   setTimeout(() => {
-    commands.value = filterList
+    commandArray.value = filterList
     dialogLoading.value = false
   }, 1000)
 }
@@ -78,7 +78,7 @@ const dataChange = (value: string | number) => {
   if (!value) {
     dialogLoading.value = true
     setTimeout(() => {
-      commands.value = defaultCommands.value
+      commandArray.value = defaultCommands.value
       dialogLoading.value = false
     }, 1000)
   }
@@ -109,7 +109,7 @@ const commandSwitch = (command: GroupCommand) => {
     children.forEach(child => child.disable = disable)
 
   if (parent) {
-    const parent = findParentCommand(command, commands.value)
+    const parent = findParentCommand(command, commandArray.value)
     parent.disable = parent.children?.every(child => child.disable)
   }
 }
@@ -129,7 +129,7 @@ const getAllDisable = (commands: GroupCommand[]): string[] => {
 }
 
 const setCommands = async () => {
-  const disabledCommands = getAllDisable(commands.value)
+  const disabledCommands = getAllDisable(commandArray.value)
   await fetchSwitchCommands(String(props.groupId), disabledCommands).then((res: boolean) => {
     if (res)
       ElMessage.success('设置成功')

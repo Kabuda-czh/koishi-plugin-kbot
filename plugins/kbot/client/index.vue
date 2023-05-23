@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-15 11:27:47
+ * @LastEditTime: 2023-05-23 10:09:25
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -33,7 +33,7 @@ import GroupDialog from './components/GroupDialog.vue'
 import FuzzySearch from './components/FuzzySearch.vue'
 import GroupPlugins from './components/GroupPlugins.vue'
 import type { Group, GroupCommand, GroupList, GuildWatch, UserInfo } from './interface'
-import { fetchGuildWatchList, fetchSetGuildWatch } from './api/guild'
+import { fetchGuildWatchList } from './api/guild'
 
 const loading = ref<boolean>(true)
 
@@ -251,16 +251,16 @@ const groupLeave = (groupId: number, isOwner: boolean) => {
     })
 }
 
-const setGuildWatch = (row: GroupList) => {
-  row.isWatch = !row.isWatch
-  fetchSetGuildWatch(row.group_id, row.isWatch).then((res: boolean) => {
-    if (!res) {
-      message.error('操作失败')
-      return
-    }
-    message.success(row.isWatch ? '开启成功' : '关闭成功')
-  })
-}
+// const setGuildWatch = (row: GroupList) => {
+//   row.isWatch = !row.isWatch
+//   fetchSetGuildWatch(row.group_id, row.isWatch).then((res: boolean) => {
+//     if (!res) {
+//       message.error('操作失败')
+//       return
+//     }
+//     message.success(row.isWatch ? '开启成功' : '关闭成功')
+//   })
+// }
 
 const paginationClick = (val: number) => {
   loading.value = true
