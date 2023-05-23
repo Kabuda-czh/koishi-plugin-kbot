@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 11:09:13
+ * @LastEditTime: 2023-05-23 11:10:43
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -61,9 +61,9 @@ async function fetchUserInfo(
     if (+JSON.parse(jsonStrings[0]).code === -509)
       res = JSON.parse(jsonStrings[1])
   }
-  if (res.code !== 0)
+  if (res.code !== 0 && res.code !== -403)
     throw new Error(`获取 ${uid} 信息失败: [code: ${res.code}, message: ${res.message}]`)
-  return res.data
+  return res.data || {}
 }
 
 export async function bilibiliAdd(
@@ -90,7 +90,7 @@ export async function bilibiliAdd(
     const notification: DynamicNotifiction = {
       botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
       bilibiliId: uid,
-      bilibiliName: name,
+      bilibiliName: name || uid,
     }
     session.channel.bilibili.dynamic.push(notification);
     (list[uid] ||= []).push([
@@ -102,11 +102,11 @@ export async function bilibiliAdd(
       },
       notification,
     ])
-    return `成功添加 up主: ${name}`
+    return `成功添加 up主: ${name || uid}`
   }
   catch (e) {
     logger.error(e)
-    return `请求失败，请检查 uid 是否正确或重试${e.message}`
+    return `请求失败，请检查 uid 是否正确或重试，${e.message}`
   }
 }
 
