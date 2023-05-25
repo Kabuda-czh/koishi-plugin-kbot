@@ -49,10 +49,10 @@
   },
   "dependencies": {
     "qs": "^6.11.2",
-    "systeminformation": "^5.17.12"
+    "systeminformation": "^5.17.13"
   },
   "devDependencies": {
-    "@koishijs/client": "^5.9.1",
+    "@koishijs/client": "^5.9.3",
     "@types/qs": "^6.9.7",
     "@types/systeminformation": "^3.54.1"
   }
