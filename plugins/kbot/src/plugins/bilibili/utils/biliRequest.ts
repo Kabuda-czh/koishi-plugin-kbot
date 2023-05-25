@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-06 11:09:37
+ * @LastEditTime: 2023-05-25 12:49:58
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
@@ -20,7 +20,8 @@ export async function getDynamic(http: Quester, uid: string) {
     StringFormat(BilibiliDynamicType.DynamicDetailURL, uid),
     {
       headers: {
-        Referer: `https://space.bilibili.com/${uid}/dynamic`,
+        'Referer': `https://space.bilibili.com/${uid}/dynamic`,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
       },
     },
   )
