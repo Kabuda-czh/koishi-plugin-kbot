@@ -1,0 +1,139 @@
+/*
+ * @Author: Kabuda-czh
+ * @Date: 2023-05-23 12:04:31
+ * @LastEditors: Kabuda-czh
+ * @LastEditTime: 2023-05-23 14:59:05
+ * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamicHtml\style.css
+ * @Description:
+ *
+ * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
+ */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+body * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+/* 整体 */
+.m-opus {
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+.m-opus .opus-modules {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+}
+
+/* 作者 */
+.opus-module-author {
+  display: flex;
+  align-items: center;
+  padding: 3.2vmin;
+  height: 19.2vmin;
+}
+
+/* 作者头像区域 */
+.opus-module-author__avatar {
+  flex-shrink: 0;
+  width: 10.66667vmin;
+  height: 10.66667vmin;
+  margin-right: 3.2vmin;
+}
+
+.opus-module-author__avatar__face {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: url(https://i0.hdslb.com/bfs/face/member/noface.jpg) 50%/cover no-repeat;
+}
+
+.b-img__inner {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.b-img__inner img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: inherit;
+}
+
+/* 作者信息区域 */
+.opus-module-author__info {
+  flex: 1;
+}
+
+/* 名字 */
+.opus-module-author__name {
+  color: #18191c;
+  font-size: 4vmin;
+}
+
+/* 发布时间 */
+.opus-module-author__pub {
+  margin-top: 1px;
+  font-size: 3.2vmin;
+  line-height: 4.53333vmin;
+  color: #9499a0;
+}
+
+/* 内容 */
+.opus-module-content {
+  color: #18191c;
+  word-break: break-all;
+  letter-spacing: 0;
+  word-wrap: break-word;
+  font-size: 4.53333vmin;
+  /* white-space: pre-line; */
+}
+
+.opus-module-content p {
+  margin-bottom: 3.2vmin;
+  padding: 0 3.2vmin;
+  line-height: 1.6em;
+}
+
+.opus-text-rich-hl {
+  color: #008ac5;
+}
+
+.bm-pics-block {
+  box-sizing: border-box;
+}
+
+.bm-pics-block__container {
+  padding: 0 3.2vmin;
+}
+
+.bm-pics-block img {
+  border-radius: 1.06667vmin;
+  object-fit: cover;
+  object-position: 50% 50%;
+  width: 100%;
+  height: 100%;
+}
