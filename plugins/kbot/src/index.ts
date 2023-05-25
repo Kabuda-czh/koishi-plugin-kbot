@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 11:20:49
+ * @LastEditTime: 2023-05-25 14:03:22
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -28,20 +28,15 @@ import { kbotDir, publicDir } from './config'
 export const name = 'kbot'
 
 export const usage = `
-# KBot v1.0.6 更新日志
+# KBot v1.0.7 更新日志
 
 ## Note
-- 修复 \`bilibili\` 插件无法添加用户的问题
-- 修复 \`bilibili\` 插件添加和删除用户的错误问题
-
-## Features
-- 优化部分代码
+- 修复 \`bilibili\` 获取用户动态 \`-352\` 问题
 
 ## Bug Fix
-- 修复 \`bilibili\` 因接口增加 md5 校验导致 \`code -403\` 问题
-- 修复 \`bilibili\` 插件添加和删除用户因 uid 类型问题, 导致无法正确使用
+- 修复 \`bilibili\` 因接口增加 ua 校验导致 \`code -352\` 问题
 
-详细更新日志请查看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.6)
+详细更新日志请查看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.7)
 `
 
 interface IPluginEnableConfig {
