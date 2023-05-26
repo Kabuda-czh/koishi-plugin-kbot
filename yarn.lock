@@ -454,10 +454,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.9.1":
-  version "5.9.1"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-console/-/plugin-console-5.9.1.tgz#e00a6655c38ca300a5bb353356678674a4457402"
-  integrity sha512-wNuR/YI7qwGgU0IKKWu324Mw3KbS9qIxWyGI1v7F/eHAn06hGCx161JkYhqGJe949CE0PsnCNBTbDqdRxSYuKg==
+"@koishijs/plugin-console@5.9.3":
+  version "5.9.3"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.9.3.tgz#f7363c5c9b7b85163487b541c03c49c1aaf97b22"
+  integrity sha512-RxmFIZNHGp7dI9OjLhIhvJaVJ0LJRv+pzyqa/fih55435CD3ks7VsGyWYUd2Gfm3pxWayR1pfgJ1trJmktZstQ==
   dependencies:
     open "^8.4.2"
     uuid "^8.3.2"
@@ -489,10 +489,10 @@
     chokidar "^3.5.3"
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-insight@3.3.4":
-  version "3.3.4"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-insight/-/plugin-insight-3.3.4.tgz#dcedf8cdba948b32faaffb288733cd7a9a5dee4f"
-  integrity sha512-r51NOcrnkjpAnR4uSqp+srlsCoyZYijZdENqzdtgSgUIfeUfqwl7yhOKtD87KiQnccTIKxFr0UI+h6H7K/ta7g==
+"@koishijs/plugin-insight@3.4.0":
+  version "3.4.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-insight/-/plugin-insight-3.4.0.tgz#0e53d6a808fee4d908c058489ff0115d7f6c2b8f"
+  integrity sha512-Fszzsn0KNB10aXq+WYNy9m+foRM0GOvtKxOkTIEUpvT0WJAy+pLI+L1s408BhQ8KLM8UGL5CIs2IOf//vIBnbg==
   dependencies:
     throttle-debounce "^3.0.1"
 
@@ -509,10 +509,10 @@
   resolved "https://registry.npmjs.org/@koishijs/plugin-logger/-/plugin-logger-2.2.3.tgz#4876eb4d6d15c3c42ec109f3a7acebff6853d562"
   integrity sha512-OqZK6UOVJUtcqhdOvcABqWYraALzwDhN+Apr32F4DF3fDtjJ9ld0fX9ndFMgPBucfSXYrCM7ciJ2Cqj563Tdjg==
 
-"@koishijs/plugin-market@2.0.2":
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-market/-/plugin-market-2.0.2.tgz#5e832e9fe077f8823db74ee39f38d24375cc87e7"
-  integrity sha512-GlFkeJ0y7B7UVGTwcAp7hvEXlRcRX1GA4HUGOw+fkV3Ed+gHD0zREOvo+oa+H+LKBH2wKE5SQbF2V4TPY5sCPw==
+"@koishijs/plugin-market@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-market/-/plugin-market-2.0.3.tgz#bee30f6275ae04e3be33a67e53d72033201e6772"
+  integrity sha512-ZPu+TRC/sPBPBdxgB2xeTiJ31mU4r0OXjXYX2eb8+6wTY+tIYCz4y8FBM9lN8YJxiKcS8IxopWmzTfVW8hyHOA==
   dependencies:
     "@koishijs/registry" "^5.0.0"
     execa "^5.1.1"
@@ -3290,10 +3290,10 @@ koishi-plugin-desktop@0.0.4:
   resolved "https://registry.npmjs.org/koishi-plugin-desktop/-/koishi-plugin-desktop-0.0.4.tgz#8ea2f63949b69ac6545c4af146e945d81730f0ce"
   integrity sha512-uk5Nfc5M5pGPArTn4G6unMxCfalNpGxupaSLMGy7waCkiRJhiZxUydtxbgbohfEaJKOlWx3MZ7fqvB84MaOt6w==
 
-koishi-plugin-gocqhttp@3.5.0:
-  version "3.5.0"
-  resolved "https://registry.npmjs.org/koishi-plugin-gocqhttp/-/koishi-plugin-gocqhttp-3.5.0.tgz#dd6f8aa4f3d3292f9c59d1e66b9b477ccfa4e4af"
-  integrity sha512-ZoQsSCVkTw1xVFosQ6drI7/XLGSzelBKvhbe1P7EL5VvtQ9c9QPbBxeNLIRHjgzqdp+wegAqiQPDKtfJEdFiMQ==
+koishi-plugin-gocqhttp@3.6.0:
+  version "3.6.0"
+  resolved "https://registry.npmmirror.com/koishi-plugin-gocqhttp/-/koishi-plugin-gocqhttp-3.6.0.tgz#da01fe3d9579b9c56464ec60469883fc02e65135"
+  integrity sha512-O3RpM+DS1bGO633IRf4//TWlUa1P5P8Tl8Uq4GbQvhopx/9z0vysYYnjmzzLsLBEsXVAtoHsDIaj5L7O+r7RJg==
   dependencies:
     go-cqhttp "^4.0.1"
     strip-ansi "^6.0.1"
