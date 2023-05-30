@@ -170,7 +170,18 @@ export async function bilibiliDanmuCheck(
   }
 }
 
-export async function bilibiliRefreshVup() {
+export async function bilibiliRefreshVup(
+  _: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
+  _uid: string,
+  _list: Dict<
+    [
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
+      DynamicNotifiction,
+    ][]
+  >,
+  ctx: Context,
+  _config: IConfig,
+) {
   const vtbURLs = [
     'https://api.vtbs.moe/v1/short',
     'https://api.tokyo.vtbs.moe/v1/short',
@@ -180,9 +191,8 @@ export async function bilibiliRefreshVup() {
   try {
     const vtbFetchs = await Promise.allSettled(
       vtbURLs.map(url =>
-        fetch(url)
-          .then(res => res.json())
-          .then(res => res),
+        ctx.http.axios(url)
+          .then(res => res.data),
       ),
     )
 
