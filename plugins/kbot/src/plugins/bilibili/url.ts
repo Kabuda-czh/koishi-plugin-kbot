@@ -3,7 +3,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:44:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-04 14:36:38
+ * @LastEditTime: 2023-05-30 10:00:37
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\url.ts
  * @Description:
  *
@@ -95,12 +95,12 @@ async function render(avid: string, channelId: string, http: Quester) {
     delete sendedTimes[`${avid}-${channelId}`]
   }, 30 * 1000)
 
-  const imageData = await http.get<string>(data.pic).then(res => {
+  const imageData = await http.get<string>(data.pic).then((res) => {
+    // eslint-disable-next-line n/prefer-global/buffer
     const base64 = Buffer.from(res, 'binary').toString('base64')
     return base64
-  }).catch(err => {
-    return data.pic
   })
+    .catch(_err => data.pic)
 
   return `<image url="${imageData}"/>
 标题: ${data.title}
