@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-11 15:12:57
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-29 10:22:11
+ * @LastEditTime: 2023-05-30 10:01:59
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\render.tsx
  * @Description:
  *
@@ -286,7 +286,7 @@ export async function renderDanmu(
             <p>页码 [0 / {Math.floor((danmukuData.data.total - 1) / 5)}]</p>
           </div>
           <div>
-            <p>网页链接: https://danmukus.com/user/{searchUserCardInfo.card.mid}</p>
+            <p>网页链接: https://danmakus.com/user/{searchUserCardInfo.card.mid}</p>
           </div>
         </div>
       </div>
