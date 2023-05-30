@@ -95,7 +95,14 @@ async function render(avid: string, channelId: string, http: Quester) {
     delete sendedTimes[`${avid}-${channelId}`]
   }, 30 * 1000)
 
-  return `<image url="${data.pic}"/>
+  const imageData = await http.get<string>(data.pic).then(res => {
+    const base64 = Buffer.from(res, 'binary').toString('base64')
+    return base64
+  }).catch(err => {
+    return data.pic
+  })
+
+  return `<image url="${imageData}"/>
 标题: ${data.title}
 UP 主: ${up}
 点赞: ${data.stat.like} | 硬币: ${data.stat.coin} | 收藏: ${data.stat.favorite}
