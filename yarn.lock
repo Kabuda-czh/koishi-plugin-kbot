@@ -457,7 +457,7 @@
 
 "@koishijs/plugin-console@5.10.4":
   version "5.10.4"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-console/-/plugin-console-5.10.4.tgz#c83d3db8a5c618b181068d3188dc41856bd1ef06"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.10.4.tgz#c83d3db8a5c618b181068d3188dc41856bd1ef06"
   integrity sha512-qiDqW+HXNPUaDR7AoblzyT2lynWaB562ZqhAoh/rerkd/DgzY1WLsKHpk5HBw2g4dDD1dBTGgk9edSEzUhM6VQ==
   dependencies:
     open "^8.4.2"
@@ -475,6 +475,15 @@
   version "2.3.1"
   resolved "https://registry.npmjs.org/@koishijs/plugin-dataview/-/plugin-dataview-2.3.1.tgz#71f09d90772ff239e84cdbec1f78c644eedde6ec"
   integrity sha512-Xn1MSmKGmxBGMe5uFN5RrGTtiPxAbniq200P1vBWh8Yya6fzk57bO6PkmG8KAxjA4R0epPcat1QOhNqHad5nUw==
+
+"@koishijs/plugin-explorer@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-explorer/-/plugin-explorer-1.3.2.tgz#600e89e4c19f2705f65b4d0f6e289d95e58890f8"
+  integrity sha512-doCmdnfoHUy4JL/RDWW/Zx9AoTXpIWJxaSqp06a/vuJRpsiyRBWWgqG73Lbr5R9Z4TDYdsi5nCYmzNyMK8BW0g==
+  dependencies:
+    anymatch "^3.1.3"
+    chokidar "^3.5.3"
+    throttle-debounce "^3.0.1"
 
 "@koishijs/plugin-help@2.2.3":
   version "2.2.3"
@@ -1271,7 +1280,7 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-anymatch@~3.1.2:
+anymatch@^3.1.3, anymatch@~3.1.2:
   version "3.1.3"
   resolved "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz#790c58b19ba1720a84205b57c618d5ad8524973e"
   integrity sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==
@@ -3314,10 +3323,10 @@ koishi-plugin-qdvc@0.2.2:
   dependencies:
     qdvc-web "^0.2.2"
 
-koishi-plugin-theme-material@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.npmmirror.com/koishi-plugin-theme-material/-/koishi-plugin-theme-material-0.1.0.tgz#8dd11fdaf7f773a59f6c554543eb3027ae9bcff0"
-  integrity sha512-/X60OIbnym92lNJtHAFfAqIOk1tmSS0y2muS32myf9EvMovj9SDZ54ApAd4TDP0lYPHVIn3X2t9y4PxkRYZZVg==
+koishi-plugin-theme-martin@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmmirror.com/koishi-plugin-theme-martin/-/koishi-plugin-theme-martin-1.0.2.tgz#00cc18e757bce0fdb50f535d54857546bf8b8181"
+  integrity sha512-QT4NhP6vVbT3Q/wmx2aTywXYGfLxQWeiPlm+AVk7dmKK1Y7kby/IPdjz0C+Z2mJAQZ2aOKTW6ROovpjCvLYCWg==
 
 koishi-plugin-theme-vanilla@1.0.4:
   version "1.0.4"
