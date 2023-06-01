@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-04 10:05:55
+ * @LastEditTime: 2023-06-01 12:09:06
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -116,7 +116,7 @@ async function mobileRenderImage(
 
     await page.goto(`https://m.bilibili.com/dynamic/${item.id_str}`, {
       waitUntil: 'networkidle0',
-      timeout: 30000,
+      timeout: 120000,
     })
 
     if (page.url().includes('bilibili.com/404')) {
