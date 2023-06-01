@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 11:42:56
+ * @LastEditTime: 2023-06-01 09:46:22
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\listen.ts
  * @Description:
  *
@@ -42,12 +42,12 @@ export async function* listen(
           notifications.forEach(
             ([, notification]) =>
               (notification.lastUpdated
-                = items[0]?.modules.module_author.pub_ts
+                = items?.[0]?.modules?.module_author?.pub_ts
                 || Math.ceil(+new Date() / 1000)),
           )
           continue
         }
-        let neo = items.filter(
+        let neo = items?.filter(
           item => item.modules.module_author.pub_ts > time,
         )
         if (!config.live)
