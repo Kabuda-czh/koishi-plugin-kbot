@@ -455,21 +455,21 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-console@5.10.4":
-  version "5.10.4"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.10.4.tgz#c83d3db8a5c618b181068d3188dc41856bd1ef06"
-  integrity sha512-qiDqW+HXNPUaDR7AoblzyT2lynWaB562ZqhAoh/rerkd/DgzY1WLsKHpk5HBw2g4dDD1dBTGgk9edSEzUhM6VQ==
+"@koishijs/plugin-console@5.11.0":
+  version "5.11.0"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-console/-/plugin-console-5.11.0.tgz#4b13640321b936ceec993ca3989d3565606dfc44"
+  integrity sha512-kPTjHANPn/BM/J9Z2ZhKNdTcz8omkWZW4yGsFDL1JXFmlKMEr88TxTigCSHjRFjyK0B2icVMopUj+7Fakcxskw==
   dependencies:
     open "^8.4.2"
     uuid "^8.3.2"
     ws "^8.13.0"
 
-"@koishijs/plugin-database-sqlite@3.4.4":
-  version "3.4.4"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.4.4.tgz#6fa63a87016bb32d75eb054557f6f106f8140ba1"
-  integrity sha512-3lkQuoK3gLQIjT9eHCp8cLOMxcodoGKgBDspA47YDGLttTH53QTy0Yju72BuiA6MR2WQchThe9nFUuuuSE/8lg==
+"@koishijs/plugin-database-sqlite@3.5.1":
+  version "3.5.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.5.1.tgz#fff96d70882ee01d18aef71eb69dda0ae755fb6f"
+  integrity sha512-BxNEjQ5nz8As7QJeI4hiw8yqlETr+jMU7ij9BCFGBeZPstAY7RVw0/czvwxUlcy/MZi9IdBmjJ7+zZJ7gjINqg==
   dependencies:
-    "@minatojs/driver-sqlite" "^3.4.4"
+    "@minatojs/driver-sqlite" "^3.5.1"
 
 "@koishijs/plugin-dataview@2.3.1":
   version "2.3.1"
@@ -506,10 +506,10 @@
   dependencies:
     throttle-debounce "^3.0.1"
 
-"@koishijs/plugin-locales@2.2.7":
-  version "2.2.7"
-  resolved "https://registry.npmjs.org/@koishijs/plugin-locales/-/plugin-locales-2.2.7.tgz#cee748eb9eb3b4c88814994dcb3dbb5396d0ae0a"
-  integrity sha512-Ix33rWy/NjIuqAEOrebYTbA+pu+3GuoOUKeXW7nxHmHPcvBOR/ayLr/of/8MvPyWZv8vECemclGD0FmjXrbmSw==
+"@koishijs/plugin-locales@2.3.1":
+  version "2.3.1"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-locales/-/plugin-locales-2.3.1.tgz#516dfb22c5721b75dd1225400d35b1de411bb3e1"
+  integrity sha512-Qdrz/w3mSO8yu0USK21pyVDECWEjjMBiC1c1Se/q5A+pD9y1SyfkaQK3s1MgR8A1jcBTmJKeTe89HFkcO5TiNA==
   dependencies:
     js-yaml "^4.1.0"
     throttle-debounce "^3.0.1"
@@ -596,10 +596,10 @@
   dependencies:
     cosmokit "^1.4.1"
 
-"@minatojs/driver-sqlite@^3.4.4":
-  version "3.4.4"
-  resolved "https://registry.npmjs.org/@minatojs/driver-sqlite/-/driver-sqlite-3.4.4.tgz#41cad2a4c2b3154bb3352d5ce50f6cb31c1385de"
-  integrity sha512-PXruHb3ChpYyVC/8TKuzcHFfaRj6tklReaqAtjuUFM02iVuOo7jbG9lSvlbbAFKqjpHjtxKdSQIvtuHy21m0Yw==
+"@minatojs/driver-sqlite@^3.5.1":
+  version "3.5.1"
+  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.5.1.tgz#1e639ebbfd2f8f240c8dbe5f1709c8c878872822"
+  integrity sha512-gusqfpxXMtk4OYCgHa8lqJM7TxmyEFz3fkuypP7373rQKrI7NLFYOeqsCweLAWWGic3HhZSMHWKu00qVT/2vvQ==
   dependencies:
     "@minatojs/sql-utils" "^4.0.3"
     "@minatojs/sql.js" "^2.0.1"
@@ -3287,10 +3287,10 @@ koa@^2.14.2:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-koishi-plugin-assets-local@3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/koishi-plugin-assets-local/-/koishi-plugin-assets-local-3.0.4.tgz#b4e9a71f23757eb101481000a8a7c26f7ff86001"
-  integrity sha512-9Na8x9so/y0aRpouRR7hqIwheFJpe/VBoL/nv2iROLwcIa16w2qBCbnuyopWO/3+/aOoZ3vDjC0tpK6lZolkjA==
+koishi-plugin-assets-local@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmmirror.com/koishi-plugin-assets-local/-/koishi-plugin-assets-local-3.1.0.tgz#de5a0efde0268518043c823e35d2dbdea0a8d414"
+  integrity sha512-3tQ0sQnzkpCheoqMLyopdUmmCmPovagw1ToLollAxG1kf2Avvh3d8phTImIkXRrsQKlCXC3lb+jb1yZnCj71TQ==
   dependencies:
     "@koishijs/assets" "^1.0.2"
     file-type "^16.5.4"
@@ -3300,10 +3300,10 @@ koishi-plugin-desktop@0.0.4:
   resolved "https://registry.npmjs.org/koishi-plugin-desktop/-/koishi-plugin-desktop-0.0.4.tgz#8ea2f63949b69ac6545c4af146e945d81730f0ce"
   integrity sha512-uk5Nfc5M5pGPArTn4G6unMxCfalNpGxupaSLMGy7waCkiRJhiZxUydtxbgbohfEaJKOlWx3MZ7fqvB84MaOt6w==
 
-koishi-plugin-gocqhttp@3.6.0:
-  version "3.6.0"
-  resolved "https://registry.npmjs.org/koishi-plugin-gocqhttp/-/koishi-plugin-gocqhttp-3.6.0.tgz#da01fe3d9579b9c56464ec60469883fc02e65135"
-  integrity sha512-O3RpM+DS1bGO633IRf4//TWlUa1P5P8Tl8Uq4GbQvhopx/9z0vysYYnjmzzLsLBEsXVAtoHsDIaj5L7O+r7RJg==
+koishi-plugin-gocqhttp@3.7.2:
+  version "3.7.2"
+  resolved "https://registry.npmmirror.com/koishi-plugin-gocqhttp/-/koishi-plugin-gocqhttp-3.7.2.tgz#fa92f5fd850bb84d23773e4a41fa8a63df69ae6b"
+  integrity sha512-nFRL2pnCxFBM9ZyAH/poogQGk0Ogv17eBjTaryr8be1PzRnb0RAL+vcoUHby0k0U6w1A0L2DUXkXKxx35auEOw==
   dependencies:
     go-cqhttp "^4.0.1"
     strip-ansi "^6.0.1"
