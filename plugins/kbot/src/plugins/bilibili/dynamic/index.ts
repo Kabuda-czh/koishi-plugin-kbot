@@ -134,10 +134,10 @@ async function request(
   http: Quester,
 ): Promise<BilibiliDynamicItem[]> {
   try {
-    const res = await getDynamic(http, uid)
+    const res = await getDynamic(http, uid, logger)
 
     if (res.code !== 0)
-      throw new Error(res)
+      throw new Error(res.message)
 
     return (res.data.items as BilibiliDynamicItem[]).sort(
       (a, b) => b.modules.module_author.pub_ts - a.modules.module_author.pub_ts,

@@ -49,7 +49,7 @@ export async function* listen(
         }
         let neo = items?.filter(
           item => item.modules.module_author.pub_ts > time,
-        )
+        ) || []
         if (!config.live)
           neo = neo.filter(item => item.type !== 'DYNAMIC_TYPE_LIVE_RCMD')
         if (neo.length !== 0) {
@@ -71,7 +71,7 @@ export async function* listen(
         }
       }
       catch (e) {
-        logger.error(`轮询 Error: ${e.message}`)
+        logger.error(`轮询 Error: ${e}`)
       }
       yield
     }
