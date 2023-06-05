@@ -15,13 +15,32 @@ import type { DanmukuData, MedalWall, MemberCard } from '../model'
 import { StringFormat } from '../../utils'
 import { bilibiliCookiePath } from '../../../config'
 
-export async function getDynamic(http: Quester, uid: string) {
+export async function getDynamic(http: Quester, uid: string, logger: Logger) {
+  let cookie
+  try {
+    cookie = JSON.parse(
+      await fs.promises.readFile(
+        bilibiliCookiePath,
+        'utf-8',
+      ),
+    )
+  }
+  catch (e) {
+    logger.error(`Failed to get cookie info. ${e}`)
+    throw new Error('cookie信息未找到, 请使用 --ck 或 --cookie 更新cookie信息')
+  }
+
+  const cookieString = Object.entries(cookie)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('; ')
+
   return http.get(
     StringFormat(BilibiliDynamicType.DynamicDetailURL, uid),
     {
       headers: {
         'Referer': `https://space.bilibili.com/${uid}/dynamic`,
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+        'cookie': cookieString,
       },
     },
   )

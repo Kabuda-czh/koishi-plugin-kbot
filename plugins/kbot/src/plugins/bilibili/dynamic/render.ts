@@ -85,7 +85,7 @@ async function pcRenderImage(
   }
   catch (e) {
     logger.error('pc render error', e)
-    throw e
+    throw e.message
   }
   finally {
     page?.close()
@@ -152,7 +152,7 @@ async function mobileRenderImage(
   }
   catch (e) {
     logger.error('mobile render error', e)
-    throw e
+    throw e.message
   }
   finally {
     page?.close()
