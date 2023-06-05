@@ -23,7 +23,7 @@ import * as tarotPlugin from './plugins/tarot'
 
 // import * as valorantPlugin from './plugins/valorant'
 
-import { kbotDir, publicDir } from './config'
+import { assetsLocalDir, kbotDir } from './config'
 
 export const name = 'kbot'
 
@@ -99,11 +99,11 @@ export async function apply(ctx: Context, config: IConfig) {
   else {
     let fileNames: string[] = []
     try {
-      fileNames = await fs.promises.readdir(publicDir)
+      fileNames = await fs.promises.readdir(assetsLocalDir)
     }
     catch (e) {
       logger.error('未找到 public 文件夹, 正在创建')
-      await fs.promises.mkdir(publicDir)
+      await fs.promises.mkdir(assetsLocalDir)
     }
 
     if (!fileNames.includes('kbot'))
