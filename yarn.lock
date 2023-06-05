@@ -464,12 +464,12 @@
     uuid "^8.3.2"
     ws "^8.13.0"
 
-"@koishijs/plugin-database-sqlite@3.5.1":
-  version "3.5.1"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.5.1.tgz#fff96d70882ee01d18aef71eb69dda0ae755fb6f"
-  integrity sha512-BxNEjQ5nz8As7QJeI4hiw8yqlETr+jMU7ij9BCFGBeZPstAY7RVw0/czvwxUlcy/MZi9IdBmjJ7+zZJ7gjINqg==
+"@koishijs/plugin-database-sqlite@3.5.2":
+  version "3.5.2"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.5.2.tgz#e3fc84f1126957d3ffc4a12151ebe4bff4c4ca88"
+  integrity sha512-bqh7Z+nUpxc9KpGxGmAytnWcPw57b0LYPC7pVxOYvgaXCYbnRy28G+25Dfp5JYEM4Mb5EjzCEjk2LpArPXJbcQ==
   dependencies:
-    "@minatojs/driver-sqlite" "^3.5.1"
+    "@minatojs/driver-sqlite" "^3.5.2"
 
 "@koishijs/plugin-dataview@2.3.1":
   version "2.3.1"
@@ -596,10 +596,10 @@
   dependencies:
     cosmokit "^1.4.1"
 
-"@minatojs/driver-sqlite@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.5.1.tgz#1e639ebbfd2f8f240c8dbe5f1709c8c878872822"
-  integrity sha512-gusqfpxXMtk4OYCgHa8lqJM7TxmyEFz3fkuypP7373rQKrI7NLFYOeqsCweLAWWGic3HhZSMHWKu00qVT/2vvQ==
+"@minatojs/driver-sqlite@^3.5.2":
+  version "3.5.2"
+  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.5.2.tgz#82771122dd2c7710c37548d89fc4df644a477a7f"
+  integrity sha512-rbPYGshvvXKCX5gpy6VxNjKZ5eMc5WxFPuPoxyZ1iwhwmzfQdWg9Dgu8HDE8/dI0PYBPW/6wz6Hjb3mhSLcjmQ==
   dependencies:
     "@minatojs/sql-utils" "^4.0.3"
     "@minatojs/sql.js" "^2.0.1"
@@ -3300,10 +3300,10 @@ koishi-plugin-desktop@0.0.4:
   resolved "https://registry.npmjs.org/koishi-plugin-desktop/-/koishi-plugin-desktop-0.0.4.tgz#8ea2f63949b69ac6545c4af146e945d81730f0ce"
   integrity sha512-uk5Nfc5M5pGPArTn4G6unMxCfalNpGxupaSLMGy7waCkiRJhiZxUydtxbgbohfEaJKOlWx3MZ7fqvB84MaOt6w==
 
-koishi-plugin-gocqhttp@3.7.2:
-  version "3.7.2"
-  resolved "https://registry.npmmirror.com/koishi-plugin-gocqhttp/-/koishi-plugin-gocqhttp-3.7.2.tgz#fa92f5fd850bb84d23773e4a41fa8a63df69ae6b"
-  integrity sha512-nFRL2pnCxFBM9ZyAH/poogQGk0Ogv17eBjTaryr8be1PzRnb0RAL+vcoUHby0k0U6w1A0L2DUXkXKxx35auEOw==
+koishi-plugin-gocqhttp@3.7.3:
+  version "3.7.3"
+  resolved "https://registry.npmmirror.com/koishi-plugin-gocqhttp/-/koishi-plugin-gocqhttp-3.7.3.tgz#9ce49ba5a375f5b1844d116187ed96130dae97b7"
+  integrity sha512-hJokP7MNVJlUxcewGPcW/MVVfC2vuIPgE+4FvxVJjOGuA07qXW0TEyN7seTV9kpGgmJqnA0zLCQemOt+P5PvZQ==
   dependencies:
     go-cqhttp "^4.0.1"
     strip-ansi "^6.0.1"
