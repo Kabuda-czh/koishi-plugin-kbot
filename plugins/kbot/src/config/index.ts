@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-06 11:03:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-06 11:11:41
+ * @LastEditTime: 2023-06-02 11:37:54
  * @FilePath: \KBot-App\plugins\kbot\src\config\index.ts
  * @Description:
  *
@@ -10,11 +10,11 @@
  */
 import { resolve } from 'node:path'
 
-// public
-export const publicDir = resolve(__dirname, '../../../../public')
+// assetsLocal
+export const assetsLocalDir = resolve(__dirname, '../../../../data/assets')
 
 // kbot
-export const kbotDir = resolve(publicDir, 'kbot')
+export const kbotDir = resolve(assetsLocalDir, 'kbot')
 
 // bilibili
 export const bilibiliDir = resolve(kbotDir, 'bilibili')
