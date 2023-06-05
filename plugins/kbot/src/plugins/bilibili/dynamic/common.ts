@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 11:10:43
+ * @LastEditTime: 2023-06-05 10:11:02
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -171,7 +171,7 @@ export async function bilibiliSearch(
   config: IConfig,
 ) {
   try {
-    const { data } = await getDynamic(ctx.http, uid)
+    const { data } = await getDynamic(ctx.http, uid, logger)
     const items = data.items as BilibiliDynamicItem[]
 
     if (items.length === 0)
