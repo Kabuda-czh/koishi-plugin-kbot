@@ -3,7 +3,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:44:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-30 10:00:37
+ * @LastEditTime: 2023-06-05 10:24:53
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\url.ts
  * @Description:
  *
@@ -95,10 +95,12 @@ async function render(avid: string, channelId: string, http: Quester) {
     delete sendedTimes[`${avid}-${channelId}`]
   }, 30 * 1000)
 
-  const imageData = await http.get<string>(data.pic).then((res) => {
+  const imageData = await http.get<string>(data.pic, {
+    responseType: 'arraybuffer',
+  }).then((res) => {
     // eslint-disable-next-line n/prefer-global/buffer
     const base64 = Buffer.from(res, 'binary').toString('base64')
-    return base64
+    return `data:image/jpeg;base64,${base64}`
   })
     .catch(_err => data.pic)
 
