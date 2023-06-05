@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-01 12:24:11
+ * @LastEditTime: 2023-06-05 10:10:24
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -28,19 +28,18 @@ import { assetsLocalDir, kbotDir } from './config'
 export const name = 'kbot'
 
 export const usage = `
-# KBot v1.0.8 更新日志
+# KBot v1.0.9 更新日志
 
 ## Note
-- 修复 \`bilibili\` 插件多个问题
+- 修复 \`bilibili\` 插件中, \`轮询 undefined\` 和 \`请求动态接口 -352\`
+- 修复因 \`assets-local\` 更新位置后, 数据被迁移未适配位置的情况
 
 ## Bug Fix
-- 修复 \`bilibili\` 在某些设备 \`node\` 版本低于 \`18\` 时, 无法使用 \`fetch\` 请求的情况
-- 修复 \`bilibili\` 在轮询时, 被返回 \`-352\` 时候 \`items\` 为 \`undefined\` 的情况
-- 修复 \`bilibili\` 解析 \`url\` 时候, 会因网络问题, 导致图片无法发出
-- 修复 \`bilibili\` 查弹幕网页链接错误的问题
-- 优化 \`bilibili\` 插件在渲染动态图片的时候, 等待时间从 30s 变为 120s
+- 修复 \`bilibili\` 在动态请求时 -352 的问题, 增加了 cookie 的请求头
+- 修复 \`bilibili\` 在轮询时, 因动态接口报错, 导致后续 \`neo\` 为 \`undefined\` 的问题
+- 修复 \`assets-local\` 位置更新, 对应适配
 
-详情更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.8)
+详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.9)
 `
 
 interface IPluginEnableConfig {
