@@ -136,10 +136,10 @@ export async function getMedalWall(
   }
 }
 
-export async function getDanmukuData(http: Quester, uid: string) {
+export async function getDanmukuData(http: Quester, api: string, uid: string, pageNumber = 0) {
   try {
     const resp = await http.get<DanmukuData>(
-      StringFormat(BilibiliDynamicType.DanmakuAPI, uid, 0),
+      StringFormat(api, uid, pageNumber),
     )
     return resp
   }

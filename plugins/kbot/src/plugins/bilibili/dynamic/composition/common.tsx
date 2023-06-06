@@ -20,6 +20,7 @@ import { getDanmukuData, getMedalWall, getMemberCard } from '../../utils'
 
 import { getFontsList } from '../../../utils'
 import { bilibiliCookiePath, bilibiliDir, bilibiliVupPath } from '../../../../config'
+import { BilibiliDynamicType } from '../../enum'
 import { renderDanmu, renderVup } from './render'
 
 export async function bilibiliVupCheck(
@@ -148,7 +149,10 @@ export async function bilibiliDanmuCheck(
 
         const needLoadFontList = await getFontsList(logger)
 
-        const danmuku = await getDanmukuData(ctx.http, uid)
+        let danmuku = await getDanmukuData(ctx.http, BilibiliDynamicType.DanmakuAPI, uid)
+
+        if (!(Object.prototype.toString.call(danmuku) === '[object object]'))
+          danmuku = await getDanmukuData(ctx.http, BilibiliDynamicType.DanmakuAPI2, uid)
 
         const image = await renderDanmu(searchUserCardInfo, danmuku, needLoadFontList)
 
