@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 18:31:12
+ * @LastEditTime: 2023-06-06 19:22:49
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -245,7 +245,7 @@ export async function bilibiliCookie({
     if (!options.cookie)
       return '请提供cookie'
 
-    const cookieRegex = /\d*\w*([-+.,*]\w+)*=\d*\w*([-+.,*]\w+)*(==)*/gi
+    const cookieRegex = /([^=;\s]+)=([^=;\s]*)/g
 
     if (!cookieRegex.test(session.content))
       return 'cookie 格式错误'
