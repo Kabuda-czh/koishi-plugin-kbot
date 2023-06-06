@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-25 12:49:58
+ * @LastEditTime: 2023-06-06 19:23:39
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
@@ -116,30 +116,29 @@ export async function getMedalWall(
   cookieString: string,
 ) {
   try {
-    const resp = await http.get<MedalWall>(
-      StringFormat(BilibiliDynamicType.MedalWallURL, uid),
-      {
-        headers: {
-          Referer: `https://space.bilibili.com/${uid}/medal`,
-          cookie: cookieString,
-        },
+    const resp = await http.axios<MedalWall>({
+      method: 'get',
+      url: StringFormat(BilibiliDynamicType.MedalWallURL, uid),
+      headers: {
+        Cookie: cookieString,
+        Referer: 'https://live.bilibili.com/',
       },
-    )
+    })
 
-    if (resp.code === -101)
+    if (resp.data.code !== 0)
       throw new Error('cookie 信息已过期, 请使用 --ck 或 --cookie 更新cookie信息')
 
-    return resp
+    return resp.data
   }
   catch (e) {
     throw new Error(e.message)
   }
 }
 
-export async function getDanmukuData(http: Quester, uid: string) {
+export async function getDanmukuData(http: Quester, api: string, uid: string, pageNumber = 0) {
   try {
     const resp = await http.get<DanmukuData>(
-      StringFormat(BilibiliDynamicType.DanmakuAPI, uid, 0),
+      StringFormat(api, uid, pageNumber),
     )
     return resp
   }

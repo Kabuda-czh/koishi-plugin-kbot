@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 18:31:12
+ * @LastEditTime: 2023-06-06 19:22:49
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -20,6 +20,7 @@ import { getDanmukuData, getMedalWall, getMemberCard } from '../../utils'
 
 import { getFontsList } from '../../../utils'
 import { bilibiliCookiePath, bilibiliDir, bilibiliVupPath } from '../../../../config'
+import { BilibiliDynamicType } from '../../enum'
 import { renderDanmu, renderVup } from './render'
 
 export async function bilibiliVupCheck(
@@ -148,7 +149,10 @@ export async function bilibiliDanmuCheck(
 
         const needLoadFontList = await getFontsList(logger)
 
-        const danmuku = await getDanmukuData(ctx.http, uid)
+        let danmuku = await getDanmukuData(ctx.http, BilibiliDynamicType.DanmakuAPI, uid)
+
+        if (!(Object.prototype.toString.call(danmuku) === '[object object]'))
+          danmuku = await getDanmukuData(ctx.http, BilibiliDynamicType.DanmakuAPI2, uid)
 
         const image = await renderDanmu(searchUserCardInfo, danmuku, needLoadFontList)
 
@@ -241,7 +245,7 @@ export async function bilibiliCookie({
     if (!options.cookie)
       return '请提供cookie'
 
-    const cookieRegex = /\d*\w*([-+.,*]\w+)*=\d*\w*([-+.,*]\w+)*(==)*/gi
+    const cookieRegex = /([^=;\s]+)=([^=;\s]*)/g
 
     if (!cookieRegex.test(session.content))
       return 'cookie 格式错误'
