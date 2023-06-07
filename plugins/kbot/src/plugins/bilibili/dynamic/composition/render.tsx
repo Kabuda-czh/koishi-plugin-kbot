@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-11 15:12:57
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-30 10:01:59
+ * @LastEditTime: 2023-06-07 10:04:44
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\render.tsx
  * @Description:
  *
@@ -307,7 +307,7 @@ export async function renderDanmu(
                   }</p>
                   <p>直播时长: {
                     `${(
-                      (item.live.isFinish ? item.live.stopDate : new Date().getTime() - item.live.startDate) / 3600000
+                      ((item.live.isFinish ? item.live.stopDate : Date.now()) - item.live.startDate) / 3600000
                     ).toFixed(1)}小时`}
                   </p>
                   <p>弹幕数量: {item.live.danmakusCount}</p>
