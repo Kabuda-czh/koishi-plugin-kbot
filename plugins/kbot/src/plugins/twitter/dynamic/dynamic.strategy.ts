@@ -2,17 +2,17 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 10:38:28
+ * @LastEditTime: 2023-06-07 11:11:00
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\dynamic.strategy.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as fs from 'node:fs'
-import { resolve } from 'node:path'
 import type { Argv, Channel, Context, Dict } from 'koishi'
 import type { DynamicNotifiction } from '../model'
 import { getTwitterRestId, getTwitterToken } from '../utils'
+import { twitterCookiePath } from '../../../config'
 import {
   twitterAdd,
   twitterList,
@@ -47,7 +47,7 @@ export async function dynamicStrategy(
   try {
     cookie = JSON.parse(
       await fs.promises.readFile(
-        resolve(__dirname, '../../../../../../public/kbot/twitter/cookie.json'),
+        twitterCookiePath,
         'utf-8',
       ),
     )
