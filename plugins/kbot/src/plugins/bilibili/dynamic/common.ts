@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-05 10:11:02
+ * @LastEditTime: 2023-06-08 11:11:55
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -153,7 +153,7 @@ export async function bilibiliList({
   return session.channel.bilibili.dynamic
     .map(
       notification =>
-        `- ${notification.bilibiliId} ${notification.bilibiliName}`,
+        `- ${notification.bilibiliId} 「${notification.bilibiliName}」`,
     )
     .join('\n')
 }

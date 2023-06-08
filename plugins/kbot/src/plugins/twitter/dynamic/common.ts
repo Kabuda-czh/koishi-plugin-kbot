@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-26 17:41:19
+ * @LastEditTime: 2023-06-07 14:12:16
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
@@ -104,7 +104,7 @@ export async function twitterList({
   return session.channel.twitter.dynamic
     .map(
       notification =>
-        `- @${notification.twitterId} ${notification.twitterName}`,
+        `- @${notification.twitterId} 「${notification.twitterName}」`,
     )
     .join('\n')
 }
