@@ -362,15 +362,15 @@
     cosmokit "^1.4.2"
     schemastery-vue "6.0.0"
 
-"@koishijs/core@4.13.1":
-  version "4.13.1"
-  resolved "https://registry.npmjs.org/@koishijs/core/-/core-4.13.1.tgz#cb4630d64a59dc056e71369d9ba36c84ccb6a2a7"
-  integrity sha512-Psk5cu7YwRb6JWJLo+iYOnNl65wznKP2mmE6IhUROAT8kgeBgRv1IwyaOuMlJb8O8Vfb2ttw9uAzji3HOnPSrQ==
+"@koishijs/core@4.13.2":
+  version "4.13.2"
+  resolved "https://registry.npmmirror.com/@koishijs/core/-/core-4.13.2.tgz#d7eaa64465f839cc75bba08d2fa52c3df4bda26f"
+  integrity sha512-3NOKeINvUhRkVwwKkElcH2ADYVdDnuYrdj7QoNv2o8mA7T5Ih+JRoK6VfVAq/9GHjgRp5IdsfeFGHrIng0hpdw==
   dependencies:
     "@koishijs/i18n-utils" "^1.0.0"
     "@koishijs/utils" "^7.0.2"
     "@minatojs/core" "^2.3.1"
-    "@satorijs/core" "^2.3.8"
+    "@satorijs/core" "^2.3.9"
     cordis "^2.8.0"
     cosmokit "^1.4.2"
     fastest-levenshtein "^1.0.16"
@@ -382,10 +382,10 @@
   dependencies:
     cosmokit "^1.4.2"
 
-"@koishijs/loader@3.2.1":
-  version "3.2.1"
-  resolved "https://registry.npmjs.org/@koishijs/loader/-/loader-3.2.1.tgz#d220cd9e68fca7ae205a2fbc6bca4ae4b5d0e0d9"
-  integrity sha512-BU2z0Hgbd7f5cOTxgoNI3DDvqqzKbT+A4eMjW93Rd0lrLwtXmew4qlKoWAI0/YXl1oikHVc0h3ncEyVdqTjzGg==
+"@koishijs/loader@3.2.2":
+  version "3.2.2"
+  resolved "https://registry.npmmirror.com/@koishijs/loader/-/loader-3.2.2.tgz#d5a2cb7188559ac85c30f03aeb4c2b5e32a10955"
+  integrity sha512-pdqG3TkYeP6LQnaifqm0zZ6rZ7d/FcKuSfSRUO1KIm7u2fdnwdgN2P/Xdzy6NwJeTlR5mKtv+St/Oei0dLTBWg==
   dependencies:
     dotenv "^16.0.3"
     js-yaml "^4.1.0"
@@ -464,12 +464,12 @@
     uuid "^8.3.2"
     ws "^8.13.0"
 
-"@koishijs/plugin-database-sqlite@3.5.2":
-  version "3.5.2"
-  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.5.2.tgz#e3fc84f1126957d3ffc4a12151ebe4bff4c4ca88"
-  integrity sha512-bqh7Z+nUpxc9KpGxGmAytnWcPw57b0LYPC7pVxOYvgaXCYbnRy28G+25Dfp5JYEM4Mb5EjzCEjk2LpArPXJbcQ==
+"@koishijs/plugin-database-sqlite@3.5.3":
+  version "3.5.3"
+  resolved "https://registry.npmmirror.com/@koishijs/plugin-database-sqlite/-/plugin-database-sqlite-3.5.3.tgz#b8bd8dbba1bb7c46206db481c8599d8cf00d840f"
+  integrity sha512-bpXlYYRXIfLX9QRg4UjXRmsnx2Y1v3STZePMjqOF6OMqCnDFnD9odcgh165TvOrc3XiF3p0Cn221YWn+RI+3rA==
   dependencies:
-    "@minatojs/driver-sqlite" "^3.5.2"
+    "@minatojs/driver-sqlite" "^3.5.3"
 
 "@koishijs/plugin-dataview@2.3.1":
   version "2.3.1"
@@ -596,10 +596,10 @@
   dependencies:
     cosmokit "^1.4.1"
 
-"@minatojs/driver-sqlite@^3.5.2":
-  version "3.5.2"
-  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.5.2.tgz#82771122dd2c7710c37548d89fc4df644a477a7f"
-  integrity sha512-rbPYGshvvXKCX5gpy6VxNjKZ5eMc5WxFPuPoxyZ1iwhwmzfQdWg9Dgu8HDE8/dI0PYBPW/6wz6Hjb3mhSLcjmQ==
+"@minatojs/driver-sqlite@^3.5.3":
+  version "3.5.3"
+  resolved "https://registry.npmmirror.com/@minatojs/driver-sqlite/-/driver-sqlite-3.5.3.tgz#874c02f3a90710c0423851f567393a962fb4a476"
+  integrity sha512-iQwMYrfuye0XXxUEgkWuOJ3bMuCgymuEvtM64RjcygbAUfFufnWzCHGiMsy4P4AaG6Jp4AJS6reJymnmTd2/Vg==
   dependencies:
     "@minatojs/sql-utils" "^4.0.3"
     "@minatojs/sql.js" "^2.0.1"
@@ -702,10 +702,10 @@
   dependencies:
     form-data "^4.0.0"
 
-"@satorijs/core@2.3.8", "@satorijs/core@^2.3.8":
-  version "2.3.8"
-  resolved "https://registry.npmjs.org/@satorijs/core/-/core-2.3.8.tgz#dd1a66c1b2d67c2078eaa89160c9636ba6c4d302"
-  integrity sha512-DC49xuoU9oWqFUa0TpYWXpOQhPDkNXsh0O6t4uOLtJumXYRIyd/DXCM3Ohv7NyRXzdWXg1cXKoXvEdOeygZUpw==
+"@satorijs/core@2.3.9", "@satorijs/core@^2.3.9":
+  version "2.3.9"
+  resolved "https://registry.npmmirror.com/@satorijs/core/-/core-2.3.9.tgz#fb63e93e57b2f3fa59fcfa31aa94ee2c4572a6c7"
+  integrity sha512-1xl+NJ9TlxZSWGkVdDU99HgYnhYelsPOw7Eer1aq499WS3V9f/L25EYZ3wLsStB0A7fFvn+oYzTMVCVJ+DG9sg==
   dependencies:
     "@satorijs/element" "^2.4.2"
     cordis "^2.8.0"
@@ -722,13 +722,13 @@
   dependencies:
     cosmokit "^1.4.2"
 
-"@satorijs/satori@^2.3.8":
-  version "2.3.8"
-  resolved "https://registry.npmjs.org/@satorijs/satori/-/satori-2.3.8.tgz#3aed58beacd054ab048b6e730eb1c7c6d23b870c"
-  integrity sha512-v+hJ7iUva8QeqjpNZufwxW7suQ8ods3e0sL66mtTnvBHOre+/rz4GD/kw0UL7AORXlaemXTDPhUrqmi+3ubMRA==
+"@satorijs/satori@^2.3.9":
+  version "2.3.9"
+  resolved "https://registry.npmmirror.com/@satorijs/satori/-/satori-2.3.9.tgz#2f43831dd6cd0ab083294496c88942c2cd608ca7"
+  integrity sha512-C2oMTJNTpao5JhuAnyZr+wgYe2V1A1MCqTxWl0nT5HqTAcgxTOo6HMIz0Aa1vyFlfG8YCQHpdEPMWAmUAMtiqw==
   dependencies:
     "@koa/router" "^10.1.1"
-    "@satorijs/core" "2.3.8"
+    "@satorijs/core" "2.3.9"
     "@types/koa" "*"
     "@types/koa__router" "*"
     "@types/ws" "^8.5.4"
@@ -3323,33 +3323,15 @@ koishi-plugin-qdvc@0.2.2:
   dependencies:
     qdvc-web "^0.2.2"
 
-koishi-plugin-theme-martin@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmmirror.com/koishi-plugin-theme-martin/-/koishi-plugin-theme-martin-1.0.2.tgz#00cc18e757bce0fdb50f535d54857546bf8b8181"
-  integrity sha512-QT4NhP6vVbT3Q/wmx2aTywXYGfLxQWeiPlm+AVk7dmKK1Y7kby/IPdjz0C+Z2mJAQZ2aOKTW6ROovpjCvLYCWg==
-
-koishi-plugin-theme-vanilla@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmmirror.com/koishi-plugin-theme-vanilla/-/koishi-plugin-theme-vanilla-1.0.4.tgz#1796f3ddd3fdc2e372b30db6854dbbd78d4ae469"
-  integrity sha512-/3vrbUHwLJM7AkYMvMHgcbRpVDYnrPERqt6hByZy67kr/KpN4K3PP9GdCCL2JNl7bT7wo3cMBlEl3WNon5y0uw==
-
-koishi-plugin-wallpaper@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmmirror.com/koishi-plugin-wallpaper/-/koishi-plugin-wallpaper-1.0.3.tgz#e7ce1caf6ef1576fdd07711d874f5cdecfd2b45e"
-  integrity sha512-8NvKSIZQxec1nlbOZFAhZo2n+JT8a4tBEt5SGNeNfcketR3F7HnugRqYIaONuMHiaTvru3/qUqeDesiXcNp75A==
+koishi@4.13.2:
+  version "4.13.2"
+  resolved "https://registry.npmmirror.com/koishi/-/koishi-4.13.2.tgz#a1142bf5e22f87cacc2706264ef466dd7ee16cfb"
+  integrity sha512-iFH2lF1iyseb+9i3eWp9B0onmi9jQJpiZdugq0CLtLFdOwMeS9R/DuInqLQLHiXi4nhnSVAI6OXmYZvqMUogvA==
   dependencies:
-    chokidar "^3.5.3"
-    throttle-debounce "^3.0.1"
-
-koishi@4.13.1:
-  version "4.13.1"
-  resolved "https://registry.npmjs.org/koishi/-/koishi-4.13.1.tgz#2c10b1e561639904eaeee0bff23c44ce35ebb301"
-  integrity sha512-ZSUHNhygt+drvS+Sd/kge5FXB/omBaPbu15maidyNihG+6UOI9BE4ZeBaaY8dfU/AyKtWTuYjWSoA1Rf/hB99w==
-  dependencies:
-    "@koishijs/core" "4.13.1"
-    "@koishijs/loader" "3.2.1"
+    "@koishijs/core" "4.13.2"
+    "@koishijs/loader" "3.2.2"
     "@koishijs/utils" "^7.0.2"
-    "@satorijs/satori" "^2.3.8"
+    "@satorijs/satori" "^2.3.9"
     cac "^6.7.14"
     kleur "^4.1.5"
     ns-require "^1.1.4"
