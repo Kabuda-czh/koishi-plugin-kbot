@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-03 19:08:15
+ * @LastEditTime: 2023-06-21 18:00:31
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\listen.ts
  * @Description:
  *
@@ -71,7 +71,7 @@ export async function* listen(
                     index
                   ]?.content?.itemContent?.tweet_results?.result?.legacy?.created_at || 0,
                 ).getTime() / 1000 || Math.ceil(+new Date() / 1000)
-              ctx.bots[notification.botId].sendMessage(
+              ctx.bots[notification.botId]?.sendMessage(
                 channel.id,
                 text,
                 channel.guildId,
