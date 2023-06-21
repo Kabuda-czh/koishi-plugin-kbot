@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-05 10:10:24
+ * @LastEditTime: 2023-06-21 18:20:10
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -28,18 +28,25 @@ import { assetsLocalDir, kbotDir } from './config'
 export const name = 'kbot'
 
 export const usage = `
-# KBot v1.0.9 更新日志
+# KBot v1.0.11 更新日志
 
 ## Note
-- 修复 \`bilibili\` 插件中, \`轮询 undefined\` 和 \`请求动态接口 -352\`
-- 修复因 \`assets-local\` 更新位置后, 数据被迁移未适配位置的情况
+- 修复 \`bilibili\` 插件中, 解析链接的图片发送问题
+- 修复 \`bilibili\` 插件中, \`danmuku\` 的 api 请求问题
+- 修复 \`bilibili\` 插件中, \`cookie\` 的解析问题
+- 修复 \`bilibili\` 插件中, \`danmuku\` 的时间渲染问题
+- 修复 \`bilibili\` 插件中, \`add\` 方法请求用户信息的 \`-403\` 问题
+- 修复 \`twitter\` 插件中, 轮询 \`undefined\` 问题
+- 优化代码
 
 ## Bug Fix
-- 修复 \`bilibili\` 在动态请求时 -352 的问题, 增加了 cookie 的请求头
-- 修复 \`bilibili\` 在轮询时, 因动态接口报错, 导致后续 \`neo\` 为 \`undefined\` 的问题
-- 修复 \`assets-local\` 位置更新, 对应适配
+- 修复 \`bilibili\` 在解析链接的图片发送异常问题, 更改为 base64 发送 d4d7c95342c6021f95e1fa22bf5db04461238c1b
+- 修复 \`bilibili\` 使用 \`danmuku\` 功能时, api 请求失败以及, 主播开播下播时间异常问题 25c9d444df917ee5e4e8808ddc8235ce85164f1c 41279a4853d4bcb21231b4249733d01165366144
+- 修复 \`bilibili\` cookie 字符串解析异常问题, 对接b站最新 cookie f2dba93f531804cc362c71c1062463407e4639fa
+- 修复 \`bilibili\` 请求用户信息 \`-403\` 异常问题, 增加 \`salt\` 加密算法 e302cd8a3ffa260ac9b7a6d2fd9b6ff37f8cbe3d
+- 修复 \`twitter\` 轮询报错问题, 增加可选项避免报错 186b19ae6138ee51352f4268b4d338b758393d64
 
-详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.9)
+详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.11)
 `
 
 interface IPluginEnableConfig {
