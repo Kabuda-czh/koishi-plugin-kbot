@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 11:39:18
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-26 11:21:56
+ * @LastEditTime: 2023-06-21 12:57:21
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\enum\bilibili.enum.ts
  * @Description:
  *
@@ -11,7 +11,8 @@
 export enum BilibiliDynamicType {
   SearchUserByPC = 'https://api.bilibili.com/x/web-interface/wbi/search/all/v2',
   SearchUserByApp = 'https://api.bilibili.com/x/web-interface/search/type',
-  UserInfo = 'https://api.bilibili.com/x/space/acc/info?mid=%s&gaia_source=m_station',
+  UserInfo = 'https://api.bilibili.com/x/space/wbi/acc/info',
+  UserNav = 'https://api.bilibili.com/x/web-interface/nav',
   DynamicDetailURL = 'https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?host_mid=%s',
   MemberCardURL = 'https://account.bilibili.com/api/member/getCardByMid?mid=%s',
   MedalWallURL = 'https://api.live.bilibili.com/xlive/web-ucenter/user/MedalWall?target_id=%s',

@@ -2,73 +2,138 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-08 11:11:55
+ * @LastEditTime: 2023-06-21 12:55:30
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as crypto from 'node:crypto'
+import fs from 'node:fs'
 import type { Argv, Channel, Context, Dict, Quester } from 'koishi'
 import type {
   BilibiliDynamicItem,
   BilibiliUserInfoApiData,
+  BilibiliUserNavApiData,
   DynamicNotifiction,
 } from '../model'
 import { getDynamic } from '../utils'
+import { bilibiliCookiePath } from '../../../config'
+import { BilibiliDynamicType } from '../enum'
 import { renderFunction } from './render'
 import type { IConfig } from '.'
 import { logger } from '.'
 
-// 每次请求生成 w_rid 参数
-function wrid(uid: string | number) {
+async function _getSalt(http: Quester, cookieString: string): Promise<string> {
+  const response = await http.get<BilibiliUserNavApiData>(BilibiliDynamicType.UserNav, { headers: { cookie: cookieString } })
+  const data = response.data
+  const { img_url, sub_url } = data.wbi_img
+
+  const img_key = (/wbi\/(.*?)\.png/g.exec(img_url))[1] || ''
+  const sub_key = (/wbi\/(.*?)\.png/g.exec(sub_url))[1] || ''
+
+  const array = Array.from(img_key + sub_key)
+  const order = [46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49, 33, 9, 42, 19, 29, 28, 14, 39, 12, 38, 41, 13, 37, 48, 7, 16, 24, 55, 40, 61, 26, 17, 0, 1, 60, 51, 30, 4, 22, 25, 54, 21, 56, 59, 6, 63, 57, 62, 11, 36, 20, 34, 44, 52]
+
+  const salt = order.map(i => array[i]).join('').slice(0, 32)
+  return salt
+}
+
+async function _encrypt_w_rid(params: string | Record<string, string>, http: Quester, cookieString: string): Promise<[string, string]> {
   const wts = Math.floor(Date.now() / 1000).toString() // 获得时间戳
-  const c = '72136226c6a73669787ee4fd02a74c27'
-  const b = `mid=${uid}&platform=web&token=&web_location=1550101`
-  const a = `${b}&wts=${wts}${c}`
-  return crypto.createHash('md5').update(a).digest('hex')
+
+  let paramsList: string[]
+
+  if (typeof params === 'string') {
+    paramsList = (`${params}&wts=${wts}`).split('&')
+  }
+  else if (typeof params === 'object') {
+    params.wts = wts
+    paramsList = Object.entries(params).map(([key, value]) => `${key}=${value}`)
+  }
+  else {
+    throw new TypeError(`Invalid type of params: ${typeof params}`)
+  }
+
+  paramsList.sort()
+
+  const salt = await _getSalt(http, cookieString)
+
+  const hash = crypto.createHash('md5')
+  const w_rid = hash.update(paramsList.join('&') + salt).digest('hex')
+  return [w_rid, wts]
 }
 
 async function fetchUserInfo(
   uid: string,
   http: Quester,
 ): Promise<BilibiliUserInfoApiData['data']> {
-  let res = await http.get(
-    'https://api.bilibili.com/x/space/wbi/acc/info',
+  let cookie
+  try {
+    cookie = JSON.parse(
+      await fs.promises.readFile(
+        bilibiliCookiePath,
+        'utf-8',
+      ),
+    )
+  }
+  catch (e) {
+    logger.error(`Failed to get cookie info. ${e}`)
+    throw new Error('cookie信息未找到, 请使用 --ck 或 --cookie 更新cookie信息')
+  }
+
+  const cookieString = Object.entries(cookie)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('; ')
+
+  const defaultParams = {
+    token: '',
+    platform: 'web',
+    web_location: '1550101',
+    mid: uid,
+  }
+
+  const [w_rid, wts] = await _encrypt_w_rid(defaultParams, http, cookieString)
+
+  let res = await http.axios(
+    BilibiliDynamicType.UserInfo,
     {
+      method: 'GET',
       params: {
-        mid: uid,
-        token: '',
-        platform: 'web',
-        web_location: 1550101,
-        w_rid: wrid(uid),
-        wts: Math.floor(Date.now() / 1000),
+        ...defaultParams,
+        w_rid,
+        wts,
       },
       headers: {
         'Referer': `https://space.bilibili.com/${uid}`,
         'Content-Type': 'application/json',
         'Accept': 'application/json, text/plain, */*',
         'Origin': 'https://space.bilibili.com',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        'Cookie': cookieString,
       },
     },
   )
 
   // 对接 code -509 异常返回
-  if (res.code === undefined) {
+  if (res.data.code === undefined) {
     const regex = /(?<=})\s*(?={)/g
-    const jsonStrings = res.split(regex)
+    const jsonStrings = res.data.split(regex)
     if (+JSON.parse(jsonStrings[0]).code === -509)
       res = JSON.parse(jsonStrings[1])
   }
-  if (res.code !== 0 && res.code !== -403)
-    throw new Error(`获取 ${uid} 信息失败: [code: ${res.code}, message: ${res.message}]`)
+  if (res.data.code !== 0)
+    throw new Error(`[code: ${res.data.code}, message: ${res.data.message}] 请更新 cookie 信息 或 联系管理员`)
+
   return res.data || {}
 }
 
 export async function bilibiliAdd(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  uid: string,
+  up: {
+    uid: string
+    upName: string
+  },
   list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
@@ -77,6 +142,7 @@ export async function bilibiliAdd(
   >,
   ctx: Context,
 ) {
+  let { uid, upName } = up
   if (
     session.channel.bilibili.dynamic.find(
       notification => notification.bilibiliId === uid || +notification.bilibiliId === +uid,
@@ -85,12 +151,16 @@ export async function bilibiliAdd(
     return '该用户已在监听列表中。'
 
   try {
-    const { name } = await fetchUserInfo(uid, ctx.http)
+    let userData: BilibiliUserInfoApiData['data']
+    if (uid === upName)
+      userData = await fetchUserInfo(uid, ctx.http)
+    if (userData)
+      upName = userData.name || upName
     uid = String(uid)
     const notification: DynamicNotifiction = {
       botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
       bilibiliId: uid,
-      bilibiliName: name || uid,
+      bilibiliName: upName || uid,
     }
     session.channel.bilibili.dynamic.push(notification);
     (list[uid] ||= []).push([
@@ -102,7 +172,7 @@ export async function bilibiliAdd(
       },
       notification,
     ])
-    return `成功添加 up主: ${name || uid}`
+    return `成功添加 up主: ${upName || uid}`
   }
   catch (e) {
     logger.error(e)
@@ -112,7 +182,10 @@ export async function bilibiliAdd(
 
 export async function bilibiliRemove(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  uid: string,
+  up: {
+    uid: string
+    upName: string
+  },
   list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
@@ -120,6 +193,8 @@ export async function bilibiliRemove(
     ][]
   >,
 ) {
+  let { uid } = up
+
   uid = String(uid)
   const { channel } = session
   const index = channel.bilibili.dynamic.findIndex(
@@ -160,7 +235,10 @@ export async function bilibiliList({
 
 export async function bilibiliSearch(
   _: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  uid: string,
+  up: {
+    uid: string
+    upName: string
+  },
   _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
@@ -170,6 +248,7 @@ export async function bilibiliSearch(
   ctx: Context,
   config: IConfig,
 ) {
+  const { uid } = up
   try {
     const { data } = await getDynamic(ctx.http, uid, logger)
     const items = data.items as BilibiliDynamicItem[]

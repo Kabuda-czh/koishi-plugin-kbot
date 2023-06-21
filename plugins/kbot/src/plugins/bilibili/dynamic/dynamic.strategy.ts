@@ -64,7 +64,7 @@ export async function dynamicStrategy(
 
       return dynamicStrategies[strategyName]?.(
         { session, options },
-        uid,
+        { uid, upName: value },
         list,
         ctx,
         config,
