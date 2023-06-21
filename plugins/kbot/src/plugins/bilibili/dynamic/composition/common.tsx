@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-06 19:22:49
+ * @LastEditTime: 2023-06-21 10:29:03
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -25,7 +25,10 @@ import { renderDanmu, renderVup } from './render'
 
 export async function bilibiliVupCheck(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  uid: string,
+  up: {
+    uid: string
+    upName: string
+  },
   _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
@@ -35,6 +38,7 @@ export async function bilibiliVupCheck(
   ctx: Context,
   config: IConfig,
 ) {
+  const { uid } = up
   try {
     if (config.useImage) {
       if (ctx.puppeteer) {
@@ -132,7 +136,10 @@ export async function bilibiliVupCheck(
 
 export async function bilibiliDanmuCheck(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  uid: string,
+  up: {
+    uid: string
+    upName: string
+  },
   _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
@@ -142,6 +149,7 @@ export async function bilibiliDanmuCheck(
   ctx: Context,
   config: IConfig,
 ) {
+  const { uid } = up
   try {
     if (config.useImage) {
       if (ctx.puppeteer) {
@@ -176,7 +184,10 @@ export async function bilibiliDanmuCheck(
 
 export async function bilibiliRefreshVup(
   _: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  _uid: string,
+  _up: {
+    uid: string
+    upName: string
+  },
   _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,

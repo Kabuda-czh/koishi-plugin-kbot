@@ -68,7 +68,10 @@ async function fetchUserInfo(
 
 export async function bilibiliAdd(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  uid: string,
+  up: {
+    uid: string
+    upName: string
+  },
   list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
@@ -77,6 +80,7 @@ export async function bilibiliAdd(
   >,
   ctx: Context,
 ) {
+  let { uid, upName } = up
   if (
     session.channel.bilibili.dynamic.find(
       notification => notification.bilibiliId === uid || +notification.bilibiliId === +uid,
@@ -85,12 +89,16 @@ export async function bilibiliAdd(
     return '该用户已在监听列表中。'
 
   try {
-    const { name } = await fetchUserInfo(uid, ctx.http)
+    let userData: BilibiliUserInfoApiData['data']
+    if (uid === upName)
+      userData = await fetchUserInfo(uid, ctx.http)
+    if (userData)
+      upName = userData.name || upName
     uid = String(uid)
     const notification: DynamicNotifiction = {
       botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
       bilibiliId: uid,
-      bilibiliName: name || uid,
+      bilibiliName: upName || uid,
     }
     session.channel.bilibili.dynamic.push(notification);
     (list[uid] ||= []).push([
@@ -102,7 +110,7 @@ export async function bilibiliAdd(
       },
       notification,
     ])
-    return `成功添加 up主: ${name || uid}`
+    return `成功添加 up主: ${upName || uid}`
   }
   catch (e) {
     logger.error(e)
@@ -112,7 +120,10 @@ export async function bilibiliAdd(
 
 export async function bilibiliRemove(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  uid: string,
+  up: {
+    uid: string
+    upName: string
+  },
   list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
@@ -120,6 +131,8 @@ export async function bilibiliRemove(
     ][]
   >,
 ) {
+  let { uid } = up
+
   uid = String(uid)
   const { channel } = session
   const index = channel.bilibili.dynamic.findIndex(
@@ -160,7 +173,10 @@ export async function bilibiliList({
 
 export async function bilibiliSearch(
   _: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
-  uid: string,
+  up: {
+    uid: string
+    upName: string
+  },
   _list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
@@ -170,6 +186,7 @@ export async function bilibiliSearch(
   ctx: Context,
   config: IConfig,
 ) {
+  const { uid } = up
   try {
     const { data } = await getDynamic(ctx.http, uid, logger)
     const items = data.items as BilibiliDynamicItem[]
