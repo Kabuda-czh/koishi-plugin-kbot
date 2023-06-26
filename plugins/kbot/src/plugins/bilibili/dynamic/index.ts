@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-01 12:10:21
+ * @LastEditTime: 2023-06-26 10:39:47
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -80,6 +80,13 @@ export async function apply(ctx: Context, config: IConfig) {
     .option(
       'add',
       '-a <upInfo:string> 添加订阅, 请输入要添加的 up 主的 uid 或者 名字',
+      {
+        authority: config.authority,
+      },
+    )
+    .option(
+      'batch',
+      '-b [...upInfo:string] 批量添加订阅, 请输入要添加的 up 主的 uid 或者 名字, 以逗号分隔',
       {
         authority: config.authority,
       },

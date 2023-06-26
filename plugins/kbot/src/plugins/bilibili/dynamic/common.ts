@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-21 12:55:30
+ * @LastEditTime: 2023-06-26 10:46:02
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -95,7 +95,7 @@ async function fetchUserInfo(
 
   const [w_rid, wts] = await _encrypt_w_rid(defaultParams, http, cookieString)
 
-  let res = await http.axios(
+  let res = await http.axios<BilibiliUserInfoApiData>(
     BilibiliDynamicType.UserInfo,
     {
       method: 'GET',
@@ -118,14 +118,14 @@ async function fetchUserInfo(
   // 对接 code -509 异常返回
   if (res.data.code === undefined) {
     const regex = /(?<=})\s*(?={)/g
-    const jsonStrings = res.data.split(regex)
+    const jsonStrings = (res.data as unknown as string).split(regex)
     if (+JSON.parse(jsonStrings[0]).code === -509)
       res = JSON.parse(jsonStrings[1])
   }
   if (res.data.code !== 0)
     throw new Error(`[code: ${res.data.code}, message: ${res.data.message}] 请更新 cookie 信息 或 联系管理员`)
 
-  return res.data || {}
+  return res.data.data
 }
 
 export async function bilibiliAdd(
@@ -178,6 +178,70 @@ export async function bilibiliAdd(
     logger.error(e)
     return `请求失败，请检查 uid 是否正确或重试，${e.message}`
   }
+}
+
+export async function bilibiliBatch(
+  { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'bilibili', any>,
+  up: {
+    uid: string[]
+    upName: string[]
+  },
+  list: Dict<
+    [
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
+      DynamicNotifiction,
+    ][]
+  >,
+  ctx: Context,
+) {
+  const { uid: uids, upName: upNames } = up
+
+  const result: string[] = []
+  const error: string[] = []
+  for (let i = 0; i < uids.length; i++) {
+    let uid = uids[i]
+    let upName = upNames[i]
+
+    if (
+      session.channel.bilibili.dynamic.find(
+        notification => notification.bilibiliId === uid || +notification.bilibiliId === +uid,
+      )
+    )
+      continue
+
+    try {
+      const userData = await fetchUserInfo(uid, ctx.http)
+      upName = userData.name || upName
+      uid = String(uid)
+      const notification: DynamicNotifiction = {
+        botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
+        bilibiliId: uid,
+        bilibiliName: upName || uid,
+      }
+      session.channel.bilibili.dynamic.push(notification);
+      (list[uid] ||= []).push([
+        {
+          id: session.channel.id,
+          guildId: session.channel.guildId,
+          platform: session.platform,
+          bilibili: session.channel.bilibili,
+        },
+        notification,
+      ])
+      result.push(`${upName || uid}`)
+    }
+    catch (e) {
+      logger.error(e)
+      error.push(`${upName || uid}「${e.message}」`)
+    }
+  }
+
+  if (result.length)
+    return `成功添加 up主: \n${result.join('\n')}`
+  else if (error.length)
+    return `添加以下 up主 失败: \n${error.join('\n')}`
+  else
+    return '所有用户已在监听列表中。'
 }
 
 export async function bilibiliRemove(
