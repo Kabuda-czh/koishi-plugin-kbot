@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:03:04
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-27 12:53:56
+ * @LastEditTime: 2023-06-26 11:28:36
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\model\userTweet.model.ts
  * @Description:
  *
@@ -131,6 +131,22 @@ interface Features {
    * false
    */
   responsive_web_enhance_cards_enabled: boolean
+  /**
+   * true
+   */
+  longform_notetweets_rich_text_read_enabled: boolean
+  /**
+   * true
+   */
+  longform_notetweets_inline_media_enabled: boolean
+  /**
+   * true
+   */
+  rweb_lists_timeline_redesign_enabled: boolean
+  /**
+   * true
+   */
+  creator_subscriptions_tweet_preview_api_enabled: boolean
 }
 
 // get -> data.user.result.timeline_v2.timeline.instructions[1] || instructions.fint(type === "TimelineAddEntries").entries[0].content.itemContent.tweet_results.result.rest_id && legacy.created_at

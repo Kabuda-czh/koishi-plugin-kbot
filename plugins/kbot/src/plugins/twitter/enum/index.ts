@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 14:45:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 14:49:58
+ * @LastEditTime: 2023-06-26 11:19:40
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\enum\index.ts
  * @Description:
  *
@@ -10,9 +10,9 @@
  */
 export enum TwitterDynamicType {
   // get user restId
-  UserByScreenNameURL = 'https://twitter.com/i/api/graphql/rePnxwe9LZ51nQ7Sn_xN_A/UserByScreenName',
+  UserByScreenNameURL = 'https://twitter.com/i/api/graphql/qRednkZG-rn1P6b48NINmQ/UserByScreenName',
   // get user tweets
-  UserTweetsURL = 'https://twitter.com/i/api/graphql/OXXUyHfKYZ-xLx4NcL9-_Q/UserTweets',
+  UserTweetsURL = 'https://twitter.com/i/api/graphql/Uuw5X2n3tuGE_SatnXUqLA/UserTweets',
   // get user dynamic info
   UserStatusURL = 'https://twitter.com/%s/status/%s',
 }
