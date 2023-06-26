@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 10:37:44
+ * @LastEditTime: 2023-06-26 10:41:11
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\dynamic.strategy.ts
  * @Description:
  *
@@ -13,6 +13,7 @@ import type { DynamicNotifiction } from '../model'
 import { uidExtract } from '../utils'
 import {
   bilibiliAdd,
+  bilibiliBatch,
   bilibiliList,
   bilibiliRemove,
   bilibiliSearch,
@@ -35,6 +36,7 @@ const dynamicStrategies = {
   danmu: bilibiliDanmuCheck,
   refresh: bilibiliRefreshVup,
   cookie: bilibiliCookie,
+  batch: bilibiliBatch,
 }
 
 export async function dynamicStrategy(
@@ -53,13 +55,26 @@ export async function dynamicStrategy(
 ) {
   const strategyName = Object.keys(options).find(key => options[key])
   if (Object.keys(dynamicStrategies).includes(strategyName)) {
-    const value = options[strategyName]
     try {
-      let uid: string
-      if (!['list', 'cookie', 'refresh'].includes(strategyName)) {
+      let value: string | string[]
+      let uid: string | string[]
+      if (!['list', 'cookie', 'refresh', 'batch'].includes(strategyName)) {
+        value = options[strategyName] as string
         uid = await uidExtract(value, { session }, logger, ctx)
         if (!uid)
           return '未找到该 up, 请输入正确的 up 名 , up uid 或 up 首页链接'
+      }
+      else if (strategyName === 'batch') {
+        value = session.content.split(' ').slice(2) as string[]
+        uid = await Promise.all(value
+          .join(' ')
+          .replace(/，/ig, ',')
+          .split(',')
+          .map(
+            async (v: string) => await uidExtract(v.trim(), { session }, logger, ctx),
+          ),
+        )
+        uid = [...new Set(uid)]
       }
 
       return dynamicStrategies[strategyName]?.(

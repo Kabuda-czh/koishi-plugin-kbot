@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-25 11:19:51
+ * @LastEditTime: 2023-06-26 10:57:00
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -90,6 +90,11 @@ export async function apply(ctx: Context, config: IConfig) {
     .option(
       'add',
       '-a <userId:string> 添加订阅, 请输入要添加的 twitter 博主的 id 名字(指 @后的字符串)',
+      { authority: config.authority },
+    )
+    .option(
+      'batch',
+      '-b [...userId:string] 批量添加订阅, 请输入要添加的 twitter 博主的 id 名字(指 @后的字符串), 以逗号分隔',
       { authority: config.authority },
     )
     .option(

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-07 14:12:16
+ * @LastEditTime: 2023-06-26 11:08:38
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
@@ -17,7 +17,11 @@ import type { IConfig } from '.'
 
 export async function twitterAdd(
   { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'twitter', any>,
-  twitter: { twitterId: string; twitterName: string; twitterRestId: string },
+  twitter: {
+    twitterId: string
+    twitterName: string
+    twitterRestId: string
+  },
   list: Dict<
     [
       Pick<Channel, 'id' | 'guildId' | 'platform' | 'twitter'>,
@@ -58,6 +62,71 @@ export async function twitterAdd(
     logger.error(`添加推特用户 ${twitterId} 失败: [${e}]`)
     return `请求失败，请检查 id 是否正确或重试${e}`
   }
+}
+
+export async function twitterBatch(
+  { session }: Argv<never, 'id' | 'guildId' | 'platform' | 'twitter', any>,
+  twitter: {
+    twitterId: string[]
+    twitterName: string[]
+    twitterRestId: string[]
+  },
+  list: Dict<
+    [
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'twitter'>,
+      DynamicNotifiction,
+    ][]
+  >,
+  _ctx: Context,
+) {
+  const { twitterId: twitterIds, twitterName: twitterNames, twitterRestId: twitterRestIds } = twitter
+
+  const result = []
+  const error = []
+
+  for (let i = 0; i < twitterIds.length; i++) {
+    const twitterId = twitterIds[i].trim()
+    const twitterName = twitterNames[i]
+    const twitterRestId = twitterRestIds[i]
+
+    if (
+      session.channel.twitter.dynamic.find(
+        notification => notification.twitterRestId === twitterRestId,
+      )
+    )
+      continue
+
+    try {
+      const notification: DynamicNotifiction = {
+        botId: `${session.platform}:${session.bot.userId || session.bot.selfId}`,
+        twitterId,
+        twitterName,
+        twitterRestId,
+      }
+      session.channel.twitter.dynamic.push(notification);
+      (list[twitterRestId] ||= []).push([
+        {
+          id: session.channel.id,
+          guildId: session.channel.guildId,
+          platform: session.platform,
+          twitter: session.channel.twitter,
+        },
+        notification,
+      ])
+      result.push(`${twitterName}`)
+    }
+    catch (e) {
+      logger.error(`添加推特用户 ${twitterId} 失败: [${e}]`)
+      error.push(`${twitterId}: [${e}]`)
+    }
+  }
+
+  if (result.length)
+    return `成功添加: \n${result.join('\n')}`
+  else if (error.length)
+    return `以下用户添加失败: \n${error.join('\n')}`
+  else
+    return '所有用户已在监听列表中。'
 }
 
 export async function twitterRemove(
