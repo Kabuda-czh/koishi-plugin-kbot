@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-03 19:07:37
+ * @LastEditTime: 2023-06-26 11:27:03
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -104,6 +104,10 @@ export async function getTwitterTweets(
       interactive_text_enabled: true,
       responsive_web_text_conversations_enabled: false,
       longform_notetweets_richtext_consumption_enabled: false,
+      longform_notetweets_rich_text_read_enabled: true,
+      longform_notetweets_inline_media_enabled: true,
+      rweb_lists_timeline_redesign_enabled: true,
+      creator_subscriptions_tweet_preview_api_enabled: true,
       responsive_web_enhance_cards_enabled: false,
     },
   }
@@ -129,7 +133,7 @@ export async function getTwitterTweets(
           return 'continue'
         else throw new Error('请求超时, 网络错误')
       }
-      throw new Error(`请求失败: ${err.message}`)
+      throw new Error(`请求失败: ${err.response.data.errors}`)
     })
 
   if (tokenError) {
