@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-17 11:22:03
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-27 10:58:40
+ * @LastEditTime: 2023-06-27 18:49:43
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\command\blackList.ts
  * @Description:
  *
@@ -10,8 +10,8 @@
  */
 import type { Context } from 'koishi'
 import type { GroupInfo, GroupMemberInfo } from '../typings'
-import { RoleNumber } from './enum'
-import { getGroupMemberRole } from './util'
+import { getGroupMemberRole } from '../utils'
+import { RoleNumber } from '../enum'
 
 interface IBlackList {
   id: number
