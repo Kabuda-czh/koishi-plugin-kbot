@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:24
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 10:46:28
+ * @LastEditTime: 2023-06-27 18:49:20
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\utils\index.ts
  * @Description:
  *
@@ -10,7 +10,9 @@
  */
 import type { Context } from 'koishi'
 import type { Context as KoaContext } from 'koa'
+import type { Bot } from 'koishi'
 import { logger } from '..'
+import type { GroupMemberInfo } from '../typings'
 
 export default function handleFunction<T = any>(
   context: Context,
@@ -39,4 +41,9 @@ export default function handleFunction<T = any>(
         ctx.body = null
       })
   }
+}
+
+export async function getGroupMemberRole(bot: Bot, groupId: string | number, userId: string | number) {
+  const res: GroupMemberInfo = await bot.internal.getGroupMemberInfo(groupId, userId)
+  return res.role
 }
