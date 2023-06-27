@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-15 11:29:29
+ * @LastEditTime: 2023-06-27 18:55:03
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
  *
@@ -14,6 +14,7 @@ import type { Argv, Context } from 'koishi'
 import { } from '@koishijs/plugin-console'
 import { routerStrategies } from './router'
 import { initCommand } from './command'
+import { initCommon } from './common'
 
 declare module 'koishi' {
   interface Channel {
@@ -22,13 +23,63 @@ declare module 'koishi' {
   }
 }
 
-export interface IConfig { }
+export interface IConfig {
+  monitorSpeech?: {
+    enabled: boolean
+    violations?: string[]
+    count?: number
+    handleWay?: 'mute' | 'kick'
+  }
+  monitorGuildAdd?: {
+    enabled: boolean
+    timer?: number
+    questions?: Record<string, string>
+  }
+}
 
-export const Config: Schema<IConfig> = Schema.object({})
+export const Config: Schema<IConfig> = Schema.object({
+  monitorSpeech: Schema.intersect([
+    Schema.object({
+      enabled: Schema.boolean().default(false).description('是否开启群发言监控'),
+    }),
+    Schema.union([
+      Schema.object({
+        enabled: Schema.const(true).required(),
+        violations: Schema.union([
+          Schema.array(String),
+          Schema.transform(String, value => [value]),
+        ]).default([]).description('违规词语列表'),
+        count: Schema.number().min(1).max(999).default(3).description('每天违规次数'),
+        handleWay: Schema.union([
+          Schema.const('mute').description('禁言'),
+          Schema.const('kick').description('踢出群聊'),
+        ]).role('radio').default('mute').description('违规处理方式'),
+      }),
+      Schema.object({
+        enabled: Schema.const(false),
+      }),
+    ]),
+  ]),
+  monitorGuildAdd: Schema.intersect([
+    Schema.object({
+      enabled: Schema.boolean().default(false).description('是否开启群入群监控'),
+    }),
+    Schema.union([
+      Schema.object({
+        enabled: Schema.const(true).required(),
+        timer: Schema.number().default(60).description('入群问答超时时间(秒)'),
+        questions: Schema.dict(String).role('table').required().description('入群问答 (左边 key 为 问题, 右边 value 为 答案)'),
+      }),
+      Schema.object({
+        enabled: Schema.const(false),
+      }),
+    ]),
+  ]),
+})
 
 export const logger = new Logger('kbot-plugin-guildManage')
 
-export function apply(context: Context) {
+export function apply(context: Context, config: IConfig) {
   context.model.extend('channel', {
     disable: 'list',
     watchDelete: 'boolean',
@@ -59,6 +110,8 @@ export function apply(context: Context) {
   // context.guild().on('message-deleted', async (session) => {
 
   // })
+
+  initCommon(context, config)
 
   initCommand(context)
 

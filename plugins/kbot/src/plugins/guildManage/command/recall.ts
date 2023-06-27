@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-17 11:20:08
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-11 11:07:55
+ * @LastEditTime: 2023-06-27 18:50:26
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\command\recall.ts
  * @Description:
  *
@@ -11,8 +11,8 @@
 import type { Context, Dict } from 'koishi'
 import { Time, remove, sleep } from 'koishi'
 import type { Message } from '../typings'
-import { RoleNumber } from './enum'
-import { getGroupMemberRole } from './util'
+import { RoleNumber } from '../enum'
+import { getGroupMemberRole } from '../utils'
 
 export async function initRecall(context: Context) {
   const recent: Dict<string[]> = {}
