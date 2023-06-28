@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 10:09:25
+ * @LastEditTime: 2023-06-28 16:48:25
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -18,6 +18,7 @@ import {
   ElTable,
   ElTableColumn,
 } from 'element-plus'
+import type { Ref } from 'vue'
 import { nextTick, onMounted, ref } from 'vue'
 import {
   fetchBroadcast,
@@ -32,6 +33,8 @@ import {
 import GroupDialog from './components/GroupDialog.vue'
 import FuzzySearch from './components/FuzzySearch.vue'
 import GroupPlugins from './components/GroupPlugins.vue'
+import GroupNotice from './components/GroupNotice.vue'
+import GroupPortrait from './components/GroupPortrait.vue'
 import type { Group, GroupCommand, GroupList, GuildWatch, UserInfo } from './interface'
 import { fetchGuildWatchList } from './api/guild'
 
@@ -58,6 +61,12 @@ const botRole = ref<string>('')
 // plugin dialog
 const commands = ref<GroupCommand[]>([])
 const pluginDialogVisible = ref<boolean>(false)
+
+// notice dialog
+const noticeDialogVisible = ref<boolean>(false)
+
+// portrait dialog
+const portraitDialogVisible = ref<boolean>(false)
 
 // bot dialog
 const botDialogLoading = ref<boolean>(false)
@@ -176,10 +185,16 @@ async function changeBot(userId: string | number) {
   botDialogLoading.value = false
 }
 
-function manageGroupPlugins(group_id: number) {
-  pluginDialogVisible.value = true
-  groupId.value = group_id
+function createManageFunction(dialog: Ref<boolean>) {
+  return function (group_id: number) {
+    dialog.value = true
+    groupId.value = group_id
+  }
 }
+
+const manageGroupNotice = createManageFunction(noticeDialogVisible)
+const manageGroupPortrait = createManageFunction(portraitDialogVisible)
+const manageGroupPlugins = createManageFunction(pluginDialogVisible)
 
 function selectData(item: { label: string; value: string | number }) {
   loading.value = true
@@ -352,6 +367,12 @@ onMounted(async () => {
           </ElTableColumn>
           <ElTableColumn align="center" label="操作">
             <template #default="{ row }">
+              <ElButton v-if="['owner', 'admin'].includes(row.role)" type="primary" @click="manageGroupNotice(row.group_id)">
+                发送群公告
+              </ElButton>
+              <ElButton v-if="['owner', 'admin'].includes(row.role)" type="primary" @click="manageGroupPortrait(row.group_id)">
+                更改群头像
+              </ElButton>
               <ElButton type="primary" @click="manageGroupPlugins(row.group_id)">
                 管理群指令
               </ElButton>
@@ -391,6 +412,20 @@ onMounted(async () => {
   <GroupPlugins
     :visible="pluginDialogVisible" :group-id="groupId" :commands="commands" @closed="
       pluginDialogVisible = false;
+      groupId = 0;
+    "
+  />
+
+  <GroupNotice
+    :visible="noticeDialogVisible" :group-id="groupId" :bot-id="botId" @closed="
+      noticeDialogVisible = false;
+      groupId = 0;
+    "
+  />
+
+  <GroupPortrait
+    :visible="portraitDialogVisible" :group-id="groupId" :bot-id="botId" @closed="
+      portraitDialogVisible = false;
       groupId = 0;
     "
   />
