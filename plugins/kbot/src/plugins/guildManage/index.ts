@@ -116,7 +116,7 @@ export function apply(context: Context, config: IConfig) {
   initCommand(context)
 
   Object.keys(routerStrategies).forEach((key) => {
-    context.router.get(key, routerStrategies[key](context))
+    context.router.all(key, routerStrategies[key](context))
   })
 
   context.using(['console'], (ctx) => {

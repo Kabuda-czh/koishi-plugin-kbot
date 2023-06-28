@@ -22,13 +22,13 @@ export default function handleFunction<T = any>(
   return async (ctx: KoaContext) => {
     await Promise.all(
       context.bots.flatMap(bot =>
-        (bot.platform === 'onebot' && bot.selfId === ctx.query[args[0]])
+        (bot.platform === 'onebot' && bot.selfId === (ctx.query[args[0]] || ctx.request.body[args[0]]) && bot.status === 'online')
           ? functionName.includes('internal.')
             ? bot.internal?.[functionName.slice(functionName.indexOf('.') + 1)](
-              ...args.slice(1).map(arg => (arg = ctx.query?.[arg] || '')),
+              ...args.slice(1).map(arg => (arg = (ctx.query?.[arg] || ctx.request?.body?.[arg] || ''))),
             )
             : bot?.[functionName](
-              ...args.slice(1).map(arg => (arg = ctx.query?.[arg] || '')),
+              ...args.slice(1).map(arg => (arg = (ctx.query?.[arg] || ctx.request?.body?.[arg] || ''))),
             )
           : [],
       ),
