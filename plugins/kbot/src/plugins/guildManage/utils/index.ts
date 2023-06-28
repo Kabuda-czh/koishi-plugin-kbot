@@ -2,15 +2,16 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:24
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-27 18:49:20
+ * @LastEditTime: 2023-06-28 17:22:38
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\utils\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import type { Context } from 'koishi'
+import fs from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import type { Bot, Context } from 'koishi'
 import type { Context as KoaContext } from 'koa'
-import type { Bot } from 'koishi'
 import { logger } from '..'
 import type { GroupMemberInfo } from '../typings'
 
@@ -34,12 +35,31 @@ export default function handleFunction<T = any>(
       ),
     )
       .then((res: T[]) => {
+        if (['internal.sendGroupNotice', 'internal.setGroupPortrait'].includes(functionName)) {
+          setTimeout(() => {
+            deleteTempFile(ctx.query?.[args[args.length - 1]] as string || ctx.request.body?.[args[args.length - 1]])
+          }, 60 * 1000)
+        }
+
         ctx.body = res.flat()
       })
       .catch((err) => {
         logger.error(err)
         ctx.body = null
       })
+  }
+}
+
+async function deleteTempFile(filePath: string) {
+  if (!filePath)
+    return
+
+  try {
+    await fs.promises.rm(fileURLToPath(filePath))
+    logger.info(`已删除临时文件 ${filePath}`)
+  }
+  catch (err) {
+    logger.error(`删除临时文件 ${filePath} 失败：${err}`)
   }
 }
 
