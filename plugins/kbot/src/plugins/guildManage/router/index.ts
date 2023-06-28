@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-16 16:34:35
+ * @LastEditTime: 2023-06-28 15:44:13
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router\index.ts
  * @Description:
  *
@@ -13,6 +13,7 @@ import { botRoutes } from './bot'
 import { commandRoutes } from './commands'
 import { groupRoutes } from './group'
 import { guildRoutes } from './guild'
+import { imageRoutes } from './image'
 import { muteRoutes } from './mute'
 
 export const routerStrategies: IRouterStrategy = {
@@ -21,4 +22,5 @@ export const routerStrategies: IRouterStrategy = {
   ...groupRoutes,
   ...muteRoutes,
   ...commandRoutes,
+  ...imageRoutes,
 }
