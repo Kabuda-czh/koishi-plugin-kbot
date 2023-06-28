@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-27 18:05:45
+ * @LastEditTime: 2023-06-28 17:34:06
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -28,25 +28,23 @@ import { assetsLocalDir, kbotDir } from './config'
 export const name = 'kbot'
 
 export const usage = `
-# KBot v1.0.11 更新日志
+# KBot v1.0.12 更新日志
 
 ## Note
-- 修复 \`bilibili\` 插件中, 解析链接的图片发送问题
-- 修复 \`bilibili\` 插件中, \`danmuku\` 的 api 请求问题
-- 修复 \`bilibili\` 插件中, \`cookie\` 的解析问题
-- 修复 \`bilibili\` 插件中, \`danmuku\` 的时间渲染问题
-- 修复 \`bilibili\` 插件中, \`add\` 方法请求用户信息的 \`-403\` 问题
-- 修复 \`twitter\` 插件中, 轮询 \`undefined\` 问题
+- 增加 \`bilibili\` & \`twitter\` 插件批量增加的功能
+- 修复 \`twitter\` 插件轮询可能出现的问题
+- 增加 \`guildmanage\` 群管插件 \`发送群公告\` 和 \`更改群头像\` 功能
 - 优化代码
 
 ## Bug Fix
-- 修复 \`bilibili\` 在解析链接的图片发送异常问题, 更改为 base64 发送
-- 修复 \`bilibili\` 使用 \`danmuku\` 功能时, api 请求失败以及, 主播开播下播时间异常问题
-- 修复 \`bilibili\` cookie 字符串解析异常问题, 对接b站最新 cookie
-- 修复 \`bilibili\` 请求用户信息 \`-403\` 异常问题, 增加 \`salt\` 加密算法
-- 修复 \`twitter\` 轮询报错问题, 增加可选项避免报错
+- 修复 \`twitter\` 轮询报错问题, 增加请求参数
 
-详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.11)
+## Features
+- 增加 \`bilibili\` & \`twitter\` 插件的批量添加功能
+- 增加 \`guildmanage\` 群管插件, \`发送群公告\` 和 \`更改群头像\` 的功能, 优化部分代码
+- 暂时关闭 \`guildmanage\` 的群屏蔽词汇以及加群校验功能, 优化代码结构后开放
+
+详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.12)
 `
 
 interface IPluginEnableConfig {
