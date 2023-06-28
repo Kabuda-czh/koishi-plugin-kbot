@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-02 11:22:38
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-28 14:32:55
+ * @LastEditTime: 2023-06-28 17:03:56
  * @FilePath: \KBot-App\plugins\kbot\client\api\group.ts
  * @Description:
  *
@@ -36,4 +36,16 @@ export function fetchGroupKick(botId: string | number, groupId: string | number,
 
 export function fetchGroupAdmin(botId: string | number, groupId: string | number, userId: string | number, enable: boolean) {
   return http.request('get', '/groupAdmin', { botId, groupId, userId, enable })
+}
+
+export function fetchGroupNotice(botId: string | number, groupId: string | number) {
+  return http.request('get', '/groupNotice', { botId, groupId })
+}
+
+export function fetchSendGroupNotice(method: 'get' | 'post', botId: string | number, groupId: string | number, content: string, image = '') {
+  return http.request(method, '/sendGroupNotice', { botId, groupId, content, image })
+}
+
+export function fetchSetGroupPortrait(botId: string | number, groupId: string | number, file: string) {
+  return http.request('post', '/setGroupPortrait', { botId, groupId, file })
 }

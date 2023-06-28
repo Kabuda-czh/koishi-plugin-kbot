@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-01 10:36:37
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-28 14:33:07
+ * @LastEditTime: 2023-06-28 17:04:07
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router\group.ts
  * @Description:
  *
@@ -30,5 +30,14 @@ export const groupRoutes: IRouterStrategy = {
   },
   '/groupAdmin': function (context: Context) {
     return handleFunction(context, 'internal.setGroupAdmin', 'botId', 'groupId', 'userId', 'enable')
+  },
+  '/groupNotice': function (context: Context) {
+    return handleFunction(context, 'internal.getGroupNotice', 'botId', 'groupId')
+  },
+  '/sendGroupNotice': function (context: Context) {
+    return handleFunction(context, 'internal.sendGroupNotice', 'botId', 'groupId', 'content', 'image')
+  },
+  '/setGroupPortrait': function (context: Context) {
+    return handleFunction(context, 'internal.setGroupPortrait', 'botId', 'groupId', 'file')
   },
 }
