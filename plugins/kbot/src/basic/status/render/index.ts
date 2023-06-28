@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 10:32:53
+ * @LastEditTime: 2023-06-28 15:40:43
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
  * @Description:
  *
@@ -62,7 +62,6 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
     }).then(async (resp) => {
       // eslint-disable-next-line n/prefer-global/buffer
       const imageBase64 = Buffer.from(resp.data, 'binary').toString('base64')
-      // writeBlobToFile(resp.data, new Date().toLocaleString().replace(/[/:]/g, '-'))
       let page: Page
       try {
         page = await ctx.puppeteer.page()
