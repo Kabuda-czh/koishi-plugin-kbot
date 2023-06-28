@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-02 09:59:05
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-02 13:12:06
+ * @LastEditTime: 2023-06-28 16:03:55
  * @FilePath: \KBot-App\plugins\kbot\client\utils\http\index.ts
  * @Description:
  *
@@ -48,23 +48,21 @@ class FetchHttp {
     if (fetchConfig.params !== null && !isObject(fetchConfig.params))
       fetchConfig.params = null
 
-    let { url, headers, body, params, responseType } = fetchConfig
-
-    if (params) {
-      url += `${url.includes('?') ? '&' : '?'}${qs.stringify(params, {
+    if (fetchConfig.params) {
+      fetchConfig.url += `${fetchConfig.url.includes('?') ? '&' : '?'}${qs.stringify(fetchConfig.params, {
         arrayFormat: 'repeat',
       })}`
     }
 
-    if (isObject(body)) {
-      body = qs.stringify(body)
-      headers['Content-Type'] = 'application/x-www-form-urlencoded'
+    if (isObject(fetchConfig.body)) {
+      fetchConfig.body = qs.stringify(fetchConfig.body)
+      fetchConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     }
 
     fetchConfig.cache = 'no-cache'
     fetchConfig.mode = 'cors'
 
-    return fetch(url, fetchConfig)
+    return fetch(fetchConfig.url, fetchConfig)
       .then((response) => {
         const { status, statusText } = response
 
@@ -72,8 +70,8 @@ class FetchHttp {
           // eslint-disable-next-line prefer-promise-reject-errors
           return Promise.reject({ code: -1, status, statusText })
 
-        const result = ['text', 'arraybuffer', 'blob'].includes(responseType)
-          ? response[responseType]()
+        const result = ['text', 'arraybuffer', 'blob'].includes(fetchConfig.responseType)
+          ? response[fetchConfig.responseType]()
           : response.json()
         return result.then(
           (res) => {
