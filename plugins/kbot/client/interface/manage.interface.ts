@@ -43,3 +43,16 @@ export interface GuildWatch {
 }
 
 export type GroupList = Group & GroupConfig
+
+export interface GroupNotice {
+  sender_id: number
+  publish_time: number
+  message: {
+    text: string
+    images: {
+      height: string
+      width: string
+      id: string
+    }[]
+  }
+}

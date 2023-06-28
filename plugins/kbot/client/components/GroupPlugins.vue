@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 10:08:44
+ * @LastEditTime: 2023-06-28 11:12:59
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupPlugins.vue
  * @Description:
  *
@@ -131,11 +131,11 @@ function getAllDisable(commands: GroupCommand[]): string[] {
 async function setCommands() {
   const disabledCommands = getAllDisable(commandArray.value)
   await fetchSwitchCommands(String(props.groupId), disabledCommands).then((res: boolean) => {
-    if (res)
+    if (res) {
       ElMessage.success('设置成功')
-
-    else
-      ElMessage.error('设置失败')
+      dialogVisible.value = false
+    }
+    else { ElMessage.error('设置失败') }
   })
 }
 

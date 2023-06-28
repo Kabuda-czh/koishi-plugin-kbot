@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-17 10:38:32
+ * @LastEditTime: 2023-06-28 11:18:48
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupMemberDialog.vue
  * @Description:
  *
@@ -292,7 +292,7 @@ function groupKick() {
           <ElFormItem label="群名片">
             <el-input
               v-model="memberInfo.card"
-              :disabled="!memberInfo.card_changeable"
+              :disabled="RoleObject[props.botRole]?.role < 2"
               placeholder="无"
             />
           </ElFormItem>
@@ -354,7 +354,7 @@ function groupKick() {
             <el-input
               v-model="memberInfo.title"
               placeholder="无"
-              :disabled="RoleObject[memberInfo.role]?.role !== 3"
+              :disabled="RoleObject[props.botRole]?.role !== 3"
             />
           </ElFormItem>
         </ElCol>

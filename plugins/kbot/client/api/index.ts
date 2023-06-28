@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-02 11:22:16
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-09 16:57:48
+ * @LastEditTime: 2023-06-28 15:45:26
  * @FilePath: \KBot-App\plugins\kbot\client\api\index.ts
  * @Description:
  *
@@ -13,3 +13,4 @@ export * from './bot'
 export * from './group'
 export * from './guild'
 export * from './plugins'
+export * from './image'
