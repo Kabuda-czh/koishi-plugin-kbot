@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 16:48:25
+ * @LastEditTime: 2023-06-29 10:22:09
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -393,7 +393,7 @@ onMounted(async () => {
         </ElTable>
 
         <div class="data__pagination">
-          <el-pagination
+          <ElPagination
             background :page-sizes="[10]" layout="prev, pager, next" :total="defaultGroupList.length"
             :current-page="currentPage" :page-size="pageSize" @current-change="paginationClick"
           />
@@ -430,7 +430,7 @@ onMounted(async () => {
     "
   />
 
-  <el-dialog
+  <ElDialog
     v-model="botDialogVisible" width="30%" title="bot 切换管理" destroy-on-close
     @closed="botDialogVisible = false"
   >
@@ -452,7 +452,7 @@ onMounted(async () => {
         </ElTableColumn>
       </ElTable>
     </div>
-  </el-dialog>
+  </ElDialog>
 </template>
 
 <style scoped>

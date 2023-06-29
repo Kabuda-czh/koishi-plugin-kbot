@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-09 10:51:28
+ * @LastEditTime: 2023-06-29 10:18:16
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupDialog.vue
  * @Description:
  *
@@ -137,7 +137,7 @@ function dataChange(value: string | number) {
 </script>
 
 <template>
-  <el-dialog
+  <ElDialog
     v-model="dialogVisible" width="50%" title="群成员列表" destroy-on-close @open="getMemberList"
     @closed="dialogVisible = false"
   >
@@ -155,7 +155,7 @@ function dataChange(value: string | number) {
         </template>
       </ElAutoResizer>
     </div>
-  </el-dialog>
+  </ElDialog>
 
   <GroupMemberDialog
     :group-id="props.groupId" :visible="memberDialogVisible" :bot-id="props.botId"

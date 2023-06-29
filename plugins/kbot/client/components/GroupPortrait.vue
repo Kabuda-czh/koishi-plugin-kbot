@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-06-28 16:37:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 17:12:55
+ * @LastEditTime: 2023-06-29 10:20:07
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupPortrait.vue
  * @Description:
  *
@@ -94,12 +94,12 @@ function handlePictureCardPreview(file: UploadFile) {
 </script>
 
 <template>
-  <el-dialog
+  <ElDialog
     v-model="dialogVisible" width="30%" title="更改群头像" destroy-on-close
     @closed="dialogVisible = false"
   >
     <div v-loading="dialogLoading" class="dialogContainer">
-      <el-upload
+      <ElUpload
         ref="upload"
         style="margin-top: 1rem"
         :on-change="handleChange"
@@ -108,7 +108,7 @@ function handlePictureCardPreview(file: UploadFile) {
         :on-exceed="handleExceed"
         :auto-upload="false"
       >
-        <el-icon><Plus /></el-icon>
+        <ElIcon><Plus /></ElIcon>
         <template #file="{ file }">
           <div>
             <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
@@ -117,13 +117,13 @@ function handlePictureCardPreview(file: UploadFile) {
                 class="el-upload-list__item-preview"
                 @click="handlePictureCardPreview(file)"
               >
-                <el-icon><ZoomIn /></el-icon>
+                <ElIcon><ZoomIn /></ElIcon>
               </span>
               <span
                 class="el-upload-list__item-delete"
                 @click="handleRemove(file)"
               >
-                <el-icon><Delete /></el-icon>
+                <ElIcon><Delete /></ElIcon>
               </span>
             </span>
           </div>
@@ -134,18 +134,18 @@ function handlePictureCardPreview(file: UploadFile) {
             <p>注意: 在 gocq 文档中有说明, 目前这个API在登录一段时间后因cookie失效而失效, 请考虑后使用</p>
           </div>
         </template>
-      </el-upload>
+      </ElUpload>
     </div>
     <template #footer>
       <ElButton type="primary" @click="setPortrait">
         确认设置
       </ElButton>
     </template>
-  </el-dialog>
+  </ElDialog>
 
-  <el-dialog v-model="imagePreVisible">
+  <ElDialog v-model="imagePreVisible">
     <img style="width: 100%" :src="imagePreUrl" alt="Preview Image">
-  </el-dialog>
+  </ElDialog>
 </template>
 
 <style scoped>

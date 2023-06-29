@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-14 11:21:29
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 10:36:03
+ * @LastEditTime: 2023-06-29 10:18:31
  * @FilePath: \KBot-App\plugins\kbot\client\components\FuzzySearch.vue
  * @Description:
  *
@@ -107,7 +107,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-autocomplete
+  <ElAutocomplete
     v-model="state"
     highlight-first-item
     value-key="label"
@@ -128,7 +128,7 @@ onMounted(() => {
         <span>{{ item.value }}</span>
       </div>
     </template>
-  </el-autocomplete>
+  </ElAutocomplete>
 </template>
 
 <style scoped>

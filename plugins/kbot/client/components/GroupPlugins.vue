@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 11:12:59
+ * @LastEditTime: 2023-06-29 10:19:28
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupPlugins.vue
  * @Description:
  *
@@ -149,7 +149,7 @@ init()
 </script>
 
 <template>
-  <el-dialog
+  <ElDialog
     v-model="dialogVisible" width="30%" title="群指令管理" destroy-on-close @open="getCommandList"
     @closed="dialogVisible = false"
   >
@@ -161,8 +161,8 @@ init()
         />
         <p>搜索指令</p>
       </div>
-      <el-scrollbar height="40vh">
-        <el-tree
+      <ElScrollbar height="40vh">
+        <ElTree
           :data="commands"
           node-key="id"
           :expand-on-click-node="false"
@@ -177,15 +177,15 @@ init()
               />
             </div>
           </template>
-        </el-tree>
-      </el-scrollbar>
+        </ElTree>
+      </ElScrollbar>
     </div>
     <template #footer>
       <ElButton type="primary" @click="setCommands">
         确认设置
       </ElButton>
     </template>
-  </el-dialog>
+  </ElDialog>
 </template>
 
 <style scoped>
