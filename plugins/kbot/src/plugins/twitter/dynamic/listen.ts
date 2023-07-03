@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-21 18:00:31
+ * @LastEditTime: 2023-07-03 09:26:26
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\listen.ts
  * @Description:
  *
@@ -81,7 +81,7 @@ export async function* listen(
         }
       }
       catch (e) {
-        logger.error(`轮询 Error: ${e.message}`)
+        logger.error(`轮询 Error: ${e}`)
       }
       yield
     }

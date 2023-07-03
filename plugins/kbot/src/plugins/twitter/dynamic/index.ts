@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-26 10:57:00
+ * @LastEditTime: 2023-07-03 11:30:28
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -14,7 +14,7 @@ import { Logger, Schema } from 'koishi'
 import {} from 'koishi-plugin-puppeteer'
 
 import type { DynamicNotifiction } from '../model'
-import { getTwitterToken, getTwitterTweets } from '../utils'
+import { getTwitterTweets } from '../utils'
 import { kbotDir, twitterCookiePath, twitterDir } from '../../../config'
 import { listen } from './listen'
 import { dynamicStrategy } from './dynamic.strategy'
@@ -107,6 +107,11 @@ export async function apply(ctx: Context, config: IConfig) {
       '-s <userId:string> 查看最新动态, 请输入要查看动态的 twitter 博主的 id 名字(指 @后的字符串)',
       { authority: config.authority },
     )
+    .option(
+      'cookie',
+      '-ck <cookie:string> 设置 twitter cookie, 请在登录 twitter 后使用浏览器的开发者工具获取',
+      { authority: config.authority },
+    )
     .option('list', '-l 展示当前订阅 twitter 博主列表', {
       authority: config.authority,
     })
@@ -123,13 +128,17 @@ export async function apply(ctx: Context, config: IConfig) {
       twitterCookiePath,
       { encoding: 'utf-8' },
     )
-    const cookie = JSON.parse(cookieJson).cookies
-    if (!cookie)
-      await getTwitterToken(ctx, logger)
-    else ctx.http.config.headers['x-guest-token'] = cookie
+    const cookie = JSON.parse(cookieJson)
+    if (!cookie) {
+      logger.warn('未检测到 cookie, 请使用 twitter --ck <cookie> 设置')
+    }
+    else {
+      ctx.http.config.headers['x-csrf-token'] = cookie.authCookie.ct0
+      ctx.http.config.headers.Cookie = cookie.cookieString
+    }
   }
   catch {
-    await getTwitterToken(ctx, logger)
+    logger.warn('未检测到 cookie, 请使用 twitter --ck <cookie> 设置')
   }
 
   const generator = listen(list, getTwitterTweets, ctx, config)

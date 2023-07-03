@@ -2,20 +2,19 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:57:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-26 11:30:05
+ * @LastEditTime: 2023-07-03 10:31:19
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\dynamic.strategy.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import * as fs from 'node:fs'
 import { type Argv, type Channel, type Context, type Dict, sleep } from 'koishi'
 import type { DynamicNotifiction } from '../model'
-import { getTwitterRestId, getTwitterToken } from '../utils'
-import { twitterCookiePath } from '../../../config'
+import { getTwitterRestId } from '../utils'
 import {
   twitterAdd,
   twitterBatch,
+  twitterCookie,
   twitterList,
   twitterRemove,
   twitterSearch,
@@ -29,6 +28,7 @@ const dynamicStrategies = {
   list: twitterList,
   search: twitterSearch,
   batch: twitterBatch,
+  cookie: twitterCookie,
 }
 
 export async function dynamicStrategy(
@@ -45,25 +45,11 @@ export async function dynamicStrategy(
   ctx: Context,
   config: IConfig,
 ) {
-  let cookie
-  try {
-    cookie = JSON.parse(
-      await fs.promises.readFile(
-        twitterCookiePath,
-        'utf-8',
-      ),
-    )
-    ctx.http.config.headers['x-guest-token'] = cookie.cookies
-  }
-  catch (e) {
-    await getTwitterToken(ctx, logger)
-  }
-
   const strategyName = Object.keys(options).find(key => options[key])
   if (Object.keys(dynamicStrategies).includes(strategyName)) {
     let restId: string | string[], twitterName: string | string[], twitterId: string | string[]
 
-    if (!['list', 'batch'].includes(strategyName)) {
+    if (!['list', 'batch', 'cookie'].includes(strategyName)) {
       twitterId = options[strategyName] as string
       [restId as string, twitterName as string] = await getTwitterRestId(
         twitterId,
@@ -71,10 +57,8 @@ export async function dynamicStrategy(
         logger,
       )
 
-      if (!restId) {
-        await getTwitterToken(ctx, logger)
-        return '未获取到对应 twitter 博主 ID 信息, 重新获取 token, 请稍后重试'
-      }
+      if (!restId)
+        return '未获取到对应 twitter 博主 ID 信息, 请使用 twitter --ck <cookie> 设置 cookie'
     }
     else if (strategyName === 'batch') {
       await session.send('因 twitter 限制, 批量添加速度较慢, 每个用户添加间隔为 2s')
@@ -98,13 +82,11 @@ export async function dynamicStrategy(
           twitterName.push(name)
         }
 
-        await sleep(2000)
+        await sleep(1000)
       }
 
-      if (!restId.length) {
-        await getTwitterToken(ctx, logger)
-        return '未获取到对应 twitter 博主 ID 信息, 重新获取 token, 请稍后重试'
-      }
+      if (!restId.length)
+        return '未获取到对应 twitter 博主 ID 信息, 请使用 twitter --ck <cookie> 设置 cookie'
     }
 
     return dynamicStrategies[strategyName]?.(

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:03:04
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-26 11:28:36
+ * @LastEditTime: 2023-07-03 09:45:43
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\model\userTweet.model.ts
  * @Description:
  *
@@ -11,6 +11,7 @@
 export interface UserTweetsParam {
   variables: Variables
   features: Features
+  fieldToggles: FieldToggles
 }
 
 interface Variables {
@@ -27,23 +28,23 @@ interface Variables {
   /*
    * true
    */
-  withSuperFollowsUserFields: boolean
+  // withSuperFollowsUserFields: boolean
   /*
    * false
    */
-  withDownvotePerspective: boolean
+  // withDownvotePerspective: boolean
   /*
    * false
    */
-  withReactionsMetadata: boolean
+  // withReactionsMetadata: boolean
   /*
    * false
    */
-  withReactionsPerspective: boolean
+  // withReactionsPerspective: boolean
   /*
    * true
    */
-  withSuperFollowsTweetFields: boolean
+  // withSuperFollowsTweetFields: boolean
   /*
    * true
    */
@@ -58,11 +59,19 @@ interface Features {
   /*
    * true
    */
-  responsive_web_twitter_blue_verified_badge_is_enabled: boolean
+  // responsive_web_twitter_blue_verified_badge_is_enabled: boolean
   /*
-   * false
+   * true
    */
   responsive_web_graphql_exclude_directive_enabled: boolean
+  /**
+   * false
+   */
+  responsive_web_twitter_article_tweet_consumption_enabled: boolean
+  /**
+   * false
+   */
+  responsive_web_media_download_video_enabled: boolean
   /*
    * false
    */
@@ -82,7 +91,7 @@ interface Features {
   /*
    * true
    */
-  vibe_api_enabled: boolean
+  // vibe_api_enabled: boolean
   /*
    * true
    */
@@ -104,7 +113,7 @@ interface Features {
    */
   tweet_awards_web_tipping_enabled: boolean
   /*
-   * false
+   * true
    */
   freedom_of_speech_not_reach_fetch_enabled: boolean
   /*
@@ -112,21 +121,21 @@ interface Features {
    */
   standardized_nudges_misinfo: boolean
   /*
-   * false
+   * true
    */
   tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled: boolean
   /*
    * true
    */
-  interactive_text_enabled: boolean
+  // interactive_text_enabled: boolean
   /*
    * false
    */
-  responsive_web_text_conversations_enabled: boolean
+  // responsive_web_text_conversations_enabled: boolean
   /*
    * false
    */
-  longform_notetweets_richtext_consumption_enabled: boolean
+  // longform_notetweets_richtext_consumption_enabled: boolean
   /*
    * false
    */
@@ -147,6 +156,13 @@ interface Features {
    * true
    */
   creator_subscriptions_tweet_preview_api_enabled: boolean
+}
+
+interface FieldToggles {
+  /**
+   * false
+   */
+  withArticleRichContentState: boolean
 }
 
 // get -> data.user.result.timeline_v2.timeline.instructions[1] || instructions.fint(type === "TimelineAddEntries").entries[0].content.itemContent.tweet_results.result.rest_id && legacy.created_at
