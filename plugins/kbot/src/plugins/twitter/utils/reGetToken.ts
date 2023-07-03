@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-27 13:24:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-10 18:31:59
+ * @LastEditTime: 2023-07-03 10:40:20
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\reGetToken.ts
  * @Description:
  *
@@ -22,8 +22,8 @@ export async function getTwitterToken(ctx: Context, logger: Logger) {
 
     // 监听 request 事件
     const onRequest = (request: any) => {
-      const guestToken = request.headers()['x-guest-token']
-      if (guestToken) {
+      const guestToken = request.headers().Cookie
+      if (guestToken !== undefined) {
         gtCookie = guestToken
         page.removeAllListeners('request')
       }
@@ -34,20 +34,40 @@ export async function getTwitterToken(ctx: Context, logger: Logger) {
     await page.goto('https://twitter.com/')
     await page.waitForNetworkIdle()
 
+    const cookieRegex = /([^=;\s]+)=([^=;\s]*)/g
+
+    if (!cookieRegex.test(gtCookie) && !gtCookie)
+      throw new Error('token 获取失败, 请检查是否在浏览器中正确登录 Twitter 账户')
+
+    const cookieObject: {
+      ct0: string
+      auth_token: string
+    } = {
+      ct0: '',
+      auth_token: '',
+    }
+
+    gtCookie.match(cookieRegex)?.forEach((cookie) => {
+      const [key, value] = cookie.split('=')
+      if (['ct0', 'auth_token'].includes(key))
+        cookieObject[key] = value
+    })
+
     await fs.promises.writeFile(
       twitterCookiePath,
-      JSON.stringify({ cookies: gtCookie }),
+      JSON.stringify({ cookieString: gtCookie, authCookie: { ...cookieObject } }),
     )
 
-    ctx.http.config.headers['x-guest-token'] = gtCookie
+    ctx.http.config.headers['x-csrf-token'] = cookieObject.ct0
+    ctx.http.config.headers.Cookie = gtCookie
 
-    cookie = { cookies: gtCookie }
+    cookie = { cookieString: gtCookie, authCookie: { ...cookieObject } }
 
-    logger.info('token 获取成功: ', gtCookie)
+    logger.info('token 获取成功: ', cookieObject)
   }
   catch (error) {
-    logger.error('token 获取失败: ', error)
-    return { cookies: '' }
+    logger.error('token 获取失败: ', error.message)
+    return { cookieString: '', authCookie: {} }
   }
   finally {
     page?.close()
