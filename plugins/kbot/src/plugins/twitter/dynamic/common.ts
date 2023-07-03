@@ -2,15 +2,17 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-26 11:08:38
+ * @LastEditTime: 2023-07-03 11:00:14
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
+import fs from 'node:fs'
 import type { Argv, Channel, Context, Dict } from 'koishi'
 import type { DynamicNotifiction } from '../model'
 import { getTwitterTweets } from '../utils'
+import { twitterCookiePath, twitterDir } from '../../../config'
 import { renderFunction } from './render'
 import { logger } from '.'
 import type { IConfig } from '.'
@@ -202,5 +204,71 @@ export async function twitterSearch(
   catch (e) {
     logger.error(`推特动态获取失败: ${e.message}`)
     return `动态获取失败${e.message}`
+  }
+}
+
+export async function twitterCookie(
+  {
+    session,
+    options,
+  }:
+  Argv<never, 'id' | 'guildId' | 'platform' | 'twitter', any, {
+    cookie: string
+  }>,
+  _twitter: { twitterId: string; twitterName: string; twitterRestId: string },
+  _list: Dict<
+    [
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'twitter'>,
+      DynamicNotifiction,
+    ][]
+  >,
+  ctx: Context,
+) {
+  try {
+    if (!options.cookie)
+      return '请提供cookie'
+
+    const cookieRegex = /([^=;\s]+)=([^=;\s]*)/g
+
+    if (!cookieRegex.test(session.content))
+      return 'cookie 格式错误'
+
+    const cookies = session.content.match(cookieRegex)
+
+    const cookieJson = {
+      ct0: '',
+      auth_token: '',
+    }
+
+    const cookieStringObject = {}
+
+    cookies.forEach((cookie) => {
+      const [key, value] = cookie.split('=')
+      if (['ct0', 'auth_token'].includes(key))
+        cookieJson[key] = value
+
+      cookieStringObject[key] = value
+    })
+
+    if (!cookieJson.auth_token || !cookieJson.ct0)
+      return 'cookie 格式中缺少 auth_token 或 ct0'
+
+    if (
+      !(await fs.promises.stat(twitterDir)).isDirectory()
+    )
+      await fs.promises.mkdir(twitterDir, { recursive: true })
+    await fs.promises.writeFile(
+      twitterCookiePath,
+      JSON.stringify({ cookieString: Object.entries(cookieStringObject).map(([key, value]) => `${key}=${value}`).join(';'), authCookie: { ...cookieJson } }),
+    )
+
+    ctx.http.config.headers['x-csrf-token'] = cookieJson.ct0
+    ctx.http.config.headers.cookie = session.content
+
+    return 'cookie 更新成功'
+  }
+  catch (err) {
+    logger.error(`Failed to update cookie. ${err}`)
+    return `cookie 更新失败: ${err}`
   }
 }

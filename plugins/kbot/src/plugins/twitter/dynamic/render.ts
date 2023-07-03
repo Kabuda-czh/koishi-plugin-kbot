@@ -2,18 +2,20 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-26 11:46:52
+ * @LastEditTime: 2023-07-03 11:17:46
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
+import fs from 'node:fs'
 import type { Context } from 'koishi'
 import { segment } from 'koishi'
 import type { Page } from 'puppeteer-core'
 import { StringFormat } from '../../utils'
 import { TwitterDynamicType } from '../enum'
 import type { Entry } from '../model'
+import { twitterCookiePath } from '../../../config'
 import { logger } from '.'
 import type { IConfig } from '.'
 
@@ -40,7 +42,9 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
   if (entry?.content?.itemContent?.tweet_results?.result?.legacy?.self_thread)
     return renderText(ctx, entry)
 
-  const twitterRestId = entry.sortIndex
+  const entryIdArray = entry.entryId.split('-')
+
+  const twitterRestId = entryIdArray[entryIdArray.length - 1]
   const twitterScreenName
     = entry?.content?.itemContent?.tweet_results?.result?.core?.user_results?.result
       ?.legacy?.screen_name
@@ -57,11 +61,35 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
 
     page = await ctx.puppeteer.page()
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
+
+    let cookie: any
+    try {
+      cookie = JSON.parse(
+        await fs.promises.readFile(
+          twitterCookiePath,
+          'utf-8',
+        ),
+      )
+    }
+    catch (e) {
+      logger.error(`Failed to get cookie info. ${e}`)
+      throw new Error('cookie 信息未找到, 请使用 --ck <cookie> 添加 cookie')
+    }
+
+    cookie.cookieString.match(/([^=;\s]+)=([^=;\s]*)/g).forEach((item) => {
+      const [key, value] = item.split('=')
+      page.setCookie({
+        url,
+        name: key,
+        value,
+      })
+    })
+
     await page.goto(url)
     await page.waitForNetworkIdle()
 
     const element = await page.$('article')
-    const elementClip = await element.boundingBox()
+    const elementClip = await element?.boundingBox()
 
     const URL = `https://twitter.com/${twitterScreenName}/status/${twitterRestId}`
 
