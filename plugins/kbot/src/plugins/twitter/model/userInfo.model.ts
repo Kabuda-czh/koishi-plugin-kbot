@@ -2,13 +2,12 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 14:55:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-02-17 15:16:11
+ * @LastEditTime: 2023-07-03 10:02:02
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\model\userInfo.model.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-
 export interface UserByScreenNameParam {
   variables: Variables
   features: Features
@@ -23,14 +22,26 @@ interface Variables {
   /*
    * true
    */
-  withSuperFollowsUserFields: boolean
+  // withSuperFollowsUserFields: boolean
 }
 
 interface Features {
+  /**
+   * true
+   */
+  creator_subscriptions_tweet_preview_api_enabled: boolean
+  /**
+   * false
+   */
+  hidden_profile_likes_enabled: boolean
+  /**
+   * true
+   */
+  highlights_tweets_tab_ui_enabled: boolean
   /*
    * true
    */
-  responsive_web_twitter_blue_verified_badge_is_enabled: boolean
+  // responsive_web_twitter_blue_verified_badge_is_enabled: boolean
   /*
    * false
    */
@@ -47,6 +58,10 @@ interface Features {
    * true
    */
   responsive_web_graphql_timeline_navigation_enabled: boolean
+  /**
+   * true
+   */
+  subscriptions_verification_info_verified_since_enabled: boolean
 }
 
 // get -> data.user.result.rest_id
