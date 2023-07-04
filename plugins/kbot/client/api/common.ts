@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-07-04 11:34:44
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 12:27:46
+ * @LastEditTime: 2023-07-04 13:04:43
  * @FilePath: \KBot-App\plugins\kbot\client\api\common.ts
  * @Description:
  *
@@ -22,6 +22,6 @@ export function fetchGetAddValid(guildId: string | number) {
   return http.request('get', '/getValidList', { guildId })
 }
 
-export function fetchSetAddValid(guildId: string | number, validObject: Record<string, string>) {
-  return http.request('post', '/setValidList', { guildId, validObject })
+export function fetchSetAddValid(guildId: string | number, timer: number, validObject: Record<string, string>) {
+  return http.request('post', '/setValidList', { guildId, validTimer: timer, validObject })
 }

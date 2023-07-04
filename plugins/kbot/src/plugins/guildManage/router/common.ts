@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-16 16:24:21
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 12:28:40
+ * @LastEditTime: 2023-07-04 13:07:03
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router\common.ts
  * @Description:
  *
@@ -27,9 +27,9 @@ function setViolationList(context: Context) {
     try {
       const violationListRes = await context.database.get('guildmanage.violationList', { guildId })
       if (violationListRes.length)
-        await context.database.upsert('guildmanage.violationList', [{ id: violationListRes[0].id, count: violationCount, handleWay: violationHandleWay, violations: violationList }])
+        await context.database.upsert('guildmanage.violationList', [{ id: violationListRes[0].id, count: violationCount < 3 ? 3 : violationCount > 100 ? 100 : violationCount, handleWay: violationHandleWay, violations: violationList }])
       else
-        await context.database.upsert('guildmanage.violationList', [{ guildId, violations: violationList }])
+        await context.database.upsert('guildmanage.violationList', [{ guildId, count: 3, handleWay: 'mute', violations: violationList }])
       ctx.body = {
         code: 0,
         msg: '操作成功',
@@ -51,19 +51,19 @@ function getValidList(context: Context) {
   return async (ctx: KoaContext) => {
     const { guildId } = ctx.query
     const validListRes = await context.database.get('guildmanage.addValid', { guildId })
-    ctx.body = validListRes[0]?.validObject || {}
+    ctx.body = validListRes[0] || {}
   }
 }
 
 function setValidList(context: Context) {
   return async (ctx: KoaContext) => {
-    const { guildId, validObject } = ctx.request.body
+    const { guildId, validTimer, validObject } = ctx.request.body
     try {
       const validListRes = await context.database.get('guildmanage.addValid', { guildId })
       if (validListRes.length)
-        await context.database.upsert('guildmanage.addValid', [{ id: validListRes[0].id, validObject }])
+        await context.database.upsert('guildmanage.addValid', [{ id: validListRes[0].id, timer: validTimer < 60 ? 60 : validTimer > 600 ? 600 : validTimer, validObject }])
       else
-        await context.database.upsert('guildmanage.addValid', [{ guildId, validObject }])
+        await context.database.upsert('guildmanage.addValid', [{ guildId, timer: 60, validObject }])
       ctx.body = {
         code: 0,
         msg: '操作成功',

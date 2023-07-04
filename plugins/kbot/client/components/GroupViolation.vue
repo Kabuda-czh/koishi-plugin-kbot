@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-07-04 10:31:36
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 12:28:56
+ * @LastEditTime: 2023-07-04 13:06:03
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupViolation.vue
  * @Description:
  *
@@ -255,7 +255,7 @@ async function setViolationList() {
           <ElRow>
             <ElCol :span="12">
               <ElFormItem label="每日违规次数">
-                <ElInputNumber v-model="violationCount" controls-position="right" :controls="false" :precision="0" :min="1" :max="10" />
+                <ElInputNumber v-model="violationCount" :controls="false" :precision="0" :min="3" :max="100" />
               </ElFormItem>
             </ElCol>
             <ElCol :span="12">
@@ -299,12 +299,5 @@ async function setViolationList() {
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-.commandSearch {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  gap: 15px;
 }
 </style>
