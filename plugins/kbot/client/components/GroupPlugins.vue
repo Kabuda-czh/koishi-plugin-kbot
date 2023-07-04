@@ -46,6 +46,7 @@ const commandArray = ref<GroupCommand[]>([])
 const defaultCommands = ref<GroupCommand[]>([])
 
 async function getCommandList() {
+  dialogLoading.value = true
   const setDisable = (commands: GroupCommand[], disables: string[]) => {
     for (const command of commands) {
       command.id = commandId.value++
@@ -60,6 +61,7 @@ async function getCommandList() {
       defaultCommands.value = commandArray.value = sliceCommands
     })
   }
+  dialogLoading.value = false
 }
 
 function selectData(item: { label: string; value: string }) {
@@ -138,14 +140,6 @@ async function setCommands() {
     else { ElMessage.error('设置失败') }
   })
 }
-
-async function init() {
-  dialogLoading.value = true
-  await getCommandList()
-  dialogLoading.value = false
-}
-
-init()
 </script>
 
 <template>
