@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 17:23:56
+ * @LastEditTime: 2023-07-04 13:26:40
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
  *
@@ -111,7 +111,7 @@ export function apply(context: Context, config: IConfig) {
 
   // })
 
-  initCommon(context, config)
+  initCommon(context)
 
   initCommand(context)
 

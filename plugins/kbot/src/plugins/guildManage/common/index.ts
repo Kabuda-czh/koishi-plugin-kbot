@@ -9,11 +9,10 @@
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import type { Context } from 'koishi'
-import type { IConfig } from '..'
 import { initGuildAdd } from './guildAdd'
 import { initViolation } from './violation'
 
-export async function initCommon(context: Context, config: IConfig) {
-  initViolation(context, config)
-  initGuildAdd(context, config)
+export async function initCommon(context: Context) {
+  initViolation(context)
+  initGuildAdd(context)
 }
