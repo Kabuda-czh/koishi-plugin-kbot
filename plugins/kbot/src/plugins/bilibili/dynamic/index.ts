@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-26 10:39:47
+ * @LastEditTime: 2023-07-04 13:27:53
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
@@ -27,7 +27,7 @@ declare module '..' {
 
 export interface IConfig {
   interval: number
-  device: string
+  device: 'pc' | 'mobile'
   live: boolean
   authority: number
   useImage?: boolean
