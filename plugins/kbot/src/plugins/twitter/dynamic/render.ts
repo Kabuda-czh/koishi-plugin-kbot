@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-03 11:17:46
+ * @LastEditTime: 2023-07-04 15:49:13
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -38,18 +38,20 @@ export async function renderFunction(
 }
 
 async function renderImage(ctx: Context, entry: Entry): Promise<string> {
-  // 判断是否是时间线动态, 是的话用文字渲染处理
-  if (entry?.content?.itemContent?.tweet_results?.result?.legacy?.self_thread)
-    return renderText(ctx, entry)
+  // 判断时间线
+  let isRankTweet = false
 
-  const entryIdArray = entry.entryId.split('-')
+  if (entry?.content?.clientEventInfo?.component === 'suggest_ranked_organic_tweet')
+    isRankTweet = true
 
-  const twitterRestId = entryIdArray[entryIdArray.length - 1]
+  const content = isRankTweet ? entry?.content?.items?.[0]?.item : entry?.content
+
+  const twitterRestId = content?.itemContent?.tweet_results?.result?.rest_id
   const twitterScreenName
-    = entry?.content?.itemContent?.tweet_results?.result?.core?.user_results?.result
+    = content?.itemContent?.tweet_results?.result?.core?.user_results?.result
       ?.legacy?.screen_name
   const twitterName
-    = entry?.content?.itemContent?.tweet_results?.result?.core?.user_results?.result
+    = content?.itemContent?.tweet_results?.result?.core?.user_results?.result
       ?.legacy?.name
   let page: Page
   try {
