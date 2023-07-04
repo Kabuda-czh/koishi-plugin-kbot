@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:03:04
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-03 09:45:43
+ * @LastEditTime: 2023-07-04 15:48:27
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\model\userTweet.model.ts
  * @Description:
  *
@@ -176,10 +176,10 @@ interface Data {
 }
 
 interface User {
-  result: Result13
+  result: Result9
 }
 
-interface Result13 {
+interface Result9 {
   __typename: string
   timeline_v2: Timelinev2
 }
@@ -190,119 +190,20 @@ interface Timelinev2 {
 
 interface Timeline {
   instructions: Instruction[]
+  metadata: Metadata2
+}
+
+interface Metadata2 {
+  scribeConfig: ScribeConfig
+}
+
+interface ScribeConfig {
+  page: string
 }
 
 interface Instruction {
   type: string
   entries?: Entry[]
-  entry?: Entry2
-}
-
-interface Entry2 {
-  entryId: string
-  sortIndex: string
-  content: Content2
-}
-
-interface Content2 {
-  entryType: string
-  __typename: string
-  itemContent: ItemContent2
-  clientEventInfo: ClientEventInfo
-}
-
-interface ClientEventInfo {
-  component: string
-  details: Details
-}
-
-interface Details {
-  timelinesDetails: TimelinesDetails
-}
-
-interface TimelinesDetails {
-  injectionType: string
-}
-
-interface ItemContent2 {
-  itemType: string
-  __typename: string
-  tweet_results: Tweetresults2
-  tweetDisplayType: string
-  ruxContext: string
-  socialContext: SocialContext
-}
-
-interface SocialContext {
-  type: string
-  contextType: string
-  text: string
-}
-
-interface Tweetresults2 {
-  result: Result12
-}
-
-interface Result12 {
-  __typename: string
-  rest_id: string
-  core: Core
-  unmention_data: any
-  edit_control: Editcontrol
-  views: Views2
-  source: string
-  legacy: Legacy14
-  quick_promote_eligibility: Quickpromoteeligibility
-}
-
-interface Legacy14 {
-  created_at: string
-  conversation_id_str: string
-  display_text_range: number[]
-  entities: Entities9
-  extended_entities: Extendedentities5
-  favorite_count: number
-  favorited: boolean
-  full_text: string
-  is_quote_status: boolean
-  lang: string
-  possibly_sensitive: boolean
-  possibly_sensitive_editable: boolean
-  quote_count: number
-  reply_count: number
-  retweet_count: number
-  retweeted: boolean
-  user_id_str: string
-  id_str: string
-}
-
-interface Extendedentities5 {
-  media: Media9[]
-}
-
-interface Media9 {
-  display_url: string
-  expanded_url: string
-  ext_alt_text: string
-  id_str: string
-  indices: number[]
-  media_key: string
-  media_url_https: string
-  type: string
-  url: string
-  ext_media_color: Ok
-  ext_media_availability: Extmediaavailability
-  features: Features4
-  sizes: Sizes
-  original_info: Originalinfo2
-}
-
-interface Entities9 {
-  media: Media7[]
-  user_mentions: any[]
-  urls: any[]
-  hashtags: Hashtag[]
-  symbols: any[]
 }
 
 export interface Entry {
@@ -314,95 +215,94 @@ export interface Entry {
 interface Content {
   entryType: string
   __typename: string
-  itemContent?: ItemContent
-  reactiveTriggers?: ReactiveTriggers
+  items?: Item2[]
+  metadata?: Metadata
+  displayType?: string
+  clientEventInfo?: ClientEventInfo2
+  header?: Header
+  footer?: Footer
+  itemContent?: ItemContent2
   value?: string
   cursorType?: string
-  stopOnEmptyResponse?: boolean
 }
 
-interface ReactiveTriggers {
-  onLinger: OnLinger
-}
-
-interface OnLinger {
-  execution: Execution
-  maxExecutionCount: number
-}
-
-interface Execution {
-  type: string
-  key: string
-}
-
-interface ItemContent {
+interface ItemContent2 {
   itemType: string
   __typename: string
-  tweet_results: Tweetresults
+  tweet_results: Tweetresults2
   tweetDisplayType: string
-  ruxContext: string
 }
 
-interface Tweetresults {
-  result: Result11
+interface Tweetresults2 {
+  result: Result8
 }
 
-interface Result11 {
+interface Result8 {
+  __typename: string
+  rest_id: string
+  core: Core2
+  edit_control: Editcontrol
+  edit_perspective: Editperspective
+  is_translatable?: boolean
+  views: Views2
+  source: string
+  legacy: Legacy7
+  quick_promote_eligibility: Quickpromoteeligibility
+  quoted_status_result?: Quotedstatusresult
+  voiceInfo?: VoiceInfo
+}
+
+interface VoiceInfo {
+  clipIndex: number
+  numberOfClips: number
+  totalDurationMillis: number
+  audiowaveValues: number[]
+}
+
+interface Quotedstatusresult {
+  result: Result7
+}
+
+interface Result7 {
   __typename: string
   rest_id: string
   core: Core
-  unmention_data: any
   edit_control: Editcontrol
+  edit_perspective: Editperspective
+  is_translatable: boolean
   views: Views
   source: string
   legacy: Legacy8
-  quick_promote_eligibility: Quickpromoteeligibility
-  card?: Card2
-  unified_card?: Unifiedcard
-  quoted_status_result?: Quotedstatusresult2
 }
 
-interface Quotedstatusresult2 {
-  result: Result10
-}
-
-interface Result10 {
-  __typename: string
-  rest_id: string
-  core: Core4
-  unmention_data: any
-  edit_control: Editcontrol
-  views: Views2
-  source: string
-  legacy: Legacy13
-}
-
-interface Legacy13 {
+interface Legacy8 {
+  bookmark_count: number
+  bookmarked: boolean
   created_at: string
   conversation_id_str: string
   display_text_range: number[]
-  entities: Entities8
-  extended_entities?: Extendedentities4
+  entities: Entities7
   favorite_count: number
   favorited: boolean
   full_text: string
   is_quote_status: boolean
   lang: string
-  possibly_sensitive?: boolean
-  possibly_sensitive_editable?: boolean
   quote_count: number
   reply_count: number
   retweet_count: number
   retweeted: boolean
   user_id_str: string
   id_str: string
+  extended_entities?: Extendedentities4
+  possibly_sensitive?: boolean
+  possibly_sensitive_editable?: boolean
 }
 
 interface Extendedentities4 {
-  media: Media8[]
+  media: Media7[]
 }
 
-interface Media8 {
+interface Media7 {
   display_url: string
   expanded_url: string
   id_str: string
@@ -411,266 +311,39 @@ interface Media8 {
   media_url_https: string
   type: string
   url: string
-  ext_media_color: Ok
   ext_media_availability: Extmediaavailability
-  features: Features4
+  features: Features2
   sizes: Sizes
   original_info: Originalinfo2
+  additional_media_info?: Additionalmediainfo4
+  mediaStats?: MediaStats
+  video_info?: Videoinfo
+  ext_alt_text?: string
 }
 
-interface Entities8 {
-  media?: Media7[]
-  user_mentions: any[]
-  urls: Url[]
-  hashtags: any[]
-  symbols: any[]
-}
-
-interface Media7 {
-  display_url: string
-  expanded_url: string
-  id_str: string
-  indices: number[]
-  media_url_https: string
-  type: string
-  url: string
-  features: Features4
-  sizes: Sizes
-  original_info: Originalinfo2
-}
-
-interface Features4 {
-  large: Large5
-  medium: Large5
-  small: Large5
-  orig: Large5
-}
-
-interface Large5 {
-  faces: any[]
-}
-
-interface Core4 {
-  user_results: Userresults5
-}
-
-interface Userresults5 {
-  result: Result9
-}
-
-interface Result9 {
-  __typename: string
-  id: string
-  rest_id: string
-  affiliates_highlighted_label: any
-  is_blue_verified: boolean
-  legacy: Legacy12
-  has_nft_avatar: boolean
-  super_follow_eligible: boolean
-  super_followed_by: boolean
-  super_following: boolean
-  business_account: any
-  professional?: Professional
-}
-
-interface Legacy12 {
-  protected: boolean
-  created_at: string
-  default_profile: boolean
-  default_profile_image: boolean
+interface Additionalmediainfo4 {
+  title: string
   description: string
-  entities: Entities7
-  fast_followers_count: number
-  favourites_count: number
-  followers_count: number
-  friends_count: number
-  has_custom_timelines: boolean
-  is_translator: boolean
-  listed_count: number
-  location: string
-  media_count: number
-  name: string
-  normal_followers_count: number
-  pinned_tweet_ids_str: string[]
-  possibly_sensitive: boolean
-  profile_banner_extensions: Profilebannerextensions
-  profile_banner_url: string
-  profile_image_extensions: Profilebannerextensions
-  profile_image_url_https: string
-  profile_interstitial_type: string
-  screen_name: string
-  statuses_count: number
-  translator_type: string
-  url: string
-  verified: boolean
-  withheld_in_countries: any[]
-  verified_type?: string
+  embeddable: boolean
+  monetizable: boolean
 }
 
 interface Entities7 {
-  description: Description2
-  url: Url2
+  user_mentions: any[]
+  urls: any[]
+  hashtags: any[]
+  symbols: any[]
+  media?: Media3[]
 }
 
-interface Card2 {
-  rest_id: string
-  legacy: Legacy11
-}
-
-interface Legacy11 {
-  binding_values: Bindingvalue2[]
-  card_platform: Cardplatform
-  name: string
-  url: string
-  user_refs_results: (Userrefsresult | Userrefsresults2 | Userresults)[]
-}
-
-interface Userrefsresults2 {
-  result: Result8
-}
-
-interface Result8 {
-  __typename: string
-  id: string
-  rest_id: string
-  affiliates_highlighted_label: any
-  is_blue_verified: boolean
-  legacy: Legacy10
-  professional: Professional
-  has_nft_avatar: boolean
-  super_follow_eligible: boolean
-  super_followed_by: boolean
-  super_following: boolean
-  business_account: any
-}
-
-interface Legacy10 {
-  protected: boolean
-  created_at: string
-  default_profile: boolean
-  default_profile_image: boolean
-  description: string
-  entities: Entities6
-  fast_followers_count: number
-  favourites_count: number
-  followers_count: number
-  friends_count: number
-  has_custom_timelines: boolean
-  is_translator: boolean
-  listed_count: number
-  location: string
-  media_count: number
-  name: string
-  normal_followers_count: number
-  pinned_tweet_ids_str: any[]
-  possibly_sensitive: boolean
-  profile_banner_extensions: Profilebannerextensions
-  profile_banner_url: string
-  profile_image_extensions: Profilebannerextensions
-  profile_image_url_https: string
-  profile_interstitial_type: string
-  screen_name: string
-  statuses_count: number
-  translator_type: string
-  url: string
-  verified: boolean
-  verified_type: string
-  withheld_in_countries: any[]
-}
-
-interface Entities6 {
-  description: Url2
-  url: Url2
-}
-
-interface Userrefsresult {
-  result: Result7
-}
-
-interface Result7 {
-  __typename: string
-  id: string
-  rest_id: string
-  affiliates_highlighted_label: any
-  is_blue_verified: boolean
-  legacy: Legacy9
-  has_nft_avatar: boolean
-  super_follow_eligible: boolean
-  super_followed_by: boolean
-  super_following: boolean
-  business_account: any
-}
-
-interface Legacy9 {
-  protected: boolean
-  created_at: string
-  default_profile: boolean
-  default_profile_image: boolean
-  description: string
-  entities: Entities
-  fast_followers_count: number
-  favourites_count: number
-  followers_count: number
-  friends_count: number
-  has_custom_timelines: boolean
-  is_translator: boolean
-  listed_count: number
-  location: string
-  media_count: number
-  name: string
-  normal_followers_count: number
-  pinned_tweet_ids_str: any[]
-  possibly_sensitive: boolean
-  profile_banner_extensions: Profilebannerextensions
-  profile_banner_url: string
-  profile_image_extensions: Profilebannerextensions
-  profile_image_url_https: string
-  profile_interstitial_type: string
-  screen_name: string
-  statuses_count: number
-  translator_type: string
-  url: string
-  verified: boolean
-  verified_type: string
-  withheld_in_countries: any[]
-}
-
-interface Bindingvalue2 {
-  key: string
-  value: Value2
-}
-
-interface Value2 {
-  string_value?: string
-  type: string
-  scribe_key?: string
-  image_value?: Imagevalue
-  user_value?: Uservalue
-  image_color_value?: Ok
-}
-
-interface Uservalue {
-  id_str: string
-  path: any[]
-}
-
-interface Imagevalue {
-  alt?: string
-  height: number
-  width: number
-  url: string
-}
-
-interface Quickpromoteeligibility {
-  eligibility: string
-}
-
-interface Legacy8 {
+interface Legacy7 {
+  bookmark_count: number
+  bookmarked: boolean
   created_at: string
   conversation_id_str: string
   display_text_range: number[]
-  entities: Entities2
-  extended_entities?: Extendedentities
+  entities: Entities5
+  extended_entities?: Extendedentities2
   favorite_count: number
   favorited: boolean
   full_text: string
@@ -684,13 +357,9 @@ interface Legacy8 {
   retweeted: boolean
   user_id_str: string
   id_str: string
-  retweeted_status_result?: Retweetedstatusresult
-  in_reply_to_screen_name?: string
-  in_reply_to_status_id_str?: string
-  in_reply_to_user_id_str?: string
-  self_thread?: Selfthread
   quoted_status_id_str?: string
   quoted_status_permalink?: Quotedstatuspermalink
+  retweeted_status_result?: Retweetedstatusresult
 }
 
 interface Retweetedstatusresult {
@@ -700,83 +369,22 @@ interface Retweetedstatusresult {
 interface Result6 {
   __typename: string
   rest_id: string
-  core: Core2
-  unmention_data: any
+  core: Core
   edit_control: Editcontrol
-  views: Views2
-  source: string
-  legacy: Legacy4
-  quoted_status_result?: Quotedstatusresult
-  card?: Card
-  unified_card?: Unifiedcard
-}
-
-interface Unifiedcard {
-  card_fetch_state: string
-}
-
-interface Card {
-  rest_id: string
-  legacy: Legacy7
-}
-
-interface Legacy7 {
-  binding_values: Bindingvalue[]
-  card_platform: Cardplatform
-  name: string
-  url: string
-  user_refs_results: any[]
-}
-
-interface Cardplatform {
-  platform: Platform
-}
-
-interface Platform {
-  audience: Audience
-  device: Device
-}
-
-interface Device {
-  name: string
-  version: string
-}
-
-interface Audience {
-  name: string
-}
-
-interface Bindingvalue {
-  key: string
-  value: Value
-}
-
-interface Value {
-  string_value: string
-  type: string
-  scribe_key?: string
-}
-
-interface Quotedstatusresult {
-  result: Result5
-}
-
-interface Result5 {
-  __typename: string
-  rest_id: string
-  core: Core3
-  unmention_data: any
-  edit_control: Editcontrol
-  views: Views2
+  edit_perspective: Editperspective
+  is_translatable: boolean
+  views: Views
   source: string
   legacy: Legacy6
 }
 
 interface Legacy6 {
+  bookmark_count: number
+  bookmarked: boolean
   created_at: string
   conversation_id_str: string
   display_text_range: number[]
-  entities: Entities5
+  entities: Entities6
   extended_entities: Extendedentities3
   favorite_count: number
   favorited: boolean
@@ -800,23 +408,32 @@ interface Extendedentities3 {
 interface Media6 {
   display_url: string
   expanded_url: string
+  ext_alt_text?: string
   id_str: string
   indices: number[]
   media_key: string
   media_url_https: string
   type: string
   url: string
-  ext_media_color: Ok
   ext_media_availability: Extmediaavailability
   features: Features3
   sizes: Sizes
   original_info: Originalinfo2
+  additional_media_info?: Additionalmediainfo3
+  mediaStats?: MediaStats
+  video_info?: Videoinfo
 }
 
-interface Entities5 {
+interface Additionalmediainfo3 {
+  title: string
+  description: string
+  monetizable: boolean
+}
+
+interface Entities6 {
   media: Media5[]
   user_mentions: any[]
-  urls: any[]
+  urls: Url2[]
   hashtags: any[]
   symbols: any[]
 }
@@ -834,28 +451,264 @@ interface Media5 {
   original_info: Originalinfo2
 }
 
+interface Features3 {
+  large?: Large3
+  medium?: Large3
+  small?: Large3
+  orig?: Large3
+}
+
+interface Large3 {
+  faces: any[]
+}
+
+interface Quotedstatuspermalink {
+  url: string
+  expanded: string
+  display: string
+}
+
+interface Extendedentities2 {
+  media: Media4[]
+}
+
+interface Media4 {
+  display_url: string
+  expanded_url: string
+  ext_alt_text?: string
+  id_str: string
+  indices: number[]
+  media_key: string
+  media_url_https: string
+  type: string
+  url: string
+  ext_media_availability: Extmediaavailability
+  features: Features2
+  sizes: Sizes
+  original_info: Originalinfo2
+  additional_media_info?: Additionalmediainfo2
+  mediaStats?: MediaStats
+  video_info?: Videoinfo2
+}
+
+interface Videoinfo2 {
+  aspect_ratio: number[]
+  duration_millis?: number
+  variants: Variant[]
+}
+
+interface Additionalmediainfo2 {
+  title?: string
+  description?: string
+  embeddable?: boolean
+  monetizable: boolean
+  call_to_actions?: Calltoactions
+}
+
+interface Calltoactions {
+  watch_now: Badge
+}
+
+interface Entities5 {
+  media?: Media3[]
+  user_mentions: Usermention[]
+  urls: Url2[]
+  hashtags: any[]
+  symbols: any[]
+}
+
+interface Usermention {
+  id_str: string
+  name: string
+  screen_name: string
+  indices: number[]
+}
+
+interface Media3 {
+  display_url: string
+  expanded_url: string
+  id_str: string
+  indices: number[]
+  media_url_https: string
+  type: string
+  url: string
+  features: Features2
+  sizes: Sizes
+  original_info: Originalinfo2
+}
+
 interface Originalinfo2 {
   height: number
   width: number
-  focus_rects: Face[]
+  focus_rects?: Face[]
 }
 
-interface Features3 {
-  large: Large4
-  medium: Large4
-  small: Large4
-  orig: Large4
+interface Features2 {
+  large?: Large2
+  medium?: Large2
+  small?: Large2
+  orig?: Large2
 }
 
-interface Large4 {
+interface Large2 {
   faces: Face[]
 }
 
-interface Core3 {
-  user_results: Userresults4
+interface Face {
+  x: number
+  y: number
+  w: number
+  h: number
 }
 
-interface Userresults4 {
+interface Views2 {
+  count?: string
+  state: string
+}
+
+interface Core2 {
+  user_results: Userresults3
+}
+
+interface Userresults3 {
+  result: Result5
+}
+
+interface Result5 {
+  __typename: string
+  id: string
+  rest_id: string
+  affiliates_highlighted_label: Affiliateshighlightedlabel2
+  has_graduated_access: boolean
+  is_blue_verified: boolean
+  profile_image_shape: string
+  legacy: Legacy5
+  professional?: Professional
+}
+
+interface Legacy5 {
+  can_dm: boolean
+  can_media_tag: boolean
+  created_at: string
+  default_profile: boolean
+  default_profile_image: boolean
+  description: string
+  entities: Entities4
+  fast_followers_count: number
+  favourites_count: number
+  followers_count: number
+  friends_count: number
+  has_custom_timelines: boolean
+  is_translator: boolean
+  listed_count: number
+  location: string
+  media_count: number
+  name: string
+  normal_followers_count: number
+  pinned_tweet_ids_str: string[]
+  possibly_sensitive: boolean
+  profile_banner_url?: string
+  profile_image_url_https: string
+  profile_interstitial_type: string
+  screen_name: string
+  statuses_count: number
+  translator_type: string
+  url?: string
+  verified: boolean
+  verified_type?: string
+  want_retweets: boolean
+  withheld_in_countries: any[]
+  protected?: boolean
+  needs_phone_verification?: boolean
+}
+
+interface Entities4 {
+  description: Description
+  url?: Url3
+}
+
+interface Footer {
+  displayType: string
+  text: string
+  landingUrl: Url
+}
+
+interface Header {
+  displayType: string
+  text: string
+  sticky: boolean
+}
+
+interface ClientEventInfo2 {
+  component: string
+  details: Details
+  element?: string
+}
+
+interface Metadata {
+  conversationMetadata: ConversationMetadata
+}
+
+interface ConversationMetadata {
+  allTweetIds: string[]
+  enableDeduplication: boolean
+}
+
+interface Item2 {
+  entryId: string
+  item: Item
+}
+
+interface Item {
+  itemContent: ItemContent
+  clientEventInfo: ClientEventInfo
+}
+
+interface ClientEventInfo {
+  component: string
+  element: string
+  details: Details
+}
+
+interface Details {
+  timelinesDetails: TimelinesDetails
+}
+
+interface TimelinesDetails {
+  injectionType: string
+  controllerData?: string
+  sourceData?: string
+}
+
+interface ItemContent {
+  itemType: string
+  __typename: string
+  tweet_results?: Tweetresults
+  tweetDisplayType?: string
+  user_results?: Userresults2
+  userDisplayType?: string
+  promotedMetadata?: PromotedMetadata
+}
+
+interface PromotedMetadata {
+  advertiser_results: Advertiserresults
+  disclosureType: string
+  experimentValues: ExperimentValue[]
+  impressionId: string
+  impressionString: string
+  clickTrackingInfo: ClickTrackingInfo
+}
+
+interface ClickTrackingInfo {
+  urlParams: ExperimentValue[]
+}
+
+interface ExperimentValue {
+  key: string
+  value: string
+}
+
+interface Advertiserresults {
   result: Result4
 }
 
@@ -863,18 +716,16 @@ interface Result4 {
   __typename: string
   id: string
   rest_id: string
-  affiliates_highlighted_label: any
+  affiliates_highlighted_label: Features
+  has_graduated_access: boolean
   is_blue_verified: boolean
-  legacy: Legacy5
-  has_nft_avatar: boolean
-  super_follow_eligible: boolean
-  super_followed_by: boolean
-  super_following: boolean
-  business_account: any
+  profile_image_shape: string
+  legacy: Legacy4
 }
 
-interface Legacy5 {
-  protected: boolean
+interface Legacy4 {
+  can_dm: boolean
+  can_media_tag: boolean
   created_at: string
   default_profile: boolean
   default_profile_image: boolean
@@ -893,9 +744,7 @@ interface Legacy5 {
   normal_followers_count: number
   pinned_tweet_ids_str: any[]
   possibly_sensitive: boolean
-  profile_banner_extensions: Profilebannerextensions
   profile_banner_url: string
-  profile_image_extensions: Profilebannerextensions
   profile_image_url_https: string
   profile_interstitial_type: string
   screen_name: string
@@ -903,130 +752,12 @@ interface Legacy5 {
   translator_type: string
   url: string
   verified: boolean
+  verified_type: string
+  want_retweets: boolean
   withheld_in_countries: any[]
 }
 
-interface Legacy4 {
-  created_at: string
-  conversation_id_str: string
-  display_text_range: number[]
-  entities: Entities4
-  extended_entities?: Extendedentities2
-  favorite_count: number
-  favorited: boolean
-  full_text: string
-  is_quote_status: boolean
-  lang: string
-  possibly_sensitive: boolean
-  possibly_sensitive_editable: boolean
-  quote_count: number
-  reply_count: number
-  retweet_count: number
-  retweeted: boolean
-  user_id_str: string
-  id_str: string
-  quoted_status_id_str?: string
-  quoted_status_permalink?: Quotedstatuspermalink
-  self_thread?: Selfthread
-}
-
-interface Selfthread {
-  id_str: string
-}
-
-interface Quotedstatuspermalink {
-  url: string
-  expanded: string
-  display: string
-}
-
-interface Extendedentities2 {
-  media: Media4[]
-}
-
-interface Media4 {
-  display_url: string
-  expanded_url: string
-  id_str: string
-  indices: number[]
-  media_key: string
-  media_url_https: string
-  type: string
-  url: string
-  ext_media_color: Ok
-  ext_media_availability: Extmediaavailability
-  features: Features2
-  sizes: Sizes
-  original_info: Originalinfo
-  additional_media_info?: Additionalmediainfo2
-  mediaStats?: MediaStats
-  video_info?: Videoinfo2
-  ext_alt_text?: string
-}
-
-interface Videoinfo2 {
-  aspect_ratio: number[]
-  duration_millis: number
-  variants: Variant[]
-}
-
-interface Additionalmediainfo2 {
-  title?: string
-  description?: string
-  monetizable: boolean
-  call_to_actions?: Calltoactions
-}
-
-interface Calltoactions {
-  watch_now: Watchnow
-}
-
-interface Watchnow {
-  url: string
-}
-
-interface Entities4 {
-  media?: Media3[]
-  user_mentions: Usermention[]
-  urls: Url[]
-  hashtags: Hashtag[]
-  symbols: any[]
-}
-
-interface Media3 {
-  display_url: string
-  expanded_url: string
-  id_str: string
-  indices: number[]
-  media_url_https: string
-  type: string
-  url: string
-  features: Features2
-  sizes: Sizes
-  original_info: Originalinfo
-}
-
-interface Features2 {
-  large?: Large3
-  medium?: Large3
-  small?: Large3
-  orig?: Large3
-}
-
-interface Large3 {
-  faces: Face[]
-}
-
-interface Views2 {
-  count: string
-  state: string
-}
-
-interface Core2 {
-  user_results: Userresults3
-}
-
-interface Userresults3 {
+interface Userresults2 {
   result: Result3
 }
 
@@ -1034,19 +765,24 @@ interface Result3 {
   __typename: string
   id: string
   rest_id: string
-  affiliates_highlighted_label: any
+  affiliates_highlighted_label: Affiliateshighlightedlabel2
+  has_graduated_access: boolean
   is_blue_verified: boolean
+  profile_image_shape: string
   legacy: Legacy3
-  has_nft_avatar: boolean
-  super_follow_eligible: boolean
-  super_followed_by: boolean
-  super_following: boolean
-  business_account: any
-  professional?: Professional
+  professional?: Professional2
+  super_follow_eligible?: boolean
+}
+
+interface Professional2 {
+  rest_id: string
+  professional_type: string
+  category: Category[]
 }
 
 interface Legacy3 {
-  protected: boolean
+  can_dm: boolean
+  can_media_tag: boolean
   created_at: string
   default_profile: boolean
   default_profile_image: boolean
@@ -1063,11 +799,9 @@ interface Legacy3 {
   media_count: number
   name: string
   normal_followers_count: number
-  pinned_tweet_ids_str: string[]
+  pinned_tweet_ids_str: (string | string)[]
   possibly_sensitive: boolean
-  profile_banner_extensions: Profilebannerextensions
   profile_banner_url: string
-  profile_image_extensions: Profilebannerextensions
   profile_image_url_https: string
   profile_interstitial_type: string
   screen_name: string
@@ -1075,17 +809,69 @@ interface Legacy3 {
   translator_type: string
   url?: string
   verified: boolean
-  withheld_in_countries: any[]
   verified_type?: string
+  want_retweets: boolean
+  withheld_in_countries: any[]
 }
 
 interface Entities3 {
   description: Description2
-  url?: Url2
+  url?: Url3
 }
 
 interface Description2 {
-  urls: Url[]
+  urls: Url2[][]
+}
+
+interface Affiliateshighlightedlabel2 {
+  label?: Label
+}
+
+interface Tweetresults {
+  result: Result2
+}
+
+interface Result2 {
+  __typename: string
+  rest_id: string
+  core: Core
+  edit_control: Editcontrol
+  edit_perspective: Editperspective
+  is_translatable: boolean
+  views: Views
+  source: string
+  legacy: Legacy2
+  quick_promote_eligibility: Quickpromoteeligibility
+}
+
+interface Quickpromoteeligibility {
+  eligibility: string
+}
+
+interface Legacy2 {
+  bookmark_count: number
+  bookmarked: boolean
+  created_at: string
+  conversation_id_str: string
+  display_text_range: number[]
+  entities: Entities2
+  extended_entities: Extendedentities
+  favorite_count: number
+  favorited: boolean
+  full_text: string
+  is_quote_status: boolean
+  lang: string
+  possibly_sensitive: boolean
+  possibly_sensitive_editable: boolean
+  quote_count: number
+  reply_count: number
+  retweet_count: number
+  retweeted: boolean
+  user_id_str: string
+  id_str: string
+  in_reply_to_screen_name?: string
+  in_reply_to_status_id_str?: string
+  in_reply_to_user_id_str?: string
 }
 
 interface Extendedentities {
@@ -1095,28 +881,24 @@ interface Extendedentities {
 interface Media2 {
   display_url: string
   expanded_url: string
-  ext_alt_text?: string
   id_str: string
   indices: number[]
   media_key: string
   media_url_https: string
   type: string
   url: string
-  ext_media_color: Ok
+  additional_media_info: Additionalmediainfo
+  mediaStats: MediaStats
   ext_media_availability: Extmediaavailability
   features: Features
   sizes: Sizes
   original_info: Originalinfo
-  source_status_id_str?: string
-  source_user_id_str?: string
-  additional_media_info?: Additionalmediainfo
-  mediaStats?: MediaStats
-  video_info?: Videoinfo
+  video_info: Videoinfo
 }
 
 interface Videoinfo {
   aspect_ratio: number[]
-  duration_millis?: number
+  duration_millis: number
   variants: Variant[]
 }
 
@@ -1126,96 +908,24 @@ interface Variant {
   url: string
 }
 
+interface Extmediaavailability {
+  status: string
+}
+
 interface MediaStats {
   viewCount: number
 }
 
 interface Additionalmediainfo {
-  title?: string
-  description?: string
   monetizable: boolean
-  source_user?: Sourceuser
-  embeddable?: boolean
-}
-
-interface Sourceuser {
-  user_results: Userresults2
-}
-
-interface Userresults2 {
-  result: Result2
-}
-
-interface Result2 {
-  __typename: string
-  id: string
-  rest_id: string
-  affiliates_highlighted_label: any
-  is_blue_verified: boolean
-  legacy: Legacy2
-  has_nft_avatar: boolean
-  super_follow_eligible: boolean
-  super_followed_by: boolean
-  super_following: boolean
-  business_account: any
-}
-
-interface Legacy2 {
-  protected: boolean
-  created_at: string
-  default_profile: boolean
-  default_profile_image: boolean
-  description: string
-  entities: Entities
-  fast_followers_count: number
-  favourites_count: number
-  followers_count: number
-  friends_count: number
-  has_custom_timelines: boolean
-  is_translator: boolean
-  listed_count: number
-  location: string
-  media_count: number
-  name: string
-  normal_followers_count: number
-  pinned_tweet_ids_str: string[]
-  possibly_sensitive: boolean
-  profile_banner_extensions: Profilebannerextensions
-  profile_banner_url: string
-  profile_image_extensions: Profilebannerextensions
-  profile_image_url_https: string
-  profile_interstitial_type: string
-  screen_name: string
-  statuses_count: number
-  translator_type: string
-  url: string
-  verified: boolean
-  verified_type?: string
-  withheld_in_countries: any[]
-}
-
-interface Extmediaavailability {
-  status: string
 }
 
 interface Entities2 {
-  media?: Media[]
-  user_mentions: Usermention[]
-  urls: Url[]
-  hashtags: Hashtag[]
+  media: Media[]
+  user_mentions: any[]
+  urls: Url2[][]
+  hashtags: any[]
   symbols: any[]
-}
-
-interface Hashtag {
-  indices: number[]
-  text: string
-}
-
-interface Usermention {
-  id_str: string
-  name: string
-  screen_name: string
-  indices: number[]
 }
 
 interface Media {
@@ -1229,50 +939,37 @@ interface Media {
   features: Features
   sizes: Sizes
   original_info: Originalinfo
-  source_status_id_str?: string
-  source_user_id_str?: string
 }
 
 interface Originalinfo {
   height: number
   width: number
-  focus_rects?: Face[]
 }
 
 interface Sizes {
-  large: Large2
-  medium: Large2
-  small: Large2
-  thumb: Large2
+  large: Large
+  medium: Large
+  small: Large
+  thumb: Large
 }
 
-interface Large2 {
+interface Large {
   h: number
   w: number
   resize: string
 }
 
 interface Features {
-  large?: Large
-  medium?: Large
-  small?: Large
-  orig?: Large
-}
-
-interface Large {
-  faces: (Face | Face)[]
-}
-
-interface Face {
-  x: number
-  y: number
-  w: number
-  h: number
 }
 
 interface Views {
-  count?: string
+  count: string
   state: string
+}
+
+interface Editperspective {
+  favorited: boolean
+  retweeted: boolean
 }
 
 interface Editcontrol {
@@ -1294,15 +991,12 @@ interface Result {
   __typename: string
   id: string
   rest_id: string
-  affiliates_highlighted_label: any
+  affiliates_highlighted_label: Affiliateshighlightedlabel
+  has_graduated_access: boolean
   is_blue_verified: boolean
+  profile_image_shape: string
   legacy: Legacy
   professional: Professional
-  has_nft_avatar: boolean
-  super_follow_eligible: boolean
-  super_followed_by: boolean
-  super_following: boolean
-  business_account: any
 }
 
 interface Professional {
@@ -1318,7 +1012,8 @@ interface Category {
 }
 
 interface Legacy {
-  protected: boolean
+  can_dm: boolean
+  can_media_tag: boolean
   created_at: string
   default_profile: boolean
   default_profile_image: boolean
@@ -1337,9 +1032,7 @@ interface Legacy {
   normal_followers_count: number
   pinned_tweet_ids_str: string[]
   possibly_sensitive: boolean
-  profile_banner_extensions: Profilebannerextensions
   profile_banner_url: string
-  profile_image_extensions: Profilebannerextensions
   profile_image_url_https: string
   profile_interstitial_type: string
   screen_name: string
@@ -1348,48 +1041,47 @@ interface Legacy {
   url: string
   verified: boolean
   verified_type: string
+  want_retweets: boolean
   withheld_in_countries: any[]
 }
 
-interface Profilebannerextensions {
-  mediaColor: MediaColor
-}
-
-interface MediaColor {
-  r: R
-}
-
-interface R {
-  ok: Ok
-}
-
-interface Ok {
-  palette: Palette[]
-}
-
-interface Palette {
-  percentage: number
-  rgb: Rgb
-}
-
-interface Rgb {
-  blue: number
-  green: number
-  red: number
-}
-
 interface Entities {
-  description: any
-  url: Url2
+  description: Description
+  url: Url3
+}
+
+interface Url3 {
+  urls: Url2[]
 }
 
 interface Url2 {
-  urls: Url[]
-}
-
-interface Url {
   display_url: string
   expanded_url: string
   url: string
   indices: number[]
+}
+
+interface Description {
+  urls: any[]
+}
+
+interface Affiliateshighlightedlabel {
+  label: Label
+}
+
+interface Label {
+  url: Url
+  badge: Badge
+  description: string
+  userLabelType: string
+  userLabelDisplayType: string
+}
+
+interface Badge {
+  url: string
+}
+
+interface Url {
+  url: string
+  urlType: string
 }
