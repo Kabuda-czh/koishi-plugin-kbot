@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 15:49:13
+ * @LastEditTime: 2023-07-04 16:09:21
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -33,7 +33,7 @@ export async function renderFunction(
   }
   catch (err) {
     logger.error('推特渲染失败: ', err)
-    throw err.message
+    throw err
   }
 }
 
@@ -87,7 +87,10 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
       })
     })
 
-    await page.goto(url)
+    await page.goto(url, {
+      waitUntil: 'networkidle0',
+      timeout: 120000,
+    })
     await page.waitForNetworkIdle()
 
     const element = await page.$('article')
