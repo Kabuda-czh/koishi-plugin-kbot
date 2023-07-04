@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-06-28 11:38:10
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 14:39:38
+ * @LastEditTime: 2023-06-29 10:20:59
  * @FilePath: \KBot-App\plugins\kbot\client\components\HistoryDrawer.vue
  * @Description:
  *
@@ -56,22 +56,24 @@ async function getHistoryNotice() {
 
 <template>
   <meta name="referrer" content="never">
-  <el-drawer v-model="drawerVisible" direction="rtl" size="30%" @open="getHistoryNotice">
+  <ElDrawer v-model="drawerVisible" direction="rtl" size="30%" @open="getHistoryNotice">
     <template #header="{ titleId, titleClass }">
       <span :id="titleId" class="drawer__title" :class="titleClass">
         {{ props.title }}
       </span>
     </template>
 
-    <el-timeline v-loading="timelineLoading">
-      <el-timeline-item
+    <ElEmpty v-show="historyNotices.length === 0" />
+
+    <ElTimeline v-loading="timelineLoading">
+      <ElTimelineItem
         v-for="(notice, index) in historyNotices"
         :key="index"
         center
         color="#4192F4"
         placement="top"
       >
-        <el-card :body-style="{ padding: '0px' }">
+        <ElCard :body-style="{ padding: '0px' }">
           <img v-if="notice.message.images.length > 0" :src="`https://gdynamic.qpic.cn/gdynamic/${notice.message.images[0].id}/0`" class="drawer__image">
           <div class="drawer__info">
             <span>{{ notice.message.text }}</span>
@@ -80,10 +82,10 @@ async function getHistoryNotice() {
               <span>发送者id: {{ notice.sender_id }}</span>
             </div>
           </div>
-        </el-card>
-      </el-timeline-item>
-    </el-timeline>
-  </el-drawer>
+        </ElCard>
+      </ElTimelineItem>
+    </ElTimeline>
+  </ElDrawer>
 </template>
 
 <style scoped>

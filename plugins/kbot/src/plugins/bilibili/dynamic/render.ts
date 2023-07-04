@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-01 12:09:06
+ * @LastEditTime: 2023-06-30 12:49:42
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -69,7 +69,7 @@ async function pcRenderImage(
 
     await page.evaluate(() => document.fonts.ready)
     const element = await page.$('.bili-dyn-item')
-    const elementClip = await element.boundingBox()
+    const elementClip = await element?.boundingBox()
 
     return (
       `${item.modules.module_author.name} ${new Date(item.modules.module_author.pub_ts * 1000).toLocaleString()}\n${BilibiliDynamicItemType[item.type] || '发布了动态'}:\n${
@@ -136,7 +136,7 @@ async function mobileRenderImage(
     await page.evaluate(() => document.fonts.ready)
     const element
       = (await page.$('.opus-modules')) ?? (await page.$('.dyn-card'))
-    const elementClip = await element.boundingBox()
+    const elementClip = await element?.boundingBox()
 
     return (
       `${item.modules.module_author.name} ${new Date(item.modules.module_author.pub_ts * 1000).toLocaleString()}\n${BilibiliDynamicItemType[item.type] || '发布了动态'}:\n${

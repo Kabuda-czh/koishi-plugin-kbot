@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 11:18:48
+ * @LastEditTime: 2023-06-29 10:22:57
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupMemberDialog.vue
  * @Description:
  *
@@ -260,7 +260,7 @@ function groupKick() {
 </script>
 
 <template>
-  <el-dialog
+  <ElDialog
     v-model="dialogVisible"
     width="70%"
     title="群成员详细信息"
@@ -273,24 +273,24 @@ function groupKick() {
       <ElRow>
         <ElCol :span="8">
           <ElFormItem label="群号">
-            <el-input v-model="memberInfo.group_id" disabled />
+            <ElInput v-model="memberInfo.group_id" disabled />
           </ElFormItem>
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="QQ号">
-            <el-input v-model="memberInfo.user_id" disabled />
+            <ElInput v-model="memberInfo.user_id" disabled />
           </ElFormItem>
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="QQ昵称">
-            <el-input v-model="memberInfo.nickname" disabled />
+            <ElInput v-model="memberInfo.nickname" disabled />
           </ElFormItem>
         </ElCol>
       </ElRow>
       <ElRow>
         <ElCol :span="8">
           <ElFormItem label="群名片">
-            <el-input
+            <ElInput
               v-model="memberInfo.card"
               :disabled="RoleObject[props.botRole]?.role < 2"
               placeholder="无"
@@ -299,28 +299,28 @@ function groupKick() {
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="性别">
-            <el-select v-model="memberInfo.sex" style="width: 100%" disabled>
-              <el-option
+            <ElSelect v-model="memberInfo.sex" style="width: 100%" disabled>
+              <ElOption
                 v-for="item in sexList"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               />
-            </el-select>
+            </ElSelect>
           </ElFormItem>
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="角色">
-            <el-tag :type="RoleObject[memberInfo.role]?.roleType || 'info'">
+            <ElTag :type="RoleObject[memberInfo.role]?.roleType || 'info'">
               {{ RoleObject[memberInfo.role]?.roleName || "群员" }}
-            </el-tag>
+            </ElTag>
           </ElFormItem>
         </ElCol>
       </ElRow>
       <ElRow>
         <ElCol :span="8">
           <ElFormItem label="入群时间">
-            <el-date-picker
+            <ElDatePicker
               v-model="joinTime"
               style="width: 100%"
               type="datetime"
@@ -331,7 +331,7 @@ function groupKick() {
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="最后发言">
-            <el-date-picker
+            <ElDatePicker
               v-model="lastSentTime"
               style="width: 100%"
               type="datetime"
@@ -342,16 +342,16 @@ function groupKick() {
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="成员标签">
-            <el-tag :type="memberInfo.unfriendly ? 'danger' : 'success'">
+            <ElTag :type="memberInfo.unfriendly ? 'danger' : 'success'">
               {{ memberInfo.unfriendly ? "危险" : "安全" }}
-            </el-tag>
+            </ElTag>
           </ElFormItem>
         </ElCol>
       </ElRow>
       <ElRow>
         <ElCol :span="8">
           <ElFormItem label="专属头衔">
-            <el-input
+            <ElInput
               v-model="memberInfo.title"
               placeholder="无"
               :disabled="RoleObject[props.botRole]?.role !== 3"
@@ -360,25 +360,25 @@ function groupKick() {
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="禁言操作">
-            <el-button
+            <ElButton
               type="danger"
               :disabled="botEditRole"
               @click="muteMember"
             >
               选择禁言时间
-            </el-button>
-            <el-button
+            </ElButton>
+            <ElButton
               type="success"
               :disabled="botEditRole"
               @click="cancelMuteMember"
             >
               解除禁言
-            </el-button>
+            </ElButton>
           </ElFormItem>
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="操作">
-            <el-button
+            <ElButton
               type="warning"
               :disabled="
                 props.botRole !== 'owner' || +props.botId === memberInfo.user_id
@@ -390,13 +390,13 @@ function groupKick() {
                   ? "取消管理员"
                   : "设置管理员"
               }}
-            </el-button>
-            <el-button type="danger" :disabled="botEditRole" @click="groupKick">
+            </ElButton>
+            <ElButton type="danger" :disabled="botEditRole" @click="groupKick">
               踢出群聊
-            </el-button>
+            </ElButton>
           </ElFormItem>
         </ElCol>
       </ElRow>
     </ElForm>
-  </el-dialog>
+  </ElDialog>
 </template>

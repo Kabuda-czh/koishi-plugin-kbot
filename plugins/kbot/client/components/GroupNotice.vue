@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-06-28 11:25:26
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 16:58:59
+ * @LastEditTime: 2023-06-29 10:19:00
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupNotice.vue
  * @Description:
  *
@@ -94,18 +94,18 @@ async function setNotice() {
 </script>
 
 <template>
-  <el-dialog
+  <ElDialog
     v-model="dialogVisible" width="30%" title="发送群公告" destroy-on-close
     @closed="dialogVisible = false"
   >
     <div v-loading="dialogLoading" class="dialogContainer">
-      <el-input
+      <ElInput
         v-model="groupNotice"
         type="textarea"
         :autosize="{ minRows: 2, maxRows: 10 }"
         placeholder="请输入群公告"
       />
-      <el-upload
+      <ElUpload
         ref="upload"
         style="margin-top: 1rem"
         :on-change="handleChange"
@@ -115,9 +115,9 @@ async function setNotice() {
         :auto-upload="false"
       >
         <template #trigger>
-          <el-button type="primary">
+          <ElButton type="primary">
             选择图片
-          </el-button>
+          </ElButton>
         </template>
         <template #tip>
           <div class="el-upload__tip text-red">
@@ -125,7 +125,7 @@ async function setNotice() {
             <p>注意: 当前因 gocq 原因, 无法携带图片发送群公告</p>
           </div>
         </template>
-      </el-upload>
+      </ElUpload>
     </div>
     <template #footer>
       <ElButton type="primary" @click="historyVisible = true">
@@ -135,7 +135,7 @@ async function setNotice() {
         确认设置
       </ElButton>
     </template>
-  </el-dialog>
+  </ElDialog>
 
   <HistoryDrawer :visible="historyVisible" :bot-id="props.botId" :group-id="props.groupId" @closed="historyVisible = false" />
 </template>

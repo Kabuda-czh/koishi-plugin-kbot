@@ -14,8 +14,7 @@ import type { Argv, Context } from 'koishi'
 import { } from '@koishijs/plugin-console'
 import { routerStrategies } from './router'
 import { initCommand } from './command'
-
-// import { initCommon } from './common'
+import { initCommon } from './common'
 
 declare module 'koishi' {
   interface Channel {
@@ -112,7 +111,7 @@ export function apply(context: Context, config: IConfig) {
 
   // })
 
-  // initCommon(context, config)
+  initCommon(context, config)
 
   initCommand(context)
 

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 16:48:25
+ * @LastEditTime: 2023-07-04 10:30:44
  * @FilePath: \KBot-App\plugins\kbot\client\index.vue
  * @Description:
  *
@@ -24,19 +24,17 @@ import {
   fetchBroadcast,
   fetchCommands,
   fetchGetBots,
-  fetchGroupLeave,
   fetchGroupList,
   fetchGroupMemberList,
   fetchMuteGuild,
   fetchSendMessage,
 } from './api'
-import GroupDialog from './components/GroupDialog.vue'
 import FuzzySearch from './components/FuzzySearch.vue'
-import GroupPlugins from './components/GroupPlugins.vue'
-import GroupNotice from './components/GroupNotice.vue'
-import GroupPortrait from './components/GroupPortrait.vue'
+import GroupDialog from './components/GroupDialog.vue'
+
 import type { Group, GroupCommand, GroupList, GuildWatch, UserInfo } from './interface'
 import { fetchGuildWatchList } from './api/guild'
+import GroupConfig from './components/GroupConfig.vue'
 
 const loading = ref<boolean>(true)
 
@@ -55,18 +53,13 @@ const pageSize = ref<number>(10)
 // dialog
 const dialogVisible = ref<boolean>(false)
 const groupId = ref<string | number>('')
+const groupName = ref<string>('')
 const botId = ref<string | number>('')
 const botRole = ref<string>('')
 
-// plugin dialog
+// config dialog
+const configDialogVisible = ref<boolean>(false)
 const commands = ref<GroupCommand[]>([])
-const pluginDialogVisible = ref<boolean>(false)
-
-// notice dialog
-const noticeDialogVisible = ref<boolean>(false)
-
-// portrait dialog
-const portraitDialogVisible = ref<boolean>(false)
 
 // bot dialog
 const botDialogLoading = ref<boolean>(false)
@@ -186,15 +179,15 @@ async function changeBot(userId: string | number) {
 }
 
 function createManageFunction(dialog: Ref<boolean>) {
-  return function (group_id: number) {
+  return function (group_id: string | number, group_name: string, bot_role: string) {
     dialog.value = true
     groupId.value = group_id
+    groupName.value = group_name
+    botRole.value = bot_role
   }
 }
 
-const manageGroupNotice = createManageFunction(noticeDialogVisible)
-const manageGroupPortrait = createManageFunction(portraitDialogVisible)
-const manageGroupPlugins = createManageFunction(pluginDialogVisible)
+const manageGroupConfig = createManageFunction(configDialogVisible)
 
 function selectData(item: { label: string; value: string | number }) {
   loading.value = true
@@ -216,54 +209,6 @@ function dataChange(value: string | number) {
       loading.value = false
     }, 1000)
   }
-}
-
-function sendMessage(groupId: number, groupName: string) {
-  messageBox
-    .prompt('请输入要发送的消息', `向群 ${groupName}(${groupId}) 发送消息`, {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      inputType: 'textarea',
-      inputPlaceholder: '请输入要发送的消息',
-      inputPattern: /\S/,
-      inputErrorMessage: '消息不能为空',
-    })
-    .then(({ value }) => {
-      fetchSendMessage(botId.value, groupId, value)
-    })
-    .catch(() => {
-      message.success('已取消发送')
-    })
-}
-
-function groupLeave(groupId: number, isOwner: boolean) {
-  messageBox
-    .confirm(
-      `<strong>确定要${isOwner ? '解散群' : '退群'}吗?</strong>
-      <br />
-      <strong style="color: red">该操作无法撤回!</strong>
-      <br />
-      <i style="color: orange">注意: 当前gocq中解散群接口似乎无效</i>
-      `,
-      '提醒',
-      {
-        dangerouslyUseHTMLString: true,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'error',
-      },
-    )
-    .then(() => {
-      // TODO 解散群似乎没什么效果
-      fetchGroupLeave(botId.value, groupId, isOwner).then(() => {
-        message.success('操作成功')
-        // getGroupList()
-        location.reload()
-      })
-    })
-    .catch(() => {
-      message.success('已取消操作')
-    })
 }
 
 // const setGuildWatch = (row: GroupList) => {
@@ -348,9 +293,9 @@ onMounted(async () => {
               <ElCheckbox v-model="row.checked" @change="groupCheck(row.checked, $index)" />
             </template>
           </ElTableColumn>
-          <ElTableColumn align="center" prop="group_id" label="群号" width="120" />
+          <ElTableColumn align="center" prop="group_id" label="群号" />
           <ElTableColumn align="center" prop="group_name" label="群名称" />
-          <ElTableColumn align="center" label="是否开启全员禁言" width="200">
+          <ElTableColumn align="center" label="是否开启全员禁言">
             <template #default="{ row }">
               <ElButton type="primary" :disabled="!['owner', 'admin'].includes(row.role)" @click="muteGuild(row, true)">
                 开启
@@ -360,31 +305,16 @@ onMounted(async () => {
               </ElButton>
             </template>
           </ElTableColumn>
-          <ElTableColumn align="center" label="查看群内人员" width="120">
+          <ElTableColumn align="center" label="查看群内人员">
             <template #default="{ row }">
               <ElButton :icon="View" size="large" circle @click="checkGuildInfo(row.group_id, row.role)" />
             </template>
           </ElTableColumn>
           <ElTableColumn align="center" label="操作">
             <template #default="{ row }">
-              <ElButton v-if="['owner', 'admin'].includes(row.role)" type="primary" @click="manageGroupNotice(row.group_id)">
-                发送群公告
+              <ElButton type="primary" @click="manageGroupConfig(row.group_id, row.group_name, row.role)">
+                群管理操作
               </ElButton>
-              <ElButton v-if="['owner', 'admin'].includes(row.role)" type="primary" @click="manageGroupPortrait(row.group_id)">
-                更改群头像
-              </ElButton>
-              <ElButton type="primary" @click="manageGroupPlugins(row.group_id)">
-                管理群指令
-              </ElButton>
-              <ElButton @click="sendMessage(row.group_id, row.group_name)">
-                发送消息
-              </ElButton>
-              <ElButton type="danger" @click="groupLeave(row.group_id, row.role === 'owner')">
-                {{ row.role === "owner" ? "解散群" : "退出群" }}
-              </ElButton>
-              <!-- <ElButton type="primary" @click="setGuildWatch(row)">
-                {{ row.isWatch ? '监控已开启' : '监控未开启' }}
-              </ElButton> -->
             </template>
           </ElTableColumn>
           <template #empty>
@@ -393,7 +323,7 @@ onMounted(async () => {
         </ElTable>
 
         <div class="data__pagination">
-          <el-pagination
+          <ElPagination
             background :page-sizes="[10]" layout="prev, pager, next" :total="defaultGroupList.length"
             :current-page="currentPage" :page-size="pageSize" @current-change="paginationClick"
           />
@@ -409,28 +339,21 @@ onMounted(async () => {
     "
   />
 
-  <GroupPlugins
-    :visible="pluginDialogVisible" :group-id="groupId" :commands="commands" @closed="
-      pluginDialogVisible = false;
+  <GroupConfig
+    :visible="configDialogVisible"
+    :group-id="groupId"
+    :group-name="groupName"
+    :bot-id="botId"
+    :bot-role="botRole"
+    :commands="commands"
+    @closed="
+      configDialogVisible = false;
       groupId = 0;
+      groupName = '';
     "
   />
 
-  <GroupNotice
-    :visible="noticeDialogVisible" :group-id="groupId" :bot-id="botId" @closed="
-      noticeDialogVisible = false;
-      groupId = 0;
-    "
-  />
-
-  <GroupPortrait
-    :visible="portraitDialogVisible" :group-id="groupId" :bot-id="botId" @closed="
-      portraitDialogVisible = false;
-      groupId = 0;
-    "
-  />
-
-  <el-dialog
+  <ElDialog
     v-model="botDialogVisible" width="30%" title="bot 切换管理" destroy-on-close
     @closed="botDialogVisible = false"
   >
@@ -452,7 +375,7 @@ onMounted(async () => {
         </ElTableColumn>
       </ElTable>
     </div>
-  </el-dialog>
+  </ElDialog>
 </template>
 
 <style scoped>
