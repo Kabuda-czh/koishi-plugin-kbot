@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-07-04 10:31:52
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 12:51:54
+ * @LastEditTime: 2023-07-04 13:04:17
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupAddValid.vue
  * @Description:
  *
@@ -44,6 +44,16 @@ interface IValidList {
   question: string
   answer: string
 }
+
+interface IValidRes {
+  id: number
+  guildId: string | number
+  timer: number
+  validObject: Record<string, string>
+}
+
+// validConfig
+const validTimer = ref<IValidRes['timer']>(60)
 
 // validList
 const validList = ref<IValidList[]>([])
@@ -134,12 +144,12 @@ const columns = reactive<Column<any>[]>([
 
 async function getGroupAddValid() {
   dialogLoading.value = true
-  await fetchGetAddValid(props.groupId).then((res: Record<string, string>) => {
+  await fetchGetAddValid(props.groupId).then((res: IValidRes) => {
     const list: IValidList[] = []
-    for (const key in res) {
+    for (const key in res.validObject) {
       list.push({
         question: key,
-        answer: res[key],
+        answer: res.validObject[key],
       })
     }
     validList.value = list
@@ -177,7 +187,7 @@ async function setGroupAddValid() {
     validObj[`${violation.question}`] = violation.answer
   })
 
-  await fetchSetAddValid(props.groupId, validObj).then((res) => {
+  await fetchSetAddValid(props.groupId, validTimer.value, validObj).then((res) => {
     if (res.code === 0) {
       message({
         message: '设置成功',
@@ -232,12 +242,24 @@ function addValid() {
     @closed="dialogVisible = false"
   >
     <div v-loading="dialogLoading" class="dialogContainer">
-      <div class="commandSearch">
-        <FuzzySearch
-          :options="defaultValidList" label-key="question" value-key="answer" @select-data="selectData"
-          @data-change="dataChange"
-        />
-        <p>搜索问题</p>
+      <div>
+        <ElForm>
+          <ElRow>
+            <ElCol :span="12">
+              <ElFormItem label="回答问题超时时间">
+                <ElInputNumber v-model="validTimer" :controls="false" :precision="0" :min="60" :max="600" />
+              </ElFormItem>
+            </ElCol>
+            <ElCol :span="12">
+              <ElFormItem label="搜索验证问题">
+                <FuzzySearch
+                  :options="defaultValidList" label-key="question" value-key="answer" @select-data="selectData"
+                  @data-change="dataChange"
+                />
+              </ElFormItem>
+            </ElCol>
+          </ElRow>
+        </ElForm>
       </div>
       <ElAutoResizer>
         <template #default="{ width, height }">
