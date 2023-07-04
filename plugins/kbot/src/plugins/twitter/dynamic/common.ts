@@ -203,7 +203,7 @@ export async function twitterSearch(
   }
   catch (e) {
     logger.error(`推特动态获取失败: ${e.message}`)
-    return `动态获取失败${e.message}`
+    return `动态获取失败${e}`
   }
 }
 
