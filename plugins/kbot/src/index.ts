@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 13:26:16
+ * @LastEditTime: 2023-07-04 15:55:28
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -37,6 +37,7 @@ export const usage = `
 
 ## Bug Fix
 - 修复 \`twitter\` 因推特关闭游客页面以及接口问题, 增加 cookie 自行添加选项, 需要用户自己登录后获取 cookie
+- 修复 \`twitter\` 因使用用户接口后, 返回数据结构变化导致的渲染问题
 
 ## Features
 - 增加 \`guildmanage\` 群管插件, \`群屏蔽词\` 和 \`加群验证问题配置\` 的功能, 优化页面逻辑代码
