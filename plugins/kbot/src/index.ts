@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 17:34:06
+ * @LastEditTime: 2023-07-04 13:26:16
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -28,23 +28,20 @@ import { assetsLocalDir, kbotDir } from './config'
 export const name = 'kbot'
 
 export const usage = `
-# KBot v1.0.12 更新日志
+# KBot v1.0.13 更新日志
 
 ## Note
-- 增加 \`bilibili\` & \`twitter\` 插件批量增加的功能
-- 修复 \`twitter\` 插件轮询可能出现的问题
-- 增加 \`guildmanage\` 群管插件 \`发送群公告\` 和 \`更改群头像\` 功能
+- 修复 \`twitter\` 插件异常问题
+- 增加 \`guildmanage\` 群管插件管理群屏蔽词和加群验证
 - 优化代码
 
 ## Bug Fix
-- 修复 \`twitter\` 轮询报错问题, 增加请求参数
+- 修复 \`twitter\` 因推特关闭游客页面以及接口问题, 增加 cookie 自行添加选项, 需要用户自己登录后获取 cookie
 
 ## Features
-- 增加 \`bilibili\` & \`twitter\` 插件的批量添加功能
-- 增加 \`guildmanage\` 群管插件, \`发送群公告\` 和 \`更改群头像\` 的功能, 优化部分代码
-- 暂时关闭 \`guildmanage\` 的群屏蔽词汇以及加群校验功能, 优化代码结构后开放
+- 增加 \`guildmanage\` 群管插件, \`群屏蔽词\` 和 \`加群验证问题配置\` 的功能, 优化页面逻辑代码
 
-详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.12)
+详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.0.13)
 `
 
 interface IPluginEnableConfig {
