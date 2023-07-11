@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-04-24 10:11:14
+ * @LastEditTime: 2023-07-11 18:08:07
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\tarot\index.tsx
  * @Description:
  *
@@ -12,6 +12,7 @@ import { pathToFileURL } from 'node:url'
 import path from 'node:path'
 import type { Context } from 'koishi'
 import { Logger, Schema, sleep } from 'koishi'
+import { generatePaths } from '../../config'
 import shuffle from './shuffle'
 import { cards, meanings } from './tarot.config'
 
@@ -24,19 +25,21 @@ export const logger = new Logger('KBot-plugin-tarot')
 export async function apply(ctx: Context) {
   const cardLength = Object.keys(cards).length
 
+  const { tarotImagesDir } = generatePaths(ctx.baseDir)
+
   ctx.command('kbot/抽塔罗牌', '抽单张塔罗牌', {
     checkArgCount: true,
     showWarning: false,
   }).action(async ({ session }) => {
     const randomIndex = Math.floor(Math.random() * cardLength)
     let cardKey = Object.keys(cards)[randomIndex]
-    let imageFile = `${pathToFileURL(path.join(__dirname, 'images', `${cardKey}.jpg`))}`
+    let imageFile = `${pathToFileURL(path.join(`${tarotImagesDir}`, `${cardKey}.jpg`))}`
     let cardValue = ''
 
     // 特殊: 愚者有两张
     if (cardKey === '愚者') {
       const rand = Math.floor(Math.random() * 2 + 1)
-      imageFile = `${pathToFileURL(path.join(__dirname, 'images', `愚者${rand}.jpg`))}`
+      imageFile = `${pathToFileURL(path.join(`${tarotImagesDir}`, `愚者${rand}.jpg`))}`
     }
 
     // 特殊: 正位和逆位
@@ -88,12 +91,12 @@ export async function apply(ctx: Context) {
 
       const meaningKey = Object.keys(meanings)[i]
       const meaningValue = meanings[meaningKey]
-      imageFile = `${pathToFileURL(path.join(__dirname, 'images', `${cardKey}.jpg`))}`
+      imageFile = `${pathToFileURL(path.join(`${tarotImagesDir}`, `${cardKey}.jpg`))}`
 
       // 特殊: 愚者有两张
       if (cardKey === '愚者') {
         rand = Math.floor(Math.random() * 2 + 1)
-        imageFile = `${pathToFileURL(path.join(__dirname, 'images', `愚者${rand}.jpg`))}`
+        imageFile = `${pathToFileURL(path.join(`${tarotImagesDir}`, `愚者${rand}.jpg`))}`
       }
 
       // 特殊: 正位和逆位
