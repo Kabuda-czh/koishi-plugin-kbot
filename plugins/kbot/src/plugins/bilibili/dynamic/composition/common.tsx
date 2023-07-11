@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 17:22:33
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-21 10:29:03
+ * @LastEditTime: 2023-07-11 18:15:29
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\composition\common.tsx
  * @Description:
  *
@@ -40,12 +40,12 @@ export async function bilibiliVupCheck(
 ) {
   const { uid } = up
   try {
-    const { bilibiliVupPath, bilibiliCookiePath } = generatePaths(ctx.baseDir)
+    const { bilibiliVupPath, bilibiliCookiePath, renderFontsDir } = generatePaths(ctx.baseDir)
     if (config.useImage) {
       if (ctx.puppeteer) {
         const searchUserCardInfo = await getMemberCard(ctx.http, uid)
 
-        const needLoadFontList = await getFontsList(logger)
+        const needLoadFontList = await getFontsList(renderFontsDir, logger)
 
         let vdb, cookie
 
@@ -154,9 +154,11 @@ export async function bilibiliDanmuCheck(
   try {
     if (config.useImage) {
       if (ctx.puppeteer) {
+        const { renderFontsDir } = generatePaths(ctx.baseDir)
+
         const searchUserCardInfo = await getMemberCard(ctx.http, uid)
 
-        const needLoadFontList = await getFontsList(logger)
+        const needLoadFontList = await getFontsList(renderFontsDir, logger)
 
         let danmuku = await getDanmukuData(ctx.http, BilibiliDynamicType.DanmakuAPI, uid)
 

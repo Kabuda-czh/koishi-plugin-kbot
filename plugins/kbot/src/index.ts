@@ -2,13 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 11:35:23
+ * @LastEditTime: 2023-07-11 17:46:37
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import * as fs from 'node:fs'
+import fs from 'node:fs'
 import type { Context } from 'koishi'
 import { Logger, Schema } from 'koishi'
 
@@ -21,9 +21,12 @@ import * as managePlugin from './plugins/guildManage'
 import * as twitterPlugin from './plugins/twitter'
 import * as tarotPlugin from './plugins/tarot'
 
+import {} from 'koishi-plugin-downloads'
+
 // import * as valorantPlugin from './plugins/valorant'
 
 import { generatePaths } from './config'
+import { downloadAndMoveFiles } from './plugins/utils'
 
 export const name = 'kbot'
 
@@ -92,7 +95,7 @@ export const Config: Schema<IConfig> = Schema.object({
 
 export const logger = new Logger('KBot')
 
-export const using = ['console', 'database'] as const
+export const using = ['console', 'database', 'downloads'] as const
 
 export async function apply(ctx: Context, config: IConfig) {
   if (!config.superAdminQQ || config.superAdminQQ.length === 0) {
@@ -114,6 +117,20 @@ export async function apply(ctx: Context, config: IConfig) {
 
     if (!createFlag && fileNames.length === 0)
       await fs.promises.mkdir(kbotDir)
+
+    if (!fileNames.includes('fonts')) {
+      await downloadAndMoveFiles('task1', 'fonts', [
+        'npm://koishi-plugin-kbot-assets',
+        'npm://koishi-plugin-kbot-assets?registry=https://registry.npmmirror.com',
+      ], ctx, kbotDir, logger)
+    }
+
+    if (!fileNames.includes('images')) {
+      await downloadAndMoveFiles('task2', 'images', [
+        'npm://koishi-plugin-kbot-assets',
+        'npm://koishi-plugin-kbot-assets?registry=https://registry.npm.taobao.org',
+      ], ctx, kbotDir, logger)
+    }
 
     ctx.bots.forEach(async (bot) => {
       if (
