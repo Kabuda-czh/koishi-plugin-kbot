@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 14:41:21
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-03-06 10:12:48
+ * @LastEditTime: 2023-07-11 11:20:45
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\uidExtract.ts
  * @Description:
  *
@@ -57,7 +57,7 @@ export async function uidExtract(
   }
   else {
     const keyword = message.replace(/^['"“”‘’]+|['"“”‘’]+$/g, '')
-    const resp = await searchUser(keyword, ctx.http, logger)
+    const resp = await searchUser(ctx, keyword, logger)
     if (resp?.numResults) {
       resp.result.forEach((item) => {
         if (item.uname === keyword)

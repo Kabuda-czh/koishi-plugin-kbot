@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-03 11:00:14
+ * @LastEditTime: 2023-07-11 11:30:19
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\common.ts
  * @Description:
  *
@@ -12,7 +12,7 @@ import fs from 'node:fs'
 import type { Argv, Channel, Context, Dict } from 'koishi'
 import type { DynamicNotifiction } from '../model'
 import { getTwitterTweets } from '../utils'
-import { twitterCookiePath, twitterDir } from '../../../config'
+import { generatePaths } from '../../../config'
 import { renderFunction } from './render'
 import { logger } from '.'
 import type { IConfig } from '.'
@@ -252,6 +252,8 @@ export async function twitterCookie(
 
     if (!cookieJson.auth_token || !cookieJson.ct0)
       return 'cookie 格式中缺少 auth_token 或 ct0'
+
+    const { twitterDir, twitterCookiePath } = generatePaths(ctx.baseDir)
 
     if (
       !(await fs.promises.stat(twitterDir)).isDirectory()

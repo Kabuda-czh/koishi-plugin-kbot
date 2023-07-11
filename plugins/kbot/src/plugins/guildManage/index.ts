@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 13:26:40
+ * @LastEditTime: 2023-07-11 11:16:44
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
  *
@@ -79,7 +79,7 @@ export const Config: Schema<IConfig> = Schema.object({
 
 export const logger = new Logger('kbot-plugin-guildManage')
 
-export function apply(context: Context, config: IConfig) {
+export function apply(context: Context) {
   context.model.extend('channel', {
     disable: 'list',
     watchDelete: 'boolean',

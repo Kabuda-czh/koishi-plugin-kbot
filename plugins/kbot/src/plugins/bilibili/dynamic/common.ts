@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-26 10:46:02
+ * @LastEditTime: 2023-07-11 11:25:30
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -18,7 +18,7 @@ import type {
   DynamicNotifiction,
 } from '../model'
 import { getDynamic } from '../utils'
-import { bilibiliCookiePath } from '../../../config'
+import { generatePaths } from '../../../config'
 import { BilibiliDynamicType } from '../enum'
 import { renderFunction } from './render'
 import type { IConfig } from '.'
@@ -66,10 +66,11 @@ async function _encrypt_w_rid(params: string | Record<string, string>, http: Que
 
 async function fetchUserInfo(
   uid: string,
-  http: Quester,
+  ctx: Context,
 ): Promise<BilibiliUserInfoApiData['data']> {
   let cookie
   try {
+    const { bilibiliCookiePath } = generatePaths(ctx.baseDir)
     cookie = JSON.parse(
       await fs.promises.readFile(
         bilibiliCookiePath,
@@ -93,9 +94,9 @@ async function fetchUserInfo(
     mid: uid,
   }
 
-  const [w_rid, wts] = await _encrypt_w_rid(defaultParams, http, cookieString)
+  const [w_rid, wts] = await _encrypt_w_rid(defaultParams, ctx.http, cookieString)
 
-  let res = await http.axios<BilibiliUserInfoApiData>(
+  let res = await ctx.http.axios<BilibiliUserInfoApiData>(
     BilibiliDynamicType.UserInfo,
     {
       method: 'GET',
@@ -153,7 +154,7 @@ export async function bilibiliAdd(
   try {
     let userData: BilibiliUserInfoApiData['data']
     if (uid === upName)
-      userData = await fetchUserInfo(uid, ctx.http)
+      userData = await fetchUserInfo(uid, ctx)
     if (userData)
       upName = userData.name || upName
     uid = String(uid)
@@ -210,7 +211,7 @@ export async function bilibiliBatch(
       continue
 
     try {
-      const userData = await fetchUserInfo(uid, ctx.http)
+      const userData = await fetchUserInfo(uid, ctx)
       upName = userData.name || upName
       uid = String(uid)
       const notification: DynamicNotifiction = {
@@ -314,7 +315,7 @@ export async function bilibiliSearch(
 ) {
   const { uid } = up
   try {
-    const { data } = await getDynamic(ctx.http, uid, logger)
+    const { data } = await getDynamic(ctx, uid, logger)
     const items = data.items as BilibiliDynamicItem[]
 
     if (items.length === 0)

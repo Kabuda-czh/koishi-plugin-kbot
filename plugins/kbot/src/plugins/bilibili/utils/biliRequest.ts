@@ -2,22 +2,23 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 16:34:11
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-21 10:06:34
+ * @LastEditTime: 2023-07-11 11:25:50
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\utils\biliRequest.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 import * as fs from 'node:fs'
-import type { Logger, Quester } from 'koishi'
+import type { Context, Logger, Quester } from 'koishi'
 import { BilibiliDynamicType } from '../enum'
 import type { DanmukuData, MedalWall, MemberCard } from '../model'
 import { StringFormat } from '../../utils'
-import { bilibiliCookiePath } from '../../../config'
+import { generatePaths } from '../../../config'
 
-export async function getDynamic(http: Quester, uid: string, logger: Logger) {
+export async function getDynamic(ctx: Context, uid: string, logger: Logger) {
   let cookie
   try {
+    const { bilibiliCookiePath } = generatePaths(ctx.baseDir)
     cookie = JSON.parse(
       await fs.promises.readFile(
         bilibiliCookiePath,
@@ -34,26 +35,27 @@ export async function getDynamic(http: Quester, uid: string, logger: Logger) {
     .map(([key, value]) => `${key}=${value}`)
     .join('; ')
 
-  return http.get(
+  return ctx.http.get(
     StringFormat(BilibiliDynamicType.DynamicDetailURL, uid),
     {
       headers: {
         'Referer': `https://space.bilibili.com/${uid}/dynamic`,
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
-        'cookie': `DedeUserID=${uid}; ${cookieString}`,
+        'cookie': `${cookieString}`,
       },
     },
   )
 }
 
 export async function searchUser(
+  ctx: Context,
   keyword: string,
-  http: Quester,
   logger: Logger,
 ) {
   const data = { keyword, search_type: 'bili_user' }
   let cookie
   try {
+    const { bilibiliCookiePath } = generatePaths(ctx.baseDir)
     cookie = JSON.parse(
       await fs.promises.readFile(
         bilibiliCookiePath,
@@ -71,20 +73,20 @@ export async function searchUser(
     .join('; ')
 
   try {
-    const resp = await http
+    const resp = await ctx.http
       .get(BilibiliDynamicType.SearchUserByApp, {
         params: data,
-        headers: { cookie: cookieString, ...http.config.headers },
+        headers: { cookie: cookieString, ...ctx.http.config.headers },
       })
       .then((resp) => {
         return resp
       })
       .catch((e) => {
         if (+e.response.status === 412) {
-          return http
+          return ctx.http
             .get(BilibiliDynamicType.SearchUserByPC, {
               params: data,
-              headers: { cookie: cookieString, ...http.config.headers },
+              headers: { cookie: cookieString, ...ctx.http.config.headers },
             })
             .then((resp) => {
               return resp

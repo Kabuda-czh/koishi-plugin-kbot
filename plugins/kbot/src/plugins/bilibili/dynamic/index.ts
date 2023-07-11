@@ -2,14 +2,14 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 13:27:53
+ * @LastEditTime: 2023-07-11 11:21:40
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
 
-import type { Argv, Channel, Context, Dict, Quester } from 'koishi'
+import type { Argv, Channel, Context, Dict } from 'koishi'
 import { Logger, Schema } from 'koishi'
 import {} from 'koishi-plugin-puppeteer'
 
@@ -137,14 +137,14 @@ function checkDynamic({ session }: Argv<never, 'bilibili'>) {
 }
 
 async function request(
+  ctx: Context,
   uid: string,
-  http: Quester,
 ): Promise<BilibiliDynamicItem[]> {
   try {
-    const res = await getDynamic(http, uid, logger)
+    const res = await getDynamic(ctx, uid, logger)
 
     if (res.code !== 0)
-      throw new Error(res.message)
+      throw new Error(res.message + res.code === '-352' ? ' (可能为 cookie 失效)' : '')
 
     return (res.data.items as BilibiliDynamicItem[]).sort(
       (a, b) => b.modules.module_author.pub_ts - a.modules.module_author.pub_ts,

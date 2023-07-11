@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-03 11:30:28
+ * @LastEditTime: 2023-07-11 11:31:12
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -15,7 +15,7 @@ import {} from 'koishi-plugin-puppeteer'
 
 import type { DynamicNotifiction } from '../model'
 import { getTwitterTweets } from '../utils'
-import { kbotDir, twitterCookiePath, twitterDir } from '../../../config'
+import { generatePaths } from '../../../config'
 import { listen } from './listen'
 import { dynamicStrategy } from './dynamic.strategy'
 
@@ -60,6 +60,8 @@ export async function apply(ctx: Context, config: IConfig) {
     'platform',
     'twitter',
   ])
+
+  const { kbotDir, twitterDir, twitterCookiePath } = generatePaths(ctx.baseDir)
 
   const fileNames = await fs.promises.readdir(kbotDir)
 

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-07 11:12:59
+ * @LastEditTime: 2023-07-11 11:15:58
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
@@ -67,17 +67,17 @@ export async function getSystemInfo(
       },
       {
         progress: +memoryUsage || 0,
-        title: isNaN(+memoryUsed)
+        title: Number.isNaN(+memoryUsed)
           ? ErrorInfo
           : `${memoryUsed} / ${memoryTotal}`,
       },
       {
         progress: +swapUsage || 0,
-        title: isNaN(+swapUsed) ? ErrorInfo : `${swapUsed} / ${swapTotal}`,
+        title: Number.isNaN(+swapUsed) ? ErrorInfo : `${swapUsed} / ${swapTotal}`,
       },
       {
         progress: +diskUsage || 0,
-        title: isNaN(+diskUsed) ? ErrorInfo : `${diskUsed} / ${diskTotal}`,
+        title: Number.isNaN(+diskUsed) ? ErrorInfo : `${diskUsed} / ${diskTotal}`,
       },
     ],
     information: [
