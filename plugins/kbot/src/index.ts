@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 15:55:28
+ * @LastEditTime: 2023-07-11 11:35:23
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -23,7 +23,7 @@ import * as tarotPlugin from './plugins/tarot'
 
 // import * as valorantPlugin from './plugins/valorant'
 
-import { assetsLocalDir, kbotDir } from './config'
+import { generatePaths } from './config'
 
 export const name = 'kbot'
 
@@ -99,16 +99,20 @@ export async function apply(ctx: Context, config: IConfig) {
     logger.error('未设置超级管理员QQ号')
   }
   else {
+    const { kbotDir } = generatePaths(ctx.baseDir)
+
     let fileNames: string[] = []
+    let createFlag = false
     try {
-      fileNames = await fs.promises.readdir(assetsLocalDir)
+      fileNames = await fs.promises.readdir(kbotDir)
     }
     catch (e) {
-      logger.error('未找到 public 文件夹, 正在创建')
-      await fs.promises.mkdir(assetsLocalDir)
+      logger.error('未找到 kbot-data 文件夹, 正在创建')
+      await fs.promises.mkdir(kbotDir)
+      createFlag = true
     }
 
-    if (!fileNames.includes('kbot'))
+    if (!createFlag && fileNames.length === 0)
       await fs.promises.mkdir(kbotDir)
 
     ctx.bots.forEach(async (bot) => {

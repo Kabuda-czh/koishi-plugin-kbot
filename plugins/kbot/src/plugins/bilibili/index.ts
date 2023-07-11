@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:27
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-25 12:51:14
+ * @LastEditTime: 2023-07-11 11:26:28
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\index.ts
  * @Description:
  *
@@ -11,7 +11,7 @@
 import fs from 'node:fs'
 import type { Context } from 'koishi'
 import { Quester, Schema } from 'koishi'
-import { bilibiliDir, kbotDir } from '../../config'
+import { generatePaths } from '../../config'
 import * as dynamic from './dynamic'
 import * as url from './url'
 
@@ -46,6 +46,8 @@ export async function apply(context: Context, config: IConfig) {
       initial: {},
     },
   })
+
+  const { kbotDir, bilibiliDir } = generatePaths(context.baseDir)
 
   const fileNames = await fs.promises.readdir(kbotDir)
 

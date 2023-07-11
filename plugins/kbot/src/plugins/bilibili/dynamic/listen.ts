@@ -2,13 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:40:55
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-01 09:46:22
+ * @LastEditTime: 2023-07-11 11:21:10
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\listen.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
-import type { Channel, Context, Dict, Quester } from 'koishi'
+import type { Channel, Context, Dict } from 'koishi'
 import type { BilibiliDynamicItem, DynamicNotifiction } from '../model'
 import { renderFunction } from './render'
 import { logger } from '.'
@@ -21,7 +21,7 @@ export async function* listen(
       DynamicNotifiction,
     ][]
   >,
-  request: (uid: string, http: Quester) => Promise<BilibiliDynamicItem[]>,
+  request: (ctx: Context, uid: string) => Promise<BilibiliDynamicItem[]>,
   ctx: Context,
   config: IConfig,
 ) {
@@ -36,7 +36,7 @@ export async function* listen(
         continue
       const time = notifications[0][1].lastUpdated
       try {
-        const items = await request(uid, ctx.http)
+        const items = await request(ctx, uid)
         // setup time on every start up
         if (!notifications[0]?.[1].lastUpdated) {
           notifications.forEach(

@@ -19,7 +19,7 @@ import type { DynamicNotifiction } from '../../model'
 import { getDanmukuData, getMedalWall, getMemberCard } from '../../utils'
 
 import { getFontsList } from '../../../utils'
-import { bilibiliCookiePath, bilibiliDir, bilibiliVupPath } from '../../../../config'
+import { generatePaths } from '../../../../config'
 import { BilibiliDynamicType } from '../../enum'
 import { renderDanmu, renderVup } from './render'
 
@@ -40,6 +40,7 @@ export async function bilibiliVupCheck(
 ) {
   const { uid } = up
   try {
+    const { bilibiliVupPath, bilibiliCookiePath } = generatePaths(ctx.baseDir)
     if (config.useImage) {
       if (ctx.puppeteer) {
         const searchUserCardInfo = await getMemberCard(ctx.http, uid)
@@ -204,6 +205,7 @@ export async function bilibiliRefreshVup(
   ]
 
   try {
+    const { bilibiliDir, bilibiliVupPath } = generatePaths(ctx.baseDir)
     const vtbFetchs = await Promise.allSettled(
       vtbURLs.map(url =>
         ctx.http.axios(url)
@@ -241,18 +243,32 @@ export async function bilibiliRefreshVup(
   }
 }
 
-export async function bilibiliCookie({
-  session,
-  options,
-}: Argv<
+export async function bilibiliCookie(
+  {
+    session,
+    options,
+  }: Argv<
   never,
   'id' | 'guildId' | 'platform' | 'bilibili',
   any,
   {
     cookie: string
   }
->) {
+>,
+  _up: {
+    uid: string
+    upName: string
+  },
+  _list: Dict<
+    [
+      Pick<Channel, 'id' | 'guildId' | 'platform' | 'bilibili'>,
+      DynamicNotifiction,
+    ][]
+  >,
+  ctx: Context,
+) {
   try {
+    const { bilibiliDir, bilibiliCookiePath } = generatePaths(ctx.baseDir)
     if (!options.cookie)
       return '请提供cookie'
 

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-27 13:24:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-03 10:40:20
+ * @LastEditTime: 2023-07-11 11:28:38
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\reGetToken.ts
  * @Description:
  *
@@ -11,12 +11,13 @@
 import * as fs from 'node:fs'
 import type { Context, Logger } from 'koishi'
 import type { Page } from 'puppeteer-core'
-import { twitterCookiePath } from '../../../config'
+import { generatePaths } from '../../../config'
 
 export async function getTwitterToken(ctx: Context, logger: Logger) {
   let page: Page, cookie: any, gtCookie: string
 
   try {
+    const { twitterCookiePath } = generatePaths(ctx.baseDir)
     logger.info('token 获取中...')
     page = await ctx.puppeteer.page()
 

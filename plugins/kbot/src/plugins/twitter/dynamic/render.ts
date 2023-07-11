@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 16:09:21
+ * @LastEditTime: 2023-07-11 11:29:37
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\render.ts
  * @Description:
  *
@@ -15,7 +15,7 @@ import type { Page } from 'puppeteer-core'
 import { StringFormat } from '../../utils'
 import { TwitterDynamicType } from '../enum'
 import type { Entry } from '../model'
-import { twitterCookiePath } from '../../../config'
+import { generatePaths } from '../../../config'
 import { logger } from '.'
 import type { IConfig } from '.'
 
@@ -55,6 +55,8 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
       ?.legacy?.name
   let page: Page
   try {
+    const { twitterCookiePath } = generatePaths(ctx.baseDir)
+
     const url = StringFormat(
       TwitterDynamicType.UserStatusURL,
       twitterScreenName,
