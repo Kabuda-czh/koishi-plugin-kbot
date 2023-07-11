@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-30 12:49:42
+ * @LastEditTime: 2023-07-11 17:53:22
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -15,6 +15,7 @@ import type { Page } from 'puppeteer-core'
 import type { BilibiliDynamicItem, LivePlayInfo } from '../model'
 import { getFontsList } from '../../utils'
 import { BilibiliDynamicItemType } from '../enum'
+import { generatePaths } from '../../../config'
 import { logger } from '.'
 import type { IConfig } from '.'
 
@@ -45,7 +46,9 @@ async function pcRenderImage(
 ): Promise<string> {
   let page: Page
   try {
-    const needLoadFontList = await getFontsList(logger)
+    const { renderFontsDir } = generatePaths(ctx.baseDir)
+
+    const needLoadFontList = await getFontsList(renderFontsDir, logger)
 
     page = await ctx.puppeteer.page()
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
@@ -98,7 +101,9 @@ async function mobileRenderImage(
 ): Promise<string> {
   let page: Page
   try {
-    const needLoadFontList = await getFontsList(logger)
+    const { renderFontsDir } = generatePaths(ctx.baseDir)
+
+    const needLoadFontList = await getFontsList(renderFontsDir, logger)
 
     page = await ctx.puppeteer.page()
 

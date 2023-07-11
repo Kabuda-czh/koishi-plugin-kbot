@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-28 15:40:43
+ * @LastEditTime: 2023-07-11 18:04:29
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
  * @Description:
  *
@@ -17,14 +17,24 @@ import type { SystemInfo } from '../utils'
 
 // import { writeBlobToFile } from '../utils'
 import { logger } from '..'
+import { generatePaths } from '../../../config'
+import { getFontsList } from '../../../plugins/utils'
 
 export async function renderHtml(ctx: Context, systemInfo: SystemInfo) {
   let page: Page
   try {
+    const { statusFontsDir } = generatePaths(ctx.baseDir)
+    let needLoadFontList = await getFontsList(statusFontsDir, logger)
+    needLoadFontList = needLoadFontList.filter(font => ['Gugi-Regular ttf', 'HachiMaruPop-Regular ttf'].includes(font.fontFamily))
+
     page = await ctx.puppeteer.page()
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
+
     await page.goto(`${pathToFileURL(resolve(__dirname, '../neko/template.html'))}`)
     await page.evaluate(`action(${JSON.stringify(systemInfo)})`)
+    if (needLoadFontList.length > 0)
+      await page.evaluate(`setFont(${JSON.stringify(needLoadFontList)})`)
+
     await page.waitForNetworkIdle()
     const element = await page.$('#background-page')
     await page.evaluate(() => document.fonts.ready)
@@ -64,10 +74,18 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
       const imageBase64 = Buffer.from(resp.data, 'binary').toString('base64')
       let page: Page
       try {
+        const { statusFontsDir } = generatePaths(ctx.baseDir)
+        let needLoadFontList = await getFontsList(statusFontsDir, logger)
+        needLoadFontList = needLoadFontList.filter(font => ['Poppins-Regular ttf', 'NotoSansSC-Regular otf'].includes(font.fontFamily))
+
         page = await ctx.puppeteer.page()
         await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
+
         await page.goto(`${pathToFileURL(resolve(__dirname, '../random/template.html'))}`)
         await page.evaluate(`action(${JSON.stringify(systemInfo)}, '${imageBase64}', '${botUid}')`)
+        if (needLoadFontList.length > 0)
+          await page.evaluate(`setFont(${JSON.stringify(needLoadFontList)})`)
+
         await page.waitForNetworkIdle()
         const element = await page.$('#app')
         await page.evaluate(() => document.fonts.ready)

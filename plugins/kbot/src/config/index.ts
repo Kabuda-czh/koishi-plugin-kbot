@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-06 11:03:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 11:14:08
+ * @LastEditTime: 2023-07-11 17:27:59
  * @FilePath: \KBot-App\plugins\kbot\src\config\index.ts
  * @Description:
  *
@@ -17,6 +17,16 @@ export function generatePaths(path: string) {
   // kbot
   const kbotDir = resolve(baseDir, 'kbot-data')
 
+  // fonts
+  const fontsDir = resolve(kbotDir, 'fonts')
+  const renderFontsDir = resolve(fontsDir, 'render')
+  const statusFontsDir = resolve(fontsDir, 'status')
+
+  // images
+  const imagesDir = resolve(kbotDir, 'images')
+  const statusImagesDir = resolve(imagesDir, 'status')
+  const tarotImagesDir = resolve(imagesDir, 'tarot')
+
   // bilibili
   const bilibiliDir = resolve(kbotDir, 'bilibili')
   const bilibiliCookiePath = resolve(bilibiliDir, 'cookie.json')
@@ -29,6 +39,12 @@ export function generatePaths(path: string) {
   return {
     baseDir,
     kbotDir,
+    fontsDir,
+    renderFontsDir,
+    statusFontsDir,
+    imagesDir,
+    statusImagesDir,
+    tarotImagesDir,
     bilibiliDir,
     bilibiliCookiePath,
     bilibiliVupPath,
