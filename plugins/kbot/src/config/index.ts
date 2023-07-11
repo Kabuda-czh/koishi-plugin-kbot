@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-04-06 11:03:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-02 11:37:54
+ * @LastEditTime: 2023-07-11 11:14:08
  * @FilePath: \KBot-App\plugins\kbot\src\config\index.ts
  * @Description:
  *
@@ -10,17 +10,29 @@
  */
 import { resolve } from 'node:path'
 
-// assetsLocal
-export const assetsLocalDir = resolve(__dirname, '../../../../data/assets')
+export function generatePaths(path: string) {
+  // baseDir
+  const baseDir = resolve(__dirname, path)
 
-// kbot
-export const kbotDir = resolve(assetsLocalDir, 'kbot')
+  // kbot
+  const kbotDir = resolve(baseDir, 'kbot-data')
 
-// bilibili
-export const bilibiliDir = resolve(kbotDir, 'bilibili')
-export const bilibiliCookiePath = resolve(bilibiliDir, 'cookie.json')
-export const bilibiliVupPath = resolve(bilibiliDir, 'vup.json')
+  // bilibili
+  const bilibiliDir = resolve(kbotDir, 'bilibili')
+  const bilibiliCookiePath = resolve(bilibiliDir, 'cookie.json')
+  const bilibiliVupPath = resolve(bilibiliDir, 'vup.json')
 
-// twitter
-export const twitterDir = resolve(kbotDir, 'twitter')
-export const twitterCookiePath = resolve(twitterDir, 'cookie.json')
+  // twitter
+  const twitterDir = resolve(kbotDir, 'twitter')
+  const twitterCookiePath = resolve(twitterDir, 'cookie.json')
+
+  return {
+    baseDir,
+    kbotDir,
+    bilibiliDir,
+    bilibiliCookiePath,
+    bilibiliVupPath,
+    twitterDir,
+    twitterCookiePath,
+  }
+}
