@@ -23,7 +23,7 @@
 }
 
 #background-page .__title-text {
-  font-family: "HachiMaruPop";
+  font-family: "HachiMaruPop-Regular ttf";
   font-size: 50px;
   line-height: 58px;
   color: var(--main-color);
@@ -58,7 +58,7 @@
 #background-page .__dashboard-block__info__value {
   margin-top: 42px;
   font-size: 45px;
-  font-family: "Gugi";
+  font-family: "Gugi-Regular ttf";
   line-height: 56px;
   color: var(--block-color);
 }
@@ -88,7 +88,7 @@
 #background-page .__information-block__key, #background-page .__information-block__value {
   line-height: 42px;
   font-size: 28px;
-  font-family: "Gugi";
+  font-family: "Gugi-Regular ttf";
   color: #b7a89e;
 
   white-space: nowrap;
@@ -98,7 +98,7 @@
 
 #background-page .__footer {
   margin-top: 90px;
-  font-family: "HachiMaruPop";
+  font-family: "HachiMaruPop-Regular ttf";
   font-size: 22px;
   text-align: right;
   color: #b7a89e;

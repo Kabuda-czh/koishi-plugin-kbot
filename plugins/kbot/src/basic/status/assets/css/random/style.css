@@ -1,18 +1,8 @@
-@font-face {
-  font-family: "Poppins";
-  src: url("../../../assets/font/Poppins-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Noto Sans SC";
-  src: url("../../../assets/font/NotoSansSC-Regular.otf") format("opentype");
-}
-
 * {
   padding: 0;
   border: 0;
   margin: 0;
-  font-family: "Poppins", "Noto Sans SC", Arial, Helvetica, sans-serif;
+  font-family: "Poppins-Regular ttf", "NotoSansSC-Regular otf", Arial, Helvetica, sans-serif;
   color: white;
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.4);
 }
