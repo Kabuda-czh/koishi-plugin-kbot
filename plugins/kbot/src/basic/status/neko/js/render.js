@@ -70,3 +70,20 @@ function action(config) {
     ),
   )
 }
+
+async function setFont(needLoadFontList) {
+  // 字体按需加载方法
+  await (async () => {
+    const code = needLoadFontList.reduce((defaultString, fontObject) => {
+      return (
+        `${defaultString
+        }@font-face { font-family: ${fontObject.fontFamily};src: url('${fontObject.fontUrl}'); }`
+      )
+    }, '')
+    const style = document.createElement('style')
+    style.rel = 'stylesheet'
+    style.appendChild(document.createTextNode(code))
+    const head = document.getElementsByTagName('head')[0]
+    head.appendChild(style)
+  })()
+}
