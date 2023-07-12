@@ -35,7 +35,11 @@
       "required": [
         "database"
       ]
-    }
+    },
+    "browser": true,
+    "public": [
+      "dist"
+    ]
   },
   "peerDependencies": {
     "@koishijs/plugin-admin": "^1.1.5",

@@ -2,12 +2,15 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-30 12:09:42
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 11:16:44
+ * @LastEditTime: 2023-07-12 16:33:58
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\index.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
 */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable multiline-ternary */
+
 import { resolve } from 'node:path'
 import { Logger, Schema } from 'koishi'
 import type { Argv, Context } from 'koishi'
@@ -120,9 +123,16 @@ export function apply(context: Context) {
   })
 
   context.using(['console'], (ctx) => {
-    ctx.console.addEntry({
-      dev: resolve(__dirname, '../../../client/index.ts'),
-      prod: resolve(__dirname, '../../../dist'),
-    })
+    ctx.console.addEntry(
+      process.env.KOISHI_BASE ? [
+      `${process.env.KOISHI_BASE}/dist/index.js`,
+      `${process.env.KOISHI_BASE}/dist/style.css`,
+      ] : process.env.KOISHI_ENV === 'browser' ? [
+        // @ts-expect-error
+        import.meta.url.replace(/\/src\/[^/]+$/, '/client/index.ts'),
+      ] : {
+        dev: resolve(__dirname, '../../../client/index.ts'),
+        prod: resolve(__dirname, '../../../dist'),
+      })
   })
 }

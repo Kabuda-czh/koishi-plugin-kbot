@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 18:27:49
+ * @LastEditTime: 2023-07-12 16:28:59
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -84,11 +84,11 @@ function pluginLoad<T>(schema: Schema<T>): Schema<T & IPluginEnableConfig> {
 export const Config: Schema<IConfig> = Schema.object({
   superAdminQQ: Schema.array(String).description('超级管理员QQ号 (必填)'),
   KBotBasic: botBasic.Config,
-  KBotManage: pluginLoad(managePlugin.Config).description('群管理功能'),
+  KBotManage: pluginLoad(managePlugin.Config).description('群管理功能').hidden(process.env.KOISHI_ENV === 'browser'),
   KBotBilibili: pluginLoad(bilibiliPlugin.Config).description(
     'Bilibili 动态推送',
   ),
-  KBotMusic: pluginLoad(musicPlugin.Config).description('点歌功能'),
+  KBotMusic: pluginLoad(musicPlugin.Config).description('点歌功能').hidden(process.env.KOISHI_ENV === 'browser'),
   KBotYoutube: pluginLoad(youtubePlugin.Config).description('Youtube 视频解析'),
   KBotTwitter: pluginLoad(twitterPlugin.Config).description('Twitter 动态推送 (必须要 puppeteer)'),
   KBotTarot: pluginLoad(tarotPlugin.Config).description('塔罗牌功能'),
@@ -99,7 +99,7 @@ export const logger = new Logger('KBot')
 export const using = ['console', 'database', 'downloads'] as const
 
 export async function apply(ctx: Context, config: IConfig) {
-  if (!config.superAdminQQ || config.superAdminQQ.length === 0) {
+  if ((!config.superAdminQQ || config.superAdminQQ.length === 0) && process.env.KOISHI_ENV !== 'browser') {
     logger.error('未设置超级管理员QQ号')
   }
   else {
