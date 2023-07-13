@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 18:27:49
+ * @LastEditTime: 2023-07-13 16:51:45
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -31,22 +31,17 @@ import { downloadAndMoveFiles } from './plugins/utils'
 export const name = 'kbot'
 
 export const usage = `
-# KBot v1.1.0 更新日志
+# KBot v1.1.1 更新日志
 
 ## Note
-- 修复 \`twitter\` 插件异常问题
-- 修复 \`bilibili\` 插件问题
-- 增加使用 \`downloads\` 插件
+- 修复 \`guildmanage\` 插件异常问题
+- 修复 \`bilibili\` 插件判断逻辑问题
 
 ## Bug Fix
-- 修复 \`twitter\` 因为使用 \`cookie\` 加入 \`pptr\` 方法渲染页面, 增加等待时间
-- 修复 \`bilibili\` 因 \`-352\` 的问题, 增加对应打印
-- 修复静态指定路径, 使用 \`ctx.baseDir\` 创建 \`kbot\` 所需的资源路径
+- 修复 \`guildmanage\` 因为数据结构错误问题, 导致 \`WebUI\` 中无法正常使用屏蔽词和加群校验设置
+- 修复 \`bilibili\` 因为判断 \`code\` 出现问题, 导致未能正确提供报错信息
 
-## Features
-- 增加使用 \`downloads\` 插件, 下载对应所需 \`文字\` 和 \`图片\` 减少 \`kbot\` 插件大小
-
-详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.1.0)
+详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.1.1)
 `
 
 interface IPluginEnableConfig {
