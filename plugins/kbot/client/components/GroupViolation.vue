@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-07-04 10:31:36
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 13:06:03
+ * @LastEditTime: 2023-07-13 13:05:25
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupViolation.vue
  * @Description:
  *
@@ -161,17 +161,17 @@ const columns = reactive<Column<any>[]>([
 async function getViolationList() {
   dialogLoading.value = true
   await fetchGetViolationList(props.groupId).then((res: IViolationRes) => {
-    const violations = res.violations.map((item) => {
+    const violations = res?.violations?.map((item) => {
       return {
         label: item,
         value: item,
       }
-    })
+    }) || []
     defaultViolationList.value = violations
     violationList.value = violations.slice(0)
 
-    violationCount.value = res.count || 3
-    violationHandleWay.value = res.handleWay || 'mute'
+    violationCount.value = res?.count || 3
+    violationHandleWay.value = res?.handleWay || 'mute'
   })
   dialogLoading.value = false
 }

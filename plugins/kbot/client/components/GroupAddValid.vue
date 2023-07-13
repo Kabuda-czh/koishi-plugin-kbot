@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-07-04 10:31:52
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 13:04:17
+ * @LastEditTime: 2023-07-13 13:08:04
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupAddValid.vue
  * @Description:
  *
@@ -146,7 +146,7 @@ async function getGroupAddValid() {
   dialogLoading.value = true
   await fetchGetAddValid(props.groupId).then((res: IValidRes) => {
     const list: IValidList[] = []
-    for (const key in res.validObject) {
+    for (const key in res?.validObject || {}) {
       list.push({
         question: key,
         answer: res.validObject[key],
