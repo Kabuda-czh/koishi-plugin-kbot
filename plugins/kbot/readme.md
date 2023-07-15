@@ -262,6 +262,10 @@
 - [tarot_hoshino](https://github.com/haha114514/tarot_hoshino)
 - [koishi-plugin-youtube](https://github.com/tediorelee/koishi-plugin-youtube)
 
+## 赞助
+
+- [爱发电](https://afdian.net/a/kbd-dev)
+
 ## License
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKabuda-czh%2Fkoishi-plugin-kbot.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FKabuda-czh%2Fkoishi-plugin-kbot?ref=badge_large)
