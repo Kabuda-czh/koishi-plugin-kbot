@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-17 15:57:34
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-03 10:59:40
+ * @LastEditTime: 2023-07-17 14:55:13
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\utils\twitterRequest.ts
  * @Description:
  *
@@ -144,7 +144,7 @@ export async function getTwitterTweets(
           return 'continue'
         else throw new Error('请求超时, 网络错误')
       }
-      throw new Error(`${err?.response?.data?.errors || 'cookie异常 请重新设置'}`)
+      throw new Error(`${err?.response?.data?.errors?.[0]?.message || 'cookie异常 请重新设置'}`)
     })
 
   if (tokenError)
