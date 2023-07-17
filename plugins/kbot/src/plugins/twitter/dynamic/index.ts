@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:43:47
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 11:31:12
+ * @LastEditTime: 2023-07-17 14:55:43
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\twitter\dynamic\index.ts
  * @Description:
  *
@@ -35,9 +35,9 @@ export interface IConfig {
 
 export const Config: Schema<IConfig> = Schema.object({
   interval: Schema.number()
-    .description('请求之间的间隔 (秒) 注: 最低 30 秒!')
-    .default(30)
-    .min(30),
+    .description('请求之间的间隔 (秒) 注: 最低 90 秒!')
+    .default(90)
+    .min(90),
   useImage: Schema.boolean().default(false).description('是否使用图片模式 (需要 puppeteer 支持!)'),
   usePure: Schema.boolean()
     .default(false)
