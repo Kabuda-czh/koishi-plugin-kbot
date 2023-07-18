@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-31 16:17:01
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 12:26:47
+ * @LastEditTime: 2023-07-18 15:42:12
  * @FilePath: \KBot-App\plugins\kbot\client\components\GroupConfig.vue
  * @Description:
  *
@@ -51,7 +51,6 @@ const dialogVisible = computed({
 })
 
 const pluginDialogVisible = ref<boolean>(false)
-const groupDialogVisible = ref<boolean>(false)
 const noticeDialogVisible = ref<boolean>(false)
 const portraitDialogVisible = ref<boolean>(false)
 const groupViolationVisible = ref<boolean>(false)
@@ -65,7 +64,7 @@ function createManageFunction(dialog: Ref<boolean>) {
 
 const manageGroupNotice = createManageFunction(noticeDialogVisible)
 const manageGroupPortrait = createManageFunction(portraitDialogVisible)
-const manageGroupPlugins = createManageFunction(groupDialogVisible)
+const manageGroupPlugins = createManageFunction(pluginDialogVisible)
 const manageGroupViolation = createManageFunction(groupViolationVisible)
 const manageGroupAddValid = createManageFunction(groupAddValidVisible)
 
