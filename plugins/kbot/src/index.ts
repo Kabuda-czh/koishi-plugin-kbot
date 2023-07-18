@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-13 16:51:45
+ * @LastEditTime: 2023-07-18 15:28:46
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -111,7 +111,7 @@ export async function apply(ctx: Context, config: IConfig) {
       createFlag = true
     }
 
-    if (!createFlag && fileNames.length === 0)
+    if (!createFlag && !fs.existsSync(kbotDir))
       await fs.promises.mkdir(kbotDir)
 
     if (!fileNames.includes('fonts')) {
