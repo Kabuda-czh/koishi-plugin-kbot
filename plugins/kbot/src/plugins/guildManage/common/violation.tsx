@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-06-27 18:51:02
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-04 12:54:26
+ * @LastEditTime: 2023-07-20 14:58:25
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\common\violation.tsx
  * @Description:
  *
@@ -63,17 +63,14 @@ export async function initViolation(context: Context) {
     autoInc: true,
   })
 
-  context.guild().on('message', async (session) => {
+  context.guild().middleware(async (session, next) => {
     const { userId, guildId, content } = session
-
-    const botRole = await getGroupMemberRole(session.bot, guildId, session.selfId)
-    const userRole = await getGroupMemberRole(session.bot, guildId, userId)
 
     let userRes = await context.database.get('guildmanage.userViolation', { userId })
     const violationRes = await context.database.get('guildmanage.violationList', { guildId })
 
     if (violationRes.length === 0)
-      return
+      return next()
 
     if (userRes.length === 0) {
       await context.database.upsert('guildmanage.userViolation', [{
@@ -85,12 +82,15 @@ export async function initViolation(context: Context) {
       userRes = await context.database.get('guildmanage.userViolation', { userId })
     }
 
+    const botRole = await getGroupMemberRole(session.bot, guildId, session.selfId)
+    const userRole = await getGroupMemberRole(session.bot, guildId, userId)
+
     const { id, day } = userRes[0]
     let { userCount } = userRes[0]
     let isViolation = false
 
     if (botRole === 'member' || RoleNumber[userRole] >= RoleNumber[botRole])
-      return
+      return next()
 
     const { violations = [], count = 3, handleWay = 'mute' } = violationRes[0]
 
@@ -134,7 +134,7 @@ export async function initViolation(context: Context) {
         </message>)
     }
     if (userCount < count)
-      return
+      return next()
 
     if (handleWay === 'mute') {
       await session.send(
@@ -154,5 +154,6 @@ export async function initViolation(context: Context) {
       )
       await session.bot.kickGuildMember(guildId, userId)
     }
-  })
+    return next()
+  }, true)
 }
