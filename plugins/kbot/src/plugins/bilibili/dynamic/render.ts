@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 17:53:22
+ * @LastEditTime: 2023-07-20 16:42:50
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
@@ -24,19 +24,25 @@ export async function renderFunction(
   item: BilibiliDynamicItem,
   config: IConfig,
 ): Promise<string> {
-  if (config.useImage) {
-    if (ctx.puppeteer) {
-      if (config.device === 'pc')
-        return pcRenderImage(ctx, item)
-      else
-        return mobileRenderImage(ctx, item)
+  try {
+    if (config.useImage) {
+      if (ctx.puppeteer) {
+        if (config.device === 'pc')
+          return pcRenderImage(ctx, item)
+        else
+          return mobileRenderImage(ctx, item)
+      }
+      else {
+        return '未安装/启用 puppeteer 插件，无法使用图片渲染'
+      }
     }
     else {
-      return '未安装/启用 puppeteer 插件，无法使用图片渲染'
+      return renderText(item)
     }
   }
-  else {
-    return renderText(item)
+  catch (e) {
+    logger.error('render error', e)
+    throw e
   }
 }
 
@@ -87,7 +93,6 @@ async function pcRenderImage(
     )
   }
   catch (e) {
-    logger.error('pc render error', e)
     throw e.message
   }
   finally {
@@ -156,7 +161,6 @@ async function mobileRenderImage(
     )
   }
   catch (e) {
-    logger.error('mobile render error', e)
     throw e.message
   }
   finally {
