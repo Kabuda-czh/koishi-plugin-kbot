@@ -50,10 +50,10 @@
   },
   "dependencies": {
     "qs": "^6.11.2",
-    "systeminformation": "^5.18.6"
+    "systeminformation": "^5.18.7"
   },
   "devDependencies": {
-    "@koishijs/client": "^5.11.6",
+    "@koishijs/client": "^5.11.10",
     "@types/qs": "^6.9.7",
     "@types/systeminformation": "^3.54.1"
   }
