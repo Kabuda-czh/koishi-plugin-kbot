@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-06 11:39:18
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-21 12:57:21
+ * @LastEditTime: 2023-07-24 12:03:05
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\enum\bilibili.enum.ts
  * @Description:
  *
@@ -23,6 +23,7 @@ export enum BilibiliDynamicType {
 export enum BilibiliDynamicItemType {
   DYNAMIC_TYPE_AV = '发布了视频',
   DYNAMIC_TYPE_DRAW = '发布了动态',
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   DYNAMIC_TYPE_WORD = '发布了动态',
   DYNAMIC_TYPE_LIVE = '开始直播了',
 }

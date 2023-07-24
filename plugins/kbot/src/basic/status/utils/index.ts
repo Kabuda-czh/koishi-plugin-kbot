@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-16 09:35:30
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 11:15:58
+ * @LastEditTime: 2023-07-24 12:03:19
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\utils\index.ts
  * @Description:
  *
@@ -109,6 +109,7 @@ export async function getSystemInfo(
         },
         {
           title: '编译环境',
+          // eslint-disable-next-line n/prefer-global/process
           value: `📦 Node ${process.version}`,
         },
         {
