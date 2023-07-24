@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-24 11:54:14
+ * @LastEditTime: 2023-07-24 13:17:59
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -114,14 +114,14 @@ export async function apply(ctx: Context, config: IConfig) {
     if (!createFlag && !fs.existsSync(kbotDir))
       await fs.promises.mkdir(kbotDir)
 
-    const fontPath = await downloadAndMoveFiles('task1', 'fonts', [
+    const fontPath = await downloadAndMoveFiles('task1', 'kbot-fonts', [
       'npm://koishi-plugin-kbot-assets',
       'npm://koishi-plugin-kbot-assets?registry=https://registry.npmmirror.com',
     ], ctx)
 
     generatePath.setFontsDir(fontPath)
 
-    const imagePath = await downloadAndMoveFiles('task2', 'images', [
+    const imagePath = await downloadAndMoveFiles('task2', 'kbot-images', [
       'npm://koishi-plugin-kbot-assets',
       'npm://koishi-plugin-kbot-assets?registry=https://registry.npm.taobao.org',
     ], ctx)
