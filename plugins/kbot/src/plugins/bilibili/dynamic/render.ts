@@ -2,12 +2,13 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 13:38:46
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-20 16:42:50
+ * @LastEditTime: 2023-07-24 11:31:50
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\render.ts
  * @Description:
  *
  * Copyright (c) 2023 by Kabuda-czh, All Rights Reserved.
  */
+import fs from 'node:fs'
 import path from 'node:path'
 import type { Context } from 'koishi'
 import { segment } from 'koishi'
@@ -52,13 +53,38 @@ async function pcRenderImage(
 ): Promise<string> {
   let page: Page
   try {
-    const { renderFontsDir } = generatePaths(ctx.baseDir)
+    const { renderFontsDir, bilibiliCookiePath } = generatePaths(ctx.baseDir)
 
     const needLoadFontList = await getFontsList(renderFontsDir, logger)
 
+    const url = `https://t.bilibili.com/${item.id_str}`
+
     page = await ctx.puppeteer.page()
     await page.setViewport({ width: 1920 * 2, height: 1080 * 2 })
-    await page.goto(`https://t.bilibili.com/${item.id_str}`)
+
+    let cookie: any
+    try {
+      cookie = JSON.parse(
+        await fs.promises.readFile(
+          bilibiliCookiePath,
+          'utf-8',
+        ),
+      )
+    }
+    catch (e) {
+      logger.error(`Failed to get cookie info. ${e}`)
+      throw new Error('cookie 信息未找到, 请使用 --ck <cookie> 添加 cookie')
+    }
+
+    Object.entries(cookie).forEach(([key, value]: [string, string]) => {
+      page.setCookie({
+        url,
+        name: key,
+        value,
+      })
+    })
+
+    await page.goto(url)
     await page.waitForNetworkIdle()
 
     await page.addScriptTag({
@@ -106,9 +132,11 @@ async function mobileRenderImage(
 ): Promise<string> {
   let page: Page
   try {
-    const { renderFontsDir } = generatePaths(ctx.baseDir)
+    const { renderFontsDir, bilibiliCookiePath } = generatePaths(ctx.baseDir)
 
     const needLoadFontList = await getFontsList(renderFontsDir, logger)
+
+    const url = `https://m.bilibili.com/dynamic/${item.id_str}`
 
     page = await ctx.puppeteer.page()
 
@@ -124,7 +152,29 @@ async function mobileRenderImage(
         ),
       )
 
-    await page.goto(`https://m.bilibili.com/dynamic/${item.id_str}`, {
+    let cookie: any
+    try {
+      cookie = JSON.parse(
+        await fs.promises.readFile(
+          bilibiliCookiePath,
+          'utf-8',
+        ),
+      )
+    }
+    catch (e) {
+      logger.error(`Failed to get cookie info. ${e}`)
+      throw new Error('cookie 信息未找到, 请使用 --ck <cookie> 添加 cookie')
+    }
+
+    Object.entries(cookie).forEach(([key, value]: [string, string]) => {
+      page.setCookie({
+        url,
+        name: key,
+        value,
+      })
+    })
+
+    await page.goto(url, {
       waitUntil: 'networkidle0',
       timeout: 120000,
     })
