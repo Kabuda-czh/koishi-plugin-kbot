@@ -12,7 +12,7 @@ import { pathToFileURL } from 'node:url'
 import path from 'node:path'
 import type { Context } from 'koishi'
 import { Logger, Schema, sleep } from 'koishi'
-import { generatePaths } from '../../config'
+import GeneratePath from '../../config'
 import shuffle from './shuffle'
 import { cards, meanings } from './tarot.config'
 
@@ -25,7 +25,7 @@ export const logger = new Logger('KBot-plugin-tarot')
 export async function apply(ctx: Context) {
   const cardLength = Object.keys(cards).length
 
-  const { tarotImagesDir } = generatePaths(ctx.baseDir)
+  const { tarotImagesDir } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
 
   ctx.command('kbot/抽塔罗牌', '抽单张塔罗牌', {
     checkArgCount: true,

@@ -12,7 +12,7 @@ import fs from 'node:fs'
 import type { Argv, Channel, Context, Dict } from 'koishi'
 import type { DynamicNotifiction } from '../model'
 import { getTwitterTweets } from '../utils'
-import { generatePaths } from '../../../config'
+import GeneratePath from '../../../config'
 import { renderFunction } from './render'
 import { logger } from '.'
 import type { IConfig } from '.'
@@ -253,7 +253,7 @@ export async function twitterCookie(
     if (!cookieJson.auth_token || !cookieJson.ct0)
       return 'cookie 格式中缺少 auth_token 或 ct0'
 
-    const { twitterDir, twitterCookiePath } = generatePaths(ctx.baseDir)
+    const { twitterDir, twitterCookiePath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
 
     if (
       !(await fs.promises.stat(twitterDir)).isDirectory()

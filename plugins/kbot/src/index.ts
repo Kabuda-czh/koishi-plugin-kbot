@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-18 15:28:46
+ * @LastEditTime: 2023-07-24 11:54:14
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -25,7 +25,7 @@ import {} from 'koishi-plugin-downloads'
 
 // import * as valorantPlugin from './plugins/valorant'
 
-import { generatePaths } from './config'
+import GeneratePath from './config'
 import { downloadAndMoveFiles } from './plugins/utils'
 
 export const name = 'kbot'
@@ -98,12 +98,12 @@ export async function apply(ctx: Context, config: IConfig) {
     logger.error('未设置超级管理员QQ号')
   }
   else {
-    const { kbotDir } = generatePaths(ctx.baseDir)
+    const generatePath = GeneratePath.getInstance(ctx.baseDir)
+    const { kbotDir } = generatePath.getGeneratePathData()
 
-    let fileNames: string[] = []
     let createFlag = false
     try {
-      fileNames = await fs.promises.readdir(kbotDir)
+      await fs.promises.readdir(kbotDir)
     }
     catch (e) {
       logger.error('未找到 kbot-data 文件夹, 正在创建')
@@ -114,19 +114,19 @@ export async function apply(ctx: Context, config: IConfig) {
     if (!createFlag && !fs.existsSync(kbotDir))
       await fs.promises.mkdir(kbotDir)
 
-    if (!fileNames.includes('fonts')) {
-      await downloadAndMoveFiles('task1', 'fonts', [
-        'npm://koishi-plugin-kbot-assets',
-        'npm://koishi-plugin-kbot-assets?registry=https://registry.npmmirror.com',
-      ], ctx, kbotDir, logger)
-    }
+    const fontPath = await downloadAndMoveFiles('task1', 'fonts', [
+      'npm://koishi-plugin-kbot-assets',
+      'npm://koishi-plugin-kbot-assets?registry=https://registry.npmmirror.com',
+    ], ctx)
 
-    if (!fileNames.includes('images')) {
-      await downloadAndMoveFiles('task2', 'images', [
-        'npm://koishi-plugin-kbot-assets',
-        'npm://koishi-plugin-kbot-assets?registry=https://registry.npm.taobao.org',
-      ], ctx, kbotDir, logger)
-    }
+    generatePath.setFontsDir(fontPath)
+
+    const imagePath = await downloadAndMoveFiles('task2', 'images', [
+      'npm://koishi-plugin-kbot-assets',
+      'npm://koishi-plugin-kbot-assets?registry=https://registry.npm.taobao.org',
+    ], ctx)
+
+    generatePath.setImagesDir(imagePath)
 
     ctx.bots.forEach(async (bot) => {
       if (

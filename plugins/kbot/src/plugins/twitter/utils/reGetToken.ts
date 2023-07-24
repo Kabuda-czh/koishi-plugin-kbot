@@ -11,13 +11,13 @@
 import * as fs from 'node:fs'
 import type { Context, Logger } from 'koishi'
 import type { Page } from 'puppeteer-core'
-import { generatePaths } from '../../../config'
+import GeneratePath from '../../../config'
 
 export async function getTwitterToken(ctx: Context, logger: Logger) {
   let page: Page, cookie: any, gtCookie: string
 
   try {
-    const { twitterCookiePath } = generatePaths(ctx.baseDir)
+    const { twitterCookiePath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
     logger.info('token 获取中...')
     page = await ctx.puppeteer.page()
 

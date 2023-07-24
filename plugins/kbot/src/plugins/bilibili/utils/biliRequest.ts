@@ -13,12 +13,12 @@ import type { Context, Logger, Quester } from 'koishi'
 import { BilibiliDynamicType } from '../enum'
 import type { DanmukuData, MedalWall, MemberCard } from '../model'
 import { StringFormat } from '../../utils'
-import { generatePaths } from '../../../config'
+import GeneratePath from '../../../config'
 
 export async function getDynamic(ctx: Context, uid: string, logger: Logger) {
   let cookie
   try {
-    const { bilibiliCookiePath } = generatePaths(ctx.baseDir)
+    const { bilibiliCookiePath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
     cookie = JSON.parse(
       await fs.promises.readFile(
         bilibiliCookiePath,
@@ -55,7 +55,7 @@ export async function searchUser(
   const data = { keyword, search_type: 'bili_user' }
   let cookie
   try {
-    const { bilibiliCookiePath } = generatePaths(ctx.baseDir)
+    const { bilibiliCookiePath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
     cookie = JSON.parse(
       await fs.promises.readFile(
         bilibiliCookiePath,

@@ -19,7 +19,7 @@ import type { DynamicNotifiction } from '../../model'
 import { getDanmukuData, getMedalWall, getMemberCard } from '../../utils'
 
 import { getFontsList } from '../../../utils'
-import { generatePaths } from '../../../../config'
+import GeneratePath from '../../../../config'
 import { BilibiliDynamicType } from '../../enum'
 import { renderDanmu, renderVup } from './render'
 
@@ -40,7 +40,7 @@ export async function bilibiliVupCheck(
 ) {
   const { uid } = up
   try {
-    const { bilibiliVupPath, bilibiliCookiePath, renderFontsDir } = generatePaths(ctx.baseDir)
+    const { bilibiliVupPath, bilibiliCookiePath, renderFontsDir } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
     if (config.useImage) {
       if (ctx.puppeteer) {
         const searchUserCardInfo = await getMemberCard(ctx.http, uid)
@@ -154,7 +154,7 @@ export async function bilibiliDanmuCheck(
   try {
     if (config.useImage) {
       if (ctx.puppeteer) {
-        const { renderFontsDir } = generatePaths(ctx.baseDir)
+        const { renderFontsDir } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
 
         const searchUserCardInfo = await getMemberCard(ctx.http, uid)
 
@@ -207,7 +207,7 @@ export async function bilibiliRefreshVup(
   ]
 
   try {
-    const { bilibiliDir, bilibiliVupPath } = generatePaths(ctx.baseDir)
+    const { bilibiliDir, bilibiliVupPath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
     const vtbFetchs = await Promise.allSettled(
       vtbURLs.map(url =>
         ctx.http.axios(url)
@@ -270,7 +270,7 @@ export async function bilibiliCookie(
   ctx: Context,
 ) {
   try {
-    const { bilibiliDir, bilibiliCookiePath } = generatePaths(ctx.baseDir)
+    const { bilibiliDir, bilibiliCookiePath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
     if (!options.cookie)
       return '请提供cookie'
 

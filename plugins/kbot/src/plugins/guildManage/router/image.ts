@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-06-28 17:34:17
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 11:27:33
+ * @LastEditTime: 2023-07-24 12:02:32
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\guildManage\router\image.ts
  * @Description:
  *
@@ -15,7 +15,7 @@ import type { Context as KoaContext } from 'koa'
 import type { Context } from 'koishi'
 import type { IRouterStrategy } from '../typings'
 
-import { generatePaths } from '../../../config'
+import GeneratePath from '../../../config'
 
 function getImageInfo(context: Context) {
   return async (ctx: KoaContext) => {
@@ -24,7 +24,7 @@ function getImageInfo(context: Context) {
       ctx.body = null
     }
     else {
-      const { kbotDir } = generatePaths(context.baseDir)
+      const { kbotDir } = GeneratePath.getInstance(context.baseDir).getGeneratePathData()
       // 将 base64 数据存入临时文件
       const tempPath = path.resolve(kbotDir, 'temp')
       if (!fs.existsSync(tempPath))

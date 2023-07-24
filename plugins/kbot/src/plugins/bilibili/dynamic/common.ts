@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-02-03 12:57:50
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 11:25:30
+ * @LastEditTime: 2023-07-24 12:00:30
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\dynamic\common.ts
  * @Description:
  *
@@ -18,7 +18,7 @@ import type {
   DynamicNotifiction,
 } from '../model'
 import { getDynamic } from '../utils'
-import { generatePaths } from '../../../config'
+import GeneratePath from '../../../config'
 import { BilibiliDynamicType } from '../enum'
 import { renderFunction } from './render'
 import type { IConfig } from '.'
@@ -70,7 +70,7 @@ async function fetchUserInfo(
 ): Promise<BilibiliUserInfoApiData['data']> {
   let cookie
   try {
-    const { bilibiliCookiePath } = generatePaths(ctx.baseDir)
+    const { bilibiliCookiePath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
     cookie = JSON.parse(
       await fs.promises.readFile(
         bilibiliCookiePath,

@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-03-13 17:14:23
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-11 18:04:29
+ * @LastEditTime: 2023-07-24 12:00:00
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\render\index.ts
  * @Description:
  *
@@ -17,13 +17,13 @@ import type { SystemInfo } from '../utils'
 
 // import { writeBlobToFile } from '../utils'
 import { logger } from '..'
-import { generatePaths } from '../../../config'
+import GeneratePath from '../../../config'
 import { getFontsList } from '../../../plugins/utils'
 
 export async function renderHtml(ctx: Context, systemInfo: SystemInfo) {
   let page: Page
   try {
-    const { statusFontsDir } = generatePaths(ctx.baseDir)
+    const { statusFontsDir } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
     let needLoadFontList = await getFontsList(statusFontsDir, logger)
     needLoadFontList = needLoadFontList.filter(font => ['Gugi-Regular ttf', 'HachiMaruPop-Regular ttf'].includes(font.fontFamily))
 
@@ -74,7 +74,7 @@ export async function renderRandom(ctx: Context, sort: string, systemInfo: Syste
       const imageBase64 = Buffer.from(resp.data, 'binary').toString('base64')
       let page: Page
       try {
-        const { statusFontsDir } = generatePaths(ctx.baseDir)
+        const { statusFontsDir } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
         let needLoadFontList = await getFontsList(statusFontsDir, logger)
         needLoadFontList = needLoadFontList.filter(font => ['Poppins-Regular ttf', 'NotoSansSC-Regular otf'].includes(font.fontFamily))
 

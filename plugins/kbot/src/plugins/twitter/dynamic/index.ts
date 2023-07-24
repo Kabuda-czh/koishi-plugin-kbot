@@ -15,7 +15,7 @@ import {} from 'koishi-plugin-puppeteer'
 
 import type { DynamicNotifiction } from '../model'
 import { getTwitterTweets } from '../utils'
-import { generatePaths } from '../../../config'
+import GeneratePath from '../../../config'
 import { listen } from './listen'
 import { dynamicStrategy } from './dynamic.strategy'
 
@@ -61,7 +61,7 @@ export async function apply(ctx: Context, config: IConfig) {
     'twitter',
   ])
 
-  const { kbotDir, twitterDir, twitterCookiePath } = generatePaths(ctx.baseDir)
+  const { kbotDir, twitterDir, twitterCookiePath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
 
   const fileNames = await fs.promises.readdir(kbotDir)
 

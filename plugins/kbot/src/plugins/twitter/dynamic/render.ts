@@ -15,7 +15,7 @@ import type { Page } from 'puppeteer-core'
 import { StringFormat } from '../../utils'
 import { TwitterDynamicType } from '../enum'
 import type { Entry } from '../model'
-import { generatePaths } from '../../../config'
+import GeneratePath from '../../../config'
 import { logger } from '.'
 import type { IConfig } from '.'
 
@@ -55,7 +55,7 @@ async function renderImage(ctx: Context, entry: Entry): Promise<string> {
       ?.legacy?.name
   let page: Page
   try {
-    const { twitterCookiePath } = generatePaths(ctx.baseDir)
+    const { twitterCookiePath } = GeneratePath.getInstance(ctx.baseDir).getGeneratePathData()
 
     const url = StringFormat(
       TwitterDynamicType.UserStatusURL,
