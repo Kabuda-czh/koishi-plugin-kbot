@@ -2,7 +2,7 @@
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
  * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-07-24 13:17:59
+ * @LastEditTime: 2023-08-07 15:42:29
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -31,6 +31,57 @@ import { downloadAndMoveFiles } from './plugins/utils'
 export const name = 'kbot'
 
 export const usage = `
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: #000;
+}
+svg {
+  width: 100%;
+  height: 100px;
+  margin: auto;
+}
+svg text {
+  text-transform: uppercase;
+  animation: stroke 5s infinite alternate;
+  letter-spacing: 10px;
+  font-size: 90px;
+}
+@keyframes stroke {
+  0% {
+    fill: rgba(72, 138, 20, 0);
+    stroke: rgba(54, 95, 160, 1);
+    stroke-dashoffset: 25%;
+    stroke-dasharray: 0 50%;
+    stroke-width: 0.8;
+  }
+  50% {
+    fill: rgba(72, 138, 20, 0);
+    stroke: rgba(54, 95, 160, 1);
+    stroke-width: 1.2;
+  }
+  70% {
+    fill: rgba(72, 138, 20, 0);
+    stroke: rgba(54, 95, 160, 1);
+    stroke-width: 1.5;
+  }
+  90%,
+  100% {
+    fill: rgba(72, 138, 204, 1);
+    stroke: rgba(54, 95, 160, 0);
+    stroke-dashoffset: -25%;
+    stroke-dasharray: 50% 0;
+    stroke-width: 0;
+  }
+}
+
+</style>
+<svg viewBox="400 0 400 200">
+  <text x="0" y="70%"> Koishi-Plugin-KBot </text>
+</svg>
+
 # KBot v1.1.1 更新日志
 
 ## Note
@@ -42,6 +93,9 @@ export const usage = `
 - 修复 \`bilibili\` 因为判断 \`code\` 出现问题, 导致未能正确提供报错信息
 
 详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.1.1)
+
+## 如果你觉得这个插件还不错, 可以考虑支持一下我
+[爱发电](https://afdian.net/a/kbd-dev)
 `
 
 interface IPluginEnableConfig {
