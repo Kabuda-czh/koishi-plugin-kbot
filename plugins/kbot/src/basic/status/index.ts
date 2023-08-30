@@ -1,8 +1,8 @@
 /*
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
- * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-05-23 10:31:59
+ * @LastEditors: Kabuda-czh 634469564@qq.com
+ * @LastEditTime: 2023-08-30 19:49:10
  * @FilePath: \KBot-App\plugins\kbot\src\basic\status\index.ts
  * @Description:
  *

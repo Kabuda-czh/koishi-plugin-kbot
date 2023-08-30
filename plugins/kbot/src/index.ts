@@ -1,8 +1,8 @@
 /*
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
- * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-08-07 15:42:29
+ * @LastEditors: Kabuda-czh 634469564@qq.com
+ * @LastEditTime: 2023-08-30 20:13:45
  * @FilePath: \KBot-App\plugins\kbot\src\index.ts
  * @Description:
  *
@@ -95,7 +95,7 @@ svg text {
 详细更新日志请看: [Release](https://github.com/Kabuda-czh/koishi-plugin-kbot/releases/tag/1.1.1)
 
 ## 如果你觉得这个插件还不错, 可以考虑支持一下我
-[爱发电](https://afdian.net/a/kbd-dev)
+## [爱发电](https://afdian.net/a/kbd-dev)
 `
 
 interface IPluginEnableConfig {
