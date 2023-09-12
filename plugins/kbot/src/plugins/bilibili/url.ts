@@ -2,8 +2,8 @@
 /*
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:44:05
- * @LastEditors: Kabuda-czh
- * @LastEditTime: 2023-06-05 10:24:53
+ * @LastEditors: Kabuda-czh 634469564@qq.com
+ * @LastEditTime: 2023-09-12 20:25:29
  * @FilePath: \KBot-App\plugins\kbot\src\plugins\bilibili\url.ts
  * @Description:
  *
@@ -31,8 +31,10 @@ const logger = new Logger('KBot-bilibili-url')
 async function processContent(content: string, channelId: string, http: Quester, next: Next) {
   try {
     const avid = await testVideo(content, http)
-    if (avid)
+    if (avid) {
+      logger.success(`成功解析 avid: 「${avid}」`)
       return next(async () => await render(avid, channelId, http))
+    }
   }
   catch (e) {
     logger.error('请求时发生异常: ', e)
