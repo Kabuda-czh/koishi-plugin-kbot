@@ -444,6 +444,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cordisjs/plugin-http@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@cordisjs/plugin-http@npm:0.5.1"
+  dependencies:
+    cosmokit: "npm:^1.6.2"
+    file-type: "npm:^16.5.4"
+    mime-db: "npm:^1.52.0"
+    ws: "npm:^8.16.0"
+  peerDependencies:
+    cordis: ^3.15.1
+  checksum: 10c0/90a9740b66d50620c36a0ed2644e20513e2dec631b5776874cbf4e3355fcdc6f648b04d3f6cd3e5b0ff16e967db77391092166832ea410283693547da6b6fa5b
+  languageName: node
+  linkType: hard
+
 "@cordisjs/plugin-proxy-agent@npm:^0.3.0":
   version: 0.3.0
   resolution: "@cordisjs/plugin-proxy-agent@npm:0.3.0"
@@ -1289,6 +1303,17 @@ __metadata:
     "@koishijs/loader": ^4.5.3
     koishi: ^4.17.3
   checksum: 10c0/80a18722c7e7006f88346a3918d15356ed34a7773d1f73a846014882051c14664f3be00d3b1085cb432bfce665c32332a5042575c06c26f112a70a7baaae59a0
+  languageName: node
+  linkType: hard
+
+"@koishijs/plugin-http@npm:0.5.1":
+  version: 0.5.1
+  resolution: "@koishijs/plugin-http@npm:0.5.1"
+  dependencies:
+    "@cordisjs/plugin-http": "npm:^0.5.1"
+  peerDependencies:
+    koishi: ^4.17.6
+  checksum: 10c0/870a49696d135e328c06395ac9b20939ce65ffe4a99f742ebde815bdcb01b8acd0376233d5d2c45b29bf4f1db11df7bb5a17e7cd52ab9be10b91092c6cf99eb8
   languageName: node
   linkType: hard
 
@@ -4497,7 +4522,7 @@ __metadata:
     "@koishijs/plugin-explorer": "npm:^1.5.1"
     "@koishijs/plugin-help": "npm:^2.4.3"
     "@koishijs/plugin-hmr": "npm:^1.2.9"
-    "@koishijs/plugin-http": "npm:^0.4.2"
+    "@koishijs/plugin-http": "npm:0.5.1"
     "@koishijs/plugin-insight": "npm:^3.5.1"
     "@koishijs/plugin-inspect": "npm:^1.1.5"
     "@koishijs/plugin-locales": "npm:^2.5.3"
@@ -4525,7 +4550,7 @@ __metadata:
     koishi-plugin-downloads: "npm:^0.1.3"
     koishi-plugin-puppeteer: "npm:^3.8.4"
     koishi-plugin-rate-limit: "npm:^2.0.4"
-    koishi-plugin-telemetry: "npm:^0.0.2"
+    koishi-plugin-telemetry: "npm:0.2.2"
     koishi-plugin-theme-vanilla: "npm:^1.0.6"
     tsx: "npm:^4.7.1"
     typescript: "npm:^5.4.3"
@@ -4716,10 +4741,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koishi-plugin-telemetry@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "koishi-plugin-telemetry@npm:0.0.2"
-  checksum: 10c0/962751619643f1b1a048c7c757bcb3d82a9356f540ea8b117da5a76941eccaa649b013140ff6295abff85bda2828addf64f312e40fae4a3fd2f8336f5c279974
+"koishi-plugin-telemetry@npm:0.2.2":
+  version: 0.2.2
+  resolution: "koishi-plugin-telemetry@npm:0.2.2"
+  peerDependencies:
+    koishi: ^4.0.0
+  checksum: 10c0/b6970eeadcc5fb470ca8cc607f6f14b7b4917b90aa074beae839006aeca990887ab6fa6cc12183027232fc361e2efeb76cb7fe8d2c433a05682ea2444f0302e2
   languageName: node
   linkType: hard
 
