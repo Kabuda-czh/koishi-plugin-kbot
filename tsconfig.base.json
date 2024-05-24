@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es2022",
     "module": "commonjs",
     "declaration": true,
     "composite": true,
@@ -9,6 +9,9 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "jsxImportSource": "@satorijs/element"
+    "jsxImportSource": "@satorijs/element",
+    "types": [
+      "yml-register/types",
+    ],
   }
 }

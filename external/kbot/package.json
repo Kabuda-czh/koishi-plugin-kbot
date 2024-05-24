@@ -1,0 +1,60 @@
+{
+  "name": "koishi-plugin-kbot",
+  "version": "1.1.2",
+  "description": "A muti-function qq bot for koishi",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kabuda-czh/koishi-plugin-kbot"
+  },
+  "keywords": [
+    "kbot",
+    "koishi",
+    "plugin",
+    "bilibili",
+    "youtube",
+    "music",
+    "guildmanager",
+    "twitter"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "scripts": {
+    "build:console": "koishi-console build"
+  },
+  "koishi": {
+    "description": {
+      "zh": "一个多功能的qq机器人插件",
+      "en": "A muti-function qq bot for koishi"
+    },
+    "service": {
+      "required": [
+        "database"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@koishijs/plugin-admin": "*",
+    "koishi": "^4.17.6",
+    "koishi-plugin-downloads": "*",
+    "koishi-plugin-puppeteer": "*"
+  },
+  "peerDependenciesMeta": {
+    "koishi-plugin-puppeteer": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "qs": "^6.12.1",
+    "systeminformation": "^5.22.9"
+  },
+  "devDependencies": {
+    "@koishijs/client": "^5.28.4",
+    "@types/qs": "^6.9.15",
+    "@types/systeminformation": "^3.54.1"
+  }
+}
