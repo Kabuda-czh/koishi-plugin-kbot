@@ -4356,6 +4356,11 @@ systeminformation@*, systeminformation@^5.21.7:
   resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.21.7.tgz#53ef75daaf5d756d015f4bb02e059126ccac74f2"
   integrity sha512-K3LjnajrazTLTD61+87DFg8IXFk5ljx6nSBqB8pQLtC1UPivAjDtTYGPZ8jaBFxcesPaCOkvLRtBq+RFscrsLw==
 
+systeminformation@^5.18.12:
+  version "5.22.9"
+  resolved "https://registry.npmjs.org/systeminformation/-/systeminformation-5.22.9.tgz#68700a895a48cbf96e2cd6a34c5027d1fe58f053"
+  integrity sha512-qUWJhQ9JSBhdjzNUQywpvc0icxUAjMY3sZqUoS0GOtaJV9Ijq8s9zEP8Gaqmymn1dOefcICyPXK1L3kgKxlUpg==
+
 tar-fs@2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/tar-fs/-/tar-fs-2.1.1.tgz#489a15ab85f1f0befabb370b7de4f9eb5cbe8784"
