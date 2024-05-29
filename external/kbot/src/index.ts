@@ -1,8 +1,8 @@
 /*
  * @Author: Kabuda-czh
  * @Date: 2023-01-29 14:28:53
- * @LastEditors: Kabuda-czh
- * @LastEditTime: 2024-05-24 11:31:57
+ * @LastEditors: Kabuda-czh 634469564@qq.com
+ * @LastEditTime: 2024-05-29 16:35:08
  * @FilePath: \kbot-app-new\external\kbot\src\index.ts
  * @Description:
  *
@@ -199,9 +199,8 @@ export async function apply(ctx: Context, config: IConfig) {
 
     ctx.bots.forEach(async (bot) => {
       if (
-        //@ts-ignore
-        // TODO: 需要修复
-        !['connect', 'online'].includes(bot.status)
+        // offline, connect
+        ![0, 2].includes(bot.status)
         || bot.platform === 'qqguild'
       )
         return
