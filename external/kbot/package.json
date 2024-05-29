@@ -39,7 +39,7 @@
   },
   "peerDependencies": {
     "@koishijs/plugin-admin": "*",
-    "koishi": "^4.17.6",
+    "koishi": "^4.17.7",
     "koishi-plugin-downloads": "*",
     "koishi-plugin-puppeteer": "*"
   },
