@@ -39,7 +39,7 @@
   },
   "peerDependencies": {
     "@koishijs/plugin-admin": "*",
-    "koishi": "^4.17.7",
+    "koishi": "^4.17.8",
     "koishi-plugin-downloads": "*",
     "koishi-plugin-puppeteer": "*"
   },
@@ -50,10 +50,10 @@
   },
   "dependencies": {
     "qs": "^6.12.1",
-    "systeminformation": "^5.22.9"
+    "systeminformation": "^5.22.10"
   },
   "devDependencies": {
-    "@koishijs/client": "^5.28.4",
+    "@koishijs/client": "^5.29.1",
     "@types/qs": "^6.9.15",
     "@types/systeminformation": "^3.54.1"
   }
